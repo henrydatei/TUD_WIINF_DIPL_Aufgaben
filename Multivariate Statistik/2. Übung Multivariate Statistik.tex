@@ -1,0 +1,75 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage[amsmath,thmmarks,standard]{ntheorem}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+\newcommand{\E}{\mathbb{E}}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\renewcommand{\E}{\mathbb{E}}
+
+\newtheorem{thm}{Theorem}
+
+\title{\textbf{Multivariate Statistik, Übung 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Erwartungswert und Varianz
+		\begin{align}
+			\E(X) &= 0\cdot 0,1 + 1 \cdot 0,2 + 2 \cdot 0,4 + 3 \cdot 0,2 + 4 \cdot 0,1 = 2 \notag \\
+			\Var(X) &= \E(X^2) - 2^2 = (0^2\cdot 0,1 + 1^2 \cdot 0,2 + 2^2 \cdot 0,4 + 3^2 \cdot 0,2 + 4^2 \cdot 0,1) - 4 = 1,6 \notag
+		\end{align}
+		\item Erwartungswert und Varianz
+		\begin{align}
+			\E(X) &= 0\cdot 0,25 + 3 \cdot 0,25 + 3 \cdot 0,25 + 4 \cdot 0,25 = 2,5 \notag \\
+			\Var(X) &= \E(X^2) - 2,5^2 = (0^2\cdot 0,25 + 3^2 \cdot 0,25 + 3^2 \cdot 0,25 + 4^2 \cdot 0,25) - 6,25 = 2,25 \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	Der Spektralsatz gibt uns, dass die Matrizen $P$ und $P'$ unitär sind, also die Zeilen (und Spalten) bezüglich des Standardskalarproduktes $\langle\cdot,\cdot\rangle$ orthonormal sind. Das bedeutet $\langle z_i,z_i\rangle = 1$ für eine Zeile $z_i$ und $\langle z_i,z_j\rangle=0$ für $i\neq j$. Daraus ergibt sich
+	\begin{align}
+		P\cdot P' = I \notag
+	\end{align}
+
+	\section*{Aufgabe 3}
+	Wir nutzen wieder den Spektralsatz und zerlegen $A$ in $P\cdot D\cdot P'$, wobei $D=\text{diag}(\lambda_1,...,\lambda_n)$ ist:
+	\begin{align}
+		\tr(A) &= \tr(P\cdot D\cdot P') \notag \\
+		&= \tr(P'\cdot P\cdot D) \notag \\
+		&= \tr(D) \notag \\
+		&= \sum_{i=1}^{n} \lambda_i \notag
+	\end{align}
+
+	\section*{Aufgabe 4}
+	Ich werde im nachfolgenden statt $\E(X)$ $\mu$ schreiben.
+	\begin{align}
+		\Var(X) &= \E((X-\mu)^2) \notag \\
+		&= \E(X^2 - 2\mu X + \mu^2) \notag \\
+		&= \E(X^2) - 2\mu\E(X) + \E(\mu^2) \notag \\
+		&= \E(X^2) - 2\mu^2 + \mu^2 \notag \\
+		&= \E(X^2) - \mu^2 \notag
+	\end{align}
+	
+\end{document}

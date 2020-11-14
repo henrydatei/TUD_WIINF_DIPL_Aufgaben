@@ -1,0 +1,155 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Multivariate Statistik, Hausaufgabe 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Für die Matrix $D$}
+	\begin{enumerate}[label=(\alph*)]
+		\item Determinante
+		\begin{align}
+			\det(D) = ad-bc = (2\cdot 6) - (4\cdot 2) = 12 - 8 = 4 \notag
+		\end{align}
+		\item Spur
+		\begin{align}
+			\tr(D) = \sum_{i=1}^{2} d_{ii} = 2 + 6 = 12 \notag
+		\end{align}
+		\item Eigenwerte
+		\begin{align}
+			\det\begin{pmatrix}
+				2-\lambda & 4 \\ 2 & 6-\lambda
+			\end{pmatrix} &= 0 \notag \\
+			(2-\lambda)(6-\lambda)-8 &= 0 \notag \\
+			\lambda^2 - 8\lambda + 4 &= 0 \notag \\
+			\lambda_1 &= 0.5359 \notag \\
+			\lambda_2 &= 7.4641 \notag
+		\end{align}
+		\item Eigenvektoren
+		\begin{align}
+			(D-\lambda_1I)x &= 0 \notag \\
+			\begin{pmatrix}
+				2-0.5359 & 4 \\ 2 & 6-0.5359
+			\end{pmatrix} \cdot \begin{pmatrix}
+				x_1 \\ x_2
+			\end{pmatrix} &= 0 \notag \\
+			1.4641x_1+4x_2 &= 0 \notag \\
+			2x_1+5.4641x_2 &= 0 \notag
+		\end{align}
+		Das Gleichungssystem hat unendlich viele Lösungen\footnote{Diese Lösungen spannen den sogenannten Eigenraum auf.}. Wähle z.B. $x_1=1$, dann folgt $x_2=-0.3660$. Die Norm/der Betrag dieses Vektors ist $\sqrt{1^2+(-0.3660)^2}=1.0649$, also ist der erste Eigenvektor
+		\begin{align}
+			x= \frac{1}{1.0649}\begin{pmatrix}
+				1 \\ -0.3660
+			\end{pmatrix} \notag
+		\end{align}
+		Für den zweiten Eigenvektor ergibt sich analog
+		\begin{align}
+			(D-\lambda_2I)y &= 0 \notag \\
+			\begin{pmatrix}
+				2-7.4641 & 4 \\ 2 & 6-7.4641
+			\end{pmatrix} \cdot \begin{pmatrix}
+				y_1 \\ y_2
+			\end{pmatrix} &= 0 \notag \\
+			-5.4641y_1+4y_2 &= 0 \notag \\
+			2y_1-1.4641y_2 &= 0 \notag
+		\end{align}
+		Wähle wieder $y_1=1$, dann folgt $y_2=1.3660$, Normierung $\sqrt{1^2+1.3660^2}=1.6688$, also ist der zweite Eigenvektor
+		\begin{align}
+			y= \frac{1}{1.6688}\begin{pmatrix}
+				1 \\ 1.3660
+			\end{pmatrix} \notag
+		\end{align}
+		\item nein, $D\neq D'$
+		\item ja, da $\det(D)=4\neq 0$
+	\end{enumerate}
+
+	\section*{Für die Matrix $E$}
+	\begin{enumerate}[label=(\alph*)]
+		\item Determinante
+		\begin{align}
+			\det(E) = ad-bc = (1\cdot 2) - (0\cdot 1) = 2 - 0 = 2 \notag
+		\end{align}
+		\item Spur
+		\begin{align}
+			\tr(E) = \sum_{i=1}^{2} e_{ii} = 1 + 2 = 3 \notag
+		\end{align}
+		\item Eigenwerte
+		\begin{align}
+			\det\begin{pmatrix}
+				1-\lambda & 0 \\ 1 & 2-\lambda
+			\end{pmatrix} &= 0 \notag \\
+			(1-\lambda)(2-\lambda) &= 0 \notag \\
+			\lambda_1 &= 2 \notag \\
+			\lambda_2 &= 1 \notag
+		\end{align}
+		\item Eigenvektoren
+		\begin{align}
+			(E-\lambda_1I)x &= 0 \notag \\
+			\begin{pmatrix}
+				1-2 & 0 \\ 1 & 2-2
+			\end{pmatrix} \cdot \begin{pmatrix}
+				x_1 \\ x_2
+			\end{pmatrix} &= 0 \notag \\
+			-1x_1+0x_2 &= 0 \notag \\
+			1x_1+0x_2 &= 0 \notag
+		\end{align}
+		Wähle z.B. $x_2=1$, dann folgt $x_1=0$. Die Norm/der Betrag dieses Vektors ist $\sqrt{0^2+1^2}=1$, also ist der erste Eigenvektor
+		\begin{align}
+			x= \begin{pmatrix}
+				0 \\ 1
+			\end{pmatrix} \notag
+		\end{align}
+		Für den zweiten Eigenvektor ergibt sich analog
+		\begin{align}
+			(E-\lambda_2I)y &= 0 \notag \\
+			\begin{pmatrix}
+				1-1 & 0 \\ 1 & 2-1
+			\end{pmatrix} \cdot \begin{pmatrix}
+				y_1 \\ y_2
+			\end{pmatrix} &= 0 \notag \\
+			0y_1+0y_2 &= 0 \notag \\
+			1y_1+1y_2 &= 0 \notag
+		\end{align}
+		Wähle wieder $y_1=1$, dann folgt $y_2=-1$, Normierung $\sqrt{1^2+(-1)^2}=\sqrt{2}$, also ist der zweite Eigenvektor
+		\begin{align}
+			y= \frac{1}{\sqrt{2}}\begin{pmatrix}
+				1 \\ -1
+			\end{pmatrix} \notag
+		\end{align}
+		\item nein, $E\neq E'$
+		\item ja, da $\det(E)=2\neq 0$
+		\item Varianz $\Var(e_{\cdot1}) = \frac{1}{1}[(1-1)^2 + (1-1)^2] = 0$ \\
+		Varianz $\Var(e_{\cdot2}) = \frac{1}{1}[(0-1)^2 + (2-1)^2] = 2$ \\
+		Kovarianz $\Cov(e_{\cdot1},e_{\cdot 2}) = \frac{1}{1}[(1-1)(0-1) + (1-1)(2-1)] = 0$
+		\begin{align}
+			\Cov(E) = \begin{pmatrix}
+				0 & 0 \\ 0 & 2
+			\end{pmatrix} \notag
+		\end{align}
+	\end{enumerate}
+	
+	
+\end{document}
