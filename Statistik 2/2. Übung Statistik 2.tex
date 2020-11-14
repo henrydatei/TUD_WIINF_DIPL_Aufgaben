@@ -1,0 +1,90 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\renewcommand{\P}{\mathbb{P}}
+
+\title{\textbf{Statistik 2, Übung 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir nutzen die Ungleichung von Tschebyscheff mit $\varepsilon=3$:
+		\begin{align}
+			\P(\vert X-10\vert < 3) &\ge 1 - \frac{4}{3^2} \notag \\
+			&\ge 0.5556 \notag
+		\end{align}
+		\item Sei $F$ die Verteilungsfunktion der Normalverteilung, dann ist
+		\begin{align}
+			\P(7 < X < 13) &= F(13) - F(7) \notag \\
+			&= 0.8664 \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	Wir erstellen eine neue Zufallsvariable $Z=X_1 + ... + X_{100}$, wobei $X_i\sim N(45,10^2)$ die Korrektur der Arbeit des Studenten $i$ sei. $Z$ folgt dann auch einer Normalverteilung mit $Z\sim N(45\cdot 100, 10^2 \cdot 100) = N(4500,10000)$. Es gilt dann
+	\begin{align}
+		\P(Z \le 10 \text{ Tage} \cdot 8 \text{ Stunden/Tag} \cdot 60 \text{ Minuten/Stunde}) = 0.9987 \notag
+	\end{align}
+
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Sei $X$ die Anzahl der nicht kaputten Knöpfe. Dann folgt $X$ einer Binomialverteilung mit $X\sim B(n=4500,p=0.88)$. Es gilt
+		\begin{align}
+			\P(X \ge 4000) &= 1- \P(X \le 3999) \notag \\
+			&= 0.0339 \notag
+		\end{align}
+		\item Dazu muss man folgende Gleichung lösen:
+		\begin{align}
+			0.95 &\le \P(X\ge 4501\mid X\sim B(n,p=0.88)) \notag \\
+			&\le 1 - \P(X\le 4500\mid X\sim B(n,p=0.88)) \notag \\
+			0.05 &\le \P(X\le 4500\mid X\sim B(n,p=0.88)) \notag
+		\end{align}
+		Ich habe leider nichts gefunden, was diese Gleichung schnell lösen kann, also habe ich verschiedene $n$ durchprobiert. Bei $n=5159$ ist $\P(X\le 4500) = 0.0466$. Es müssen also mindestens 5159 Knöpfe geliefert werden.
+	\end{enumerate}
+
+	\section*{Aufgabe 4}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Parameter der Normalverteilung sind alle gegeben:
+		\begin{align}
+			\P(X < 140) = 0.3905 \notag
+		\end{align}
+		\item Wir machen bei dieser Aufgabe einen statistischen Test und testen dabei auf einen Mittelwert von unter 140, wobei wir einen Mittelwert von 150 erwarten können (da das ja der richtige Mittelwert ist; also die Personen im Leistungstest 150 Punkte erreichen sollten).
+		\begin{itemize}
+			\item Hypothesen: $H_0: \mu < 140$ gegen $H_A:\mu \ge 140$
+			\item Teststatistik: $t=\frac{150-140}{36}\sqrt{49} = 1.94$
+		\end{itemize}
+		Wir berechnen nun den p-Wert, einen Wert, der angibt, wie wahrscheinlich unsere Nullhypothese ist. Bei kleinen p-Werten sollte man diese logischerweise ablehnen. Uns interessiert aber bei dieser Aufgabe nicht die Interpretation des Tests, sondern der genaue Wert des p-Wertes.
+		\begin{align}
+			\text{p-Wert} &= \int_{1.94}^{\infty} \Phi(x)\,\mathrm{d}x \notag \\
+			&= 0.0262 \notag
+		\end{align}
+		Die Wahrscheinlichkeit, dass ein $\mu < 140$ gemessen wird, obwohl das wahre $\mu = 150$ ist, ist also 0.0262.
+	\end{enumerate}
+	
+\end{document}
