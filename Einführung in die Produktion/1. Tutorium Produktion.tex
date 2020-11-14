@@ -1,0 +1,107 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage[amsmath,thmmarks,standard]{ntheorem}
+\usepackage{mathtools}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+\newcommand{\E}{\mathbb{E}}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\renewcommand{\E}{\mathbb{E}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+
+\title{\textbf{Einführung in die Produktion, Tutorium 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Vergrößerung eines Produktionsfaktors (bei konstantem Einsatz der anderen Produktionsfaktoren) führt zuerst zu steigenden, dann zu fallenden und schließlich zu negativen Ertragszuwächsen.
+		\item Ende Phase I: $\max\{x'_B\}$
+		\begin{align}
+			x'_B &= -6r_w^2 + 84r_w + 90 \notag \\
+			x''_B &= -12r_w + 84 = 0 \notag \\
+			r_w &= 7 \notag
+		\end{align}
+		Ende Phase II: $\max\{e\}$
+		\begin{align}
+			e &= -2r_w^2 + 42r_w + 90 \notag \\
+			e' &= -4r_w + 42  = 0 \notag \\
+			r_w &= 10,5 \notag
+		\end{align}
+		Ende Phase III: $\max\{x_B\}$
+		\begin{align}
+			x'_B &= -6r_w^2 + 84r_w + 90 = 0 \notag \\
+			r_w &= 15 \notag
+		\end{align}
+		$\Rightarrow x_B(r_w = 15) = 4050$
+		\item Durchschnittsertrag: $e=ar^2 + br + c$ $\xRightarrow{\max} r^\ast -\frac{b}{2a}$ \\
+		Grenzproduktivität: $x'=3ar^2 + 2br + c$
+		
+		Durchschnittsertrag in $r^\ast$:
+		\begin{align}
+			e(r^\ast) &= a\left(-\frac{b}{2a}\right) + b\left(-\frac{b}{2a}\right) + c \notag \\
+			&= a\left(\frac{b^2}{4a^2}\right) - \frac{b^2}{2a} + c \notag \\
+			&= \frac{b^2}{4a} - \frac{b^2}{2a} + c \notag \\
+			&= \frac{b^2-2b^2}{4a} + c \notag \\
+			&= -\frac{b^2}{4a}+c \notag
+		\end{align}
+		Grenzproduktivität in $r^\ast$:
+		\begin{align}
+			x'(r^\ast) &= 3a\left(-\frac{b}{2a}\right)^2 + 2b\left(-\frac{b}{2a}\right) + c \notag \\
+			&= 3a\left(\frac{b^2}{4a^2}\right) - \frac{b^2}{a} + c \notag \\
+			&= \frac{3b^2}{4a} - \frac{b^2}{a} + c \notag \\
+			&= \frac{3b^2-4b^2}{4a} + c \notag \\
+			&= -\frac{b^2}{4a} + c \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item $K'(x) = \frac{3}{85}x^2 - \frac{6}{25}x + \frac{7}{10}$ \\
+		$k(x) = \frac{1}{85}x^2 - \frac{3}{25}x + \frac{7}{10} + \frac{10}{x}$ \\
+		$k_v(x) = \frac{1}{85}x^2 - \frac{3}{25}x + \frac{7}{10}$ \\
+		$k_f(x) = \frac{10}{x}$
+		\item Ende Phase I: $\min\{K'(x)\}$
+		\begin{align}
+			K''(x) &= \frac{6}{85}x - \frac{6}{25} = 0 \notag \\
+			x &= 3,4 \notag
+		\end{align}
+		Ende Phase II: $\min\{k_v(x)\}$
+		\begin{align}
+			k'_v(x) &= \frac{2}{85}x - \frac{3}{25} = 0 \notag \\
+			x &= 5,1 \notag
+		\end{align}
+		Ende Phase III: $\min\{k(x)\}$
+		\begin{align}
+			k'(x) &= \frac{2}{85}x - \frac{3}{25} - \frac{10}{x^2} = 0 \notag \\
+			x &= 9,6571 \notag
+		\end{align}
+		\item $K(x) = ax + b$ \\
+		$k(x) = a + \frac{b}{x}$ \\
+		$K'(x) = a$
+	\end{enumerate}
+	
+\end{document}

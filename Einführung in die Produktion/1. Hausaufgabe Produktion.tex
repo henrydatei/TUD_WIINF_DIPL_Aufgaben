@@ -1,0 +1,53 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage[amsmath,thmmarks,standard]{ntheorem}
+\usepackage{mathtools}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+\newcommand{\E}{\mathbb{E}}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\renewcommand{\E}{\mathbb{E}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+
+\title{\textbf{Einführung in die Produktion, Hausaufgabe 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item $K'(x) = \frac{3}{40}x^2 - \frac{2}{5}x + 1$ \\
+		$k_v(x) = \frac{1}{40}x^2 - \frac{1}{5}x + 1$
+		\item Minimum der variablen Stückkosten
+		\begin{align}
+			k'_v(x) &= \frac{1}{20}x + \frac{1}{5} =0 \notag \\
+			x &= 4 \notag
+		\end{align}
+		$\Rightarrow k_v(x=4) = \frac{2}{5} - \frac{4}{5} + 1 = \frac{3}{5}$ \\
+		$\Rightarrow k'(x=4) = \frac{6}{5} - \frac{8}{5} + 1 = \frac{3}{5}$
+		\item Ende Phase I: $\min\{k'(x)\} \Rightarrow k''(x)=0\Rightarrow x=\frac{8}{3}$
+	\end{enumerate}
+	
+\end{document}
