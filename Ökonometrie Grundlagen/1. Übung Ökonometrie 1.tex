@@ -1,0 +1,156 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{listings}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§
+}
+
+\title{\textbf{Ökonometrie Grundlagen, Übung 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{itemize}
+		\item strukturprüfend: Verfahren, die eine gegebene Struktur anhand realer Daten überprüfen wollen.
+		\item strukturentdeckend: Verfahren, bei denen reale Daten gegeben sind und nun versuchen eine Struktur in diesen Daten zu finden.
+	\end{itemize}
+	
+	\section*{Aufgabe 2}
+	\begin{itemize}
+		\item ökonomisches Modell: Zusammenhang zwischen Regressoren und Regressand
+		\item ökonometrisches Modell: Stichprobe versucht Zusammenhang zwischen Regressoren und Regressand zu finden; es gibt einen Fehlerterm
+	\end{itemize}
+	
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item ja, logarithmieren liefert: $\ln(y_t) = \beta_1 + \beta_2x_t + u_t$
+		\item ja, invertieren liefert: $y_t^{-1} = \beta_1 + \beta_2x_t + u_t$ ($y_t\neq 0$!)
+		\item nein, $y_t = \beta_1 + \beta_2e^{\beta_3x_t} + u_t$
+		\item ja, logarithmieren liefert: $\ln(y_t) = \ln(\beta_0) + \beta_1 \cdot\ln(x_{1t}) + \beta_2\cdot\ln(x_{2t}) + u_t$
+		\item ja, invertieren und logarithmieren liefert: $\ln(y_t^{-1}-1)=\beta_1 + \beta_2x_t + u_t$ ($0<y_t<1$!)
+		\item ja, ist bereits linear: $\ln(y_t) = \beta_1 + \beta_2x_t^{-1} + u_t$ ($x_t\neq 0$!)
+		\item nein, $y_t=\beta_1 + (0.75-\beta_1)e^{-\beta_2(x-2)} + u_t$
+		\item nein, $y_t=\beta_1 + \beta_2^3 x_t + u_t$
+	\end{enumerate}
+	
+	\section*{Aufgabe 4}
+	\begin{center}
+		\begin{tabular}{c|cc}
+			\textbf{Größe} & \textbf{bekannt/unbekannt} & \textbf{deterministisch/stochastisch} \\
+			\hline
+			$y_t$ & bekannt & stochastisch \\
+			$x_t$ & bekannt & deterministisch \\
+			$\beta_1$ & unbekannt & deterministisch \\
+			$\beta_2$ & unbekannt & deterministisch \\
+			$u_t$ & unbekannt & stochastisch
+		\end{tabular}
+	\end{center}
+	
+	\section*{Aufgabe 5}
+	\begin{align}
+		Q_T(\beta_1,\beta_2,y_t,x_t) = \sum_{t=1}^{T} u_t^2 = \sum_{t=1}^T (y_t-\beta_1 - \beta_2x_t)^2\to \min_{\beta_1,\beta_2\in\Theta} \notag
+	\end{align}
+	
+	\section*{Aufgabe 6}
+	\begin{align}
+		\log(x_{t+1}) - \log(x_t) &= \log\left(\frac{x_{t+1}}{x_t}\right) \notag \\
+		&\overset{\ast}{=} \frac{x_{t+1}}{x_t} - 1 \notag \\
+		&= \frac{x_{t+1}}{x_t} - \frac{x_t}{x_t} \notag \\
+		&= \frac{x_{t+1}-x_t}{x_t} \notag \\
+		&= \frac{\Delta x}{x_t} \notag
+	\end{align}
+	$\ast$: Da es sich um eine kleine Änderung von $x_t\to x_{t+1}$ handelt, ist $ \frac{x_{t+1}}{x_t}\approx 1$ und der Hinweis kann benutzt werden.
+	
+	\section*{Aufgabe 7}
+	\begin{lstlisting}[style=R]
+734 + 318
+2^3
+(3 * 18)/625
+log(25) - 3^(-2)
+	\end{lstlisting}
+	
+	\section*{Aufgabe 8}
+	Man kann Variablen auch mit \texttt{a = 5} zuweisen
+	\begin{lstlisting}[style=R]
+#  Variablenzuweisung
+a = 5
+b = 3/8
+c = 7
+
+# Berechnung
+a + b
+sqrt(a/(b * c))
+log(b)
+
+# Logik
+a == c
+b < a
+b != c
+c >= b
+	\end{lstlisting}
+	
+	\section*{Aufgabe 9}
+	Damit R weiß, wo die Datei Deaton.csv ist, sollte man vorher das working-directory mit dem Befehl \texttt{setwd("$\sim$/Downloads")}\footnote{Für UNIX-Systeme ist das in der Regel das Download-Verzeichnis. Bei Windows-Systemen kann das durchaus abweichen.} setzen.
+	\begin{lstlisting}[style=R]
+# Aufgabe (a)
+datensatz = read.csv2("Deaton.csv")
+median(datensatz$le)
+sd(datensatz$le)
+summary(datensatz)
+
+# Aufgabe (b)
+plot(datensatz$gdp, datensatz$le)
+plot(log(datensatz$gdp), datensatz$le)
+	\end{lstlisting}
+	\begin{itemize}
+		\item[(c)] Sei $x$ das BIP und $y$ die Lebenserwartung. Aufgabe (b) zeigt uns, dass es einen Zusammenhang $y \sim \log(x)$ geben kann.
+		\begin{itemize}
+			\item ökonomisches Modell: $y = \beta_0 + \beta_1\cdot\log(x)$
+			\item ökonometrisches Modell: $y_t = \beta_0 + \beta_1\cdot\log(x_t) + u_t$
+		\end{itemize}
+	\end{itemize}
+	\begin{lstlisting}[style=R]
+# Aufgabe (d)
+?lm
+modell = lm(datensatz$le §$\sim$§ log(datensatz$gdp))
+summary(modell)
+	\end{lstlisting}
+Es ergibt sich $\beta_0 = 20.08$ und $\beta_1 = 5.52$. Ist das BIP also 1, so gibt es eine Lebenserwartung von 20.08 Jahren. Steigt $\log(\text{BIP})$ um 1, so erhöht sich die Lebenserwartung 5.52 Jahre.
+\end{document}
