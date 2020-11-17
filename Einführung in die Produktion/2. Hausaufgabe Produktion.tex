@@ -1,0 +1,100 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage[amsmath,thmmarks,standard]{ntheorem}
+\usepackage{mathtools}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+\newcommand{\E}{\mathbb{E}}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\renewcommand{\E}{\mathbb{E}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+
+\title{\textbf{Einführung in die Produktion, Hausaufgabe 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Um bei gegebenen $r_B$ das $r_K$ zu berechnen, müssen wir folgende Gleichung lösen:
+		\begin{align}
+			1 &= 0.0429r_B - 0.0006r_B^2 + (0.0003r_B^2 + 0.0357)r_K \notag \\
+			r_K &= \frac{-0.0429r_B + 0.0006r_B^2-1}{0.0003r_B^2 + 0.0357} \notag
+		\end{align}
+		Es ergibt sich
+		\begin{center}
+			\begin{tabular}{c|c}
+				$r_B$ & $r_K$ \\
+				\hline
+				0 & 28.011 \\
+				10 & 9.6043 \\
+				20 & 2.4534 \\
+				30 & 0.8276 \\
+				40 & 0.4731 \\
+				50 & 0.4518
+			\end{tabular}
+		\end{center}
+		\begin{center}
+			\begin{tikzpicture}
+				\begin{axis}[
+					xmin=0, xmax=50, xlabel=$r_B$,
+					ymin=0, ymax=30, ylabel=$r_K$,
+					samples=400,
+					axis x line=middle,
+					axis y line=middle,
+					domain=0:50,
+					]
+					\addplot[mark=x,blue] coordinates {
+						(0,28.011)
+						(10,9.6043)
+						(20,2.4534)
+						(30,0.8276)
+						(40,0.4731)
+						(50,0.4518)
+					};
+				\end{axis}
+			\end{tikzpicture}
+		\end{center}
+		\item Die Kostenfunktion ist $K=2r_K + 2.7r_B$. Daraus ergibt sich die Lagrangefunktion als $L=2r_K + 2.7r_B + \lambda(0.0429r_B - 0.0006r_B^2 + 0.0003r_B^2r_K + 0.0357 r_K - 1)$. Die Optimalitätsbedingungen sind dann
+		\begin{align}
+			\frac{\partial L}{\partial r_K} &= 2 + 0.0003r_B^2\lambda + 0.0357\lambda = 0 \\
+			\frac{\partial L}{\partial r_B} &= 2.7 + 0.0429\lambda + 0.0012 r_B\lambda + 0.0006r_Br_K\lambda =0  \\
+			\frac{\partial L}{\partial \lambda} &= 0.0429r_B - 0.0006r_B^2 + 0.0003r_B^2r_K + 0.0357 r_K - 1 = 0
+		\end{align}
+		Damit eine optimale Produktion an den zu prüfenden Punkten möglich ist, müssen die Gleichungen (1) bis (3) an der zu prüfenden Stelle genau 0 sein. Die entsprechenden $\lambda$'s in (1) und (2) müssen gleich sein. Für den Punkt $(8.4271,11.9479)$ ergibt sich
+		\begin{align}
+			\frac{\partial L}{\partial r_K} &=0 \Rightarrow \lambda = -35.0848 \notag \\
+			\frac{\partial L}{\partial r_B} &=0 \Rightarrow \lambda = -28.9702 \notag
+		\end{align}
+		Wir sparen uns die dritte Bedingung zu überprüfen, denn der Punkt $(8.4271,11.9479)$ kann also kein Maximum sein. Die Kosten hier sind $K=46.6490$. Für den Punkt $(9.9854,9.6239)$ ergibt sich
+		\begin{align}
+			\frac{\partial L}{\partial r_K} &=0 \Rightarrow \lambda = -30.4820 \notag \\
+			\frac{\partial L}{\partial r_B} &=0 \Rightarrow \lambda = -30.4821 \notag \\
+			\frac{\partial L}{\partial \lambda} = 0 \notag
+		\end{align}
+		Der Punkt $(9.9854,9.6239)$ ist ein Optimum. Die Kosten liegen hier bei $K=46.2084$.
+	\end{enumerate}
+	
+\end{document}
