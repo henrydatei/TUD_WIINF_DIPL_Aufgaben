@@ -1,0 +1,122 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\title{\textbf{Rechtfertigung der Staatstätigkeit, Hausaufgaben 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wenn $\bar{x}=0$, dann offensichtlich $x_1=x_2=0$ und somit $u_1=u_2=0$. Dies ist auch die einzig mögliche Allokation, also auch die optimale Allokation.
+		\item Die Wohlfahrtsfunktion ist "symmetrisch", das heißt der Tausch von $u_1 \Leftrightarrow u_2$ ändert die Gesamtwohlfahrt nicht, also muss $u_1=u_2$ gelten. Dies impliziert $x_1=x_2=\frac{\bar{x}}{2}$.
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Das Budget ist $p_1x_1 + p_2x_2 = 2p_1 + 2p_2 = 2(p_1+p_2)$.
+		\begin{center}
+			\begin{tikzpicture}
+			\begin{axis}[
+			xmin=0, xmax=1, xlabel=$x_1$,
+			ymin=0, ymax=1, ylabel=$x_2$,
+			samples=400,
+			axis x line=middle,
+			axis y line=middle,
+			domain=0:1,
+			yticklabels={,,},
+			xticklabels={,,},
+			xtick style={draw=none},
+			ytick style={draw=none},
+			]
+			\addplot[mark=none,smooth,blue] {0.9- 1.1111*x};
+			
+			\node at (axis cs: 0.3,0.9) (a) {$\left(0,\frac{2(p_1+p_2)}{p_2}\right)$};
+			\node at (axis cs: 0.85,0.2) (b) {$\left(\frac{2(p_1+p_2)}{p_1},0\right)$};
+			
+			\draw[->,dotted] (a) to[bend right=10] (axis cs: 0,0.9);
+			\draw[->,dotted] (b) to[bend left=10] ( axis cs: 0.81,0);
+			
+			\end{axis}
+			\end{tikzpicture}
+		\end{center}
+		\item Wenn $p_1$ steigt, so verschieben sich die Achsenabschnitte und damit die Budgetgerade. So wird der Achsenabschnitt $\frac{2(p_1+p_2)}{p_2}$ größer werden, während $\frac{2(p_1+p_2)}{p_1}$ kleiner wird. Die Budgetgerade dreht sich also.
+		\begin{center}
+			\begin{tikzpicture}
+			\begin{axis}[
+			xmin=0, xmax=1, xlabel=$x_1$,
+			ymin=0, ymax=1, ylabel=$x_2$,
+			samples=400,
+			axis x line=middle,
+			axis y line=middle,
+			domain=0:1,
+			yticklabels={,,},
+			xticklabels={,,},
+			xtick style={draw=none},
+			ytick style={draw=none},
+			]
+			\addplot[mark=none,smooth,blue] {0.9- 1.1111*x};
+			\addplot[mark=none,smooth,blue, dotted] {1- 1.5*x};
+			
+			\end{axis}
+			\end{tikzpicture}
+		\end{center}
+		\item Maximiere den Nutzen $U=\ln(x_1) + \ln(x_2)$ unter der Nebenbedingung $p_1x_1 + p_2x_2 \le 2(p_1+p_2)$. Der Lagrange-Ansatz ist $L=\ln(x_1) + \ln(x_2) - \lambda(p_1x_1 + p_2x_2 - 2(p_1+p_2))$.
+		\begin{align}
+			\frac{\partial L}{\partial x_1} &= \frac{1}{x_1} - \lambda p_1 = 0 \notag \\
+			\frac{\partial L}{\partial x_2} &= \frac{1}{x_2} - \lambda p_2 = 0 \notag \\
+			\frac{\partial L}{\partial\lambda} &= p_1x_1 + p_2x_2 - 2(p_1+p_2) = 0 \notag
+		\end{align}
+		Aus den ersten beiden Gleichungen erhält man $\frac{x_2}{x_1} = \frac{p_1}{p_2}$, also $x_2=\frac{p_1}{p_2}x_1$ bzw. $x_1 = \frac{p_2}{p_1}x_2$. Setzt man dies in die 3. Gleichung ein, so erhält man die Nachfrage für $x_1$
+		\begin{align}
+			p_1x_1 + p_2\left(\frac{p_1}{p_2}x_1\right) &= 2(p_1+p_2) \notag \\
+			2p_1x_1 &= 2(p_1+p_2) \notag \\
+			x_1 &= \frac{p_1 + p_2}{p_1} \notag
+		\end{align}
+		Bzw. die Nachfrage für $x_2$
+		\begin{align}
+			p_1\left(\frac{p_2}{p_1}x_2\right) + p_2x_2 &= 2(p_1+p_2) \notag \\
+			2p_2x_2 &= 2(p_1+p_2) \notag \\
+			x_2 &= \frac{p_1 + p_2}{p_2} \notag
+		\end{align}
+		\item Die Erstausstattung von Gut 1 steigt um $\Delta$ auf $2+\Delta$. Damit steigt auch das Budget auf $2(p_1+p_2) + p_1\Delta$. Der Lagrange-Ansatz ist $L=\ln(x_1) + \ln(x_2) - \lambda(p_1x_1 + p_2x_2 - 2(p_1+p_2) - p_1\Delta)$.
+		\begin{align}
+			\frac{\partial L}{\partial x_1} &= \frac{1}{x_1} - \lambda p_1 = 0 \notag \\
+			\frac{\partial L}{\partial x_2} &= \frac{1}{x_2} - \lambda p_2 = 0 \notag \\
+			\frac{\partial L}{\partial\lambda} &= p_1x_1 + p_2x_2 - 2(p_1+p_2) - p_1\Delta = 0 \notag
+		\end{align}
+		Die ersten zwei Gleichungen sind die selben wie bei (c), wir können also die Ergebnisse direkt für die Nachfragen nach $x_1$ und $x_2$ benutzen:
+		\begin{align}
+			p_1x_1 + p_2x_2 &= 2(p_1+p_2) + p_1\Delta \notag \\
+			2p_1x_1 &= 2(p_1+p_2) + p_1\Delta \notag \\
+			x_1 &= \frac{p_1+p_2}{p_1} + \frac{\Delta}{2} \notag
+		\end{align}
+		Die Nachfrage nach $x_1$ steigt also um $\frac{\Delta}{2}$. Für $x_2$ sieht es ähnlich aus:
+		\begin{align}
+			p_1x_1 + p_2x_2 &= 2(p_1+p_2) + p_1\Delta \notag \\
+			2p_2x_2 &= 2(p_1+p_2) + p_1\Delta \notag \\
+			x_2 &= \frac{p_1+p_2}{p_2} + \frac{p_1}{p_2}\frac{\Delta}{2} \notag
+		\end{align}
+		Die Nachfrage nach $x_2$ steigt also um das Preisverhältnis mal $\frac{\Delta}{2}$.
+	\end{enumerate}
+	
+\end{document}

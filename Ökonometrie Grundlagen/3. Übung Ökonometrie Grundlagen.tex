@@ -1,0 +1,142 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R,morekeywords={confint,head}}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\title{\textbf{Ökonometrie Grundlagen, Übung 3}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Wir diesen Beweis brauchen wir noch mal die Formeln zur Schätzung der Parameter $\beta_0$ und $\beta_1$ für lineare Modelle:
+	\begin{align}
+		\beta_0 &= \bar{y} - \beta_1\bar{x} \notag \\
+		\beta_1 &= \frac{\sum_{i=1}^{n}(y_i-\bar{y})(x_i-\bar{x})}{\sum_{i=1}^n (x_i-\bar{x})^2} \notag
+	\end{align}
+	Ferner brauchen wir die Definition von $\hat{y}=\beta_0+\beta_1x$. Jetzt wenden wir uns dem eigentlichen Beweis zu. Wir werden zeigen, dass $R^2=r^2_{xy}$, was gleichbedeutend mit $r_{xy}=\sqrt{R^2}$ ist.
+	\begin{align}
+		R^2 &= \frac{\sum_{i=1}^n (\hat{y}_i-\bar{y})^2}{\sum_{i=1}^n (y_i-\bar{y})^2} \notag \\
+		&= \frac{\sum_{i=1}^n (\beta_0+\beta_1x_i - \bar{y})^2}{\sum_{i=1}^n (y_i-\bar{y})^2} \notag \\
+		&= \frac{\sum_{i=1}^n (\bar{y}-\beta_1\bar{x}+\beta_1x_i-\bar{y})^2}{\sum_{i=1}^n (y_i-\bar{y})^2} \notag \\
+		&= \beta_1^2\frac{\sum_{i=1}^n (x_i-\bar{x})^2}{\sum_{i=1}^n (y_i-\bar{y})^2} \notag \\
+		&=\left(\frac{\sum_{i=1}^n (y_i-\bar{y})(x_i-\bar{x})}{\sum_{i=1}^n (x_i-\bar{x})^2}\right)^2\frac{\sum_{i=1}^n (x_i-\bar{x})}{\sum_{i=1}^n (y_i-\bar{y})^2} \notag \\
+		&= \frac{\left[\sum_{i=1}^n (y_i-\bar{y})(x_i-\bar{x})\right]^2}{\left[\sum_{i=1}^n (x_i-\bar{x})^2\right]^2}\frac{\sum_{i=1}^n (x_i-\bar{x})}{\sum_{i=1}^n (y_i-\bar{y})^2} \notag \\
+		&= \frac{\left[\sum_{i=1}^n (y_i-\bar{y})(x_i-\bar{x})\right]^2}{\sum_{i=1}^n (x_i-\bar{x})^2\sum_{i=1}^n (y_i-\bar{y})^2} \notag \\
+		&= r_{xy}^2 \notag
+	\end{align}
+	
+	\section*{Aufgabe 2}
+	Interpretation des theoretischen KI's: Der wahre Parameter der GG liegt mit einer Wahrscheinlichkeit von $1-\alpha$ innerhalb des Intervalls.
+	
+	Interpretation des numerischen KI's: Da das numerische bzw. realisierte KI eine Ausprägung der Zufallsvariable Konfidenzintervallschätzer ist (und damit aus 2 Zahlen, der linken und der rechten Grenze, besteht), liegt der Parameter innerhalb dieses Intervalls oder nicht. Die Wahrscheinlichkeit ist demnach 1 (innerhalb) oder 0 (außerhalb). Je höher der Stichprobenumfang $T$, desto näher liegt die Überdeckungwahrscheinlichkeit der Konfidenzintervalle beim Konfidenzniveau $(1-\alpha)100$.
+	
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Bei einer Lageverschiebung verschiebt sich das Konfidenzintervall von $\beta_i$ mit; das Konfidenzintervall von $\sigma^2_u$ sollte sich nicht verändern, da sich die Varianz der Daten nicht ändert
+		\item Das Konfidenzintervall von $\beta_i$ wird größer, wenn $\alpha$ kleiner wird. Selbiges gilt auch für $\sigma^2_u$.
+		\item Das Konfidenzintervall von $\beta_i$ wird größer, wenn der standard error größer wird. Auch dies gilt für $\sigma^2_u$.
+	\end{enumerate}
+
+	\section*{Aufgabe 4}
+	In allen 3 Fällen muss zuerst die Teststatistik berechnet werden. Wenn $\sigma^2_u$ unbekannt ist, macht man einen sogenannten $t$-Test mit der folgenden Teststatistik:
+	\begin{align}
+		t = \frac{\beta - \beta^\ast}{\text{se}(\beta)} \sim t_{T-2} \notag
+	\end{align}
+	Die Berechnung der kritischen Werte und Interpretation ist dann fallabhängig:
+	\begin{enumerate}[label=(\alph*)]
+		\item zweiseitiger Test: Man berechnet $t_{T-2;1-\frac{\alpha}{2}}$ und wenn $\vert t\vert > t_{T-2;1-\frac{\alpha}{2}}$ gilt, dann lehnt man die Nullhypothese ab.
+		\item[(b) + (c)] einseitiger Test: Man berechnet $t_{T-2;1-\alpha}$ und wenn $\vert t\vert > t_{T-2;1-\alpha}$ gilt, dann lehnt man die Nullhypothese ab.
+	\end{enumerate}
+
+	\section*{Aufgabe 5}
+	Man berechnet das Konfidenzintervall zum gewünschten Signifikanzniveau und wenn $\beta^\ast$ außerhalb dieses Intervalls liegt, lehnt man die Nullhypothese ab.
+	
+	\section*{Aufgabe 6}
+	Der $p$-value ist die minimale Irrtumswahrscheinlichkeit $\alpha^\ast$ bei gegebenem Wert der Teststatistik, bei der $H_0$ gerade noch abgelehnt werden kann.
+	
+	\section*{Aufgabe 7}
+	\begin{enumerate}[label=(\alph*)]
+		\item ökonomisches Modell: $\log(y) = \beta_0 + \beta_1\log(x)$ \\
+		ökonometrisches Modell: $\log(y_t) = \beta_0 + \beta_1\log(x_t) + u_t$
+		\item in R
+		\begin{lstlisting}[style=R]
+datensatz = read.csv2("Zigaretten.csv")
+head(datensatz)
+modell = lm(log(Zigarettenkonsum) ~ log(Realpreis), data = datensatz)
+modell$coefficients
+confint(modell)
+		\end{lstlisting}
+		$\beta_0\in [4.975343, 5.2289130]$, $\hat{\beta}_0=5.102128$ \\
+		$\log(\beta_1)\in [-1.796936,-0.6622263]$, $\hat{\log(\beta)}_1=-1.229581$
+		\item Die Konfidenzintervalle werden größer
+		\begin{lstlisting}[style=R]
+confint(modell,level=0.99)
+		\end{lstlisting}
+		$\beta_0\in [4.932759, 5.2714968]$ \\
+		$\log(\beta_1)\in [-1.987496,-0.4716662]$
+		\item In R
+		\begin{lstlisting}[style=R]
+summary(modell)
+		\end{lstlisting}
+		Der $p$-Value für $\beta_0$ ist $< 2\cdot 10^{-16}$ und für $\beta_1$ $7.53\cdot 10^{-5}$. Das bedeutet, dass die zugehörigen Nullhypothesen $\beta_0=0$ und $\beta_1=0$ abgelehnt werden. $R^2=0.3024$ was auf kein gutes Modell für diese Daten hindeutet.
+	\end{enumerate}
+
+	\section*{Aufgabe 8}
+	\begin{enumerate}[label=(\alph*)]
+		\item ökonomisches Modell: $\text{Mineralölkonsum} = \beta_0 + \beta_1\cdot\text{Realeinkommen}$ \\
+		ökonometrisches Modell: $\text{Mineralölkonsum}_t = \beta_0 + \beta_1\cdot
+		\text{Realeinkommen}_t + u_t$
+		\item In R
+		\begin{lstlisting}[style=R]
+datensatz2 = read.csv2("Mineral.csv")
+head(datensatz2)
+plot(datensatz2$Realeinkommen,datensatz2$Mineraloelkonsum)
+modell2 = lm(Mineraloelkonsum ~ Realeinkommen, data = datensatz2)
+summary(modell2)
+confint(modell2)
+		\end{lstlisting}
+		$\beta_0\in [13.29841484,18.58500742]$, $\hat{\beta}_0=15.94$ \\
+		$\beta_1\in [0.01987696,0.02198638]$, $\hat{\beta}_1=2.093\cdot 10^{-2}$
+	\end{enumerate}
+	
+\end{document}
