@@ -1,0 +1,171 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R,morekeywords={confint,head}}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\title{\textbf{Ökonometrie Grundlagen, Übung 4}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	Wir definieren uns die Matrizen
+	\begin{lstlisting}[style=R]
+X = matrix(c(2,3,7,-1,3,5),3,2, byrow = TRUE)
+Y = matrix(c(5,3,6,-2,2,-5,1,0),2,4, byrow = TRUE)
+Z = matrix(c(2,5,-3,1,-5,0,0,1,6,7,2,3),4,3, byrow = TRUE)
+A = matrix(c(1,1,1,6,3,2,6,1,1),3,3, byrow = TRUE)
+	\end{lstlisting}
+	
+	\section*{Aufgabe 1}
+	Wir berechnen einfach beide Ausdrücke und vergleichen das Ergebnis
+	\begin{lstlisting}[style=R]
+(X %*% Y) %*% Z
+X %*% (Y %*% Z)
+	\end{lstlisting}
+	ergibt
+	\begin{align}
+		\begin{pmatrix}
+			-5 & 132 & 30 \\ -6 & 48 & 105 \\ -8 & 216 & 45
+		\end{pmatrix} \notag
+	\end{align}
+	
+	\section*{Aufgabe 2}
+	Wir berechnen einfach beide Ausdrücke und vergleichen das Ergebnis
+	\begin{lstlisting}[style=R]
+t(X %*% Y)
+t(Y) %*% t(X)
+	\end{lstlisting}
+	ergibt
+	\begin{align}
+		\begin{pmatrix}
+			16 & 33 & 25 \\ -9 & 26 & -16 \\ 15 & 41 & 23 \\ -4 & -14 & -6
+		\end{pmatrix} \notag
+	\end{align}
+	
+	\section*{Aufgabe 3}
+	Eine Matrix $A$ ist genau dann symmetrisch, wenn $A'=A$ gilt. Wir berechnen einfach beide Ausdrücke und vergleichen das Ergebnis
+	\begin{lstlisting}[style=R]
+t(X) %*% X
+t(t(X) %*% X)
+	\end{lstlisting}
+	ergibt
+	\begin{align}
+		\begin{pmatrix}
+			62 & 14 \\ 14 & 35
+		\end{pmatrix} \notag
+	\end{align}
+
+	\section*{Aufgabe 4}
+	Wir berechnen einfach beide Ausdrücke und vergleichen das Ergebnis
+	\begin{lstlisting}[style=R]
+solve(t(A))
+t(solve(A))
+	\end{lstlisting}
+	ergibt
+	\begin{align}
+		\begin{pmatrix}
+			-0.2 & -1.2 & 2.4 \\ 0 & 1 & -1 \\ 0.2 & -0.8 & 0.6
+		\end{pmatrix} \notag
+	\end{align}
+	Wenn $A$ symmetrisch ist, dann gilt $A=A'$ und damit $A = A^{-1}$.
+
+	\section*{Aufgabe 5}
+	Eine Matrix $A$ ist genau dann idempotent, wenn $A=A^2$ gilt. Wir berechnen einfach beide Ausdrücke und vergleichen das Ergebnis
+	\begin{enumerate}[label=(\alph*)]
+		\item für $P$:
+		\begin{lstlisting}[style=R]
+P = X %*% solve(t(X) %*% X) %*% t(X)
+P
+P %*% P
+		\end{lstlisting}
+		ergibt
+		\begin{align}
+			\begin{pmatrix}
+				0.2685 & 0.0193 & .04428 \\ 0.0193 & 0.9995 & -0.0117 \\ 0.4428 & -0.0117 & 0.7320
+			\end{pmatrix} \notag
+		\end{align}
+		\item für $Q$: 
+		\begin{lstlisting}[style=R]
+eins = c(1,1,1)
+I = diag(1,3,3)
+Q = I - 1/3*eins %*% t(eins)
+Q
+Q %*% Q
+		\end{lstlisting}
+		ergibt
+		\begin{align}
+			\begin{pmatrix}
+				0.6667 & -0.3333 & -0.3333 \\ -0.3333 & 0.6667 & -0.3333 \\ -0.3333 & -0.3333 & 0.6667
+			\end{pmatrix} \notag
+		\end{align}
+		\item für $I-P$:
+		\begin{lstlisting}[style=R]
+I - P
+(I - P) %*% (I - P)
+		\end{lstlisting}
+		ergibt
+		\begin{align}
+			\begin{pmatrix}
+				0.7315 & -0.0193 & -0.4428 \\ -0.0193 & 0.0005 &  0.0117 \\ -0.4428 & 0.0117 & 0.2680
+			\end{pmatrix} \notag
+		\end{align}
+		
+	\end{enumerate}
+	
+	\section*{Aufgabe 6}
+	\begin{enumerate}[label=(\alph*)]
+		\item Um den Rank einer Matrix zu bestimmen, gibt es das Paket \texttt{Matrix}, welches ich installieren werde
+		\begin{lstlisting}[style=R]
+install.packages("Matrix")
+library(Matrix)
+rankMatrix(X)\\
+rankMatrix(t(X) %*% X)
+		\end{lstlisting}
+		Die Matrizen haben den Rang 2.
+		\item Eine Matrix $A$ heißt positiv definit, wenn für alle Vektoren $x\in\mathbb{R}^n$ gilt: $x^TAx > 0$. Der Nachweis davon ist mit dieser Definition sehr schwierig, weswegen ich eine äquivalente Definition mittels Eigenwerten (die sich leichter berechnen lassen) zurückgreife: Eine Matrix $A$ ist genau dann positiv definit, wenn alle Eigenwerte\footnote{Die zu einer Matrix $A$ gehörenden Eigenwerte $\lambda$ und Eigenvektoren $v$ sind dadurch bestimmt, dass sie folgende Gleichung erfüllen: $Av=\lambda v$. Die Lösung einer solchen Gleichung ist nicht leicht, aber machbar, wenn man ein paar Tricks kennt. Insbesondere kann R die Eigenwerte und Eigenvektoren mittels der Funktion \texttt{eigen()} berechnen.} echt größer als 0 sind.
+		\begin{lstlisting}[style=R]
+eigen(t(X) %*% X)
+		\end{lstlisting}
+		ergibt die Eigenwerte $\lambda_1=67.94865$ und $\lambda_2=29.05135$. Beide sind echt größer als Null und damit ist $X'X$ positiv definit.
+ 	\end{enumerate}
+	
+\end{document}
