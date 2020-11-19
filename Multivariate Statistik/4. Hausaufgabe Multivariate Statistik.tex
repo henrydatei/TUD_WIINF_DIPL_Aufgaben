@@ -32,5 +32,20 @@
 	\maketitle
 	
 	\section*{Aufgabe 1}
+	Für die Teststatistik brauchen wir die Determinante von $R$:
+	\begin{align}
+		\det(R) &= 1+0.02a + 0.02a - a^2 - 0.04 - 0.01 \notag \\
+		&= -a^2 + 0.04a + 0.95 \notag
+	\end{align}
+	Setzen wir das in die Teststatistik ein:
+	\begin{align}
+		W &= -c \cdot \ln(\det(R)) \notag \\
+		&= -\left(200-3-\frac{2\cdot 3+5}{6}\right)\cdot \ln(-a^2 + 0.04a + 0.95) \notag
+	\end{align}
+	Dies muss kleiner als der kritische Wert $\chi_{f;1-\alpha}^2=\chi_{3,0.99}=11.3449$. Wir lösen also die Ungleichung
+	\begin{align}
+		11.3449 &> -\left(200-3-\frac{2\cdot 3+5}{6}\right)\cdot \ln(-a^2 + 0.04a + 0.95) \notag \\
+		a &< 0.1029 \notag
+	\end{align}
 	
 \end{document}

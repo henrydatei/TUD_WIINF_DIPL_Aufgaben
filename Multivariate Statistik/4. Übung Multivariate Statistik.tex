@@ -23,6 +23,7 @@
 \DeclareMathOperator{\tr}{tr}
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
 \renewcommand{\E}{\mathbb{E}}
 
 \newtheorem{thm}{Theorem}
@@ -36,11 +37,87 @@
 	\maketitle
 	
 	\section*{Aufgabe 1}
+	Die Daten sind Noten und damit ordinal skaliert (14 Punkte (90 \%) ist nicht doppelt so gut wie 7 Punkte (55 \%)). Wir berechnen den Rangkorrelationskoeffizienten von den folgenden Rängen:
+	\begin{center}
+		\begin{tabular}{c|cccccccccc}
+			Schüler & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+			\hline
+			Rang(Pyhsik) & 10 & 8 & 3 & 9 & 2 & 1 & 4.5 & 4.5 & 7 & 6 \\
+			\hline
+			Rang(Mathematik) & 8.5 & 5 & 6.5 & 3.5 & 1.5 & 1.5 & 10 & 8.5 & 3.5 & 6.5
+		\end{tabular}
+	\end{center}
+	Es ergibt sich $r^s = 0.3046$, es deutet sich also keine signifikante Korrelation an.
 
 	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Ich würde die kanonische Korrelation wählen. Wir haben 2 Gruppen von Zufallsvariablen
+		\begin{itemize}
+			\item Gruppe $\mathcal{X}$: motorische Fähigkeiten ($p=3$ Merkmale)
+			\item Gruppe $\mathcal{Y}$: Intelligenz ($q=5$ Merkmale)
+		\end{itemize}
+		\item Wir führen einen $\chi^2$-Test durch
+		\begin{itemize}
+			\item Hypothesen: $H_0:\rho_1=0$ (keine Korrelation) vs. $H_1:\rho_1\neq 0$ (Korrelation), wobei $\rho_1=\max_{\alpha,\beta}\left\lbrace \Cor(\alpha\mathcal{X},\beta\mathcal{Y}) \right\rbrace$
+			\item Teststatistik: $\chi_{err}^2 = -(n-1-\frac{p-q+1}{2})\cdot\ln(\Lambda)\sim\chi_{pq}^2$ mit $\Lambda=\prod_{i=1}^{n} (1-\lambda_i)$.
+			\item Testentscheidung: $\chi_{err}^2 > \chi_{pq;1-\alpha}^2\Rightarrow H_0$ ablehnen, es gibt also Korrelation
+		\end{itemize}
+		\item $\chi_{err}^2=22.54$, $\chi_{3\cdot 5;1-0.01}^2 = \chi_{15;0.99}^2 = 30.5779 \Rightarrow$ keine Ablehnung von $H_0$, es gibt also keine Korrelation.
+	\end{enumerate}
 
 	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item $\rho_1=1$ mit $\alpha=(1,1)$ und $\beta=(1,1,1)$ $\Rightarrow u=\alpha X = \beta Y=v$
+		\item Die Matrix $R_{11}$ enthält die Korrelation innerhalb von $X$, während $R_{22}$ die Korrelation innerhalb von $Y$ beinhaltet. $R_{12}$ und $R_{21}$ enthalten die Korrelation zwischen $X$ und $Y$. Damit sind
+		\begin{align}
+			R_{11} &= \begin{pmatrix}
+				1 & 0.51 \\ 0.51 & r_{22}
+			\end{pmatrix} \notag \\
+			R_{22} &= \begin{pmatrix}
+				1 & -0.93 & 0.98 \\ -0.93 & 1 & -0.93 \\ 0.98 & -0.93 & 1
+			\end{pmatrix} \notag \\
+			R_{12} &= \begin{pmatrix}
+				r_{31} & 0.97 \\ -0.58 & -0.88 \\ 0.8 & 0.9
+			\end{pmatrix} \notag \\
+			R_{21} &= \begin{pmatrix}
+				r_{13} & -0.58 & 0.8 \\ 0.97 & -0.88 & 0.9
+			\end{pmatrix} \notag
+		\end{align}
+		\item $r_{22} = \Cor(x_2,x_2) = 1$ \\
+		$r_{13} = \Cor(x_1,y_1) = r_{31} = 0.6882$, wobei $\Var(x_1) = 1$, $\Var(y_1) = 1.1875$ und $\Cov(x_1,y_1)=0.75$ ist.
+		\item Die Einheitsmatrix hat nur den Eigenwert 1, da ja offensichtlich $Iv = v = 1\cdot v$ gilt für alle $v\in\mathbb{R}^2$.
+		\item $\rho_1=\sqrt{\lambda_1} = 1$
+	\end{enumerate}
 
 	\section*{Aufgabe 4}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir testen auf globale Unkorreliertheit:
+		\begin{itemize}
+			\item $H_0: r_{XYZ}=0$ gegen $H_1: r_{XY}\neq 0$ oder $r_{YZ}\neq 0$ oder $r_{XZ}\neq 0$.
+			\item Teststatistik:
+			\begin{align}
+				W &= -c \cdot \ln(\det(R)) \notag \\
+				&= -\left(100-3-\frac{2\cdot 3+5}{6}\right) \cdot\ln(0.72) \notag \\
+				&= 31.2626 \notag
+			\end{align}
+			\item kritischer Wert: $\chi_{f;1-\alpha}^2 = \chi_{3,0.95}^2 = 7.81473$
+			\item Testentscheidung: Ablehnung von $H_0$, das heißt es gibt eine Korrelation zwischen den Zufallsvariablen.
+		\end{itemize}
+		\item als Tabelle
+		\begin{center}
+			\begin{tabular}{l|c|c|c}
+				\textbf{Nullhypothese $H_0$} & $r_{XY} = 0$ & $r_{YZ} = 0$ & $r_{XZ} = 0$ \\
+				\textbf{Alternativhypothese $H_1$} & $r_{XY} \neq 0$ & $r_{YZ} \neq 0$ & $r_{XZ} \neq 0$ \\
+				\textbf{Korrelation $r$} & 0.1 & 0.2 & 0.5 \\
+				\textbf{Teststatistik} & 0.9949 & 2.0207 & 5.7155 \\
+				\textbf{$h$} & 3 & 2 & 1 \\
+				\textbf{kritischer Wert} & $t_{98;1-\frac{0.05}{8-2\cdot 3}}$ & $t_{98;1-\frac{0.05}{8-2\cdot 2}}$ & $t_{98;1-\frac{0.05}{8-2\cdot 1}}$ \\
+				& $t_{98;0.975}$ & $t_{98;0.9875}$ & $t_{98;0.9917}$ \\
+				& 1.98477 & 2.27636 & 2.43731 \\
+				\textbf{Testentscheidung} & $H_0$ annehmen & $H_0$ annehmen & $H_0$ ablehnen \\
+				\textbf{Interpretation} & Korr. zw. $X$ und $Y$ & Korr. zw. $Y$ und $Z$ & keine Korr. zw. $X$ und $Z$
+			\end{tabular}
+		\end{center}
+	\end{enumerate}
 	
 \end{document}
