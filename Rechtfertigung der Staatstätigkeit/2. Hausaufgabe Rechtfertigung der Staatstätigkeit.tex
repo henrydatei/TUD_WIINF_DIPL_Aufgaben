@@ -1,0 +1,99 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\title{\textbf{Rechtfertigung der Staatstätigkeit, Hausaufgabe 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 6}
+	\begin{enumerate}[label=(\alph*)]
+		\item Betrachten wir zuerst den Gewinn von Volta, wenn $z$ bereits festgelegt wurde:
+		\begin{align}
+			\Pi_V &= (46-2x)x - (c+z)x \notag \\
+			&= 46x - 2x^2 - (c+z)x \notag
+		\end{align}
+		Dieser soll maximiert werden:
+		\begin{align}
+			\frac{\partial\Pi_V}{\partial x} = 46-4x - (c+z) &= 0 \notag \\
+			4x &= 46 - (c+z) \notag \\
+			x &= \frac{46}{4} - \frac{c+z}{4} \notag
+		\end{align}
+		Mit $c=2$ ergibt sich
+		\begin{align}
+			x = \frac{46}{4} - \frac{2+z}{4} \notag
+		\end{align}
+		Wenn nun Photo Corp dies antizipiert, kann Photo Corp seinen Gewinn steigern. Dazu muss es sein $z$ in Abhängigkeit von $x$ bestimmen:
+		\begin{align}
+			x &= \frac{46}{4} - \frac{2+z}{4} \notag \\
+			\frac{2+z}{4} &= \frac{46}{4} - x \notag \\
+			2+z &= 46-4x \notag \\
+			z &= 44-4x \notag
+		\end{align}
+		Der Gewinn ergibt sich nun
+		\begin{align}
+			\Pi_P &= z\cdot x - (10+4x) \notag \\
+			&= (44-4x)x - (10+4x) \notag \\
+			&= 44x-4x^2-10-4x \notag \\
+			&= 40x - 4x^2 - 10 \notag
+		\end{align}
+		Dieser soll nun maximiert werden:
+		\begin{align}
+			\frac{\partial\Pi_P}{\partial x} = 40-8x &= 0 \notag \\
+			40 &= 8x \notag \\
+			x &= 5 \notag
+		\end{align}
+		Mit $x=5$ ergibt sich $z = 44-4\cdot 5 = 24$ und $p=46-2\cdot 5 = 36$.
+		\item Der Gewinn des neuen Monopols ist
+		\begin{align}
+			\Pi &= (46-2x)x - (10+4x) \notag \\
+			&= 46x-2x^2-10-4x \notag \\
+			&= 42x-2x^2-10 \notag
+		\end{align}
+		Auch dieser soll maximiert werden:
+		\begin{align}
+			\frac{\partial\Pi}{\partial x} = 42-4x&=0 \notag \\
+			42 &= 4x \notag \\
+			x &= 10.5 \notag
+		\end{align}
+		Damit ergibt sich ein Preis von $p=46-2\cdot 10.5= 25$.
+		\item Photo Corp sollte seine Gewinne im Fall des Doppelmonopols $\Pi_{Doppelm.}$ und im Fall der Übernahme ($\Pi_{Kauf}$) berechnen. Die Differenz dazwischen sind die maximalen Kosten, die Photo Corp bereit wäre zu bezahlen.
+		\begin{align}
+			\Pi_{Doppelm.} &= zx - K(x) \notag \\
+			&= 24\cdot 5 - (10+4\cdot 5) \notag \\
+			&= 90 \notag \\
+			\Pi_{Kauf} &= px - K(x) \notag \\
+			&= 25\cdot 10.5 - (10+4\cdot 10.5) \notag \\
+			&= 210.5 \notag
+		\end{align}
+		Photo Corp sollte Volta nur dann übernehmen, wenn die Kosten $S$ kleiner als $210,5-90=120,5$ sind.
+		\item Die gesamtwirtschaftlich optimale Länge, ist dann erreicht, wenn $GK=GZB$ ist. Es gilt $GK = c + \frac{\partial K}{\partial x} = c + 4$. Also
+		\begin{align}
+			2+4 &= 46-2x \notag \\
+			2x &= 40 \notag \\
+			x &= 20 \notag
+		\end{align}
+		Damit ergibt sich $p=46-2\cdot 20=6$.
+		\item Gesamtwirtschaftlich am besten ist es, wenn es vollständige Konkurrenz gibt, also möglichst wenig Marktmacht. Das heißt auch, dass ein Monopol besser ist als 2 hintereinandergeschaltete Monopole. Die Marktmacht kann mittels Zerschlagung von Monopolen, Subvention der Monopole oder Preisgrenzen begrenzt werden.
+	\end{enumerate}
+
+\end{document}
