@@ -1,0 +1,94 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 2, Test 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item $\E(X) = -5$
+		\item $\E(\E(X)) = \E(-5) = -5$
+		\item $\E(\Var(X)) = \E(25) = 25$
+		\item $\Var(X) = 25$
+		\item $\Var(\E(X)) = \Var(-5) = 0$
+		\item $\Var(\Var(X)) = \Var(25) = 0$
+		\item $\E(X+7) = \E(X) + 7 = 2$
+		\item $\Var(X+7) = \Var(X) = 25$
+		\item $\E(-2X) = -2\cdot \E(X) = 10$
+		\item $\Var(-2X) = (-2)^2\cdot \Var(X) = 100$
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	Die richtigen Antworten sind:
+	\begin{itemize}
+		\item Der Erwartungswert des Schätzers $\E(\hat{\vartheta})$ für den Parameter $\vartheta$ ergibt den Parameter selbst.
+		\item Der mittlere quadratische Fehler strebt mich wachsendem Stichprobenumfang $n$ gegen 0.
+		\item Der mittlere quadratische Fehler ist möglichst klein.
+	\end{itemize}
+
+	\section*{Aufgabe 3}
+	Die richtige Reihenfolge ist
+	\begin{enumerate}[label=\arabic*.]
+		\item Aufstellen der Dichtefunktion (stetig) bzw. Wahrscheinlichkeitsfunktion (diskret) für die einzelnen Stichprobenvariablen.
+		\item Bilden der Likelihood-Funktion.
+		\item Berechnen der Log-Likelihood-Funktion.
+		\item Nullsetzen der ersten Ableitung.
+		\item Gleichung auflösen nach dem zu schätzenden Parameter $\vartheta$.
+		\item Bildung der zweiten Ableitung zur Überprüfung eines Maximums.
+	\end{enumerate}
+
+	\section*{Aufgabe 4}
+	Die richtige Reihenfolge ist
+	\begin{enumerate}[label=\arabic*.]
+		\item Annahme eines zugrundeliegenden Modells.
+		\item Aufstellen der Zielfunktion.
+		\item Bildung und Nullsetzen der ersten Ableitung.
+		\item Auflösen der Gleichung nach dem zu schätzenden Parameter $\vartheta$.
+		\item Bildung der zweiten Ableitung zur Überprüfung eines Maximums.
+	\end{enumerate}
+
+	\section*{Aufgabe 5}
+	Das lineare Regressionsmodell wurde wie folgt aufgestellt:
+	\begin{align}
+		\text{Preis} &= \beta_0 + \beta_1\cdot\text{Quadratmeter} \notag \\
+		&= 976\text{ \EUR} + 2191\text{ \EUR}\cdot\text{Quadratmeter} \notag
+	\end{align}
+	Einsetzen von 60 Quadratmeter ergibt einen Preis von 132436 \EUR.
+	
+	\section*{Aufgabe 6}
+	Die richtigen Antworten sind:
+	\begin{itemize}
+		\item Abbildung 2 und 4 sind für ein lineares Modell geeignet.
+		\item In den Daten sollte keine Heteroskedastizität vorliegen.
+		\item Die Varianz in Abbildung 3 steigt mit steigendem $x$.
+	\end{itemize}
+	
+\end{document}
