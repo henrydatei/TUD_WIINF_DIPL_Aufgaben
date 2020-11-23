@@ -1,0 +1,133 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{colortbl}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\title{\textbf{Einführung in die Informatik, Übung 12}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 12.1}
+	
+	\begin{enumerate}[label=(\alph*)]
+		\item alle Modelle von $\Gamma$ finden:
+		\begin{center}
+			\begin{tabular}{ccc||c|c|c}
+				$p$ & $q$ & $r$ & $p\Rightarrow q$ & $r\lor p$ & $\neg q\lor r$ \\
+				\hline
+				0 & 0 & 0 & 1 & 0 & 1 \\
+				0 & 0 & 1 & \textcolor{red}{1} & \textcolor{red}{1} & \textcolor{red}{1} \\
+				0 & 1 & 0 & 1 & 0 & 0 \\
+				0 & 1 & 1 & \textcolor{red}{1} & \textcolor{red}{1} & \textcolor{red}{1} \\
+				1 & 0 & 0 & 0 & 1 & 1 \\
+				1 & 0 & 1 & 0 & 1 & 1 \\
+				1 & 1 & 0 & 1 & 1 & 0 \\
+				1 & 1 & 1 & \textcolor{red}{1} & \textcolor{red}{1} & \textcolor{red}{1} \\
+			\end{tabular}
+		\end{center}
+		3 Modelle erfüllen $\Gamma$
+		\item $\Gamma\models (\neg p\lor r)$, denn
+		\begin{center}
+			\begin{tabular}{ccc||c}
+				$p$ & $q$ & $r$ & $\neg p\lor r$ \\
+				\hline
+				0 & 0 & 1 & 1 \\
+				0 & 1 & 1 & 1 \\
+				1 & 1 & 1 & 1 \\
+			\end{tabular}
+		\end{center}
+		\item $\Gamma\not\models (\neg q\land r)$, denn
+		\begin{center}
+			\begin{tabular}{ccc||c}
+				$p$ & $q$ & $r$ & $\neg q\land r$ \\
+				\hline
+				0 & 0 & 1 & 1 \\
+				0 & 1 & 1 & 0 \\
+				1 & 1 & 1 & 0 \\
+			\end{tabular}
+		\end{center}
+		\item $\Gamma\models (q\lor r)$, denn
+		\begin{center}
+			\begin{tabular}{ccc||c}
+				$p$ & $q$ & $r$ & $q\lor r$ \\
+				\hline
+				0 & 0 & 1 & 1 \\
+				0 & 1 & 1 & 1 \\
+				1 & 1 & 1 & 1 \\
+			\end{tabular}
+		\end{center}
+	\end{enumerate}
+	
+	\section*{Aufgabe 12.2}
+	\begin{enumerate}[label=(\alph*)]
+		\item siehe Tabelle
+		\begin{center}
+			\begin{tabular}{cc||c|c|c}
+				$\phi$ & $\psi$ & $\phi\lor\psi$ & $\phi\land(\phi\lor\psi)$ & $\phi\land(\phi\lor\psi)\equiv\phi$ \\
+				\hline
+				0 & 0 & 0 & 0 & 1 \\
+				0 & 1 & 1 & 0 & 1 \\
+				1 & 0 & 1 & 1 & 1 \\
+				1 & 1 & 1 & 1 & 1 \\
+			\end{tabular}
+		\end{center}
+		\item siehe Tabelle
+		\begin{center}
+			\begin{tabular}{ccc||c|c|c|c|c|c}
+				$\phi$ & $\psi$ & $\pi$ & $\psi\lor\pi$ & $\phi\land(\psi\lor\pi)$ & $\phi\land\psi$ & $\phi\land\pi$ & $(\phi\land\psi)\lor(\phi\land\pi)$ & $\phi\land(\psi\lor\pi)\equiv(\phi\land\psi)\lor(\phi\land\pi)$ \\
+				\hline
+				0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+				0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 1 \\
+				0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 1 \\
+				0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 1 \\
+				1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+				1 & 0 & 1 & 1 & 1 & 0 & 1 & 1 & 1 \\
+				1 & 1 & 0 & 1 & 1 & 1 & 0 & 1 & 1 \\
+				1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1
+			\end{tabular}
+		\end{center}
+	\end{enumerate}
+
+	\section*{Aufgabe 12.3}
+	Ersetzungen:
+	\begin{itemize}
+		\item $a\lor b\equiv \neg\neg a\lor\neg\neg b\equiv\neg(\neg a\land\neg b)$
+		\item $c\Leftrightarrow d\equiv (c\land d)\lor(\neg c\land\neg d) \equiv \neg(\neg (c\land d)\land\neg (\neg c\land\neg d))$
+	\end{itemize}
+	\begin{align}
+		\phi &= \neg(((\neg p\lor q)\lor(p\Leftrightarrow\neg q))\textcolor{red}{\,\lor\,}\neg(r\land(s\lor r))) \notag \\
+		&= \neg(\neg(\neg ((\neg p\lor q)\lor(p\Leftrightarrow\neg q))\land\neg(\neg(r\land(s\textcolor{red}{\,\lor\,} r))))) \notag \\
+		&= \neg(\neg(\neg ((\neg p\lor q)\textcolor{red}{\,\lor\,}(p\Leftrightarrow\neg q))\land\neg(\neg(r\land(\neg(\neg s\land\neg r)))))) \notag \\
+		&= \neg(\neg(\neg (\neg(\neg (\neg p\textcolor{red}{\,\lor\,} q)\land\neg (p\Leftrightarrow\neg q)))\land\neg(\neg(r\land(\neg(\neg s\land\neg r)))))) \notag \\
+		&= \neg(\neg(\neg (\neg(\neg (\neg(\neg (\neg p)\land\neg q))\land\neg (p\textcolor{red}{\,\Leftrightarrow\,}\neg q)))\land\neg(\neg(r\land(\neg(\neg s\land\neg r)))))) \notag \\
+		&= \neg(\neg(\neg (\neg(\neg (\neg(\neg (\neg p)\land\neg q))\land\neg (\neg(\neg (p\land \neg q)\land\neg (\neg p\land\neg \neg q)))))\land\neg(\neg(r\land(\neg(\neg s\land\neg r)))))) \notag
+	\end{align}
+	
+	\section*{Aufgabe 12.4}
+	\begin{enumerate}[label=(\alph*)]
+		\item siehe Tabelle
+
+	\end{enumerate}
+
+	\section*{Aufgabe 12.5}
+
+\end{document}

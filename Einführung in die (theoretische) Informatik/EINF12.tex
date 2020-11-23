@@ -1,0 +1,212 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{colortbl}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\title{\textbf{Einführung in die Informatik, Übung 12}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 12.1}
+	
+	\begin{enumerate}[label=(\alph*)]
+		\item alle Modelle von $\Gamma$ finden:
+		\begin{center}
+			\begin{tabular}{ccc||c|c|c}
+				$p$ & $q$ & $r$ & $p\Rightarrow q$ & $r\lor p$ & $\neg q\lor r$ \\
+				\hline
+				0 & 0 & 0 & 1 & 0 & 1 \\
+				\rowcolor{lime}0 & 0 & 1 & 1 & 1 & 1 \\
+				0 & 1 & 0 & 1 & 0 & 0 \\
+				\rowcolor{lime}0 & 1 & 1 & 1 & 1 & 1 \\
+				1 & 0 & 0 & 0 & 1 & 1 \\
+				1 & 0 & 1 & 0 & 1 & 1 \\
+				1 & 1 & 0 & 1 & 1 & 0 \\
+				\rowcolor{lime}1 & 1 & 1 & 1 & 1 & 1 \\
+			\end{tabular}
+		\end{center}
+		3 Modelle erfüllen $\Gamma$
+		\item $\Gamma\models (\neg p\lor r)$, denn
+		\begin{center}
+			\begin{tabular}{ccc||c}
+				$p$ & $q$ & $r$ & $\neg p\lor r$ \\
+				\hline
+				0 & 0 & 1 & 1 \\
+				0 & 1 & 1 & 1 \\
+				1 & 1 & 1 & 1 \\
+			\end{tabular}
+		\end{center}
+		\item $\Gamma\not\models (\neg q\land r)$, denn
+		\begin{center}
+			\begin{tabular}{ccc||c}
+				$p$ & $q$ & $r$ & $\neg q\land r$ \\
+				\hline
+				0 & 0 & 1 & 1 \\
+				0 & 1 & 1 & 0 \\
+				1 & 1 & 1 & 0 \\
+			\end{tabular}
+		\end{center}
+		\item $\Gamma\models (q\lor r)$, denn
+		\begin{center}
+			\begin{tabular}{ccc||c}
+				$p$ & $q$ & $r$ & $q\lor r$ \\
+				\hline
+				0 & 0 & 1 & 1 \\
+				0 & 1 & 1 & 1 \\
+				1 & 1 & 1 & 1 \\
+			\end{tabular}
+		\end{center}
+	\end{enumerate}
+	
+	\section*{Aufgabe 12.2}
+	\begin{enumerate}[label=(\alph*)]
+		\item siehe Tabelle
+		\begin{center}
+			\begin{tabular}{cc||c|c|c}
+				$\phi$ & $\psi$ & $\phi\lor\psi$ & $\phi\land(\phi\lor\psi)$ & $\phi\land(\phi\lor\psi)\equiv\phi$ \\
+				\hline
+				0 & 0 & 0 & 0 & 1 \\
+				0 & 1 & 1 & 0 & 1 \\
+				1 & 0 & 1 & 1 & 1 \\
+				1 & 1 & 1 & 1 & 1 \\
+			\end{tabular}
+		\end{center}
+		\item siehe Tabelle
+		\begin{center}
+			\begin{tabular}{ccc||c|c|c|c|c|c}
+				$\phi$ & $\psi$ & $\pi$ & $\psi\lor\pi$ & $\phi\land(\psi\lor\pi)$ & $\phi\land\psi$ & $\phi\land\pi$ & $(\phi\land\psi)\lor(\phi\land\pi)$ & $\phi\land(\psi\lor\pi)\equiv(\phi\land\psi)\lor(\phi\land\pi)$ \\
+				\hline
+				0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+				0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 1 \\
+				0 & 1 & 0 & 1 & 0 & 0 & 0 & 0 & 1 \\
+				0 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 1 \\
+				1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+				1 & 0 & 1 & 1 & 1 & 0 & 1 & 1 & 1 \\
+				1 & 1 & 0 & 1 & 1 & 1 & 0 & 1 & 1 \\
+				1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1
+			\end{tabular}
+		\end{center}
+	\end{enumerate}
+
+	\section*{Aufgabe 12.3}
+	Ersetzungen:
+	\begin{itemize}
+		\item $a\lor b\equiv \neg\neg a\lor\neg\neg b\equiv\neg(\neg a\land\neg b)$
+		\item $c\Leftrightarrow d\equiv (c\land d)\lor(\neg c\land\neg d) \equiv \neg(\neg (c\land d)\land\neg (\neg c\land\neg d))$
+	\end{itemize}
+	\begin{align}
+		\phi &= \neg(((\neg p\lor q)\lor(p\Leftrightarrow\neg q))\textcolor{red}{\,\lor\,}\neg(r\land(s\lor r))) \notag \\
+		&= \neg(\neg(\neg ((\neg p\lor q)\lor(p\Leftrightarrow\neg q))\land\neg(\neg(r\land(s\textcolor{red}{\,\lor\,} r))))) \notag \\
+		&= \neg(\neg(\neg ((\neg p\lor q)\textcolor{red}{\,\lor\,}(p\Leftrightarrow\neg q))\land\neg(\neg(r\land(\neg(\neg s\land\neg r)))))) \notag \\
+		&= \neg(\neg(\neg (\neg(\neg (\neg p\textcolor{red}{\,\lor\,} q)\land\neg (p\Leftrightarrow\neg q)))\land\neg(\neg(r\land(\neg(\neg s\land\neg r)))))) \notag \\
+		&= \neg(\neg(\neg (\neg(\neg (\neg(\neg (\neg p)\land\neg q))\land\neg (p\textcolor{red}{\,\Leftrightarrow\,}\neg q)))\land\neg(\neg(r\land(\neg(\neg s\land\neg r)))))) \notag \\
+		&= \neg(\neg(\neg (\neg(\neg (\neg(\neg (\neg p)\land\neg q))\land\neg (\neg(\neg (p\land \neg q)\land\neg (\neg p\land\neg \neg q)))))\land\neg(\neg(r\land(\neg(\neg s\land\neg r)))))) \notag
+	\end{align}
+	
+	\section*{Aufgabe 12.4}
+		$\phi$ muss erst in die richtige Form gebracht werden, das Problem ist hier $\neg(p\lor r)\equiv\neg p\land\neg r$
+		\begin{center}
+			\begin{tikzpicture}
+			\node at (0,0) (1) {$\phi$};
+			\node at (0,-1) (2) {$p$};
+			\node at (0,-2) (3) {$(\neg r\land((q\land\neg p)\lor r))\lor((r\land(p\lor\neg q))\land((\neg p\land \neg r)\lor(p\land r)))$};
+			\node at (-3,-3) (4) {$\neg r\land((q\land\neg p)\lor r)$};
+			\node at (-3,-4) (5) {$\neg r$};
+			\node at (-3,-5) (6) {$(q\land\neg p)\lor r$};
+			\node at (-4.5,-6) (7) {$r$};
+			\node at (-1.5,-6) (8) {$q\land\neg p$};
+			\node at (-1.5,-7) (9) {$q$};
+			\node at (-1.5,-8) (10) {$\neg p$};
+			\node at (3,-3) (11) {$(r\land(p\lor\neg q))\land((\neg p\land \neg r)\lor(p\land r))$};
+			\node at (3,-4) (12) {$r\land(p\lor\neg q)$};
+			\node at (3,-5) (13) {$(\neg p\land \neg r)\lor(p\land r)$};
+			\node at (3,-6) (14) {$r$};
+			\node at (3,-7) (15) {$p\lor\neg q$};
+			\node at (1.5,-8) (16) {$p$};
+			\node at (0,-9) (17) {$\neg p\land\neg r$};
+			\node at (0,-10) (18) {$\neg p$};
+			\node at (2,-9) (19) {$p\land r$};
+			\node at (2,-10) (20) {$p$};
+			\node at (2,-11) (21) {$r$};
+			\node at (4.5,-8) (22) {$\neg q$};
+			\node at (4,-9) (23) {$\neg p\land \neg r$};
+			\node at (4,-10) (24) {$\neg p$};
+			\node at (6,-9) (25) {$p\land r$};
+			\node at (6,-10) (26) {$p$};
+			\node at (6,-11) (27) {$r$};
+			
+			\draw (1) -- (2) -- (3) -- (4) -- (5) -- (6) -- (7);
+			\draw (6) -- (8) -- (9) -- (10);
+			\draw (3) -- (11) -- (12) -- (13) -- (14) -- (15) -- (16) -- (17) -- (18);
+			\draw (16) -- (19) -- (20) -- (21);
+			\draw (15) -- (22) -- (23) -- (24);
+			\draw (22) -- (25) -- (26) -- (27);
+			
+			\node[red] at (7.south) {$\times$};
+			\node[red] at (10.south) {$\times$};
+			\node[red] at (18.south) {$\times$};
+			\node[red] at (24.south) {$\times$};
+			\end{tikzpicture}
+		\end{center}
+
+	\section*{Aufgabe 12.5}
+	\begin{enumerate}[label=(\alph*)]
+		\item Hier ist das vollständige semantische Tableau. Die \textcolor{red}{roten} Knoten die Knoten, die dem  Tableau aus der Aufgabenstellung fehlen.
+		\begin{center}
+			\begin{tikzpicture}
+			\node at (0,0) (1) {$\phi$};
+			\node at (0,-1) (2) {$(\neg r\lor p)\lor(p\land q)$};
+			\node at (0,-2) (3) {$p\land((p\land q)\lor\neg r)$};
+			\node at (0,-3) (4) {$p$};
+			\node at (0,-4) (5) {$(p\land q)\lor\neg r$};
+			\node at (-3,-5) (6) {$p\land q$};
+			\node at (-3,-6) (7) {$q$};
+			\node[red] at (-3,-7) (8) {$p$};
+			\node[red] at (-3,-8) (9) {$(\neg r\lor p)\lor(p\land q)$};
+			\node[red] at (-4.5,-9) (10) {$\neg r \lor p$};
+			\node[red] at (-5,-10) (11) {$\neg r$};
+			\node[red] at (-4,-10) (12) {$p$};
+			\node[red] at (-1.5,-9) (13) {$p\land q$};
+			\node[red] at (-1.5,-10) (14) {$p$};
+			\node[red] at (-1.5,-11) (15) {$q$};
+			\node at (3,-6) (16) {$(\neg r\lor p)\lor(p\land q)$};
+			\node at (1.5,-7) (17) {$\neg r\lor p$};
+			\node[red] at (1,-8) (18) {$\neg r$};
+			\node[red] at (2,-8) (19) {$p$};
+			\node at (4.5,-7) (20) {$p\land q$};
+			\node[red] at (4.5,-8) (21) {$p$};
+			\node[red] at (4.5,-9) (22) {$q$};
+			\node at (3,-5) (v) {$\neg r$};
+			
+			\draw (1) -- (2) -- (3) -- (4) -- (5) -- (6) -- (7) -- (8) -- (9) -- (10) -- (11);
+			\draw (9) -- (13) -- (14) -- (15);
+			\draw (10) -- (12);
+			\draw (5) -- (v) -- (16) -- (17) -- (18);
+			\draw (17) -- (19);
+			\draw (16) -- (20) -- (21) -- (22);
+			\end{tikzpicture}
+		\end{center}
+		\item ja, z.B. für $w(p)=w(q)=w(r)=1$
+		\item nein, z.B. für $w(p)=w(q)=w(r)=0$ ist $w(\phi)=0$
+	\end{enumerate}
+
+\end{document}

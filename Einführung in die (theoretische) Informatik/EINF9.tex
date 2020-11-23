@@ -1,0 +1,109 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\title{\textbf{Einführung in die Informatik, Übung 9}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 9.1}
+	
+	\begin{enumerate}[label=(\alph*)]
+		\item $(N_1\cup \{S\}\cup N_2 \cup \{T\},\Sigma,P_1\cup \{S\to\varepsilon,S\to SS_1\}\cup P_2\cup \{T\to SS_2\},T)$
+		\item Veränderungen in den Grammatiken sind mit \textcolor{red}{rot} dargestellt.\\
+		$\cdot$: $(N_1\cup N_2\cup \{S\},\Sigma,P_1\cup P_2\cup \{S\to S_1S_2\},S)$ \\
+		$(\cdot)^\ast$: $(N_1\cup N_2\cup \{S\}\cup \textcolor{red}{\{T\}},\Sigma,P_1\cup P_2\cup \{S\to S_1S_2\}\cup \textcolor{red}{\{T\to\varepsilon,T\to TS\}},\textcolor{red}{T})$ \\
+		$(\cdot)^\ast\cup$: $(N_1\cup N_2\cup \{S\}\cup \{T\}\cup \textcolor{red}{\{A\}},\Sigma,P_1\cup P_2\cup \{S\to S_1S_2\}\cup \{T\to\varepsilon,T\to TS\}\cup \textcolor{red}{\{A\to T,A\to S_1\}},\textcolor{red}{A})$
+	\end{enumerate}
+	
+	\section*{Aufgabe 9.2}
+	
+	\begin{enumerate}[label=(\alph*)]
+		\item $T_1=\{S,R\}$, $T_2=\{S,R,V\}$, $T_3=\{S,R,V,W\}=T_4=...$
+		\item $ab\in L(G)\Rightarrow L(G)\neq\emptyset$ (alternative Begründung: $S\in T_3=T_4=...$)
+	\end{enumerate}
+
+	\section*{Aufgabe 9.3}
+	
+	\begin{center}
+		\begin{tabular}{l|L{3cm}|L{3cm}|L{3cm}|L{3cm}}
+			& $P_1$ & $P_2$ & $P_3$ & $P_4$ \\
+			\hline
+			kontextfrei & \checkmark & \checkmark & \checkmark & \checkmark \\
+			\hline
+			rechtslinear & mehr als 1 nichtterminales Symbol & \checkmark & mehr als 1 nichtterminales Symbol & mehr als 1 nichtterminales Symbol \\
+			\hline
+			Chomsky-Normalform & $B\to BB$ geht nicht & $S\to bB$ geht nicht & $A\to aB$ geht nicht & $A\to SC$ geht nicht, wenn $S\to\epsilon\in P_4$
+		\end{tabular}
+	\end{center}
+
+	\section*{Aufgabe 9.4}
+	
+	\begin{enumerate}[label=(\alph*)]
+		\item siehe Tabelle\\
+		\begin{center}
+			\begin{tabular}{l|L{3cm}|L{3cm}|L{3cm}|L{3cm}}
+				& \textbf{Typ 0} & \textbf{Typ 1} & \textbf{Typ 2} & \textbf{Typ 3} \\
+				\hline
+				$G_1$ & \checkmark & \checkmark & $Ca\to aC\notin N\times (N\cup\Sigma)^\ast$ & nicht rechtslinear \\
+				\hline
+				$G_2$ & \checkmark & \checkmark & \checkmark & nicht rechtslinear \\
+				\hline
+				$G_3$ & \checkmark & \checkmark & \checkmark & \checkmark
+			\end{tabular}
+		\end{center}
+		\item Vermutung: $G$ vom Typ $i$ $\Leftrightarrow$ $L(G)$ vom Typ $i$. Zumindest für den Typ 3 scheint dies zu stimmen.
+	\end{enumerate}
+
+	\section*{Aufgabe 9.5}
+	
+	\begin{enumerate}[label=(\alph*)]
+		\item $aaabba\in L(G)$
+		\begin{center}
+			\begin{tabular}{c|cccccc}
+				& $a$ & $a$ & $a$ & $b$ & $b$ & $a$ \\
+				& 1 & 2 & 3 & 4 & 5 & 6 \\
+				\hline
+				1 & $A,B$ & $S,M$ & $X$ & $S,M$ & $X$ & $S,M$ \\
+				2 & & $A,B$ & $S,M$ & $X$ & $S,M$ & $X$ \\
+				3 & & & $A,B$ & $S,M$ & $X$ & $\emptyset$ \\
+				4 & & & & $B$ & $\emptyset$ & $\emptyset$ \\
+				5 & & & & & $B$ & $\emptyset$ \\
+				6 & & & & & & $A,B$
+			\end{tabular}
+		\end{center}
+		\item $aabbaa\notin L(G)$
+		\begin{center}
+			\begin{tabular}{c|cccccc}
+				& $a$ & $a$ & $b$ & $b$ & $a$ & $a$ \\
+				& 1 & 2 & 3 & 4 & 5 & 6 \\
+				\hline
+				1 & $A,B$ & $S,M$ & $X$ & $S,M$ & $X$ & $\emptyset$ \\
+				2 & & $A,B$ & $S,M$ & $X$ & $\emptyset$ & $\emptyset$ \\
+				3 & & & $B$ & $\emptyset$ & $\emptyset$ & $\emptyset$ \\
+				4 & & & & $B$ & $\emptyset$ & $\emptyset$ \\
+				5 & & & & & $A,B$ & $S,M$ \\
+				6 & & & & & & $A,B$
+			\end{tabular}
+		\end{center}
+	\end{enumerate}
+
+\end{document}

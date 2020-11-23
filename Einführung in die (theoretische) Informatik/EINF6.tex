@@ -1,0 +1,58 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\title{\textbf{Einführung in die Informatik, Übung 6}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 6.1}
+	
+	\begin{enumerate}[label=(\alph*)]
+		\item $L=\{ab,abcab,abcab\vert c\vert ab,abcabcab\vert c\vert abcab, abcabcabcabcab\vert c\vert abcabcab\}$
+		\item nein, denn $f(0)=f(1)$, aber $0\neq 1$
+		\item nein, denn $f(\cdot)\neq c$
+	\end{enumerate}
+	
+	\section*{Aufgabe 6.2}
+	
+	\begin{enumerate}[label=(\alph*)]
+		\item nein, denn $ba\in \{a,b\}^\ast$, aber $ba\notin \{a\}^\ast\cdot\{b\}^\ast$
+		\item ja, trivial
+		\item nein, denn $ba\in \{a,b\}^\ast$, aber $ba\notin \{a\}^\ast\cup\{b\}^\ast$
+	\end{enumerate}
+	
+	\section*{Aufgabe 6.3}
+	
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Sprache besteht aus den Wörtern $a$, $ba$ und $b$ \\
+		$\Rightarrow$ $L=\{a,ba,b\}$
+		\item Die Sprache besteht aus dem Wort $a$ und den Wörtern, die mit $b$ enden, wo aber davor mindesten 0 $a$'s stehen \\
+		$\Rightarrow$ $L=\{a,a^ib\mid i\ge 0\}$
+		\item Die Sprache besteht aus Wörtern, die aus Wiederholungen von $abc$'s gebildet sind, wobei $abc$ mindestens einmal vorkommt \\
+		$\Rightarrow$ $L=\{(abc)^n\mid n\ge 1\}$
+	\end{enumerate}
+	
+	\section*{Aufgabe 6.4}
+	
+	\begin{enumerate}[label=(\alph*)]
+		\item $(aaa)^\ast$
+		\item $(a^+b^+)^5$
+		\item $\Sigma^\ast\cdot (aaa)\cdot [\Sigma^\ast\cdot (bab)\cdot\Sigma^\ast\cdot (bab)\cdot\Sigma^\ast]^+\cdot \Sigma^\ast$
+		\item $\overline{(abba)}\cdot\Sigma^\ast$
+		\item $b^\ast a^\ast$
+	\end{enumerate}
+
+\end{document}
