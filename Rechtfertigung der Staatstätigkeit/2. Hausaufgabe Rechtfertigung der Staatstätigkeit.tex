@@ -25,6 +25,74 @@
 \begin{document}
 	\maketitle
 	
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der Monopolist setzt $GE=GK$. Die Grenzkosten sind gegeben, kümmern wir uns um den Grenzerlös:
+		\begin{align}
+			E &= p\cdot x \notag \\
+			&= (a-bx)\cdot x \notag \\
+			&= ax - bx^2 \notag \\
+			GE &= a - 2bx \notag
+		\end{align}
+		Setzen wir ein
+		\begin{align}
+			GE &= GK \notag \\
+			a-2bx &= cx+d \notag \\
+			a-d &= cx+2bx \notag \\
+			x_M &= \frac{a-d}{c+2b} \notag
+		\end{align}
+		Aus sozialer Sicht wäre $GK=GZB$ wünschenswert, also
+		\begin{align}
+			cx+d &= a-bx \notag \\
+			cx+bx &= a-d \notag \\
+			x_{opt} &= \frac{a-d}{c+b} \notag
+		\end{align}
+		\item Eine Subvention senkt die Grenzkosten des Monopolisten. Man muss also solange subventionieren, bis $GE=GK-s \Rightarrow x_{opt}=\frac{a-d}{b+c}$ ergibt.
+		\begin{align}
+			a-2bx_S &= cx_S+d-s \notag \\
+			a-d+s &= cx_S + 2bx_S \notag \\
+			x_S &= \frac{a-d+s}{c+2b} \notag \\
+			&\overset{!}{=} \frac{a-d}{b+c} \notag \\
+			(c+2b)(a-d) &= (a-d+s)(b+c) \notag \\
+			a-d+s &= \frac{(c+2b)(a-d)}{b+c} \notag \\
+			s &= \frac{(c+2b)(a-d)}{b+c}-a+d \notag \\
+			&= \frac{b(a-d)}{b+c} \notag
+		\end{align}
+		\item Subventionsbedarf: $S = s\cdot x = \frac{bx(a-d)}{b+c}$
+		\begin{center}
+			\begin{tikzpicture}
+				\draw[->] (0,-3) -- (5,-3) node[above] {$x$};
+				\draw[->] (0,-3) -- (0,5) node[right] {$p$};
+				
+				\draw[blue] (0,4) -- (5,0);
+				\draw[red] (0,1) -- (5,1);
+				\draw[dashed,red] (0,-2.6) -- (5,-2.6);
+				\draw[green!80!black] (0,4) -- (4,-3);
+				
+				\draw[dotted] (1.72,-3) node[below] {$x_M$} to (1.72,2.62) -- (0,2.62);
+				\draw[dotted] (3.77,-3) node[below] {$x_{opt}$} to (3.77,1);
+				
+				\draw[->] (0.6,1) -- (0.6,-2.6);		
+			\end{tikzpicture} \\
+			\textcolor{blue}{GZB}, \textcolor{red}{GK/um $s$ reduzierte Grenzkosten}, \textcolor{green!80!black}{GE}
+		\end{center}
+		\item Diese Subvention ist teuer und "schwierig zu verkaufen": Man belohnt einen Monopolisten dafür, dass er ein Monopol hat, statt ihn zu zerschlagen. Etwas billiger wird es, wenn man nur die Einheiten zwischen $x_M$ und $x_{opt}$ subventioniert.
+		\begin{center}
+			\begin{tikzpicture}
+				\draw[->] (0,-3) -- (5,-3) node[above] {$x$};
+				\draw[->] (0,-3) -- (0,5) node[right] {$p$};
+				
+				\draw[blue] (0,4) -- (5,0);
+				\draw[red] (0,1) -- (1.72,1) -- (1.72,-2.6) -- (5,-2.6);
+				\draw[green!80!black] (0,4) -- (4,-3);
+				
+				\draw[dotted] (1.72,-3) node[below] {$x_M$} to (1.72,2.62) -- (0,2.62);
+				\draw[dotted] (3.77,-3) node[below] {$x_{opt}$} to (3.77,1);
+			\end{tikzpicture} \\
+			\textcolor{blue}{GZB}, \textcolor{red}{subventionierte Grenzkosten}, \textcolor{green!80!black}{GE}
+		\end{center}
+	\end{enumerate}
+	
 	\section*{Aufgabe 6}
 	\begin{enumerate}[label=(\alph*)]
 		\item Betrachten wir zuerst den Gewinn von Volta, wenn $z$ bereits festgelegt wurde:
