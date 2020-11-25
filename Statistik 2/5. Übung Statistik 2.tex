@@ -1,0 +1,92 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\CDF}{CDF}
+
+\title{\textbf{Statistik 2, Übung 5}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Beachte: $\E(X_i)=\mu$, $\Var(X_i)=\sigma^2$
+	\begin{enumerate}[label=(\alph*)]
+		\item Ein Schätzer $\hat{\vartheta}$ ist genau dann erwartungstreu, wenn $\E(\hat{\vartheta})=\vartheta$ bzw. wenn $Bias =\E(\hat{\vartheta}) - \vartheta = 0$
+		\begin{itemize}
+			\item $(\frac{1}{n}(\E(X_1) + ... + \E(X_n))) - \mu = (\frac{1}{n}\cdot n\mu)-\mu = 0$
+			\item $(\frac{2}{3}\E(X_2) + \frac{1}{3}\E(X_3))-\mu = \mu-\mu = 0$
+			\item $\E(X_1)-\mu = 0$
+			\item $\left(\E(\bar{X}) + \E\left(\frac{1000}{n}\right)\right)-\mu = \frac{1000}{n}$
+			\item $(\frac{n-1}{n}\E(\bar{X}))-\mu = \frac{n-1}{n}\mu - \frac{n}{n}\mu = -\frac{1}{n}\mu$
+		\end{itemize}
+		\item Für den MSE gilt $MSE(X) = \Var(X) + Bias^2$. Wir berechnen zuerst die Varianz und dann den MSE
+		\begin{itemize}
+			\item $\Var(\hat{\mu}_1) = \frac{1}{n^2}\sum\Var(X_i) = \frac{1}{n}\sigma^2$ $\Rightarrow$ $MSE=\frac{1}{n}\sigma^2$
+			\item $\Var(\hat{\mu}_2) = \frac{4}{9}\Var(X_2) + \frac{1}{9}\Var(X_3) = \frac{5}{9}\sigma^2$ $\Rightarrow$ $MSE = \frac{5}{9}\sigma^2$
+			\item $\Var(\hat{\mu}_3) = \Var(X_1) = \sigma^2$ $\Rightarrow$ $MSE = \sigma^2$
+			\item $\Var(\hat{\mu}_4) = \Var(\bar{X}) + \Var\left(\frac{1000}{n}\right) = \frac{1}{n}\sigma^2$ $\Rightarrow$ $MSE = \frac{1}{n}\sigma^2 + \left(\frac{1000}{n}\right)^2$
+			\item $\Var(\hat{\mu}_5) = \frac{(n-1)^2}{n^2}\Var(\bar{X}) = \frac{(n-1)}{n^3}\sigma^3$ $\Rightarrow$ $MSE=\frac{(n-1)}{n^3}\sigma^3 + \frac{1}{n^2}\mu^2$
+		\end{itemize}
+		\item Ein Schätzer ist genau dann konsistent, wenn $\lim_{n\to\infty} MSE = 0$
+		\begin{itemize}
+			\item $0$
+			\item $\frac{5}{9}\sigma^2$
+			\item $\sigma^2$
+			\item $0$
+			\item $0$
+		\end{itemize}
+		\item Der einzig konsistente und erwartungstreue Schätzer ist $\hat{\mu}_1$.
+	\end{enumerate}
+	
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Konfidenzintervalle für den Mittelwert haben alle die folgende Struktur: $KI = [\bar{x} \pm \varepsilon]$. Ich werde für die nächsten Teilaufgaben nur dieses $\varepsilon$ berechnen.
+		\begin{itemize}
+			\item $\varepsilon = z_{1-\frac{\alpha}{2}}\cdot\frac{\sigma}{\sqrt{n}} = 1.64\cdot\frac{8}{3} = 4.373$
+			\item $\varepsilon = z_{1-\frac{\alpha}{2}}\cdot\frac{\sigma}{\sqrt{n}} = 1.96\cdot\frac{8}{3} = 5.227$
+			\item $\varepsilon = t_{n-1;1-\frac{\alpha}{2}}\cdot\frac{s}{\sqrt{n}} = 2.306\cdot\frac{\sqrt{70}}{3} = 6.431$
+			\item $KI = \left[\frac{(n-1)s^2}{\chi_{n-1;1-\frac{\alpha}{2}}^2};\frac{(n-1)s^2}{\chi_{n-1;\frac{\alpha}{2}}^2}\right] = \left[\frac{8\cdot 70}{17.535};\frac{8\cdot 70}{2.180}\right] = [31.936;256.881]$
+			\item $\varepsilon = z_{1-\frac{\alpha}{2}}\cdot\frac{s}{\sqrt{n}} = 1.96\cdot\frac{\sqrt{70}}{\sqrt{40}} = 2.68$
+		\end{itemize}
+		\item Wenn das KI eine Breite von 5 haben soll, so muss mein $\varepsilon=2.5$ sein. Also
+		\begin{align}
+			\varepsilon &= 1.96 \cdot\frac{\sigma}{\sqrt{n}} \notag \\
+			\sqrt{n} &= 1.96\cdot\frac{\sigma}{\varepsilon} \notag \\
+			n &= \left(1.96\cdot\frac{\sigma}{\varepsilon}\right)^2 \notag \\
+			&= 39.34 \approx 40 \notag
+		\end{align}
+		\item Die Aufgabenstellung gibt uns hier schon indirekt, dass $\varepsilon = 7$ gilt. Umstellen nach $\alpha$:
+		\begin{align}
+			\varepsilon &= z_{1-\frac{\alpha}{2}} \cdot\frac{\sigma}{\sqrt{n}} \notag \\
+			z_{1-\frac{\alpha}{2}} &= \frac{\varepsilon\cdot\sqrt{n}}{\sigma} \notag \\
+			1-\frac{\alpha}{2} &= \CDF\left(\frac{\varepsilon\cdot\sqrt{n}}{\sigma}\right) \notag \\
+			\frac{\alpha}{2} &= 1- \CDF\left(\frac{\varepsilon\cdot\sqrt{n}}{\sigma}\right) \notag \\
+			\alpha &= 2\left[1-\CDF\left(\frac{\varepsilon\cdot\sqrt{n}}{\sigma}\right)\right] \notag \\
+			&= 2[1-\CDF(2.625)] \notag \\
+			&= 0.0068 \notag
+		\end{align}
+		Wobei $\CDF(\cdot)$ für die \textit{Cumulative distribution function} (Verteilungsfunktion) der Standardnormalverteilung steht.
+	\end{enumerate}
+	
+\end{document}
