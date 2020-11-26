@@ -1,0 +1,103 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage[amsmath,thmmarks,standard]{ntheorem}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+\newcommand{\E}{\mathbb{E}}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\renewcommand{\E}{\mathbb{E}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+
+\title{\textbf{Multivariate Statistik, Übung 5}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Was wir am Ende eigentlich zeigen wollen, ist, dass, wenn man $\alpha$ (und $\beta$, aber das folgt analog) als Eigenvektor von $R_{11}^{-1}R_{12}R_{22}^{-1}R_{21}$ wählt, $\alpha'R_{12}\beta$ maximal wird.\\
+	Wir werden hier Ableitungen von Matrizen brauchen, nämlich die folgenden Ableitungen:
+	\begin{align}
+		\frac{\partial (Av)}{\partial v} &= A' \notag \\
+		\frac{\partial (v'A)}{\partial v} &= A \notag \\
+		\frac{\partial (v'Av)}{\partial v} &= 2A'v \notag
+	\end{align}
+	Dann bilden wir die Lagrange-Funktion (um im späteren Teil der Aufgabe keine Verwirrung zu stiften, ist hier der Lagrange-Multiplikator $\xi$)
+	\begin{align}
+		L = \alpha'R_{12}\beta - \frac{\xi}{2}(\alpha'R_{11}\alpha-1) - \frac{\xi}{2}(\beta'R_{22}\beta-1) \notag
+	\end{align}
+	Ableitung nach $\alpha$ und $\beta$ gibt
+	\begin{align}
+		\frac{\partial L}{\partial\alpha} &= R_{12}\beta - \frac{\xi}{2}2R_{11}'\alpha = 0 \notag \\
+		\frac{\partial L}{\partial\beta} &= \underbrace{(\alpha'R_{12})'}_{R_{12}'\alpha} - \frac{\xi}{2}2R_{22}\beta = 0 \notag
+	\end{align}
+	Unter Nutzung von $R_{11}'=R_{11}$ und $R_{22}'=R_{22}$ erhalten wir
+	\begin{align}
+		R_{12}\beta &= \xi R_{11}\alpha \notag \\
+		R_{12}'\alpha &= \xi R_{22}\beta \notag
+	\end{align}
+	Umstellen nach $\beta$ und anschließendes Einsetzen entfernt alle $\beta$'s.
+	\begin{align}
+		\beta &= \frac{1}{\xi}R_{22}^{-1}R_{12}'\alpha \notag \\
+		R_{12}\left(\frac{1}{\xi}R_{22}^{-1}R_{12}'\alpha\right)&= \xi R_{11}\alpha \notag
+	\end{align}
+	Da wir zeigen wollen, dass $\alpha$ ein Eigenvektor einer bestimmten Matrix $A$ ist, müssen wir die obige Gleichung noch in die Form $(A-\lambda I)\alpha = 0$ bringen.
+	\begin{align}
+		R_{12}R_{22}^{-1}R_{21}\alpha &= \xi^2 R_{11}\alpha \notag \\
+		R_{11}^{-1}R_{12}R_{22}^{-1}R_{21}\alpha &= \xi^2 \alpha \notag \\
+		R_{11}^{-1}R_{12}R_{22}^{-1}R_{21}\alpha - \xi^2 \alpha &= 0 \notag \\
+		(R_{11}^{-1}R_{12}R_{22}^{-1}R_{21} - \xi^2I)\alpha &= 0 \notag
+	\end{align}
+	Also muss $\alpha$ als Eigenvektor von $R_{11}^{-1}R_{12}R_{22}^{-1}R_{21}$ gewählt werden. Der passende Eigenwert zu diesem Eigenvektor ist $\xi^2$.
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir untersuchen ein durchschnittliches Geschmacksempfinden bei verschiedenen Gruppen. Der $F$-Test mit Wilks Lambda bietet sich hier an.
+		\item $H_0: \mu_{\text{Männer}} = \mu_{\text{Frauen}}$ vs. $H_1:\mu_{\text{Männer}} \neq\mu_{\text{Frauen}}$
+		\item Wir müssen hierzu eine große Menge an Variablen berechnen:
+		\begin{align}
+			W &= (11-1)S_X + (11-1)S_Y \notag \\
+			T &= (22-1)S_Z \notag \\
+			\Lambda &= \frac{\det(W)}{\det(T)} = \frac{132447}{218572.5} = 0.6060 \notag \\
+			s &= \sqrt{\frac{k^2(g-1)^2-4}{k^2+(g-1)^2-5}} = 1 \notag \\
+			\nu_1 &= k(g-1) = 3 \notag \\
+			\nu_2 &= s\left[(n-1)-\frac{k+g}{2}\right]-\frac{k(g-1)-2}{2} = 18 \notag \\
+			F &= \frac{1-\Lambda^{\frac{1}{s}}}{\Lambda^{\frac{1}{s}}}\cdot\frac{\nu_2}{\nu_1} = 3.901 \notag
+		\end{align}
+		\item Aus der Tabelle kann man einen kritischen Wert von $F_{3,18;0.95}=3.16$ ablesen. Das heißt wie lehnen $H_0$ ab. Es gibt also einen Geschmacksunterschied zwischen Männern und Frauen.
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	Hier gibt es eine ähnliche Vorgehensweise wie bei Aufgabe 2:
+	\begin{align}
+		\Lambda &= 0.398 \notag \\
+		s &= 1 \notag \\
+		\nu_1 &= 4 \notag \\
+		\nu_2 &= 5 \notag \\
+		F &= 1.8907 \notag
+	\end{align}
+	Der kritische Wert ist hier $F_{4,5;0.95}=6.26$. Wir lehnen $H_0$ nicht ab, es scheint also keinen Unterschied zwischen Kindern im Sportverein und nicht im Sportverein zu geben.
+	
+\end{document}
