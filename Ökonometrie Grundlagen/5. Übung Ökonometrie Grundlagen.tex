@@ -1,0 +1,190 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R,morekeywords={confint,head}}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Ökonometrie Grundlagen, Übung 5}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(A\arabic*)]
+		\item Positive und negative Fehler heben sich gegenseitig auf:
+		\begin{align}
+		\E(u) = 0 \notag
+		\end{align}
+		\item Die Spalten von $X$ sind linear unabhängig bzw. Abwesenheit von Multikollinearität.
+		\begin{align}
+		\rk(X) &= k \notag \\
+		\rk(X'X) &= k \notag \\
+		\vert X'X\vert &\neq 0 \notag
+		\end{align}
+		\item[(A2$^\ast$)] Die Regressormatrix $X$ besitzt eine kleine Konditionszahl, ist also gut konditioniert.
+		\item Keine Autokorrelation und keine Heteroskedastizität.
+		\item Die Effekte von $x_{1t},...,x_{kt}$ und $u_t$ auf $y_t$ sind separabel.
+		\begin{align}
+		\E(X'u) = 0 \notag
+		\end{align}
+		Ist bei deterministischem $X$ erfüllt.
+		\item Der Fehlervektor soll einer multivariaten Normalverteilung folgen. Diese Annahme ist die Grundlage für die Konstruktion statistischer Signifikanztests.
+	\end{enumerate}
+	
+	\section*{Aufgabe 2}
+	Ziel ist es die der quadrierten Fehler zu minimieren, in Matrixschreibweise $Q_T=(y-X\beta)'(y-X\beta)$. Wir werden für den Beweis einige Ableitungen von Matrizen brauchen\footnote{Hier kommt ziemlich komplizierte Mathematik ins Spiel, deswegen weiß ich nicht, ob dieser Lösungsweg überhaupt geplant war. Aber man kommt mit ihm recht schnell ans Ziel. Weitere Informationen hier: https://en.wikipedia.org/wiki/Matrix\_calculus}:
+	\begin{align}
+		\frac{\partial (Av)}{\partial v} &= A' \notag \\
+		\frac{\partial (v'A)}{\partial v} &= A \notag \\
+		\frac{\partial (v'Av)}{\partial v} &= 2A'v \notag
+	\end{align}
+	Führen wir nun den Beweis:
+	\begin{align}
+		Q_T &= y'y - y'X\hat{\beta} - \hat{\beta}'X'y + \hat{\beta}'X'X\hat{\beta} \notag \\
+		\frac{\partial Q_T}{\partial \hat{\beta}} &= 0 - \underbrace{(y'X)'}_{X'y} - X'y + 2(X'X)\hat{\beta} = 0 \notag \\
+		0 &= -2X'y + 2(X'X)\hat{\beta} \notag \\
+		(X'X)\hat{\beta} &= X'y \notag \\
+		\hat{\beta} &= (X'X)^{-1}X'y \notag
+	\end{align}
+	
+	\section*{Aufgabe 3}
+	\begin{align}
+		(1 ... 1)\hat{u} &= (1 ... 1)(y-X\hat{\beta}) \notag \\
+		&= (1...1)(y-X(X'X)^{-1}X'y) \notag \\
+		&= (1...1)(y-XX^{-1}(X')^{-1}X'y) \notag \\
+		&= (1...1)(y-y) \notag \\
+		&= 0 \notag
+	\end{align}
+	Eigenschaft (A1)
+
+	\section*{Aufgabe 4}
+	Der Beweis läuft sehr ähnlich zu Aufgabe 3
+	\begin{align}
+		X'\hat{u} &= (1 ... 1)(y-X\hat{\beta}) \notag \\
+		&= X'(y-X(X'X)^{-1}X'y) \notag \\
+		&= X'(y-XX^{-1}X'^{-1}X'y) \notag \\
+		&= X'(y-y) \notag \\
+		&= 0 \notag
+	\end{align}
+	Eigenschaft (A4)
+
+	\section*{Aufgabe 5}
+	Auf der Hauptdiagonalen der Varianz-Kovarianz-Matrix wird der Ausdruck $\Sigma_z$ zu $\E((z_i-\theta_i)(z_i-\theta_i)') = \E((z_i-\theta_i)^2) = \Var(z_i)$ ausgewertet. Auf den Nebendiagonalen wird der Ausdruck zu $\E((z_i-\theta_i)(z_j-\theta_j)') = \E((z_i-\theta_i)(z_j-\theta_j)) = \Cov(z_i,z_j)$ ausgewertet.
+	
+	\section*{Aufgabe 6}
+	\begin{enumerate}[label=(\alph*)]
+		\item Das ökonometrische Modell ist: $y_i = \beta_1 + \beta_2x{2i} + \beta_3x_{3i} + \beta_4x_{4i} + \beta_5x_{5i} + u_i$
+		\item in R:
+		\begin{lstlisting}[style=R]
+datensatz = matrix(c(250,0,68,3500,1,850,1,49,1600,1,620,1,71,2000,
+	0,160,0,23,800,0,600,0,45,3000,1,1420,1,33,2400,0,550,1,28,
+	2100,1,1600,1,62,4500,0,2100,0,58,9000,0,1800,1,48,3300,1,
+	420,1,24,400,1,300,0,22,480,1),ncol = 5, byrow = TRUE)
+y = datensatz[,1]
+X = cbind(rep(1,12),datensatz[,2],datensatz[,3],datensatz[,4],
+	datensatz[,5])
+beta = solve(t(X) %*% X) %*% t(X) %*%y
+		\end{lstlisting}
+		ergibt ein $\hat{\beta}$ von
+		\begin{align}
+			\hat{\beta} = \begin{pmatrix}
+				186.9027199 \\
+				659.2722612 \\
+				-9.2664317 \\
+				0.2821646 \\
+				-85.8955146
+			\end{pmatrix} \notag
+		\end{align}
+		\item in R
+		\begin{lstlisting}[style=R]
+# Berechnen der Fehler u
+error = y - X %*% beta
+# Mean Squared Error
+MSE = sum(error * error)/(12-(4+1))
+# Matrix, die die Varianzen aller betas enthaelt
+varMatrix = diag(MSE * solve(t(X) %*% X))
+# Matrix, die die Standardabweichung aller betas enthaelt
+sdMatrix = sqrt(varMatrix)
+# Standardabweichung von beta4 = se(beta4)
+SEbeta4 = sdMatrix[4]
+# Teststatistik
+beta[4,1]/SEbeta4
+# 97.5 Quantil der t-Verteilung mit 5 df
+qt(0.975, df=5)
+		\end{lstlisting}
+		Die Teststatistik hat einen Wert von 4.627785, aber der kritische Wert ist schon bei 2.570582. $\hat{\beta}_4$ ist also nicht signifikant von Null verschieden.
+		\item in R
+		\begin{lstlisting}[style=R]
+summary(lm(y §$\sim$§ X[,-1]))
+		\end{lstlisting}
+		Das bestätigt die vorher berechneten Werte. Obwohl $R^2_{adj} = 0.7239$ sind viele Parameter nicht signifikant von Null verschieden. Man sollte diese aus dem Modell entfernen.
+	\end{enumerate}
+
+	\section*{Aufgabe 7}
+	\begin{enumerate}[label=(\alph*)]
+		\item ökonometrisches Modell: $y_i = \beta_1 + \beta_2x_{2i} + \beta_3x_{3i} + \beta_4x_{4i} + \beta_5x_{5i} + \beta_6x_{6i} + \beta_7x_{7i} + u_i$
+		\item in R
+		\begin{lstlisting}[style=R]
+datensatz = read.csv2("Mikrozensus.csv")
+head(datensatz)
+modell = lm(Einkommen ~ ., data = datensatz)
+summary(modell)
+		\end{lstlisting}
+		Schätzer für Alter: 6.8098, Konfidenzintervall: [5.488043; 8.131639] \\
+		Schätzer für Anstellungsdauer: 12.5050, Konfidenzintervall: [11.088655; 13.921416] \\
+		Schätzer für Teilzeit: -685.9728, Konfidenzintervall: [-719.082560; -652.862975]
+		\item in R
+		\begin{lstlisting}[style=R]
+modell2 = lm(Einkommen ~ Alter + Geschlecht + Kinder + 
+	AnstDauer + Uni, data = datensatz)
+summary(modell2)
+		\end{lstlisting}
+		Interessant ist, dass plötzlich die Variable Alter nicht mehr signifikant von Null verschieden ist. \\
+		Schätzer für Alter: 0.5623, Konfidenzintervall: [-0.8420126; 1.966635] \\
+		Schätzer für Anstellungsdauer: 17.7254, Konfidenzintevall: [16.2045149; 19.246345]
+	\end{enumerate}
+	
+\end{document}
