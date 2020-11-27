@@ -1,0 +1,77 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage[amsmath,thmmarks,standard]{ntheorem}
+\usepackage{mathtools}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+\newcommand{\E}{\mathbb{E}}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\renewcommand{\E}{\mathbb{E}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+
+\title{\textbf{Einführung in die Produktion, Hausaufgabe 4}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 5}
+	\begin{enumerate}[label=(\alph*)]
+		\item Zielfunktion $DB = (50-33)x_T + (4ß0-28)x_S + (100-62)x_T \to\max$ unter den Nebenbedingungen
+		\begin{align}
+			3 x_T + 6x_S + 3x_H &\le 5000 \notag \\
+			5 x_T + 3x_s + 6x_H &\le 4000 \notag \\
+			x_T &\le 600 \notag \\
+			x_S &\le 400 \notag \\
+			x_H &\le 50 \notag \\
+			x_T,x_S,x_H &\ge 0 \notag
+		\end{align}
+		\item Lösung dieses Problems (https://www2.wiwi.uni-jena.de/Entscheidung/tenor/) ergibt
+		\begin{center}
+			\begin{tabular}{c|cc}
+				& \textbf{Ergebnis} & \textbf{Opp-Kosten} \\
+				\hline
+				$x_T$ & 500 & 0 \\
+				$x_S$ & 400 & 0 \\
+				$x_H$ & 50 & 0 \\
+				$y_1$ & 950 & 0 \\
+				$y_2$ & 0 & $\frac{17}{5}$ \\
+				$y_3$ & 100 & 0 \\
+				$y_4$ & 0 & $\frac{9}{5}$ \\
+				$y_5$ & 0 & $\frac{88}{5}$ \\
+				$F$ & 15200 &
+			\end{tabular}
+		\end{center}
+		Es sollten also $x_T=500$, $x_S=400$ und $x_H=50$ hergestellt werden. Der DB beträgt dann 15200.
+		\item Für die Variable $A$ gilt wieder offensichtlich $A=0$. Für die anderen Variablen gilt:
+		\begin{align}
+			B\cdot 12 + 0.29\cdot 17 &= 3.14 \notag \\
+			-1.29\cdot 17 + 0.14\cdot 12 + 1\cdot 38 &= C \notag \\
+			269.05\cdot 12 + 578.57\cdot 17 + 50\cdot 38 &= D \notag
+		\end{align}
+		ergibt $B=-0.1492$, $C=17.75$ und $D=14964.29$.
+		\item Schauen wir uns die Spalte $y_k$ des Tableaus an. Wenn die Kunststoffmenge um eine Einheit erhöht wird, dann werden 0.24 Einheiten $x_S$ mehr hergestellt und 0.14 Einheiten $x_T$ weniger. Die Menge von $x_H$ verändert sich nicht. Insgesamt steigt so der DB um 0.43 GE.
+	\end{enumerate}
+	
+\end{document}
