@@ -1,0 +1,84 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\CDF}{CDF}
+
+\title{\textbf{Statistik 2, Übung 6}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Wir haben hier wieder ein einfaches Konfidenzintervall zu berechnen, alles nötige ist dafür schon gegeben. Wir brauchen nur noch 98\%-Quantil der Standardnormalverteilung: $z_{0.98}=2.0537$
+	\begin{align}
+		KI &= \left[\bar{x} \mp z_{1-\frac{\alpha}{2}}\cdot\frac{\sqrt{s^2}}{\sqrt{n}}\right] \notag \\
+		&= \left[25.452 \mp 2.05375\frac{\sqrt{0.85}}{\sqrt{116}}\right] \notag \\
+		&= [25.276,25.628] \notag
+	\end{align}
+	
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Ein Schätzer für $p$ ist hier durch $\hat{p}=\frac{70}{100}=0.7$. Die Varianz von $\hat{p}$ ist dann gegeben durch $s^2 = \hat{p}(1-\hat{p})=0.7\cdot 0.3=0.21$ und das 95\%-Quantil ist $z_{0.95}=1.64485$. Das Konfidenzintervall ist dann
+		\begin{align}
+			KI &= \left[\hat{p} \mp z_{1-\frac{\alpha}{2}}\cdot\frac{\sqrt{s^2}}{\sqrt{n}}\right] \notag \\
+			&= \left[0.7 \mp 1.64485\cdot\frac{\sqrt{0.21}}{\sqrt{100}}\right] \notag \\
+			&= [0.625,0.775] \notag
+		\end{align}
+		\item Das Zielkonfidenzintervall ist [0.65,0.75] bei einem $\alpha$ von 10\%. Das heißt also, dass
+		\begin{align}
+			z_{1-\frac{\alpha}{2}}\cdot\frac{\sqrt{s^2}}{\sqrt{n}} &= 0.05 \notag \\
+			\sqrt{n} &= z_{1-\frac{\alpha}{2}}\cdot\frac{\sqrt{s^2}}{0.05} \notag \\
+			n &= \left(z_{1-\frac{\alpha}{2}}\cdot\frac{\sqrt{s^2}}{0.05}\right)^2 \notag \\
+			&= 228 \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Diese Teilaufgabe funktioniert analog zur Aufgabe 2a. WIr brauchen hier nur das 98.5\%-Quantil: $z_{0.985}=2.17009$
+		\begin{align}(
+			KI &= \left[p \mp z_{1-\frac{\alpha}{2}}\cdot\sqrt{\frac{p(1-p)}{n}}\right] \notag \\
+			&= \left[0.38 \mp 2.17009\cdot\sqrt{\frac{0.38\cdot 0.62}{400}}\right] \notag \\
+			&= [0.327,0.433] \notag
+		\end{align}
+		\item Hier verschieben wir die Streuung im Konfidenzintervall nur auf die linke Seite, das heißt wir ersetzen den Term $z_{1-\frac{\alpha}{2}}$ durch $z_{1-\alpha}$. Es ergibt sich
+		\begin{align}
+			z_{1-\alpha}\cdot\sqrt{\frac{p(1-p)}{n}} &= 0.03 \notag \\
+			z_{1-\alpha} &= \frac{0.03}{\sqrt{\frac{p(1-p)}{n}}} \notag \\
+			1-\alpha &= \CDF\left(\frac{0.03}{\sqrt{\frac{p(1-p)}{n}}}\right) \notag \\
+			\alpha &= 1 - \CDF\left(\frac{0.03}{\sqrt{\frac{p(1-p)}{n}}}\right) \notag \\
+			&= 0.108 \notag
+		\end{align}
+		Wobei $\CDF(\cdot)$ für die \textit{Cumulative distribution function} (Verteilungsfunktion) der Standardnormalverteilung steht.
+		\item Die Überlegung ist die selbe wie bei (b), nur das wir jetzt nach $n$ umstellen:
+		\begin{align}
+			z_{1-\alpha}\cdot\sqrt{\frac{p(1-p)}{n}} &= 0.03 \notag \\
+			\sqrt{\frac{p(1-p)}{n}} &= \frac{0.03}{z_{1-\alpha}} \notag \\
+			\frac{p(1-p)}{n} &= \left(\frac{0.03}{z_{1-\alpha}}\right)^2 \notag \\
+			n &= \left(\frac{0.03}{z_{1-\alpha}}\right)^2\cdot p(1-p) \notag \\
+			&= 632,7 \approx 633 \notag
+		\end{align}
+	\end{enumerate}
+	
+\end{document}
