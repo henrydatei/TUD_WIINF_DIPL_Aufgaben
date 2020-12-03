@@ -1,0 +1,200 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R,morekeywords={confint,head}}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Ökonometrie Grundlagen, Übung 6}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Für einen unverzerrten Schätzer gilt $\E(\hat{\beta})=\beta$.
+	\begin{align}
+		\E(\hat{\beta}) &= \E((X'X)^{-1}X'y) \notag \\
+		&= \E(X^{-1}\underbrace{X'^{-1}X'}_{I}y) \notag \\
+		&= \E(X^{-1}y) \notag \\
+		&= X^{-1}\E(y) \notag \\
+		&= X^{-1}\E(X\beta) \notag \\
+		&= \underbrace{X^{-1}X}_{I}\beta \notag \\
+		&= \beta \notag
+	\end{align}
+	
+	\section*{Aufgabe 2}
+	Wir werden zeigen, dass sich $\Sigma_{\hat{\beta}}$ auch als $\sigma^2_u(X'X)^{-1}$ schreiben lässt.
+	\begin{align}
+		\Sigma_{\hat{\beta}} = \Var(\hat{\beta}) &= \E(\hat{\beta}^2) - \underbrace{\E(\hat{\beta})}_{\beta}\underbrace{\E(\hat{\beta}')}_{\beta} \notag \\
+		&= \E\left([(X'X)^{-1}X'y]^2\right) - \beta^2 \notag \\
+		&= \E\left( [(X'X)^{-1}X'(X\beta+u)]^2\right) - \beta^2 \notag \\
+		&= \E\left([\underbrace{(X'X)^{-1}(X'X)}_{I}(\beta + (X'X)^{-1}X'u)]^2\right) - \beta^2 \notag \\
+		&= \E \left( [\beta + (X'X)^{-1}X'u]^2\right) - \beta^2 \notag \\
+		&= \beta^2 + \E\left([(X'X)^{-1}X'u]^2 \right) - \beta^2 \notag \\
+		&= [(X'X)^{-1}X']^2\cdot \underbrace{\E(u^2)}_{\sigma_u^2} \notag \\
+		&= \underbrace{(X'X)^{-1}(X'X)}_{I}(X'X)'^{-1} \cdot\sigma_u^2 \notag \\
+		&= \underbrace{(X'X)'^{-1}}_{(X'X)^{-1}\text{, da symmetrisch}}\cdot\sigma_u^2 \notag \\
+		&= (X'X)^{-1}\cdot\sigma_u^2 \notag
+	\end{align}
+	
+	\section*{Aufgabe 3}
+	Für einen unverzerrten Schätzer gilt $\E(\widehat{\sigma_u^2}) = \sigma_u^2$.
+	\begin{align}
+		\E(\widehat{\sigma_u^2}) &= \E\left( \frac{\hat{u}'\hat{u}}{T-k}\right) \notag \\
+		&= \E\left( \frac{(y-X\hat{\beta})'(y-X\hat{\beta})}{T-k}\right) \notag \\
+		&= \frac{1}{T-k}\E(y'y - y'X\hat{\beta} - (X\hat{\beta})'y + (X\hat{\beta})'(X\hat{\beta})) \notag \\
+		&= \frac{1}{T-k} (\E((X\hat{\beta}+u)'(X\hat{\beta}+u)) - \E((X\hat{\beta})X\hat{\beta}) - \E((X\hat{\beta})'(X\hat{\beta}+u)) + \hat{\beta}'X'X\hat{\beta}) \notag \\
+		&= \frac{1}{T-k} (\E(\hat{\beta}'X'X\hat{\beta} + (X\hat{\beta})'u + u'(X\hat{\beta}) + u'u) - \E(X\hat{\beta}X\hat{\beta} + uX\hat{\beta}) - \E((X\hat{\beta})'X\hat{\beta} + (X\hat{\beta})'u) + \hat{\beta}'X'X\hat{\beta}) \notag \\
+		&= \frac{1}{T-k} (\hat{\beta}'X'X\hat{\beta} + (X\hat{\beta})'\underbrace{\E(u)}_{0} + (X\hat{\beta})\underbrace{\E(u')}_{0} + \E(u'u) - \hat{\beta}'X'X\hat{\beta} - X\hat{\beta}\underbrace{\E(u)}_{0} - (X\hat{\beta})'X\hat{\beta} - (X\hat{\beta})'\underbrace{\E(u)}_{0} + \hat{\beta}'X'X\hat{\beta}) \notag \notag \\
+		&= \frac{1}{T-k} (\hat{\beta}'X'X\hat{\beta} + \E(u'u) - \hat{\beta}'X'X\hat{\beta} - \hat{\beta}'X'X\hat{\beta} + \hat{\beta}'X'X\hat{\beta}) \notag \\
+		&= \frac{1}{T-k} \E(u'u) \notag \\
+		&= \E\left( \frac{u'u}{T-k}\right) \notag \\
+		&= \sigma_u^2 \notag
+	\end{align}
+
+	\section*{Aufgabe 4}
+	Ich weiß nicht wirklich, was ich hier beweisen soll. Das Gauß-Markow-Theorem sagt, dass ein Schätzer $\hat{\vartheta}$ genau dann die BLUE-Eigenschaft (\textit{Best linear unbiased estimator}), wenn die zugehörigen Residuen
+	\begin{itemize}
+		\item den Erwartungswert 0 haben
+		\item eine endliche Varianz haben
+		\item unkorreliert sind
+	\end{itemize}
+	Alle diese 3 Eigenschaften sind durch die Annahmen (A1) und (A3) für alle Fehler (und damit insbesondere für den durch die Schätzung von $\hat{\beta}$ erzeugten Fehler) gegeben. Mit dem Theorem folgt also dass
+	$\hat{\beta}$ die BLUE-Eigenschaft hat.
+
+	\section*{Aufgabe 5}
+	Angenommen wir beobachten die Daten
+	\begin{align}
+		y = \begin{pmatrix}
+			1 \\ 3
+		\end{pmatrix} \notag
+	\end{align}
+	und schätzen diese mit einem linearen Modell ($k=1$) durch
+	\begin{align}
+		\hat{y} = \begin{pmatrix}
+			4 \\ 4
+		\end{pmatrix} \notag
+	\end{align}
+	Es ist $T=2$ und für $R^2$ gilt dann:
+	\begin{align}
+		R^2 &= \frac{\text{ESS}}{\text{RSS}} = \frac{(\hat{y}_1 - \bar{y})^2 + (\hat{y}_2 - \bar{y})^2}{(y_1-\bar{y})^2 + (y_2-\bar{y})^2} \notag \\
+		&= \frac{2+2}{1+1} \notag \\
+		&= 2 \notag
+	\end{align}
+	Für Theils adjustiertes Bestimmheitsmaß und Amemiyas adjustiertes Bestimmtheitsmaß gilt dann
+	\begin{align}
+		\bar{R}^2 &=1- (1-R^2)\frac{T+1}{T-k} \notag \\
+		&= 1-(1-2)\frac{2+1}{2-1} \notag \\
+		&= 4 \notag \\
+		\tilde{R}^2 &= 1- (1-R^2)\frac{T+k}{T-k} \notag \\
+		&= 1-(1-2)\frac{2+1}{2-1} \notag \\
+		&= 4 \notag
+	\end{align}
+	Es gilt also $\bar{R}^2\notin [0,1]$ und $\tilde{R}^2\notin [0,1]$.
+	
+	\section*{Aufgabe 6}
+	\begin{enumerate}[label=(\alph*)]
+		\item ökonomisches Modell: price = $\beta_0$ + $\beta_1\cdot$ speed + $\beta_2\cdot$ hd + $\beta_3\cdot$ ram + $\beta_4\cdot$ screen \\
+		ökonometrisches Modell: price$_t$ = $\beta_0$ + $\beta_1\cdot$ speed$_t$ + $\beta_2\cdot$ hd$_t$ + $\beta_3\cdot$ ram$_t$ + $\beta_4\cdot$ screen$_t$ + $u_t$
+		\item in R
+		\begin{lstlisting}[style=R]
+datensatz = Computers
+modell = lm(price ~ speed + hd + ram + screen, data = datensatz)
+summary(modell)
+		\end{lstlisting}
+		ergibt
+		\begin{center}
+			\begin{tabular}{c|c|c}
+				& \texttt{Estimate} & \texttt{Pr($>$|t|)} \\
+				\hline
+				\texttt{(Intercept)} & 10.33311 & 0.907 \\
+				\texttt{speed} & 5.24930 & $<$ 2e-16 \\
+				\texttt{hd} & -0.57936 & $<$ 2e-16 \\
+				\texttt{ram} & 76.74545 & $<$ 2e-16 \\
+				\texttt{screen} & 105.52592 & $<$ 2e-16
+			\end{tabular}
+		\end{center}
+		Der $F$-Test ergibt einen p-Value $<2.2\cdot 10^{-16}$ und es sind auch alle Parameter (bis auf $\beta_0$) signifikant von Null verschieden. Zudem ist $\bar{R}^2=0.4583$, was auf kein gutes Modell der Daten hindeutet.
+		\item Praktisch gesehen macht es keinen Sinn den Preis von Computern nur von einem Parameter abhängig zu machen. Computer bestehen aus vielen Komponenten, das sollte sich auch im Modell wiederfinden. Die Devise ist also hier: mehr Parameter statt weniger. Schaut man sich den $\bar{R}^2$ für das volle Modell an, so ergibt sich
+		\begin{lstlisting}[style=R]
+Fullmodell = lm(price ~ ., data = datensatz)
+summary(Fullmodell)
+		\end{lstlisting}
+		Hier ist $\bar{R}^2=0.7752$.
+	\end{enumerate}
+
+	\section*{Aufgabe 7}
+	\begin{enumerate}[label=(\alph*)]
+		\item ökonomisches Modell: $Z = \beta_0 + \beta_1 P + \beta_2E_i$ \\
+		ökonometrisches Modell: $Z_i = \beta_0 + \beta_1P_i + \beta_2E_i + u_i$
+		\item Die Dummy-Variable $k_i$ soll 0 werden, wenn die Familie Kinder hat, ansonsten ist $k_i=0$.
+		\begin{align}
+			Z_i = \beta_0 + \beta_1 k_i + \beta_2P_i + \beta_3k_iP_i + \beta_4E_i + \beta_5k_iE_i + u_i \notag
+		\end{align}
+		mit Restriktion $R\beta=r$.
+		\item in Blockmatrixform:
+		\begin{align}
+			\begin{pmatrix}
+				Z_1 \\ \vdots \\ Z_T
+			\end{pmatrix} = \begin{pmatrix}
+				1 & k_1 & P_1 & k_1P_1 & E_1 & k_1E_1 \\
+				\vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+				1 & k_T & P_T & k_TP_T & E_T & k_TE_T
+			\end{pmatrix}\cdot\begin{pmatrix}
+				\beta_1 \\ \vdots \\ \beta_5
+			\end{pmatrix} + \begin{pmatrix}
+				u_1 \\ \vdots \\ u_T
+			\end{pmatrix} \notag
+		\end{align}
+		mit Restriktion $R\beta=r$.
+		\item Zielfunktion: $Q_T=(Z - X\beta)'(Z-X\beta)\to\min$ unter der Nebenbedingung $R\beta=r$. Schätzung der Parameter über
+		\begin{align}
+			\hat{\beta} = (X'X)^{-1}X'Z - (X'X)^{-1}R'[R(X'X)^{-1}R']^{-1}(R(X'X)^{-1}X'Z-r) \notag
+		\end{align}
+		\item Wenn gemeinsam auf die Signifikanz der Steigung getestet werden soll, sollte ein $F$-Test verwendet werden. Der $t$-Test testet nur auf die Signifikanz eines Parameters.
+		\item Alle p-Values sind kleiner als $\alpha=0.05$, damit sind alle Parameter signifikant von Null verschieden.
+	\end{enumerate}
+	
+\end{document}
