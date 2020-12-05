@@ -1,0 +1,128 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage[amsmath,thmmarks,standard]{ntheorem}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R,morekeywords={confint,head}}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+\newcommand{\E}{\mathbb{E}}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\renewcommand{\E}{\mathbb{E}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+
+\title{\textbf{Multivariate Statistik, Übung 6}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Es lohnt sich meiner Meinung nach hier, Ideen aus der linearen Algebra vorher sich anzuschauen. Das Produkt zweier Zeilenvektoren $xy'$ ist eine Zahl, man nennt es das Skalarprodukt von $x$ und $y$ und schreibt dafür $\langle x,y\rangle$. Das Skalarprodukt hat unter anderem die Eigenschaft der Additivität, also $\langle x,y\rangle + \langle u,v\rangle = \langle x+u,y+v\rangle$. Mehr brauchen wir nicht, um das Fundamentaltheorem der multivariaten Varianzanalyse in wenigen Zeilen zu beweisen:
+	\begin{align}
+		\sum_{i=1}^{g}\sum_{j=1}^{n_i} (x_{ij}-\bar{x}_i)(x_{ij}-\bar{x}_i)' + \sum_{i=1}^g\sum_{j=1}^{n_i} (\bar{x}_i - \bar{x})(\bar{x}_i - \bar{x})' &= \sum_{i=1}^{g}\sum_{j=1}^{n_i} \underbrace{(x_{ij}-\bar{x}_i)}_{x}(x_{ij}-\bar{x}_i)' + \underbrace{(\bar{x}_i - \bar{x})}_{y}(\bar{x}_i - \bar{x})' \notag \\
+		&= \sum_{i=1}^{g}\sum_{j=1}^{n_i} xx' + yy' \notag \\
+		&= \sum_{i=1}^{g}\sum_{j=1}^{n_i} \langle x,x\rangle + \langle y,y\rangle \notag \\
+		&= \sum_{i=1}^{g}\sum_{j=1}^{n_i} \langle x+y,x+y\rangle \notag \\
+		&= \sum_{i=1}^{g}\sum_{j=1}^{n_i} [(x_{ij}-\bar{x}_i) + (\bar{x}_i - \bar{x})]\cdot [(x_{ij}-\bar{x}_i) + (\bar{x}_i - \bar{x})]' \notag \\
+		&= \sum_{i=1}^{g}\sum_{j=1}^{n_i} (x_{ij}-\bar{x})(x_{ij}-\bar{x})' \notag
+	\end{align}
+
+	\section*{Aufgabe 2}
+	Bei einer standardisierten Matrix sind die Mittelwerte der Spalten 0.
+	\begin{align}
+		S &= \frac{1}{n-1}T \notag \\
+		&= \frac{1}{n-1}(Z'Z - n\underbrace{\bar{z}}_0\underbrace{\bar{z}'}_0) \notag \\
+		&= \frac{1}{n-1}Z'Z \notag \\
+		&= R \notag
+	\end{align}
+
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der F-Test ist hier ein geeignetes Mittel, wobei wir Körpergröße und Körpergewicht herausrechnen wollen.
+		\item Gruppe 1: ($x_1$, $x_2$, $x_3$, $x_4$) \\
+		Gruppe 2: (Körpergewicht, Körpergröße) \\
+		$H_0: \mu_{\text{Mitglied},1.2} = \mu_{\text{Nicht-Mitglied},1.2}$ vs. $H_1: \mu_{\text{Mitglied},1.2} \neq \mu_{\text{Nicht-Mitglied},1.2}$
+		\item Wir haben $p=4$, $q=2$, $g=2$, $k=6$, $n=10$
+		\begin{align}
+			\nu_1 &= p(g-1) = 4 \notag \\
+			\nu_2 &= s\left[(n-1-p)-\frac{q+g}{2}\right] - \frac{q(g-1)-2}{2} = 3 \notag \\
+			s &= \sqrt{\frac{k^2(g-1)^2-4}{k^2+(g-1)^2-5}} = 1 \notag \\
+			\Lambda &= \frac{\det(W_{1.2})}{\det(T_{1.2})} = -0.8391879 \notag \\
+			F &= \frac{1-\Lambda^{\frac{1}{s}}}{\Lambda^{\frac{1}{s}}} = -13.14977 \notag
+		\end{align}
+		Ich bin mir nicht sicher, ob meine berechneten Werte richtig sind, da als Teststatistik der Wert 3.32 rauskommen soll. Ich vermute, dass die gegebenen Matrizen falsch sind, so ist z.B $T$ nicht symmetrisch: $t_{26}\neq t_{62}$.
+		\item Die Matrix $T_{11}$ ist eine $4\times 4$-Matrix, $T_{22}$ hat die Dimensionen $2\times 2$. Logischerweise dann die Dimension von $T_{12}$ $4\times 2$. Selbiges gilt für die Partitionen von $W$.
+		\item Der kritische Wert ist $F_{4,3;0.95}=9.1172$. Man kann also $H_0$ nicht ablehnen.
+	\end{enumerate}
+
+	\section*{Aufgabe 4}
+	Wir bilden wieder 2 Gruppen. Gruppe 1: ($X_1$, $X_2$) und Gruppe 2: ($X_3$, $X_4$). Wir testen dann $H_0: \mu_{\text{Land}_1,1.2} = \mu_{\text{Land}_2,1.2}$ vs. $H_1: \mu_{\text{Land}_1,1.2} \neq \mu_{\text{Land}_2,1.2}$. Zudem haben wir $p=2$, $q=2$, $g=2$, $k=4$ und $n=72$. Damit ergibt sich
+	\begin{align}
+		\nu_1 &= 2 \notag \\
+		\nu_2 &= 67 \notag \\
+		s &= 1 \notag \\
+		F &= 136.5508 \notag
+	\end{align}
+	Es gilt $F > F_{2,67;0.95}=3.134$, also lehnen wir $H_0$ ab. Ein Tempolimit verändert also die Verkehrsunfälle.
+	\begin{lstlisting}[style=R]
+p = 2
+q = 2
+g = 2
+n = 72
+k = p + q
+alpha = 0.05
+
+v1 = p*(g-1)
+s = sqrt((k^2 * (g-1)^2 - 4)/(k^2 + (g-1)^2 - 5))
+v2 = s*((n-1-p)-(q+g)/2) - (q*(g-1)-2)/2
+
+lambda = 0.197
+
+F = (1-lambda^(1/s))/(lambda^(1/s)) * v2/v1
+
+krit = qf(1-alpha,v1,v2)
+	\end{lstlisting}
+	
+\end{document}
