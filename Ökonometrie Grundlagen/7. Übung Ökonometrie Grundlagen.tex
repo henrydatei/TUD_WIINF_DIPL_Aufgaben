@@ -1,0 +1,212 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R,morekeywords={confint,head}}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Ökonometrie Grundlagen, Übung 7}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Kann ich leider zum jetzigen Zeitpunkt nicht beantworten. Ich werde da mal im Forum nachfragen. Idee ist auf jeden Fall eine Lagrange-Optimierung, aber ich schaffe es dabei nicht, alles richtig zusammenzusetzen.
+	
+	\section*{Aufgabe 2}
+	Wir überprüfen wieder, ob $\E(\hat{\beta}_R)=\beta$ ist:
+	\begin{align}
+		\E(\hat{\beta}_R) &= \E(\hat{\beta}_{KQ}) - \E((X'X)^{-1}R'(R(X'X)^{-1}R')^{-1}\underbrace{(R\hat{\beta}_{KQ} - r))}_{0} \notag \\
+		&= \E(\hat{\beta}_{KQ}) - \E(0) \notag \\
+		&= \beta \notag
+	\end{align}
+	Das gilt natürlich nur unter der Annahme, dass $R\hat{\beta}_{KQ} = r$ ist.
+	
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Diese Restriktion ist gegeben durch
+		\begin{align}
+			\begin{pmatrix}
+				0 & \dots & 0 & 1 & 0 & \dots & 0
+			\end{pmatrix}\cdot\begin{pmatrix}
+				\beta_1 \\ \vdots \\ \beta_k
+			\end{pmatrix} = 0 \notag
+		\end{align}
+		\item Diese Restriktion ist gegeben durch
+		\begin{align}
+		\begin{pmatrix}
+			0 & 1 & \dots & 1
+		\end{pmatrix}\cdot\begin{pmatrix}
+			\beta_1 \\ \vdots \\ \beta_k
+		\end{pmatrix} = 0 \notag
+		\end{align}
+		\item Diese Restriktion ist gegeben durch
+		\begin{align}
+		\begin{pmatrix}
+			0 & 1 & 0 & 0 & \dots & 0 \\
+			0 & 0 & 1 & 0 & \dots & 0 \\
+			\vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+			0 & 0 & 0 & 0 & \dots & 1
+		\end{pmatrix}\cdot\begin{pmatrix}
+			\beta_1 \\ \vdots \\ \beta_k
+		\end{pmatrix} = \begin{pmatrix}
+			0 \\ \vdots \\ 0
+		\end{pmatrix} \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 4}
+	Wir testen \\
+	$H_0: R\beta = r$ \\
+	$H_1: \exists \beta_i : R\beta\neq r$ \\
+	Die Teststatistik ist geben durch
+	\begin{align}
+		F = \frac{\frac{\hat{u}_R'\hat{u}_R - \hat{u}_{UR}'\hat{u}_{UR}}{m}}{\frac{\hat{u}'_{UR}\hat{u}_{UR}}{T-k}} \sim F_{m,T-k} \notag
+	\end{align}
+	Ist $F> F_{m,T-k;1-\alpha}$, so wird $H_0$ abgelehnt.
+
+	\section*{Aufgabe 5}
+	Ich werde hier aus Gründen der besseren Lesbarkeit und (meiner Meinung nach) besserem Verständnis einige Ideen der linearen Algebra und Analysis aufgreifen
+	\begin{itemize}
+		\item Wenn man von zwei Spaltenvektoren $x$ und $y$ das Produkt $x'y$ ausrechnen will, so kommt dabei ein Skalar (eine Zahl) raus. Man nennt dieses Produkt deswegen Skalarprodukt und schreibt dafür $\langle x,y\rangle$. Ausgerechnet bedeutet dies $\langle x,y\rangle = \sum_{i=1}^{n} x_iy_i$.
+		\item Wenn man den Abstand eines Vektors $x$ zum Ursprung wissen möchte, so berechnet man seine Norm $\Vert x\Vert$. Konkret rechnet man die euklidische Distanz mittels des Satzes des Pythagoras aus, also $\Vert x\Vert = \sqrt{\sum_{i=1}^n x_i^2}$. Eine Norm hat unter anderem drei Eigenschaften
+		\begin{itemize}
+			\item $\Vert x\Vert \ge 0 \quad\forall x$
+			\item $\Vert x+y\Vert \le \Vert x\Vert + \Vert y\Vert$
+			\item $\Vert\Vert x\Vert\Vert = \Vert x\Vert$
+		\end{itemize}
+	\end{itemize}
+	Skalarprodukt und Norm hängen auf eine sehr schöne Weise miteinander zusammen: $\Vert x\Vert = \sqrt{\langle x,x\rangle}$ bzw. $\langle x,x\rangle = \Vert x\Vert^2$. Mit diesem Wissen können wir den Beweis angehen. Wir starten diesmal mit der zu beweisen Aussage und formen solange um, bis wir eine offensichtlich wahre Aussage dastehen haben. Da wir nur Äquivalenzumformungen machen werden, muss dann auch die zu beweisende Aussage richtig sein.
+	\begin{align}
+		\hat{u}_{UR}'\hat{u}_{UR} &\le \hat{u}_R'\hat{u}_R \notag \\
+		\langle \hat{u}_{UR},\hat{u}_{UR}\rangle &\le \langle \hat{u}_R,\hat{u}_R\rangle \notag \\
+		\Vert \hat{u}_{UR}\Vert &\overset{\ast}{\le} \Vert \hat{u}_R\hat{u}_R\Vert \notag \\
+		\Vert (y-X\hat{\beta}_{UR})'(y-X\hat{\beta}_{UR})\Vert &\le \Vert (y-X\hat{\beta}_R)'(y-X\hat{\beta}_R)\Vert \notag \\
+		\Vert \langle (y-X\hat{\beta}_{UR}),(y-X\hat{\beta}_{UR})\rangle\Vert &\le \Vert \langle (y-X\hat{\beta}_{R}),(y-X\hat{\beta}_{R})\rangle\Vert \notag \\
+		\Vert \Vert y-X\hat{\beta}_{UR}\Vert\Vert &\overset{\ast}{\le} \Vert \Vert y-X\hat{\beta}_R\Vert\Vert \notag \\
+		\Vert y-X\hat{\beta}_{UR}\Vert &\le \Vert y-X\hat{\beta}_R\Vert \notag \\
+		&\le \Vert y-X(\hat{\beta}_{UR} - (X'X)^{-1}R'[R(X'X)^{-1}R]^{-1}(R\hat{\beta}_{UR}-r))\Vert \notag \\
+		&\le \Vert y-X\hat{\beta}_{UR} + X(X'X)^{-1}R'[R(X'X)^{-1}R]^{-1}(R\hat{\beta}_{UR}-r) \Vert \notag \\
+		&\le \Vert y-X\hat{\beta}_{UR}\Vert + \Vert X(X'X)^{-1}R'[R(X'X)^{-1}R]^{-1}(R\hat{\beta}_{UR}-r) \Vert \notag
+	\end{align}
+	Da Normen immer positiv sind, ist die rechte Seite offensichtlich größer als die linke Seite der Ungleichung. Damit muss dann auch $\hat{u}_{UR}'\hat{u}_{UR} \le \hat{u}_R'\hat{u}_R$ wahr sein. Die einzige Schwäche die ich hier für das Bestimmtheitsmaß sehe, ist, dass es nicht zwischen restringierten und unrestringierten Modellen unterscheidet. \\
+	$\ast$: Eigentlich müssten bei diesen Normen noch Quadrate stehen, aber da Quadrieren von positiven Zahlen eine monotone Transformation ist, ändern wir nicht die Richtung der Ungleichung.
+	
+	\section*{Aufgabe 6}
+	Wir sollten zuerst den Datensatz vernünftig verarbeitbar machen:
+	\begin{lstlisting}[style=R]
+datensatz = read.csv2("worldagprod.csv", sep = ",")
+str(datensatz)
+datensatz[,5] = as.numeric(datensatz[,5])
+datensatz[,8] = as.numeric(datensatz[,8])
+	\end{lstlisting}
+	\begin{enumerate}[label=(\alph*)]
+		\item In der ersten Spalte der Variable \texttt{datensatz} stehen die Namen der Länder. Diese sind logischerweise nicht benutzbar für eine Regression, weswegen wir sie entfernen:
+		\begin{lstlisting}[style=R]
+modell = lm(output ~ ., data = datensatz[-1])
+summary(modell)
+		\end{lstlisting}
+		In diesem Modell ist fast kein Parameter signifikant, und selbst wenn, dann nur wenig. Trotzdem hat das Modell einen adjustierten $R^2$ von 0.9793.
+		\item Wir stellen fest, dass der erste und letzte Eintrag im Datensatz die Ausreißer enthält und entfernen diese:
+		\begin{lstlisting}[style=R]
+plot(datensatz$output)
+plot(datensatz$workforce,datensatz$output)
+datensatzReduziert = datensatz[-c(1,22),]
+modell2 = lm(output ~ ., data = datensatzReduziert[-1])
+summary(modell2)
+		\end{lstlisting}
+		Diese Veränderung war eher schlecht als recht, jetzt ist nur noch ein Parameter "ein bisschen" signifikant von Null verschieden und der adjustierte $R^2$ ist auf 0.668 gesunken.
+		\item Wir suchen einfach in den Ergebnissen von (b) nach den Parametern mit dem kleinsten $p$-Value. Das sind \textit{workforce}, \textit{arable.land} und \textit{fertilizer}
+		\begin{lstlisting}[style=R]
+modell3 = lm(output ~ workforce + arable.land + fertilizer, 
+	data = datensatz)
+summary(modell3)
+		\end{lstlisting}
+		Wir befinden uns auf einem guten Weg: Die Parameter werden wieder signifikant und das adjustierte $R^2$ steigt auf 0.975. Ein schnellerer Weg um die 3 signifikantesten Parameter zu finden wäre übrigens
+		\begin{lstlisting}[style=R]
+step(modell2)
+		\end{lstlisting}
+		Nun inkludieren wir wieder die Parameter \textit{livestock} und \textit{work.stock}
+		\begin{lstlisting}[style=R]
+modell4 = lm(output ~ workforce + arable.land + fertilizer
+	 + livestock, data = datensatz)
+summary(modell4)
+modell5 = lm(output ~ workforce + arable.land + fertilizer
+	 + livestock + work.stock, data = datensatz)
+summary(modell5)
+		\end{lstlisting}
+		Wirklich signifikant sind die zusätzlichen Parameter nicht, sie verwässern eher den Einfluss unserer 3 bisherigen Parameter. Aber wenigstens steigt das adjustierte $R^2$ auf 0.9756 und schließlich auf 0.9801.
+		\item Die Cobb-Douglas-Produktionsfunktion ist gegeben durch
+		\begin{align}
+			y &= \beta_0 \cdot x_1^{\beta_1}\cdot x_2^{\beta_2}\cdot x_3^{\beta_3} \notag \\
+			\log(y) &= \log(\beta_0)  + \beta_1\log(x_1) + \beta_2\log(x_2) + \beta_3\log(x_3) \notag \\
+			\log(y_t) &= \log(\beta_0)  + \beta_1\log(x_{1t}) + \beta_2\log(x_{2t}) + \beta_3\log(x_{3t}) + u_t \notag
+		\end{align}
+		\begin{lstlisting}[style=R]
+modell6 = lm(log(output) ~ log(workforce) + log(arable.land)
+	 + log(fertilizer), data = datensatz)
+summary(modell6)
+0.27593 + 0.42580 + 0.28646
+		\end{lstlisting}
+		Addition der Parameter ergibt 0.98819, also fast 1.
+		\item Dazu müssen wir das Modell erstmal umformen. Wir nutzen dabei $\beta_3 = 1-\beta_1 - \beta_2$
+		\begin{align}
+			y &= \beta_0 \cdot x_1^{\beta_1}\cdot x_2^{\beta_2}\cdot x_3^{\beta_3} \notag \\
+			y &= \beta_0 \cdot x_1^{\beta_1}\cdot x_2^{\beta_2}\cdot x_3^{1-\beta_1-\beta_2} \notag \\
+			\log(y) &= \log(\beta_0)  + \beta_1\log(x_1) + \beta_2\log(x_2) + (1-\beta_1-\beta_2)\log(x_3) \notag \\
+			&= \log(\beta_0)  + \beta_1\log(x_1) + \beta_2\log(x_2) + \log(x_3) - \beta_1\log(x_3) - \beta_2\log(x_3) \notag \\
+			\log(y) - \log(x_3) &= \log(\beta_0)  + \beta_1(\log(x_1) - \log(x_3)) + \beta_2(\log(x_2) - \log(x_3)) \notag
+		\end{align}
+		\begin{lstlisting}[style=R]
+modell7 = lm(I(log(output) - log(fertilizer)) ~ I(log(workforce) - 
+	log(fertilizer)) + I(log(arable.land) - log(fertilizer)), 
+	data = datensatz)
+summary(modell7)
+1 - 0.2808 - 0.4280
+		\end{lstlisting}
+		Die Parameter ändern sich recht wenig, $\beta_3 = 0.2912$. Damit der Schätzer unverzerrt ist, muss die Bedingung für die Grundgesamtheit gelten.
+	\end{enumerate}
+	
+\end{document}
