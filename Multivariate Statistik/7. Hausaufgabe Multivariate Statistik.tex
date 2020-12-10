@@ -1,0 +1,73 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Multivariate Statistik, Hausaufgabe 7}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item euklidische Distanz:
+		\begin{itemize}
+			\item $d(x_1,x_1) = 0$
+			\item $d(x_1,x_2) = \sqrt{4^2 + 8^2} = \sqrt{80}$
+			\item $d(x_1,x_3) = \sqrt{1^2 + 1^1} = \sqrt{2}$
+			\item $d(x_2,x_2) = 0$
+			\item $d(x_2,x_3) = \sqrt{3^2 + 7^2} = \sqrt{58}$
+			\item $d(x_3,x_3) = 0$
+		\end{itemize}
+		Manhatten Distanz:
+		\begin{itemize}
+			\item $d(x_1,x_1) = 0$
+			\item $d(x_1,x_2) = 4 + 8 = 12$
+			\item $d(x_1,x_3) = 1 + 1 = 2$
+			\item $d(x_2,x_2) = 0$
+			\item $d(x_2,x_3) = 3 + 7 = 10$
+			\item $d(x_3,x_3) = 0$
+		\end{itemize}
+		Für die Mahalanobisdistanz brauchen wir die Inverse der Varianz-Kovarianz-Matrix, die sich einfach mit R berechnen lässt. Es ergibt sich
+		\begin{align}
+			S^{-1} = \begin{pmatrix}
+				14.25 & -6.75 \\
+				-6.75 & 3.25
+			\end{pmatrix} \notag
+		\end{align}
+		und damit
+		\begin{itemize}
+			\item $d(x_1,x_1) = 0$
+			\item $d(x_1,x_2) = \sqrt{4} = 2$
+			\item $d(x_1,x_3) = \sqrt{4} = 2$
+			\item $d(x_2,x_2) = 0$
+			\item $d(x_2,x_3) = \sqrt{4} = 2$
+			\item $d(x_3,x_3) = 0$
+		\end{itemize}
+		\item Man sieht eigentlich recht schnell, dass zuerst $x_1$ und $x_2$ sowohl bei euklidischer als auch bei Manhatten Distanz zu einem Cluster zusammengefasst werden, danach wird $x_3$ diesem Cluster hinzugefügt. Bei der Mahalanobisdistanz haben alle Punkte den selben Abstand zueinander, man könnte sie also direkt in einem Cluster zusammenfassen.
+	\end{enumerate}
+	
+\end{document}
