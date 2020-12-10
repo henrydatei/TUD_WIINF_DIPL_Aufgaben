@@ -1,0 +1,119 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\CDF}{CDF}
+
+\title{\textbf{Statistik 2, Übung 7}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir machen einen zweiseiten Gaußtest, da hier $\sigma^2$ bekannt ist und testen \\
+		$H_0:\mu=83$ \\
+		$H_1:\mu\neq 83$ \\
+		Die Teststatistik ist
+		\begin{align}
+			Z &= \frac{86-\mu}{\sqrt{\sigma^2}}\cdot\sqrt{n} \sim\Phi \notag \\
+			&= \frac{86-83}{\sqrt{64}}\cdot\sqrt{9} \notag \\
+			&= 1.125 \notag
+		\end{align}
+		Vergleichen wir das mit dem kritischen Wert $z_{1-\frac{\alpha}{2}}=1.95996$ ergibt sich, dass wir die Nullhypothese nicht ablehnen können.\footnote{Das bedeutet nicht, dass man die Nullhypothese annehmen kann. Das einzige was wir zeigen können, dass die Daten nicht ausreichen (mit 5\%-igen Fehlerwahrscheinlichkeit) um $H_0$ abzulehnen. Vor Gericht ist es ähnlich: Nur weil man die Schuld nicht beweisen kann, heißt das noch lange nicht, dass der Angeklagte unschuldig ist.}
+		\item Jetzt ist $\sigma^2$ nicht mehr bekannt, weswegen wir auf einen zweiseiten $t$-Test zurückgreifen müssen. Die Hypothesen sind die selben, nur die Teststatistik ändert sich zu
+		\begin{align}
+			T &= \frac{86-\mu}{\sqrt{s^2}}\cdot\sqrt{n}\sim t_{n-1} \notag \\
+			&= \frac{86-83}{\sqrt{20}}\cdot\sqrt{9} \notag \\
+			&= 2.012 \notag
+		\end{align}
+		Der kritische Wert ist dann $t_{n-1;1-\frac{\alpha}{2}}=2.306$, also können wir auch hier $H_0$ nicht ablehnen.
+		\item Da wir $H_0$ nie annehmen können, sondern entweder ablehnen oder nicht, müssen wir die zu zeigende Behauptung als die Alternativhypothese auffassen: \\
+		$H_0: \mu\le 83$ \\
+		$H:1: \mu > 83$ \\
+		Zudem handelt es sich hier um einen einseitigen $t$-Test. Die Teststatistik ändert sich nicht, aber der kritische Wert: $t_{n-1;1-\alpha}=1.86$. Das heißt wir können $H_0$ ablehnen und nehmen $H_1$ an.
+		\item Auch hier ändert sich nur der kritische Wert zu $t_{n-1;1-\alpha}=2.45$, hier kann also $H_0$ nicht angelehnt werden.
+		\item Wir testen hier Varianzen, das heißt wir brauchen den zweiseitigen $\chi^2$-Test \\
+		$H_0: \sigma^2 = 64$ \\
+		$H_1: \sigma^2 \neq 64$ \\
+		Die Teststatistik ergibt sich zu
+		\begin{align}
+			T &= (n-1)\frac{s^2}{\sigma^2} \sim \chi^2_{n-1} \notag \\
+			&= (9-1)\frac{20}{64} \notag \\
+			&= 2.5 \notag
+		\end{align}
+		Die beiden kritischen Werte sind $\chi^2_{n-1;1-\frac{\alpha}{2}}=17.53$ und  $\chi^2_{n-1;\frac{\alpha}{2}}=2.1$. Da unsere Teststatistik zwischen diesen beiden kritischen Werten liegt, können wir $H_0$ nicht ablehnen.
+	\end{enumerate}
+	
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Auch hier führen wir wieder einen einseitigen $t$-Test durch: \\
+		$H_0: p < 0.35$ \\
+		$H_1: p \ge 0.35$ \\
+		Für die Teststatik werden wir die Varianz brauchen. Diese ist gegeben durch $s^2= p(1-p) = 0.38\cdot 0.62 = 0.2356$.
+		\begin{align}
+			T &= \frac{0.38-p}{\sqrt{s^2}}\cdot\sqrt{n} \sim t_{n-1} \notag \\
+			&= \frac{0.38-0.35}{\sqrt{0.2356}}\cdot\sqrt{400} \notag \\
+			&= 1.2361 \notag
+		\end{align}
+		Der kritische Wert ist $t_{n-1;1-\alpha}=1.8861$, also können wir $H_0$ nicht ablehnen.
+		\item Die Teststatistik ändert sich nicht, nur die kritischen Werte:
+		\begin{itemize}
+			\item $t_{n-1;1-0.05} = 1.6487 \Rightarrow$ keine Ablehnung von $H_0$
+			\item $t_{n-1;1-0.10} = 1.2837 \Rightarrow$ keine Ablehnung von $H_0$
+			\item $t_{n-1;1-0.15} = 1.0378 \Rightarrow$ Ablehnung von $H_0$ und Annahme von $H_1$
+		\end{itemize}
+		\item Wenn wir den $p$-Wert bestimmen wollen, so fragen wir uns, bei welchem $\alpha$ $H_0$ gerade so nicht mehr ablehnt werden kann, also $t_{n-1;1-\alpha}=1.2361$.
+		\begin{align}
+			t_{n-1;1-\alpha} &= 1.2361 \notag \\
+			1-\alpha &= \CDF(1.2361) \notag \\
+			\alpha &= 1-\CDF(1.2361) \notag \\
+			&= 0.108574 \notag
+		\end{align}
+		wobei $\CDF(\cdot)$ für die Verteilungsfunktion (\textit{Cumulative Distribution function}) der $t$-Verteilung mit 399 Freiheitsgraden steht.
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	Wir testen wieder \\
+	$H_0: p\le 0.5$ \\
+	$H_1: p>0.5$ \\
+	wobei $p$ für die Wahrscheinlichkeit, dass ein Kopiervorgang fehlschlägt steht. Auch hier werden wir die Varianz brauchen: $s^2=p(1-p)=0.55\cdot 0.45=0.2475$
+	\begin{align}
+		T &= \frac{0.55-p}{\sqrt{s^2}}\cdot\sqrt{n} \sim t_{n-1} \notag \\
+		&= \frac{0.55-0.5}{\sqrt{0.2475}}\cdot\sqrt{100} \notag \\
+		&= 1.00504 \notag
+	\end{align}
+	Der kritische Wert ist $t_{n-1;1-\alpha}=0.8453$, also können wir $H_0$ ablehnen und $H_1$ annehmen.
+
+	\section*{Aufgabe 4}
+	Wir testen \\
+	$H_0:\mu> 25.8$ \\
+	$H_1:\mu\le 25.8$ \\
+	Die Teststatistik berechnet sich durch
+	\begin{align}
+		T &= \frac{25.8 - \mu}{\sqrt{s^2}}\cdot\sqrt{n} \sim t_{n-1} \notag \\
+		&= \frac{25.8 - 25.452}{\sqrt{0.85}}\cdot\sqrt{116} \notag \\
+		&= 4.0654 \notag
+	\end{align}
+	Der kritische Wert ist $t_{n-1;1-\alpha}=1.7663$, also lehnen wir $H_0$ ab und können $H_1$ annehmen.
+\end{document}
