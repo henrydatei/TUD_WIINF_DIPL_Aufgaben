@@ -1,0 +1,164 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage[amsmath,thmmarks,standard]{ntheorem}
+\usepackage{mathtools}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+\newcommand{\E}{\mathbb{E}}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\renewcommand{\E}{\mathbb{E}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+
+\title{\textbf{Einführung in die Produktion, Tutorium 6}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 12}
+	\begin{enumerate}[label=(\alph*)]
+		\item Prämissen sind
+		\begin{itemize}
+			\item Disposition eines Gutes
+			\item Zeitpunktgeballter Lagerzugang
+			\item konstante Nachfrage
+			\item keine Fehlmengen
+			\item keine Kapazitätsbeschränkungen
+			\item Daten sind sicher und bekannt
+			\item keine Sicherheitsbestandsplanung
+		\end{itemize}
+		\item Es gilt
+		\begin{align}
+			K &= K_L + K_B \to\min \notag \\
+			&= \underbrace{\underbrace{(k_{LM} + z\cdot q)}_{c_L} \cdot t_v\cdot n}_{k_L} \cdot\frac{r}{2}  + k_B\cdot n \notag \\
+			&= \frac{r}{2}k_L + k_B\frac{B}{r} \notag
+		\end{align}
+		Ableiten und Nullsetzen liefert
+		\begin{align}
+			\frac{\partial K}{\partial r} = \frac{k_L}{2} - k_B\frac{B}{r^2} &= 0 \notag \\
+			\frac{k_L}{2} &= k_B\frac{B}{r^2} \notag \\
+			\frac{2}{k_L} &= \frac{r^2}{k_B\cdot B} \notag \\
+			r &= \sqrt{\frac{2}{k_L}\cdot k_B\cdot B} \notag
+		\end{align}
+		\item Die Stückkostenfunktion lautet
+		\begin{align}
+			\frac{K}{r} &= \frac{K_L}{r} + \frac{K_B}{r} \notag \\
+			&= \frac{1}{r}\frac{r}{2}k_L + \frac{1}{r}\frac{B}{r}k_B \notag \\
+			&= \frac{1}{2}k_L + k_B\frac{B}{r^2} \to\min \notag
+		\end{align}
+		Ableiten und Nullsetzen liefert
+		\begin{align}
+			\frac{\partial\left(\frac{K}{r}\right)}{\partial r} = -2 k_B\frac{B}{r^3} &= 0 \notag \\
+			r^3 &= \frac{1}{k_B\cdot B} \notag \\
+			r &= \sqrt[3]{\frac{1}{k_B\cdot B}} \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 13}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die bestellmengenabhängigen Funktionen sind
+		\begin{align}
+			q(r) &= \begin{cases}
+				12 & r < 1000 \\
+				11.88 & 1000 \le r < 3000 \\
+				11.76 & 3000 \le r < 10000 \\
+				11.64 & r\ge 10000
+			\end{cases} \notag \\
+			k_L(r) = k_{LM} + z\cdot q(r) &= \begin{cases}
+				1.36 & r < 1000 \\
+				1.3564 & 1000 \le r < 3000 \\
+				1.3528 & 3000 \le r < 10000 \\
+				1.3492 & r \ge 10000
+			\end{cases} \notag
+		\end{align}
+		\item Ich wüsste nicht, was diese Aufgabe von der Aufgabe 12(b) unterscheidet...
+		\item Bestimmen wir zuerst die optimale Bestellmenge unter der Annahme, dass wir den vollen Rabatt bekommen:
+		\begin{align}
+			r_{opt} &= \sqrt{\frac{2}{k_L}\cdot k_B \cdot B} \notag \\
+			&= \sqrt{\frac{2}{1.3492}\cdot 75 \cdot 90000} \notag \\
+			&= 3163.22 \notag
+		\end{align}
+		Aber um diesen Rabatt zu bekommen, müssten wir mindesten 10000 Stück bestellen, was wir nicht machen. Also kommt diese Lösung für uns nicht in Frage. Gucken wir mal, ob wir die zweithöchste Rabattstufe bekommen können:
+		\begin{align}
+			r_{opt} &= \sqrt{\frac{2}{k_L}\cdot k_B \cdot B} \notag \\
+			&= \sqrt{\frac{2}{1.3528}\cdot 75 \cdot 90000} \notag \\
+			&= 3159 \notag
+		\end{align}
+		Ja, diese Stufe wäre möglich. Vielleicht lohnt es sicher aber auch 10000 Stück zu bestellen, um den höchsten Rabatt zu bekommen. Wir vergleichen dafür die Gesamtkosten der Bestellung für beide Bestellmengen
+		\begin{align}
+			K(r=3159) &= K_L + K_B + K_{EV} \notag \\
+			&= \frac{3159}{2}\cdot 1.3528 + 75\cdot \frac{90000}{3159} + 11.76\cdot 90000 \notag \\
+			&= 1062673.50 \notag \\
+			K(r=10000) &= K_L + K_B + K_{EV} \notag \\
+			&= \frac{10000}{2}\cdot 1.3492 + 75\cdot \frac{90000}{10000} + 11.64\cdot 90000 \notag \\
+			&= 1055021 \notag
+		\end{align}
+		Es ist also am besten 10000 Stück auf einmal zu bestellen.
+	\end{enumerate}
+	
+	\section*{Aufgabe 14}
+	\begin{enumerate}[label=(\alph*)]
+		\item Im Optimum werden die durchschnittlichen Kosten pro Zeiteinheit minimal. Wir bestellen also solange weiter, bis die durchschnittlichen Kosten steigen.
+		\item Wir sollten vorher noch $k_L = k_{LM} + z\cdot q = 2.1 + 0.9 = 3$ bestimmen. Es ergibt sich
+		\begin{center}
+			\begin{tabular}{c|c|c}
+				$b$ & $l$ & $\frac{k_B + k_L\sum_{t=b}^{l} (t-b)B_t}{l-b+1}$ \\
+				\hline\hline
+				1 & 1 & $\frac{250}{1-1+1} = 250$ \\
+				1 & 2 & $\frac{250 + 3(1\cdot 80)}{2-1+1} = 245$ \\
+				1 & 3 & $\frac{250 + 3(1\cdot 80 + 2\cdot 70)}{3-1+1} = 303.33$ \\
+				\hline
+				3 & 3 & $\frac{250}{3-3+1} = 250$ \\
+				3 & 4 & $\frac{250 + 3(1\cdot 100)}{4-3+1} = 275$ \\
+				\hline
+				4 & 4 & $\frac{250}{4-4+1} = 250$ \\
+				4 & 5 & $\frac{250 + 3(1\cdot 50)}{5-4+1} = 200$ \\
+				4 & 6 & $\frac{250 + 3(1\cdot 50 + 2\cdot 30)}{6-4+1} = 193.33$
+			\end{tabular}
+		\end{center}
+		Es laufen also drei Bestellungen in den Perioden 1, 3 und 4 ab mit den Bestellmengen $r_1=120+80=200$, $r_3=70$ und $r_4=100+50+30=180$.
+		\item Im Optimum sind Lagergaltungs- und Bestellkosten gleich. Wir bestellen also solange weiter, wie die Lagerhaltungskosten die Bestellkosten nicht überschreitet.
+		\item Auch hier gilt wieder $k_L=3$. Es ergibt sich
+		\begin{center}
+			\begin{tabular}{c|c|c|c}
+				$b$ & $l$ & $\sum_{t=b}^l (t-b)B_t$ & kleiner als $\frac{k_L}{k_B}=\frac{250}{3}=83.33$? \\
+				\hline\hline
+				1 & 1 & 0 & $\checkmark$ \\
+				1 & 2 & $1\cdot 80$ & $\checkmark$ \\
+				1 & 3 & $1\cdot 80 + 2\cdot 70$ & \\
+				\hline
+				3 & 3 & 0 & $\checkmark$ \\
+				3 & 4 & $1\cdot 100$ & \\
+				\hline
+				4 & 4 & 0 & $\checkmark$ \\
+				4 & 5 & $1\cdot 50$ & $\checkmark$ \\
+				4 & 6 & $1\cdot 50 + 2\cdot 30$ & \\
+				\hline
+				6 & 6 & 0 & $\checkmark$ 
+			\end{tabular}
+		\end{center}
+		Es werden also 4 Bestellungen in den Perioden 1, 3, 4 und 6 ausgelöst mit den Mengen $r_1=120+80=200$, $r_3=70$, $r_4=100+50=150$ und $r_6=30$.
+	\end{enumerate}
+	
+\end{document}
