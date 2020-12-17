@@ -1,0 +1,82 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\CDF}{CDF}
+
+\title{\textbf{Statistik 2, Übung 8}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Gütefunktion ist als Wahrscheinlichkeit, die Nullhypothese abzulehnen, definiert. Also
+		\begin{align}
+			G(\mu_0) &= \mathbb{P}(H_0\text{ ablehnen}) \notag \\
+			&= \mathbb{P}(T > z_{1-\alpha}) \notag \\
+			&= \mathbb{P}\left(\frac{\mu-\mu_0}{\sigma}\sqrt{n} > z_{1-\alpha}\right) \notag \\
+			&= 1-\mathbb{P}\left(\frac{\mu-\mu_0}{\sigma}\sqrt{n} > -z_{1-\alpha}\right) \notag \\
+			&= 1-\mathbb{P}\left(\frac{\mu-\mu_0}{\sigma}\sqrt{n} + z_{1-\alpha} > 0\right) \notag \\
+			&= 1-\Phi\left(\frac{\mu-\mu_0}{\sigma}\sqrt{n} + z_{1-\alpha}\right) \notag
+		\end{align}
+		\item Wir testen $H:0: \bar{x} \le 83$ vs. $H_1: \bar{x} > 83$ und berechnen $G(84)=0.102936$. Wir machen keinen Fehler.
+		\item Das ist das Gegenereignis zu (b), also $1-G(84)=0.897064$. Wir machen hier einen Fehler 2. Art.
+		\item $G(82)=0.021953$. Wir machen hier einen Fehler 1. Art.
+	\end{enumerate}
+	
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir testen $H_0: \bar{x} \ge 175$ gegen $H_1:\bar{x} < 175$. Die Teststatistik berechnet sich zu
+		\begin{align}
+			T = \frac{175-174.4}{4}\sqrt{25} = 0.75 \notag
+		\end{align}
+		Der kritische Wert ist $z_{1-\alpha}=1.64$ und damit erfolgt keine Ablehnung von $H_0$.
+		\item Wir müssen $\alpha^\ast$ finden, so dass
+		\begin{align}
+			z_{1-\alpha^\ast} &= 0.75 \notag \\
+			1-\alpha^\ast &=  \CDF(0.75) \notag \\
+			\alpha^\ast &= 1-\CDF(0.75) \notag \\
+			&= 0.226627 \notag
+		\end{align}
+		wobei $\CDF(\cdot)$ für die Verteilungsfunktion der Standardnormalverteilung steht.
+		\item Läuft ähnlich wie Aufgabe 1 (a):
+		\begin{align}
+			G(\mu_0) &= \mathbb{P}(H_0\text{ ablehnen}) \notag \\
+			&= \mathbb{P}(T > -z_{1-\alpha}) \notag \\
+			&= \mathbb{P}\left(\frac{\mu-\mu_0}{\sigma}\sqrt{n} > -z_{1-\alpha}\right) \notag \\
+			&= \mathbb{P}\left(\frac{\mu-\mu_0}{\sigma}\sqrt{n} - z_{1-\alpha} < 0\right) \notag \\
+			&= \Phi\left(\frac{\mu-\mu_0}{\sigma}\sqrt{n} - z_{1-\alpha}\right) \notag
+		\end{align}
+		\item Hier ist nach der Operationscharakteristik gefragt, also $1-G(174)=\Phi(-0.39)=0.651732$.
+		\item Wir müssen ein $n$ finden, sodass die Gütefunktion für $\bar{x}=174$ größer als 0.975 ist:
+		\begin{align}
+			\mathbb{P}(H_0\text{ ablehnen}) &\ge 0.975 \notag \\
+			\Phi\left(\frac{175-174}{4}\sqrt{n} - 1.64\right) &\ge 0.975 \notag \\
+			\frac{1}{4}\sqrt{n} - 1.64 &\ge z_{0.975} \notag \\
+			\sqrt{n} &\ge 4(1.95996 + 1.64) \notag \\
+			n &\ge 207.335 \notag \\
+			 &\ge 208 \notag
+		\end{align}
+	\end{enumerate}
+\end{document}
