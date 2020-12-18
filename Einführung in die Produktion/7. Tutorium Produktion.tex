@@ -1,0 +1,79 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage[amsmath,thmmarks,standard]{ntheorem}
+\usepackage{mathtools}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+\newcommand{\E}{\mathbb{E}}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\renewcommand{\E}{\mathbb{E}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+
+\title{\textbf{Einführung in die Produktion, Tutorium 7}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 15}
+	\begin{enumerate}[label=(\alph*)]
+		\item offene Fertigung: sofortige Weitergabe zur nächsten Stufe \\
+		geschlossene Fertigung: Weitergabe erfolgt erst, wenn gesamtes Los produziert wurde
+		\item Es handelt sich um ein Staulager, da $x_p>x_v$. Da der Lagerbestand auf Null sinkt, muss eine sofortige Weitergabe der Produkte erfolgen, also handelt es sich hier um ein offenes Staulager.
+		\item Es gilt
+		\begin{itemize}
+			\item $t_p=b$
+			\item $t_v=a$
+			\item $t_f=t_v-t_p=c$
+			\item $x=e$
+			\item $L_{max}=d$
+		\end{itemize}
+		\item Lagerhaltungskosten je Los:
+		\begin{align}
+			K_{L,Los} &= \frac{L_{max}}{2} \cdot t_v \cdot c_L \notag \\
+			L_{max} &= t_p(x_p-x_v) \notag \\
+			&= \frac{x}{x_p}(x_p-x_v) \notag \\
+			&= x\left(1-\frac{x_v}{x_p}\right) \notag \\
+			t_v &= \frac{x}{x_v} \notag \\
+			K_{L,Los} &= \frac{x}{2}\left(1-\frac{x_v}{x_p}\right) \cdot \frac{x}{x_v}\cdot c_L \notag \\
+			&= \frac{x^2}{2}\left(\frac{1}{x_v}-\frac{1}{x_p}\right)\cdot c_L \notag
+		\end{align}
+		\item Multiplikation mit der Losauflagehäufigkeit $n=\frac{B}{x}$ ergibt:
+		\begin{align}
+			K_L &= \frac{x}{2}\left(\frac{1}{x_v}-\frac{1}{x_p}\right)\cdot c_L\cdot B \notag
+		\end{align}
+		Gesamtkosten sind also
+		\begin{align}
+			K(x) &= K_L + K_R \to\min \notag \\
+			&= \frac{x}{2}\left(\frac{1}{x_v}-\frac{1}{x_p}\right)\cdot c_L\cdot B + k_R\frac{B}{x} \to\min \notag
+		\end{align}
+		\item Ableiten und Nullsetzen
+		\begin{align}
+			\frac{\partial K}{\partial x} = \frac{1}{2}\left(\frac{1}{x_v}-\frac{1}{x_p}\right)\cdot c_L\cdot B - k_R\frac{B}{x^2} &= 0 \notag \\
+			\frac{1}{2}\left(\frac{1}{x_v}-\frac{1}{x_p}\right)\cdot c_L\cdot B &= k_R\frac{B}{x^2} \notag \\
+			x_{opt} &= \sqrt{\frac{2k_R}{\left(\frac{1}{x_v}-\frac{1}{x_p}\right)\cdot c_L}} \notag
+		\end{align}
+	\end{enumerate}
+	
+\end{document}
