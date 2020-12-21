@@ -1,0 +1,85 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R,morekeywords={confint,head}}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Ökonometrie Grundlagen, Übung 7, Ergänzung zu Aufgabe 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Wir bilden die Lagrangefunktion $L=(y-X\hat{\beta})'(y-X\hat{\beta}) - \lambda(R\hat{\beta}-r)$. Die Ableitungen sind
+	\begin{align}
+		\frac{\partial L}{\partial \hat{\beta}} &= -X'y - X'y + 2(X'X)'\hat{\beta} - (\lambda R)' = 0 \notag \\
+		\label{ast}
+		&= -2X'y + 2X'X\hat{\beta} - R'\lambda' = 0 \tag{\textasteriskcentered} \\
+		\frac{\partial L}{\partial\lambda} &= -(R\hat{\beta}-r)=0 \notag \\
+		R\hat{\beta} &= r \notag
+	\end{align}
+	Multiplikation von \eqref{ast} mit $R(X'X)^{-1}$ liefert
+	\begin{align}
+		0 &= -2R(X'X)^{-1}X'y + 2R\underbrace{(X'X)^{-1}X'X}_{I}\hat{\beta} - R(X'X)^{-1}R'\lambda' \notag \\
+		&= -2R(X'X)^{-1}X'y + 2R\hat{\beta} - R(X'X)^{-1}R'\lambda' \notag
+	\end{align}
+	Einsetzen von $\beta_{UR} = (X'X)^{-1}X'y$ und auflösen nach $\lambda'$
+	\begin{align}
+		0 &= -2R\beta_{UR} + 2R\hat{\beta} - R(X'X)^{-1}R'\lambda' \notag \\
+		R(X'X)^{-1}R'\lambda' &= -2R\beta_{UR} + 2R\hat{\beta} \notag \\
+		\lambda' &= \left[R(X'X)^{-1}R'\right]^{-1}(-2R\beta_{UR} + 2\underbrace{R\hat{\beta}}_{r}) \notag \\
+		&= -2\left[R(X'X)^{-1}R'\right]^{-1}(R\beta_{UR} - r) \notag
+	\end{align}
+	Einsetzen in \eqref{ast} und Auflösen nach $\hat{\beta}$
+	\begin{align}
+		0 &= -2X'y + 2X'X\hat{\beta} - R'\left[-2\left[R(X'X)^{-1}R'\right]^{-1}(R\beta_{UR} - r)\right] \notag \\
+		&= X'y - X'X\hat{\beta} - R'\left[R(X'X)^{-1}R'\right]^{-1}(R\beta_{UR} - r) \notag \\
+		X'X\hat{\beta} &= X'y - R'\left[R(X'X)^{-1}R'\right]^{-1}(R\beta_{UR} - r) \notag \\
+		\hat{\beta} &= \underbrace{(X'X)^{-1}X'y}_{\beta_{UR}} - (X'X)^{-1}R'\left[R(X'X)^{-1}R'\right]^{-1}(R\beta_{UR} - r) \notag \\
+		&= \beta_{UR} - (X'X)^{-1}R'\left[R(X'X)^{-1}R'\right]^{-1}(R\beta_{UR} - r) \notag
+	\end{align}
+	
+\end{document}
