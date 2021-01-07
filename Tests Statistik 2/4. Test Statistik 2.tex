@@ -1,0 +1,77 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 2, Test 4}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Die richtigen Aussagen sind
+	\begin{itemize}
+		\item Die Ablehnung von $H_0$ führt zu der Annahme von $H_1$.
+		\item Wenn die $H_0$-Hypothese beibehalten wird, obwohl sie falsch ist, handelt es sich um einen Fehler 2. Art.
+		\item Die Ablehnung von $H_0$ bei Korrektheit der Hypothese führt zu keinem Fehler.\footnote{Meiner Meinung nach ist diese Aussage falsch. $H_0$ wird abgelehnt, aber ist richtig, führt zu einem Fehler 1. Art.}
+	\end{itemize}
+
+	\section*{Aufgabe 2}
+	Die richtigen Aussagen sind
+	\begin{itemize}
+		\item Die Prüfgröße ergibt sich mit $T=(n-1)\frac{S^2}{\sigma_0^2}$.
+		\item Bei der Durchführung des Tests ergibt sich ein $p$-Wert von 0.01. Zuvor wurde eine Irrtumswahrscheinlichkeit von 5\% festgelegt. In diesem Fall kann man die $H_0$-Hypothese ablehnen.
+		\item Die kritischen Werte sind mit $\chi^2_{n-1;\frac{\alpha}{2}}$ und $\chi^2_{n-1;1-\frac{\alpha}{2}}$ gegeben.
+	\end{itemize}
+
+	\section*{Aufgabe 3}
+	Die richtigen Aussagen sind
+	\begin{itemize}
+		\item Das $\alpha$ stellt die obere Schranke für die Wahrscheinlichkeit des Fehlers 1. Art dar.
+		\item Die Prüfgröße für diesen Fall ist $T=\frac{\bar{X}-\mu_0}{\sigma}\sqrt{n}$.
+		\item $H_0$ wird abgelehnt, wenn die Prüfgröße kleiner ist als der kritische Wert.
+	\end{itemize}
+
+	\section*{Aufgabe 4}
+	Wenn der $p$-Wert kleiner als die Irrtumswahrscheinlichkeit $\alpha$ ist, wird $H_0$ abgelehnt, also gilt hier:
+	\begin{itemize}
+		\item $\alpha=0.005$: $H_0$ wird nicht abgelehnt
+		\item $\alpha=0.05$: $H_0$ wird abgelehnt
+		\item $\alpha=0.1$: $H_0$ wird abgelehnt
+		\item $\alpha=0.01$: $H_0$ wird nicht abgelehnt
+ 	\end{itemize}
+
+	\section*{Aufgabe 5}
+	\begin{enumerate}[label=(\alph*)]
+		\item Da $\alpha=5\%$ und eine obere Schranke für den Fehler 1. Art ist, ist dieser maximal 0.05
+		\item Der kritische Wert für einen linksseitigen Test ist $z_\alpha$ ($=-z_{1-\alpha}$), also $z_{0.05}=-1.6449$
+	\end{enumerate}
+	
+	\section*{Aufgabe 6}
+	Wenn der $p$-Wert kleiner als die Irrtumswahrscheinlichkeit $\alpha$ ist, wird $H_0$ abgelehnt, also sind hier alle Aussagen richtig.
+	
+\end{document}
