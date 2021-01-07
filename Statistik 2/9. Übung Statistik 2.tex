@@ -1,0 +1,114 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\CDF}{CDF}
+
+\title{\textbf{Statistik 2, Übung 9}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir haben hier unabhängige Stichproben und ungleiche Varianzen, wir führen also den Welch-Test durch: \\
+		$H_0$: $\mu_A \le \mu_B$ \\
+		$H_1$: $\mu_A > \mu_B$ \\
+		Die Teststatistik ergibt sich zu
+		\begin{align}
+			T = \frac{140-134}{\sqrt{\frac{51}{16} + \frac{46}{11}}} = 2.2102 \notag
+		\end{align}
+		Die Berechnung des kritischen Wertes ist ein bisschen komplizierter:
+		\begin{align}
+			R &= \frac{11\cdot 51}{16\cdot 46} = 0.7622 \notag \\
+			df &= \left\lfloor\frac{(1+R)^2}{\frac{R^2}{16-1} + \frac{1}{11-1}}\right\rfloor = \lfloor 22.3844\rfloor = 22 \notag
+		\end{align}
+		Der kritische Wert ist nun $t_{22;0.99}=2.50832$. Es gilt $T<t_{22;0.99}$ und damit kann $H_0$ nicht abgelehnt werden.
+		\item Wir führen einen $F$-Test durch: \\
+		$H_0$: $\sigma_A^2 = \sigma_B^2$ \\
+		$H_1$: $\sigma_A^2 \neq \sigma_B^2$ \\
+		Die Teststatistik ist
+		\begin{align}
+			T = \frac{51}{46} = 1.1087 \notag
+		\end{align}
+		Die kritischen Werte sind
+		\begin{itemize}
+			\item $F_{15,10;0.01}=0.262816$
+			\item $F_{15,10;0.99}=4.55814$
+		\end{itemize}
+		Da die Teststatistik zwischen den beiden kritischen Werten liegt, kann $H_0$ nicht abgelehnt werden.
+		\item Wir führen nun einen Zweistichprobentest durch: \\
+		$H_0$: $\mu_A \le \mu_B$ \\
+		$H_1$: $\mu_A > \mu_B$ \\
+		Aber zuerst müssen wir die gemeinsame Varianz schätzen:
+		\begin{align}
+			\tilde{\sigma}^2 = \frac{(16-1)\cdot 51 + (11-1)\cdot 46}{16+11-2} = 49 \notag
+		\end{align}
+		Dann berechnet sich die Teststatistik zu
+		\begin{align}
+			T = \frac{140-134}{\sqrt{\tilde{\sigma}^2\left(\frac{1}{16}+\frac{1}{11}\right)}} = 2.1884 \notag
+		\end{align}
+		Der kritische Wert ist $t_{16+11-2;0.99}=2.48511$ und da $T < t_{25;0.99}$ kann $H_0$ nicht abgelehnt werden.
+ 	\end{enumerate}
+	
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir haben immer noch unabhängige Stichproben und führen wieder den Welch-Test durch:
+		$H_0$: $\mu_M \le \mu_P$ \\
+		$H_1$: $\mu_M > \mu_P$ \\
+		Die Teststatistik ergibt sich zu
+		\begin{align}
+			T = \frac{10.7-1.6}{\sqrt{\frac{9.8^2}{20} + \frac{11.1^2}{20}}} = 2.7484 \notag
+		\end{align}
+		Die Berechnung des kritischen Wertes ist ein bisschen komplizierter:
+		\begin{align}
+			R &= \frac{20\cdot 9.8^2}{20\cdot 11.1^2} = 0.7795 \notag \\
+			df &= \left\lfloor\frac{(1+R)^2}{\frac{R^2}{20-1} + \frac{1}{20-1}}\right\rfloor = \lfloor 37.4253\rfloor = 37 \notag
+		\end{align}
+		Der kritische Wert ist nun $t_{37;0.99}=2.43145$. Es gilt $T>t_{37;0.99}$ und damit kann $H_0$ abgelehnt werden und $H_1$ wird angenommen. Wir führen jetzt noch einen $F$-Test durch: \\
+		$H_0$: $\sigma_M^2 \ge \sigma_P^2$ \\
+		$H_1$: $\sigma_M^2 < \sigma_P^2$ \\
+		Die Teststatistik ist
+		\begin{align}
+			T = \frac{9.8^2}{11.1^2} = 0.7795 \notag
+		\end{align}
+		Der kritische Wert ist $F_{19,19;0.05}=0.461201$ und da $T>F_{19,19;0.05}$, kann $H_0$ nicht abgelehnt werden.
+		\item Jetzt haben wir eine verbundene Stichprobe und testen: \\
+		$H_0$: $\mu_{vor} \le \mu_{nach}$ \\
+		$H_1$: $\mu_{vor} > \mu_{nach}$ \\
+		Wir brauchen dazu die Differenzen der einzelnen Werte; diese sind
+		\begin{center}
+			\begin{tabular}{c|ccccc}
+				$i$ & 1 & 2 & 3 & 4 & 5 \\
+				\hline
+				$d_i$ & 1.7 & -1.7 & 20.4 & 24.6 & -3.5
+			\end{tabular}
+		\end{center}
+		Die Teststatistik ist dann
+		\begin{align}
+			T = \sqrt{5}\frac{8.3}{\sqrt{\frac{1}{5-1}\sum_{i=1}^{5}(d_i-\bar{d})^2}} = 1.4081 \notag
+		\end{align}
+		Der kritische Wert ist $t_{4;0.95}=2.1318$ und da $T< t_{4;0.95}$ kann $H_0$ nicht abgelehnt werden.
+		\item Mit 12\%-iger Irrtumswahrscheinlichkeit behauptet der Test, dass das Medikament den Blutdruck senkt, obwohl das nicht so ist (Fehler 1. Art).
+	\end{enumerate}
+\end{document}
