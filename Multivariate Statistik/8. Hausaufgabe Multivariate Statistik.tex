@@ -1,0 +1,67 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Multivariate Statistik, Hausaufgabe 8}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Klasse $R_1$ ist wie folgt definiert und vereinfacht sich in dieser Aufgabe zu
+		\begin{align}
+			R_1 &= \left\lbrace x\in \mathbb{R}^k\,\bigg\vert\, \frac{f_1(x)}{f_2(x)} \ge \frac{c(1\mid 2)\mathbb{P}(Y=2)}{c(2\mid 1)\mathbb{P}(Y=1)}\right\rbrace \notag \\
+			&= \left\lbrace x\in \mathbb{R}^k\,\bigg\vert\, \frac{f_1(x)}{f_2(x)} \ge 1\right\rbrace \notag
+		\end{align}
+		wobei
+		\begin{align}
+			\frac{f_1(x)}{f_2(x)} = \exp\left(-\frac{1}{2}x'(\Sigma_1^{-1}-\Sigma_2^{-1})x + (\mu_1'\Sigma_1^{-1} - \mu_2'\Sigma_2^{-1})x\right) \cdot\frac{\sqrt{\det(\Sigma_2)}}{\sqrt{\det(\Sigma_1)}}\exp\left(-\frac{1}{2}(\mu_1'\Sigma_1^{-1}\mu_1 - \mu_2'\Sigma_2^{-1}\mu_2)\right) \notag
+		\end{align}
+		Die dazu benötigten inversen Matrizen lauten
+		\begin{align}
+			\Sigma_1^{-1} = \begin{pmatrix}
+				\frac{3}{2} & -\frac{1}{2} \\ -\frac{1}{2} & \frac{1}{2}
+			\end{pmatrix} \qquad \Sigma_1^{-1} = \begin{pmatrix}
+				\frac{1}{2} & -\frac{1}{2} \\ -\frac{1}{2} & 1
+			\end{pmatrix} \notag
+		\end{align}
+		Damit ist
+		\begin{align}
+			\frac{f_1(x)}{f_2(x)} = \exp\left(-\frac{1}{2}x'\begin{pmatrix}1 & 0 \\ 0 & -\frac{1}{2}\end{pmatrix}x + \begin{pmatrix}\frac{1}{2} & -\frac{5}{2}\end{pmatrix}x\right) \cdot\sqrt{2}\cdot\exp\left(\frac{21}{4}\right) \notag
+		\end{align}
+		\item Einsetzen von $x=(2,2)$ liefert $\frac{f_1(x)}{f_2(x)}=1.815886$, damit wird $x$ der Klasse 1 zugeordnet.
+		\item Durch Einbeziehen der Fehlklassifikationskosten ändert sich $R_1$ auf
+		\begin{align}
+			R_1 &= \left\lbrace x\in \mathbb{R}^k\,\bigg\vert\, \frac{f_1(x)}{f_2(x)} \ge \frac{c(1\mid 2)\mathbb{P}(Y=2)}{c(2\mid 1)\mathbb{P}(Y=1)}\right\rbrace \notag \\
+			&= \left\lbrace x\in \mathbb{R}^k\,\bigg\vert\, \frac{f_1(x)}{f_2(x)} \ge \frac{c(1\mid 2)}{c(2\mid 1)}\right\rbrace \notag \\
+			&= \left\lbrace x\in \mathbb{R}^k\,\bigg\vert\, \frac{f_1(x)}{f_2(x)} \ge \frac{350}{100}\right\rbrace \notag \\
+			&= \left\lbrace x\in \mathbb{R}^k\,\bigg\vert\, \frac{f_1(x)}{f_2(x)} \ge 3.5\right\rbrace \notag
+		\end{align}
+	\end{enumerate}
+	
+\end{document}
