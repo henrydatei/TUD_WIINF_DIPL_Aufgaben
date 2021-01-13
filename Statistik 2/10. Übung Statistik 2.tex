@@ -1,0 +1,74 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\CDF}{CDF}
+
+\title{\textbf{Statistik 2, Übung 10}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Wir machen einen Unabhängigkeitstest basierend auf dem Spearmanschen Korrelationskoeffizienten: \\
+	$H_0$: $R_{XY}\le0$ \\
+	$H_1$: $R_{XY}> 0$ \\
+	Die Teststatistik ergibt sich zu
+	\begin{align}
+		T = \frac{1}{2}\log\left(\frac{1+\hat{R}}{1-\hat{R}}\right)\sqrt{\frac{n-3}{1.06}} = 2.2442 \notag
+	\end{align}
+	Der kritische Wert ist $z_{1-\alpha}=z_{0.99}=2.32635$. Die Nullhypothese wird abgelehnt, $\hat{R}$ ist größer als 0.
+	
+	\section*{Aufgabe 2}
+	Stellen wir zuerst einmal die Kontingenztafel mit relativen Häufigkeiten auf:
+	\begin{center}
+		\begin{tabular}{c|ccc|c}
+			& \textbf{positiv} & \textbf{unentschieden} & \textbf{negativ} & $\Sigma$ \\
+			\hline
+			\textbf{weiblich} & 0.17 & 0.082 & 0.148 & 0.4 \\
+			\textbf{männlich} & 0.18 & 0.104 & 0.316 & 0.6 \\
+			\hline
+			$\Sigma$ & 0.35 & 0.186 & 0.464 & 1
+		\end{tabular}
+	\end{center}
+	Wir testen \\
+	$H_0$: $X$ (= Geschlecht) und $Y$ (= Meinung) sind unabhängig \\
+	$H_1$: $X$ und $Y$ sind abhängig \\
+	Die Teststatistik ist
+	\begin{align}
+		T &= 500\cdot\left(\frac{(0.17 - 0.35\cdot 0.4)^2}{0.35\cdot 0.4} + \frac{(0.082 - 0.186\cdot 0.4)^2}{0.186\cdot 0.4} + \frac{(0.148 - 0.464\cdot 0.4)^2}{0.464\cdot 0.4}\right. \notag \\
+		&\left.+ \frac{(0.18 - 0.35\cdot 0.6)^2}{0.35\cdot 0.6} + \frac{(0.104 - 0.186\cdot 0.6)^2}{0.186\cdot 0.6} + \frac{(0.316 - 0.464\cdot 0.6)^2}{0.464\cdot 0.6}\right) \notag \\
+		&= 12.3518 \notag
+	\end{align}
+	Nehmen wir $\alpha=0.05$ an, dann ist der kritische Wert $\chi^2_{(2-1)(3-1);1-\alpha}=5.9914$, $H_0$ wird abgelehnt; weibliche und männliche Studenten haben eine also unterschiedliche Meinung.
+	
+	\section*{Aufgabe 3}
+	Wir machen einen Unabhängigkeitstest basierend auf dem Korrelationskoeffizinten nach Bravais-Pearson und testen \\
+	$H_0$: $r=0$ \\
+	$H_1$: $r\neq 0$ \\
+	Die Teststatistik ergibt sich zu
+	\begin{align}
+		T = \sqrt{n-2}\cdot\frac{r}{\sqrt{1-r^2}} = -4.2277 \notag
+	\end{align}
+	Der kritische Wert ist (bei $\alpha=0.05$) $t_{n-2;1-\frac{\alpha}{2}}=t_{18;0.975} = 2.1009$, also wird die Nullhypothese abgelehnt. Der Zusammenhang zwischen Alter und Wegstrecke ist also signifikant.
+\end{document}
