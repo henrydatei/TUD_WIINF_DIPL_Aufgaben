@@ -1,0 +1,81 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 2, Test 5}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Es ist nach einem $F$-Test gefragt. Die Teststatistik ist
+	\begin{align}
+		T = \frac{s_1^2}{s_2^2} = \frac{20^2}{23^2} = 0.75614 \notag
+	\end{align}
+	Der kritische Bereich ist bei einem zweiseitigen $F$-Test das Intervall $[F_{n_1-1,n_2-1;\frac{\alpha}{2}},F_{n_1-1,n_2-1;1-\frac{\alpha}{2}}]$. Hier ist nur nach der unteren Grenze gefragt, also nach $F_{n_1-1,n_2-1;\frac{\alpha}{2}}=F_{30,30;0.05}= 0.54322$.
+
+	\section*{Aufgabe 2}
+	Die falschen Aussagen sind
+	\begin{itemize}
+		\item Der kritische Wert für den linksseitigen Test beträgt $z_{1-\alpha}$.
+		\item Vorausgesetzt wird, dass $X_1$ und $X_2$ voneinander unabhängig sind.
+	\end{itemize}
+
+	\section*{Aufgabe 3}
+	Wir brauchen den Unabhängigkeitstest basierend auf dem Korrelationskoeffizienten nach Bravais-Pearson. Die Teststatistik ist
+	\begin{align}
+		T = \sqrt{n-2}\frac{\hat{\rho}}{\sqrt{1-\hat{\rho}^2}} = \sqrt{12}\frac{0.243}{\sqrt{1-0.243^2}} = 0.86779 \notag
+	\end{align}
+	Der kritische Wert ist $t_{n-2;1-\frac{\alpha}{2}} = t_{12;0.975} = 2.17881$. Da $T > t_{12;0.975}$ ist, kann die Nullhypothese (keine Korrelation) nicht abgelehnt werden. Es liegt also keine lineare Abhängigkeit vor.
+
+	\section*{Aufgabe 4}
+	Die vollständige Tabelle lautet
+	\begin{center}
+		\begin{tabular}{c|ccc|c}
+			& \textbf{positiv} & \textbf{neutral} & \textbf{negativ} & $\Sigma$ \\
+			\hline
+			\textbf{Touristen} & 100 & 10 & 70 & 180 \\
+			\textbf{Dresdner} & 60 & 30 & 110 & 200 \\
+			\hline
+			$\Sigma$ & 160 & 40 & 180 & 380
+		\end{tabular}
+	\end{center}
+
+	\section*{Aufgabe 5}
+	\begin{enumerate}[label=(\alph*)]
+		\item 2 Stichproben, nicht verbunden $\Rightarrow$ 3
+		\item 2 Stichproben, nicht verbunden $\Rightarrow$ 3
+		\item Die Stichproben sind verbunden, aber da Leistung nicht metrisch skaliert ist, kann man nicht auf linearen, sondern nur auf monotonen Zusammenhang testen. $\Rightarrow$ 5
+		\item 2 Stichproben, nicht verbunden $\Rightarrow$ 3
+		\item eine Stichprobe, Überprüfung, ob der Erwartungswert über/unter/gleich 150 ist $\Rightarrow$ 1
+		\item Fläche und Miete sind metrisch skalierte Merkmale, man kann also auf linearen Zusammenhang testen. $\Rightarrow$ 4
+		\item 2 Stichproben, nicht verbunden $\Rightarrow$ 3
+		\item Man interessiert sich, ob Strecke und Alter unabhängig sind $\Rightarrow$ 6
+		\item Man interessiert sich, ob Geschlecht  und Beliebtheit unabhängig sind $\Rightarrow$ 6
+	\end{enumerate}
+\end{document}
