@@ -1,0 +1,125 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 2, Test 6}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Die richtigen Aussagen sind
+	\begin{itemize}
+		\item Wird kein unbekannter Parameter geschätzt, so ist der kritische Wert $\chi^2_{r-1;1-\alpha}$, wobei $r$ ist die Anzahl der Klassen
+		\item Die Prüfgröße für diesen Test ist
+		\begin{align}
+			T = \sum_{i=1}^{r} \frac{(S_i-np_i)^2}{np_i} \notag
+		\end{align}
+		\item Hängt die Verteilung von $l$ unbekannten Parametern ab, so müssen diese geschätzt werden. Durch die Schätzung wird der Freiheitsgrad des kritischen Wertes um $l$ reduziert.
+		\item Wird die Bedingung $np_i\le 5$ nicht erfüllt ist, müssen die entsprechenden Klassen mit anderen Klassen zusammengefasst werden.
+	\end{itemize} 
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die vollständige Tabelle lautet
+		\begin{center}
+			\begin{tabular}{c|cccccc|c}
+				$i$ & 0 & 1 & 2 & 3 & 4 & $\ge$ 5 & $\Sigma$ \\
+				\hline
+				$S_i$ & 8 & 28 & 27 & 15 & 7 & 0 & 85 \\
+				$\hat{p}_i$ & 0.162 & \textcolor{blue}{0.295} & 0.268 & 0.163 & 0.074 & \textcolor{red}{0.038} & 1 \\
+				$n\cdot \hat{p}_i$ & 13.77 & \textcolor{green!80!black}{25.07} & 22.78 & 13.86 & 6.29 & 3.23 & \textcolor{orange}{85}
+			\end{tabular}
+		\end{center}
+		\textcolor{blue}{Die Dichte der Poisson-Verteilung ist
+		\begin{align}
+			\mathbb{P}(k) &= \frac{\lambda^k}{k!}\cdot\exp(-\lambda) \notag \\
+			\mathbb{P}(1) &= \frac{1.82^1}{1!}\cdot\exp(-1.82) \notag \\
+			&= 0.295 \notag
+		\end{align}}
+		\textcolor{red}{Wir wissen, dass die Summe aller Wahrscheinlichkeiten in dieser Zeile 1 sein muss, das fehlende Feld lässt sich also durch $1-0.162-0.295-0.268-0.163-0.074 = 0.038$ berechnen.} \\
+		\textcolor{green!80!black}{Wir müssen nur noch die Formel $n\cdot\hat{p}_i$ ausrechnen. $n=85$, also $85\cdot 0.295 = 25.07$.} \\
+		\textcolor{orange}{Hier muss einfach nur die Summe der gesamten Zeile hin.}
+		\item Da es ein Produkt $n\cdot\hat{p}_i$ gibt, welches kleiner als 5 ist, muss hier eine Klassenbildung vorgenommen werden, da ansonsten die Voraussetzungen für den $\chi^2$-Anpassungstest nicht mehr erfüllt sind.
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der kritische Wert ist $\chi^2_{r-1;1-\alpha} = \chi^2_{5;0.95} = 9.4877$.
+		\item Da $q$ kleiner als der kritische Wert ist, kann $H_0$ nicht verworfen werden.
+	\end{enumerate}
+
+	\section*{Aufgabe 4}
+	Die richtigen Aussagen sind
+	\begin{itemize}
+		\item Wenn man $H_0$ nicht ablehnt, kann man davon ausgehen, dass die vermutetet Verteilung eine gute Näherung der wahren Verteilung ist.
+		\item Je größer der Abstand der Stichprobenwerte der Verteilungsfunktion unter $H_0$ ist, desto eher wird $H_0$ abgelehnt.
+		\item Um den Test anwenden zu können, muss die zu testende Zufallsvariable stetig sein.
+	\end{itemize}
+
+	\section*{Aufgabe 5}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die vollständige Tabelle lautet
+		\begin{center}
+			\begin{tabular}{c|cccc|c}
+				$x_i$ & $\hat{F}(x_i)$ & $F_0(x_i)$ & $\vert \hat{F}(x_i) - F_0(x_i)\vert$ & $\vert \hat{F}(x_{i-1}) - F_0(x_i)\vert$ & $\max_i$ \\
+				\hline
+				7 & 0.15 & \textcolor{red}{0.1} & 0.05 & \textcolor{blue}{0.1} & 0.1 \\
+				9 & 0.25 & 0.2 & 0.05 & 0.05 & 0.05 \\
+				11 & 0.4 & \textcolor{green!80!black}{0.37} & 0.03 & 0.12 & 0.12 \\
+				12 & 0.6 & 0.55 & \textcolor{orange}{0.05} & 0.15 & 0.15 \\
+				14 & 0.8 & 0.74 & 0.06 & 0.14 & 0.14 \\
+				15 & 1 & 1 & 0 & 0.2 & \textcolor{cyan}{0.2}
+			\end{tabular}
+		\end{center}
+		Die Berechnungen für die fehlenden Werte sind
+		\begin{itemize}
+			\item \textcolor{red}{Wir wissen, dass $\vert \hat{F}(x_i) - F_0(x_i)\vert = \vert 0.15 - F_0(x_i)\vert = 0.05 \Rightarrow F_0(x_i)=0.1$}
+			\item \textcolor{blue}{$\vert \hat{F}(x_{i-1}) - F_0(x_i)\vert = \vert 0- 0.1\vert = 0.1$}
+			\item \textcolor{green!80!black}{$\vert \hat{F}(x_i) - F_0(x_i)\vert = \vert 0.4 - F_0(x_i)\vert = 0.03 \Rightarrow F_0(x_i)=0.37$}
+			\item \textcolor{orange}{$\vert \hat{F}(x_i) - F_0(x_i)\vert = \vert 0.6-0.55\vert = 0.05$}
+			\item \textcolor{cyan}{An diese Stelle kommt $\max\left\lbrace \vert \hat{F}(x_i) - F_0(x_i)\vert,\vert \hat{F}(x_{i-1}) - F_0(x_i)\vert\right\rbrace = \max \left\lbrace 0,0.2\right\rbrace =0.2$ hin.}
+		\end{itemize}
+		\item Die Testgröße ist das Maximum der $\max_i$-Spalte, also 0.2. Der kritische Wert muss in der Formelsammlung auf Seite 35 nachgeschaut werden, er ist in diesem Fall 0.43. Da die Testgröße kleiner als der kritische Wert ist, wird die Nullhypothese nicht abgelehnt. 
+	\end{enumerate}
+	
+	\section*{Aufgabe 6}
+	Die vollständige Tabelle lautet
+	\begin{center}
+		\begin{tabular}{cc|cc}
+			$i$ & $x_{(i)}$ & $p_i=\frac{i-0.5}{n}$ & $v_i=\mathbb{P}_0^{-1}(p_i)$ \\
+			\hline
+			1 & 12 & 0.1 & -1.28 \\
+			2 & 26 & 0.3 & -0.5244 \\
+			3 & 32 & 0.5 & 0 \\
+			4 & 35 & 0.7 & 0.5244 \\
+			5 & 40 & 0.9 & 1.28
+		\end{tabular}
+	\end{center}
+	Aus der 0.1 in der ersten Zeile kann man $n=5$ herauslesen und dann damit die restlichen $p_i$ berechnen. In die Spalte $v_i$ trägt man den entsprechenden Wert des $p_i$-Quantils der Standardnormalverteilung ein.
+\end{document}
