@@ -1,0 +1,44 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Multivariate Statistik, Hausaufgabe 9}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Eigenwerte sind $\lambda_1=\frac{11}{10}$ und $\lambda_2=\frac{9}{10}$. Die zugehörigen normierten Eigenvektoren sind $v_1=\sqrt{2}\cdot (1,1)$ und $v_2=\sqrt{2}\cdot (-1,1)$. Damit wird
+		\begin{align}
+			\frac{\lambda_1}{\lambda_1 + \lambda_2} = \frac{\frac{11}{10}}{\frac{11}{10} + \frac{9}{10}} = 55\% \notag
+		\end{align}
+		der Streuung erklärt.
+		\item Die erste Hauptkomponente ist $y_1=v_1\cdot x = \sqrt{2}\cdot 2 + \sqrt{2}\cdot 10 = \sqrt{2}\cdot 12 = 16.9706$.
+	\end{enumerate}
+	
+\end{document}

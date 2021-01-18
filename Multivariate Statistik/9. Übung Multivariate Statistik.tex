@@ -1,0 +1,118 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage[amsmath,thmmarks,standard]{ntheorem}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R,morekeywords={confint,head}}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+\newcommand{\E}{\mathbb{E}}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\renewcommand{\E}{\mathbb{E}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+
+\title{\textbf{Multivariate Statistik, Übung 9}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Eigenwerte sind $\lambda_1=4$ und $\lambda_2=1$\footnote{Wenn eine Matrix schon in Diagonalform ist, sind die Elemente auf der Hauptdiagonalen die Eigenwerte und die Einheitsvektoren sind die Eigenvektoren.} und die dazugehörigen Eigenvektoren sind $v_1=(0,1)$ und $v_2=(1,0)$. Durch die erste Hauptkomponente wird dann
+		\begin{align}
+			\frac{\lambda_1}{\lambda_1 + \lambda_2} = \frac{4}{4+1} = 80\% \notag
+		\end{align}
+		der Streuung erklärt.
+		\item Selbiges Vorgehen hier: Die Eigenwerte sind $\lambda_1=\lambda_2=1$ und die zugehörigen Eigenvektoren sind $v_1=(1,0)$ und $v_2=(0,1)$. Durch die erste Hauptkomponente wird dann
+		\begin{align}
+			\frac{\lambda_1}{\lambda_1 + \lambda_2} = \frac{1}{1+1} = 50\% \notag
+		\end{align}
+		der Streuung erklärt.
+		\item Ich würde die Hauptkomponentenanalyse der Varianz-Kovarianz-Matrix benutzen. Hier wird 80\% der Streuung erklärt, im Gegensatz zu den 50\% der Korrelationsmatrix.
+		\item Die erste Hauptkomponente ist $y_1 = (1,0)\cdot x = 1\cdot 2 + 0\cdot 10 = 2$.
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Es handelt sich hier um eine $4\times 4$-Matrix, wir erwarten also 4 Eigenwerte.\footnote{Das muss nicht unbedingt sein; es ist durchaus möglich, dass eine $n\times n$-Matrix weniger als $n$ Eigenwerte hat. Allerdings sind in diesem Fall dann die sogenannten Eigenräume (der Vektorraum, aus denen der Eigenvektor kommt) mehrdimensional. Die Summe der sogenannten geometrischen Vielfachheiten (Dimension der Eigenräume) ist dann aber immer $n$. Eine solche Matrix lässt sich aber nicht mehr in Diagonalform bringen, das heißt die spezielle Form des Spektralsatzes aus der Vorlesung gilt dann nicht mehr. Ich denke, dass wir es deswegen in dieser Vorlesung nur mit Matrizen zu tun haben werden, die genau $n$ Eigenwerte haben.} Das charakteristische Polynom ist
+		\begin{align}
+			\chi = \bigg((1-\lambda)^2 - \rho_1^2\bigg)\bigg((1-\lambda)^2-\rho_2^2\bigg) \notag
+		\end{align}
+		Nullsetzen des Polynoms liefert
+		\begin{align}
+			(1-\lambda)^2-\rho_1^2 &= 0 \notag \\
+			(1-\lambda)^2 &= \rho_1^2 \notag \\
+			\lambda_1 &= 1+\rho_1 \notag \\
+			\lambda_2 &= 1-\rho_1 \notag
+		\end{align}
+		und
+		\begin{align}
+			(1-\lambda)^2-\rho_2^2 &= 0 \notag \\
+			(1-\lambda)^2 &= \rho_2^2 \notag \\
+			\lambda_3 &= 1+\rho_2 \notag \\
+			\lambda_4 &= 1-\rho_2 \notag
+		\end{align}
+		Wir wissen, dass $\rho_1>\rho_2$ und weil es sich hier um eine Korrelationsmatrix handelt $\sum \lambda_i=4$. Damit lassen sich die Eigenwerte ihrer Größe nach ordnen:
+		\begin{align}
+			\lambda_1 > \lambda_2 > \lambda_4 > \lambda_2 \notag
+		\end{align}
+		Wenn mit der ersten Hauptkomponente mindestens 50\% erklärt werden soll, so muss gelten:
+		\begin{align}
+			\frac{\lambda_1}{4} &\ge 0.5 \notag \\
+			\lambda_1 &\ge 2 \notag \\
+			1+\rho_1 &\ge 2 \notag \\
+			\rho_1 &\ge 1 \notag
+		\end{align}
+		Da aber $\rho_1 \le 1$, muss $\rho_1=1$ gelten. $\rho_2$ kann frei gewählt werden.
+		\item Nun muss gelten:
+		\begin{align}
+			\frac{\lambda_1}{4} + \frac{\lambda_2}{4} &\ge 0.8 \notag \\
+			\lambda_1 + \lambda_2 &\ge 3.2 \notag \\
+			(1+\rho_1) + (1+\rho_2) &\ge 3.2 \notag \\
+			\rho_1 + \rho_2 &\ge 1.2 \notag
+		\end{align}
+	\end{enumerate}
+	
+\end{document}
