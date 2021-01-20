@@ -1,0 +1,105 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\CDF}{CDF}
+
+\title{\textbf{Statistik 2, Übung 11}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Da hier auf eine diskrete Verteilung getestet werden soll, können wir nur den $\chi^2$-Anpassungstest benutzen. Dafür müssen wir aber erstmal den Parameter der Poisson-Verteilung schätzen. MLE ergibt
+	\begin{align}
+		\hat{\lambda} &= \frac{1}{N}\cdot\sum_{i=1}^{N} n_i \notag \\
+		&= \frac{1}{99} \cdot (\underbrace{0+\dots+0}_{10\text{ mal}} + \underbrace{1+\dots+1}_{30\text{ mal}} + \underbrace{2+\dots+2}_{25\text{ mal}} + \underbrace{3+\dots+3}_{20\text{ mal}} + \underbrace{4+\dots+4}_{10\text{ mal}} + \underbrace{5+\dots+5}_{4\text{ mal}}) \notag \\
+		&= \frac{200}{99} \notag
+	\end{align}
+	Die Tabelle für den Test ist dann
+	\begin{center}
+		\begin{tabular}{c|ccccccc|c}
+			& 0 & 1 & 2 & 3 & 4 & 5 & $> 5$ & $\Sigma$ \\
+			\hline
+			$S_i$ & 10 & 30 & 25 & 20 & 10 & 4 & 0 & 99 \\
+			$p_i$ & 0.1326 & 0.2679 & 0.2706 & 0.1823 & 0.0920 & 0.0372 & 0.0176 & 1 \\
+			$np_i$ & 13.1274 & 26.5221 & 26.7894 & 18.0477 & 9.108 & 3.6828 & 1.7424 &
+		\end{tabular}
+	\end{center}
+	Die Teststatistik berechnet sich dann zu
+	\begin{align}
+		q &= \frac{(10-13.1274)^2}{13.1274} + \frac{(30-26.5221)^2}{26.5221} + \frac{(25-26.7894)^2}{26.7894} + \frac{(20-18.0477)^2}{18.0477} + \frac{(10-9.108)^2}{9.108} \notag \\
+		&+ \frac{(4-3.6828)^2}{3.6828} + \frac{(0-1.7424)^2}{1.7424} \notag \\
+		&= 3.3889 \notag
+	\end{align}
+	Der kritischen Werte sind
+	\begin{itemize}
+		\item $\alpha=0.01 \Rightarrow \chi^2_{7-1;0.99} = 16.8119 \Rightarrow$ $H_0$ (die Verteilung entspricht der Poisson-Verteilung mit dem oben errechneten $\lambda$) kann nicht abgelehnt werden
+		\item $\alpha=0.05 \Rightarrow \chi^2_{7-1;0.95} = 12.5916 \Rightarrow$ $H_0$ kann nicht abgelehnt werden
+		\item $\alpha=0.1 \Rightarrow \chi^2_{7-1;0.9} = 10.6446 \Rightarrow$ $H_0$ kann nicht abgelehnt werden
+	\end{itemize}
+	
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir führen den Kolmogorow-Smirnow-Test durch:
+		\begin{center}
+			\begin{tabular}{c|cccc|c}
+				$i$ & $x_i$ & $\hat{F}(x_i)$ & $F(x_i)$ & $\hat{F}(x_{i-1})$ & max \\
+				\hline
+				1 & 6 & $\frac{1}{10}$ & $\frac{1}{100}$ & 0 & $\frac{9}{100}$ \\
+				2 & 8 & $\frac{2}{10}$ & $\frac{9}{100}$ & $\frac{1}{10}$ & $\frac{9}{100}$ \\
+				3 & 10 & $\frac{3}{10}$ & $\frac{25}{100}$ & $\frac{2}{10}$ & $\frac{11}{100}$ \\
+				4 & 11 & $\frac{4}{10}$ & $\frac{36}{100}$ & $\frac{3}{10}$ & $\frac{5}{100}$ \\
+				5 & 13 & $\frac{6}{10}$ & $\frac{64}{100}$ & $\frac{4}{10}$ & $\frac{6}{100}$ \\
+				6 & 13 & $\frac{6}{10}$ & $\frac{64}{100}$ & $\frac{6}{10}$ & $\frac{4}{100}$ \\
+				7 & 14 & $\frac{7}{10}$ & $\frac{81}{100}$ & $\frac{6}{10}$ & $\frac{21}{100}$ \\
+				8 & 15 & 1 & 1 & $\frac{7}{10}$ & $\frac{30}{100}$ \\
+				9 & 15 & 1 & 1 & 1 & 0 \\
+				10 & 15 & 1 & 1 & 1 & 0
+			\end{tabular}
+		\end{center}
+		Die Teststatistik ist dann
+		\begin{align}
+			D = \frac{30}{100} = 0.3 \notag
+		\end{align}
+		und der kritische Wert ist $c=0.409$. Damit kann $H_0$ nicht abgelehnt werden.
+		\item Die Tabelle für den $\chi^2$-Anpassungstest sieht wie folgt aus:
+		\begin{center}
+			\begin{tabular}{c|cccc|c}
+				$i$ & 1 & 2 & 3 & 4 & $\Sigma$ \\
+				\hline
+				$I_i=(a_i,b_i)$ & [5,7.5] & (7.5,10] & (10,12.5] & (12.5,15] & \\
+				$S_i$ & 33 & 41 & 40 & 36 & 150 \\
+				$p_i=F(b_i)-F(a_i)$ & $\frac{1}{16}$ & $\frac{3}{16}$ & $\frac{5}{16}$ & $\frac{7}{16}$ & 1 \\
+				$np_i$ & 9.375 & 28.125 & 46.875 & 65.625 & 150 
+			\end{tabular}
+		\end{center}
+		Die Teststatistik ergibt sich zu
+		\begin{align}
+			q &= \frac{(33-9.375)^2}{9.375} + \frac{(41-28.125)^2}{28.125} + \frac{(40-46.875)^2}{46.875} + \frac{(36-65.625)^2}{65.625} \notag \\
+			&= 79.8108 \notag
+		\end{align}
+		Der kritische Wert ist $\chi^2_{4-1;0.95}=7.8147$, also wird $H_0$ abgelehnt und $H_1$ angenommen.
+	\end{enumerate}
+	
+\end{document}
