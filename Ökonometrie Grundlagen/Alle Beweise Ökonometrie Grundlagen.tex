@@ -1,0 +1,484 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R,morekeywords={confint,head}}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true, %set true if you want colored links
+	linktoc=all,     %set to all if you want both sections and subsections linked
+	linkcolor=blue,  %choose some color if you want links to stand out
+}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Mat}{Mat}
+
+\title{\textbf{Ökonometrie Grundlagen, alle Beweise aus den Übungen}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\tableofcontents
+	
+	\section{Zeigen Sie, dass für geringe Änderungen der unabhängigen Variable der Logarithmus dieser Variable als ihre prozentuale Änderung interpretiert werden kann.}
+	\begin{align}
+		\log(x_{t+1}) - \log(x_t) &= \log\left(\frac{x_{t+1}}{x_t}\right) \notag \\
+		&\overset{\ast}{=} \frac{x_{t+1}}{x_t} - 1 \notag \\
+		&= \frac{x_{t+1}}{x_t} - \frac{x_t}{x_t} \notag \\
+		&= \frac{x_{t+1}-x_t}{x_t} \notag \\
+		&= \frac{\Delta x}{x_t} \notag
+	\end{align}
+	$\ast$: Da es sich um eine kleine Änderung von $x_t\to x_{t+1}$ handelt, ist $ \frac{x_{t+1}}{x_t}\approx 1$ und der Hinweis kann benutzt werden.
+	
+	\section{KQ-Schätzer im einfachen linearen Regressionsmodell}
+	Das Ziel der KQ-Schätzung ist, die Summe der Fehlerquadrate zu minimieren, also
+	\begin{align}
+		\sum_{i=1}^T u_t^2 = \sum_{i=1}^T (y_i-\beta_0 - \beta_1x_i)^2 \to\min \notag
+	\end{align}
+	Dazu müssen wir die partiellen Ableitungen nach $\beta_0$ und $\beta_1$ Null gesetzt werden. Wir wenden uns zunächst $\beta_0$ zu:
+	\begin{align}
+		\frac{\partial}{\partial\beta_0} \sum_{i=1}^T (y_i-\beta_0-\beta_1x_i)^2 &= 0 \notag \\
+		-2\sum_{i=1}^T (y_i-\beta_0-\beta_1x_i) &= 0 \notag \\
+		\sum_{i=1}^T y_i - T\beta_0 - \beta_1\sum_{i=1}^T x_i &= 0 \notag \\
+		T\beta_0 &= \underbrace{\sum_{i=1}^T y_i}_{T\bar{y}} - \beta_1\underbrace{\sum_{i=1}^T x_i}_{T\bar{x}} \notag \\
+		\beta_0 &= \bar{y} - \beta_1\bar{x} \notag
+	\end{align}
+	Jetzt kommt $\beta_1$:
+	\begin{align}
+		\frac{\partial}{\partial\beta_1} \sum_{i=1}^T(y_i-\beta_0-\beta_1x_i) &= 0 \notag \\
+		2\sum_{i=1}^T (y_i-\beta_0-\beta_1x_i)(-x_i) &= 0 \notag \\
+		\sum_{i=1}^T (x_iy_i - \beta_0x_i - \beta_1x_i^2) &= 0 \notag \\
+		\sum_{i=1}^T x_iy_i - \beta_0\sum_{i=1}^T x_i - \beta_1\sum_{i=1}^T x_i^2 &= 0 \notag \\
+		\sum_{i=1}^T x_iy_i - \bar{y}\sum_{i=1}^T x_i + \beta_1\bar{x}\sum_{i=1}^T x_i - \beta_1\sum_{i=1}^T x_i^2 &= 0 \notag \\
+		\beta_1\left(-\bar{x}\sum_{i=1}^T x_i + \sum_{i=1}^T x_i^2\right) &= \sum_{i=1}^T x_iy_i - \bar{y}\sum_{i=1}^T x_i \notag \\
+		\beta_1 &= \frac{\sum_{i=1}^T x_iy_i - \bar{y}T\bar{x}}{-\bar{x}T\bar{x} + \sum_{i=1}^T x_i^2} \notag \\
+		\beta_1 &= \frac{\sum_{i=1}^T (y_i-\bar{y})(x_i-\bar{x})}{\sum_{i=1}^T (x_i-\bar{x})^2} \notag
+	\end{align}
+
+	\section{KQ-Schätzer im einfachen linearen Regressionsmodell ohne Absolutglied}
+	Die Zielfunktion lautet
+	\begin{align}
+		Q_T = \sum_{t=1}^T (y_t-\beta x_t)^2 \to\min \notag
+	\end{align}
+	Bedingung erster Ordnung:
+	\begin{align}
+		\frac{\partial Q_T}{\partial \beta} = -2\sum_{t=1}^T (y_t-\hat{\beta}x_t)x_t = 0 \notag
+	\end{align}
+	einfaches Umstellen fuhrt zu:
+	\begin{align}
+		\hat{\beta} = \frac{\sum_{t=1}^T y_tx_t}{\sum_{t=1}^T x_t^2} \notag
+	\end{align}
+
+	\section{Korrelationskoeffizient und Bestimmtheitsmaß im einfachen linearen Modell}
+	Wir diesen Beweis brauchen wir noch mal die Formeln zur Schätzung der Parameter $\beta_0$ und $\beta_1$ für lineare Modelle:
+	\begin{align}
+		\beta_0 &= \bar{y} - \beta_1\bar{x} \notag \\
+		\beta_1 &= \frac{\sum_{i=1}^{n}(y_i-\bar{y})(x_i-\bar{x})}{\sum_{i=1}^n (x_i-\bar{x})^2} \notag
+	\end{align}
+	Ferner brauchen wir die Definition von $\hat{y}=\beta_0+\beta_1x$. Jetzt wenden wir uns dem eigentlichen Beweis zu. Wir werden zeigen, dass $R^2=r^2_{xy}$, was gleichbedeutend mit $r_{xy}=\sqrt{R^2}$ ist.
+	\begin{align}
+		R^2 &= \frac{\sum_{i=1}^n (\hat{y}_i-\bar{y})^2}{\sum_{i=1}^n (y_i-\bar{y})^2} \notag \\
+		&= \frac{\sum_{i=1}^n (\beta_0+\beta_1x_i - \bar{y})^2}{\sum_{i=1}^n (y_i-\bar{y})^2} \notag \\
+		&= \frac{\sum_{i=1}^n (\bar{y}-\beta_1\bar{x}+\beta_1x_i-\bar{y})^2}{\sum_{i=1}^n (y_i-\bar{y})^2} \notag \\
+		&= \beta_1^2\frac{\sum_{i=1}^n (x_i-\bar{x})^2}{\sum_{i=1}^n (y_i-\bar{y})^2} \notag \\
+		&=\left(\frac{\sum_{i=1}^n (y_i-\bar{y})(x_i-\bar{x})}{\sum_{i=1}^n (x_i-\bar{x})^2}\right)^2\frac{\sum_{i=1}^n (x_i-\bar{x})}{\sum_{i=1}^n (y_i-\bar{y})^2} \notag \\
+		&= \frac{\left[\sum_{i=1}^n (y_i-\bar{y})(x_i-\bar{x})\right]^2}{\left[\sum_{i=1}^n (x_i-\bar{x})^2\right]^2}\frac{\sum_{i=1}^n (x_i-\bar{x})}{\sum_{i=1}^n (y_i-\bar{y})^2} \notag \\
+		&= \frac{\left[\sum_{i=1}^n (y_i-\bar{y})(x_i-\bar{x})\right]^2}{\sum_{i=1}^n (x_i-\bar{x})^2\sum_{i=1}^n (y_i-\bar{y})^2} \notag \\
+		&= r_{xy}^2 \notag
+	\end{align}
+
+	\section{KQ-Schätzer im multiplen linearen Regressionsmodell}
+	Ziel ist es die der quadrierten Fehler zu minimieren, in Matrixschreibweise $Q_T=(y-X\beta)'(y-X\beta)$. Wir werden für den Beweis einige Ableitungen von Matrizen brauchen\footnote{Hier kommt ziemlich komplizierte Mathematik ins Spiel, deswegen weiß ich nicht, ob dieser Lösungsweg überhaupt geplant war. Aber man kommt mit ihm recht schnell ans Ziel. Weitere Informationen hier: https://en.wikipedia.org/wiki/Matrix\_calculus}:
+	\begin{align}
+		\frac{\partial (Av)}{\partial v} &= A' \notag \\
+		\frac{\partial (v'A)}{\partial v} &= A \notag \\
+		\frac{\partial (v'Av)}{\partial v} &= 2A'v \notag
+	\end{align}
+	Führen wir nun den Beweis:
+	\begin{align}
+		Q_T &= y'y - y'X\hat{\beta} - \hat{\beta}'X'y + \hat{\beta}'X'X\hat{\beta} \notag \\
+		\frac{\partial Q_T}{\partial \hat{\beta}} &= 0 - \underbrace{(y'X)'}_{X'y} - X'y + 2(X'X)\hat{\beta} = 0 \notag \\
+		0 &= -2X'y + 2(X'X)\hat{\beta} \notag \\
+		(X'X)\hat{\beta} &= X'y \notag \\
+		\hat{\beta} &= (X'X)^{-1}X'y \notag
+	\end{align}
+
+	\section{Eigenschaften der Fehler im multiplen Regressionsmodell: $1'\hat{u}=0$}
+	\subsection{mein Beweis}
+	\begin{align}
+		(1 ... 1)\hat{u} &= (1 ... 1)(y-X\hat{\beta}) \notag \\
+		&= (1...1)(y-X(X'X)^{-1}X'y) \notag \\
+		&= (1...1)(y-XX^{-1}(X')^{-1}X'y) \notag \\
+		&= (1...1)(y-y) \notag \\
+		&= 0 \notag
+	\end{align}
+	Eigenschaft (A1)
+	
+	\subsection{Beweis in der Musterlösung}
+	Es sei also $\hat{u}=y-X\hat{\beta}$ mit $\hat{\beta}=(X'X)^{-1}X'y$ vorgelegt. Es folgt
+	\begin{align}
+		1'\hat{u} = 1'(y-\hat{y}) \notag
+	\end{align}
+	Zu zeigen ist nun, dass $1'y = 1'\hat{y}$ gilt. Es folgt
+	\begin{align}
+		1'\hat{y} &= 1'X\hat{\beta} \notag \\
+		&= X(X'X)^{-1}X'y \notag \\
+		&= 1'Py \notag \\
+		&= y'P1 \notag
+	\end{align}
+	Nun ist der Vektor 1 aber im Spaltenraum von $X$. Damit folgt, dass $P1 = 1$ aufgrund der Tatsache, dass $P$ als Projektionsmatrix Vektoren in den Spaltenraum von $X$ projiziert. Es folgt also
+	\begin{align}
+		1'\hat{y} = y'1 \notag
+	\end{align}
+	was der gewünschten Aussage entspricht. Die KQ-Residuen summieren sich also im linearen Modell mit Absolutglied zu Null. Das bedeutet, positive und negative Abweichungen von der Regressionsgeraden heben sich gegenseitig auf.
+	
+	\section{Eigenschaften der Fehler im multiplen Regressionsmodell: $X'\hat{u}=0$}
+	\subsection{mein Beweis}
+	Der Beweis läuft sehr ähnlich zum vorherigen Beweis:
+	\begin{align}
+		X'\hat{u} &= (1 ... 1)(y-X\hat{\beta}) \notag \\
+		&= X'(y-X(X'X)^{-1}X'y) \notag \\
+		&= X'(y-XX^{-1}X'^{-1}X'y) \notag \\
+		&= X'(y-y) \notag \\
+		&= 0 \notag
+	\end{align}
+	Eigenschaft (A4)
+	
+	\subsection{Beweis in der Musterlösung}
+	Es sei also $\hat{u}=y-X\hat{\beta}$ mit $\hat{\beta}=(X'X)^{-1}X'y$ vorgelegt. Es folgt
+	\begin{align}
+		X'\hat{u} &= X'y-X'X\hat{\beta} \notag \\
+		&= X'y - X'X(X'X)^{-1}X'y \notag \\
+		&= 0 \notag
+	\end{align}
+	Der KQ-Residualvektor ist somit orthogonal zu allen Regressorvektoren (Spalten von $X$).
+	
+	\section{Eigenschaften des Schätzers im multiplen Regressionsmodell: $\hat{\beta}$ ist nicht verzerrt}
+	\subsection{mein Beweis}
+	Für einen unverzerrten Schätzer gilt $\E(\hat{\beta})=\beta$.
+	\begin{align}
+		\E(\hat{\beta}) &= \E((X'X)^{-1}X'y) \notag \\
+		&= \E(X^{-1}\underbrace{X'^{-1}X'}_{I}y) \notag \\
+		&= \E(X^{-1}y) \notag \\
+		&= X^{-1}\E(y) \notag \\
+		&= X^{-1}\E(X\beta) \notag \\
+		&= \underbrace{X^{-1}X}_{I}\beta \notag \\
+		&= \beta \notag
+	\end{align}
+	
+	\subsection{Beweis in der Musterlösung}
+	Es sei also $\hat{\beta}=(X'X)^{-1}X'y$ der KQ-Schätzer im linearen Modell $y=X\beta + u$ mit $u\sim (0,\sigma^2_uI)$, dann folgt:
+	\begin{align}
+		\E(\hat{\beta}) &= \E((X'X)^{-1}X'y) \notag \\
+		&= \E((X'X)^{-1}X'(X\beta + u)) \notag \\
+		&= \E(\beta + (X'X)^{-1}X'u) \notag \\
+		&= \E(\beta) + (X'X)^{-1}X'\cdot\underbrace{\E(u)}_0 \notag \\
+		&= \beta \notag
+	\end{align}
+	
+	\section{Eigenschaften des Schätzers im multiplen Regressionsmodell: Varianz-Kovarianz-Matrix von $\hat{\beta}$}
+	\subsection{mein Beweis}
+	Wir werden zeigen, dass sich $\Sigma_{\hat{\beta}}$ auch als $\sigma^2_u(X'X)^{-1}$ schreiben lässt.
+	\begin{align}
+		\Sigma_{\hat{\beta}} = \Var(\hat{\beta}) &= \E(\hat{\beta}^2) - \underbrace{\E(\hat{\beta})}_{\beta}\underbrace{\E(\hat{\beta}')}_{\beta} \notag \\
+		&= \E\left([(X'X)^{-1}X'y]^2\right) - \beta^2 \notag \\
+		&= \E\left( [(X'X)^{-1}X'(X\beta+u)]^2\right) - \beta^2 \notag \\
+		&= \E\left([\underbrace{(X'X)^{-1}(X'X)}_{I}(\beta + (X'X)^{-1}X'u)]^2\right) - \beta^2 \notag \\
+		&= \E \left( [\beta + (X'X)^{-1}X'u]^2\right) - \beta^2 \notag \\
+		&= \beta^2 + \E\left([(X'X)^{-1}X'u]^2 \right) - \beta^2 \notag \\
+		&= [(X'X)^{-1}X']^2\cdot \underbrace{\E(u^2)}_{\sigma_u^2} \notag \\
+		&= \underbrace{(X'X)^{-1}(X'X)}_{I}(X'X)'^{-1} \cdot\sigma_u^2 \notag \\
+		&= \underbrace{(X'X)'^{-1}}_{(X'X)^{-1}\text{, da symmetrisch}}\cdot\sigma_u^2 \notag \\
+		&= (X'X)^{-1}\cdot\sigma_u^2 \notag
+	\end{align}
+
+	\subsection{Beweis in der Musterlösung}
+	Es sei also $\hat{\beta}=(X'X)^{-1}X'y$ der KQ-Schätzer im linearen Modell $y=X\beta + u$ mit $u\sim (0,\sigma^2_uI)$. Wir haben bereits vorher gesehen, dass
+	\begin{align}
+		\hat{\beta} = \beta + (X'X)^{-1}X'u \notag
+	\end{align}
+	gilt und das der KQ-Schätzer $\hat{\beta}$ unverzerrt ist. Es folgt also:
+	\begin{align}
+		\Sigma_{\hat{\beta}} &= \E((\hat{\beta}-\beta)(\hat{\beta}-\beta)') \notag \\
+		&= \E((\beta + (X'X)^{-1}X'u - \beta)(\beta + (X'X)^{-1}X'u - \beta)') \notag \\
+		&= \E(((X'X)^{-1}X'u)((X'X)^{-1}X'u)') \notag \\
+		&= \E((X'X)^{-1}X'uu'X(X'X)^{-1}) \notag \\
+		&= (X'X)^{-1}X'\cdot\E(uu')\cdot X(X'X)^{-1} \notag \\
+		&= \sigma_u^2(X'X)^{-1} \notag
+	\end{align}
+	
+	\section{Eigenschaften des Schätzers im multiplen Regressionsmodell: $\widehat{\sigma^2}_u$ ist nicht verzerrt}
+	\subsection{mein Beweis}
+	Für einen unverzerrten Schätzer gilt $\E(\widehat{\sigma_u^2}) = \sigma_u^2$.
+	\begin{align}
+		\E(\widehat{\sigma_u^2}) &= \E\left( \frac{\hat{u}'\hat{u}}{T-k}\right) \notag \\
+		&= \E\left( \frac{(y-X\hat{\beta})'(y-X\hat{\beta})}{T-k}\right) \notag \\
+		&= \frac{1}{T-k}\E(y'y - y'X\hat{\beta} - (X\hat{\beta})'y + (X\hat{\beta})'(X\hat{\beta})) \notag \\
+		&= \frac{1}{T-k} (\E((X\hat{\beta}+u)'(X\hat{\beta}+u)) - \E((X\hat{\beta})X\hat{\beta}) - \E((X\hat{\beta})'(X\hat{\beta}+u)) + \hat{\beta}'X'X\hat{\beta}) \notag \\
+		&= \frac{1}{T-k} (\E(\hat{\beta}'X'X\hat{\beta} + (X\hat{\beta})'u + u'(X\hat{\beta}) + u'u) - \E(X\hat{\beta}X\hat{\beta} + uX\hat{\beta}) - \E((X\hat{\beta})'X\hat{\beta} + (X\hat{\beta})'u) + \hat{\beta}'X'X\hat{\beta}) \notag \\
+		&= \frac{1}{T-k} (\hat{\beta}'X'X\hat{\beta} + (X\hat{\beta})'\underbrace{\E(u)}_{0} + (X\hat{\beta})\underbrace{\E(u')}_{0} + \E(u'u) - \hat{\beta}'X'X\hat{\beta} - X\hat{\beta}\underbrace{\E(u)}_{0} - (X\hat{\beta})'X\hat{\beta} - (X\hat{\beta})'\underbrace{\E(u)}_{0} + \hat{\beta}'X'X\hat{\beta}) \notag \notag \\
+		&= \frac{1}{T-k} (\hat{\beta}'X'X\hat{\beta} + \E(u'u) - \hat{\beta}'X'X\hat{\beta} - \hat{\beta}'X'X\hat{\beta} + \hat{\beta}'X'X\hat{\beta}) \notag \\
+		&= \frac{1}{T-k} \E(u'u) \notag \\
+		&= \E\left( \frac{u'u}{T-k}\right) \notag \\
+		&= \sigma_u^2 \notag
+	\end{align}
+
+	\subsection{Beweis in der Musterlösung}
+	Zu zeigen ist, dass
+	\begin{align}
+		\E(\hat{u}'\hat{u}) = \sigma_u^2(T-k) \notag
+	\end{align}
+	gilt (einfache Umformung). Sei also $\hat{u}$ der vorgelegte KQ-Residualvektor. Wir wissen bereits, dass $\hat{u}=(I-P)u$ mit $P=X(X'X)^{-1}X'$. Es gilt also:
+	\begin{align}
+		\E(\hat{u}'\hat{u}) &= \E(u'(I-P)(I-P)u) \notag \\
+		&= \E(u'(I-P)u) \notag \\
+		&= \tr(\E(u'(I-P)u)) \notag \\
+		&= \E(\tr(u'(I-P)u)) \notag \\
+		&= \E(\tr((I-P)uu')) \notag \\
+		&= \tr(\E((I-P)uu')) \notag \\
+		&= \sigma_u^2\cdot\tr(I-P) \notag \\
+		&= \sigma_u^2(\tr(I_T) - \tr(P)) \notag
+	\end{align}
+	Wir wissen, dass $P=X(X'X)^{-1}X'$ und somit gilt
+	\begin{align}
+		\tr(P) = \tr(X(X'X)^{-1}X') = \tr(X'X(X'X)^{-1}) = \tr(I_k) \notag
+	\end{align}
+	Da die Spur der Einheitsmatrix ihrer Ordnung entspricht, also $\tr(I_T)=T$ und $\tr(I_k)=k$, folgt
+	\begin{align}
+		\E(\hat{u}'\hat{u}) = \sigma_u^2(T-k) \notag
+	\end{align}
+	
+	\section{Eigenschaften des Schätzers im multiplen Regressionsmodell: $\hat{\beta}$ hat die BLUE-Eigenschaft}
+	Zu zeigen ist, dass der KQ-Schätzer $\hat{\beta}=(X'X)^{-1}X'y$ ein linearer Schätzer ist. Dies ist unmittelbar klar, wenn man $D=(X'X)^{-1}X'$ setzt und bemerkt, dass $\hat{\beta}=Dy$ eine lineare Abbildung in $y$ ist. Die Erwartungstreue (bzw. Unverzerrtheit) wurde bereits nachgewiesen. Zu zeigen ist lediglich, dass $\hat{\beta}$ die kleinste Varianz innerhalb der Klasse der unverzerrten linearen Schätzer aufweist. Wir definieren jeden anderen Schätzer über
+	\begin{align}
+		\tilde{\beta} = \hat{\beta} + Cy+d \notag
+	\end{align}
+	mit $d\in\mathbb{R}^k$ und $C\in\Mat_{k,T}(\mathbb{R})$. Des Weiteren gilt
+	\begin{align}
+		\E(\tilde{\beta}) = \beta + CX\beta + d \notag
+	\end{align}
+	Der affin lineare Schätzer ist also verzerrt. Damit $\tilde{\beta}$ erwartungstreu ist, müssen die Nebenbedingungen
+	\begin{itemize}
+		\item $CX=0$
+		\item $d=0$
+	\end{itemize}
+	erfüllt sein und wir können und o.B.d.A. auf die Klasse der linearen Schätzer beschränken. Die Varianz-Kovarianz-Matrix von $\tilde{\beta}$ ergibt sich zu (siehe Formelsammlung):
+	\begin{align}
+		\Sigma_{\tilde{\beta}} &= \Sigma_{\hat{\beta} + Cy+d} \notag \\
+		&= \Sigma_{\hat{\beta} + Cy} \notag \\´
+		&= \Sigma_{((X'X)^{-1}X'+C)y} \notag \\
+		&= ((X'X)^{-1}X'+C)\Sigma_y((X'X)^{-1}X'+C)' \notag \\
+		&= \sigma_u^2((X'X)^{-1}X'+C)((X'X)^{-1}X'+C)' \notag \\
+		&= \sigma_u^2((X'X)^{-1}X'+C)(X(X'X)^{-1}+C') \notag \\
+		&= \sigma_u^2((X'X)^{-1} + (X'X)^{-1}X'C' + CX(X'X)^{-1} + CC') \notag
+	\end{align}
+	Unter Einbindung der notwendigen Nebenbedingung $CX=0$ erhalten wir
+	\begin{align}
+		\Sigma_{\tilde{\beta}} = \sigma_u^2((X'X)^{-1} + CC') = \Sigma_{\hat{\beta}} + \sigma_u^2\cdot CC' \notag
+	\end{align}
+	Da $\sigma_u^2\ge 0$ und $CC'$ zumindest positiv semidefinit ist, ist die Varianz jedes anderen Schätzers größer (wenn $CC'$ positiv definit) oder ebenso groß wie $\Sigma_{\hat{\beta}}$.
+	
+	\section{Schätzer im restringierten multiplen linearen Regressionsmodell}
+	\subsection{mein Beweis}
+	Wir bilden die Lagrangefunktion $L=(y-X\hat{\beta})'(y-X\hat{\beta}) - \lambda(R\hat{\beta}-r)$. Die Ableitungen sind
+	\begin{align}
+		\frac{\partial L}{\partial \hat{\beta}} &= -X'y - X'y + 2(X'X)'\hat{\beta} - (\lambda R)' = 0 \notag \\
+		\label{ast}
+		&= -2X'y + 2X'X\hat{\beta} - R'\lambda' = 0 \tag{\textasteriskcentered} \\
+		\frac{\partial L}{\partial\lambda} &= -(R\hat{\beta}-r)=0 \notag \\
+		R\hat{\beta} &= r \notag
+	\end{align}
+	Multiplikation von \eqref{ast} mit $R(X'X)^{-1}$ liefert
+	\begin{align}
+		0 &= -2R(X'X)^{-1}X'y + 2R\underbrace{(X'X)^{-1}X'X}_{I}\hat{\beta} - R(X'X)^{-1}R'\lambda' \notag \\
+		&= -2R(X'X)^{-1}X'y + 2R\hat{\beta} - R(X'X)^{-1}R'\lambda' \notag
+	\end{align}
+	Einsetzen von $\beta_{UR} = (X'X)^{-1}X'y$ und auflösen nach $\lambda'$
+	\begin{align}
+		0 &= -2R\beta_{UR} + 2R\hat{\beta} - R(X'X)^{-1}R'\lambda' \notag \\
+		R(X'X)^{-1}R'\lambda' &= -2R\beta_{UR} + 2R\hat{\beta} \notag \\
+		\lambda' &= \left[R(X'X)^{-1}R'\right]^{-1}(-2R\beta_{UR} + 2\underbrace{R\hat{\beta}}_{r}) \notag \\
+		&= -2\left[R(X'X)^{-1}R'\right]^{-1}(R\beta_{UR} - r) \notag
+	\end{align}
+	Einsetzen in \eqref{ast} und Auflösen nach $\hat{\beta}$
+	\begin{align}
+		0 &= -2X'y + 2X'X\hat{\beta} - R'\left[-2\left[R(X'X)^{-1}R'\right]^{-1}(R\beta_{UR} - r)\right] \notag \\
+		&= X'y - X'X\hat{\beta} - R'\left[R(X'X)^{-1}R'\right]^{-1}(R\beta_{UR} - r) \notag \\
+		X'X\hat{\beta} &= X'y - R'\left[R(X'X)^{-1}R'\right]^{-1}(R\beta_{UR} - r) \notag \\
+		\hat{\beta} &= \underbrace{(X'X)^{-1}X'y}_{\beta_{UR}} - (X'X)^{-1}R'\left[R(X'X)^{-1}R'\right]^{-1}(R\beta_{UR} - r) \notag \\
+		&= \beta_{UR} - (X'X)^{-1}R'\left[R(X'X)^{-1}R'\right]^{-1}(R\beta_{UR} - r) \notag
+	\end{align}
+	
+	\subsection{Beweis in der Musterlösung}
+	Gegeben ist also das Modell
+	\begin{align}
+		y = X\beta + u \quad\text{s.t.}\quad R\beta=r \notag
+	\end{align}
+	Des Weiteren sei $\delta'=(\beta',\lambda')$. Die Zielfunktion (Lagrange-Ansatz: Methode zur Bestimmung des Optimums unter Beachtung von Nebenbedingungen) ist durch
+	\begin{align}
+		Q_T(\delta) = \Vert y-X\beta\Vert_2^2 + 2\lambda'(R\beta-r) \notag
+	\end{align}
+	gegeben (Der Lagrange-Parameter ost nicht restringiert, daher kann er arbiträr, hier mit Faktor 2, skaliert werden). Der Gradient ist durch
+	\begin{align}
+		\frac{\partial Q_T}{\partial \delta} = \begin{pmatrix}
+			\frac{\partial Q_T}{\partial\beta} \\ \frac{\partial Q_T}{\partial\lambda}
+		\end{pmatrix} = \begin{pmatrix}
+			-2X'(y-X\beta)+2R'\lambda \\ 2(R\beta-r)
+		\end{pmatrix} \notag
+	\end{align}
+	gegeben und somit folgt die Bedingung erster Ordnung
+	\begin{align}
+		\begin{pmatrix}
+			-X'y+X'X\hat{\beta}+R'\hat{\lambda} \\ R\hat{\beta}-r
+		\end{pmatrix} = \begin{pmatrix}
+			0_k \\ 0_m
+		\end{pmatrix} \Leftrightarrow \begin{pmatrix}
+			X'X\hat{\beta}+R'\hat{\lambda} \\ R\hat{\beta}
+		\end{pmatrix} = \begin{pmatrix}
+			X'y \\ r
+		\end{pmatrix} \notag
+	\end{align}
+	also letztendlich die Normalengleichungen
+	\begin{align}
+		\begin{pmatrix}
+			X'X & R' \\ R & O
+		\end{pmatrix}\cdot\begin{pmatrix}
+			\hat{\beta} \\ \hat{\lambda}
+		\end{pmatrix} = \begin{pmatrix}
+			X'y \\ r
+		\end{pmatrix} \notag
+	\end{align}
+	Die Normalengleichungen besitzen eine eindeutige Lösung, falls
+	\begin{align}
+		\rk\begin{pmatrix}
+			X'X & R' \\ R & O
+		\end{pmatrix} = k+m \notag
+	\end{align}
+	gilt (Nur dann ist die Invertierbarkeit gewährleistet. Anmerkung: Insbesondere muss jetzt nicht zwingend $\rk(X'X)=k$ bezüglich der Identifikation gelten). Sollte diese Forderung erfüllt sein, ist der restringierte KQ-Schätzer durch
+	\begin{align}
+		\hat{\delta} = \begin{pmatrix}
+			\hat{\beta} \\ \hat{\lambda}
+		\end{pmatrix} = \begin{pmatrix}
+			X'X & R' \\ R & O
+		\end{pmatrix}^{-1}\cdot \begin{pmatrix}
+			X'y \\ r
+		\end{pmatrix} \notag
+	\end{align}
+	gegeben. Die erste Komponente ergibt sich mithife der Normalengleichungen
+	\begin{align}
+		X'X\hat{\beta} + R'\hat{\lambda} &= X'y \notag \\
+		\label{1}
+		\hat{\beta} &= (X'X)^{-1}X'y - (X'X)^{-1}R'\hat{\lambda} \tag{\textasteriskcentered} \\
+		R\hat{\beta} &= R\hat{\beta}_{KQ} - R(X'X)^{-1}R'\hat{\lambda} \notag \\
+		\label{2}
+		\hat{\lambda} &= (R(X'X)^{-1}R')^{-1}(R\hat{\beta}_{KQ}-R\hat{\beta}) \tag{\textasteriskcentered\textasteriskcentered}
+	\end{align}
+	durch Einsetzen von \eqref{2} in \eqref{1} zu:
+	\begin{align}
+		\hat{\beta}_R = (X'X)^{-1}X'y - (X'X)^{-1}R'(R(X'X)^{-1}R')^{-1}(R\hat{\beta}_{KQ}-r) \notag
+	\end{align}
+	
+	\section{Eigenschaften des Schätzers im restringierten multiplen linearen Regressionsmodell: Schätzer erwartungstreu?}
+	Wir überprüfen wieder, ob $\E(\hat{\beta}_R)=\beta$ ist:
+	\begin{align}
+		\E(\hat{\beta}_R) &= \E(\hat{\beta}_{KQ}) - \E((X'X)^{-1}R'(R(X'X)^{-1}R')^{-1}\underbrace{(R\hat{\beta}_{KQ} - r))}_{0} \notag \\
+		&= \E(\hat{\beta}_{KQ}) - \E(0) \notag \\
+		&= \beta \notag
+	\end{align}
+	Das gilt natürlich nur unter der Annahme, dass $R\hat{\beta}_{KQ} = r$ ist.
+	
+	\section{Eigenschaften der Fehler im restringierten multiplen linearen Regressionsmodell: $\hat{u}'_{UR}\hat{u}_{UR} \le \hat{u}_R'\hat{u}_R$}
+	\subsection{mein Beweis}
+	Ich werde hier aus Gründen der besseren Lesbarkeit und (meiner Meinung nach) besserem Verständnis einige Ideen der linearen Algebra und Analysis aufgreifen
+	\begin{itemize}
+		\item Wenn man von zwei Spaltenvektoren $x$ und $y$ das Produkt $x'y$ ausrechnen will, so kommt dabei ein Skalar (eine Zahl) raus. Man nennt dieses Produkt deswegen Skalarprodukt und schreibt dafür $\langle x,y\rangle$. Ausgerechnet bedeutet dies $\langle x,y\rangle = \sum_{i=1}^{n} x_iy_i$.
+		\item Wenn man den Abstand eines Vektors $x$ zum Ursprung wissen möchte, so berechnet man seine Norm $\Vert x\Vert$. Konkret rechnet man die euklidische Distanz mittels des Satzes des Pythagoras aus, also $\Vert x\Vert = \sqrt{\sum_{i=1}^n x_i^2}$. Eine Norm hat unter anderem drei Eigenschaften
+		\begin{itemize}
+			\item $\Vert x\Vert \ge 0 \quad\forall x$
+			\item $\Vert x+y\Vert \le \Vert x\Vert + \Vert y\Vert$
+			\item $\Vert\Vert x\Vert\Vert = \Vert x\Vert$
+		\end{itemize}
+	\end{itemize}
+	Skalarprodukt und Norm hängen auf eine sehr schöne Weise miteinander zusammen: $\Vert x\Vert = \sqrt{\langle x,x\rangle}$ bzw. $\langle x,x\rangle = \Vert x\Vert^2$. Mit diesem Wissen können wir den Beweis angehen. Wir starten diesmal mit der zu beweisen Aussage und formen solange um, bis wir eine offensichtlich wahre Aussage dastehen haben. Da wir nur Äquivalenzumformungen machen werden, muss dann auch die zu beweisende Aussage richtig sein.
+	\begin{align}
+		\hat{u}_{UR}'\hat{u}_{UR} &\le \hat{u}_R'\hat{u}_R \notag \\
+		\langle \hat{u}_{UR},\hat{u}_{UR}\rangle &\le \langle \hat{u}_R,\hat{u}_R\rangle \notag \\
+		\Vert \hat{u}_{UR}\Vert &\overset{\ast}{\le} \Vert \hat{u}_R\hat{u}_R\Vert \notag \\
+		\Vert (y-X\hat{\beta}_{UR})'(y-X\hat{\beta}_{UR})\Vert &\le \Vert (y-X\hat{\beta}_R)'(y-X\hat{\beta}_R)\Vert \notag \\
+		\Vert \langle (y-X\hat{\beta}_{UR}),(y-X\hat{\beta}_{UR})\rangle\Vert &\le \Vert \langle (y-X\hat{\beta}_{R}),(y-X\hat{\beta}_{R})\rangle\Vert \notag \\
+		\Vert \Vert y-X\hat{\beta}_{UR}\Vert\Vert &\overset{\ast}{\le} \Vert \Vert y-X\hat{\beta}_R\Vert\Vert \notag \\
+		\Vert y-X\hat{\beta}_{UR}\Vert &\le \Vert y-X\hat{\beta}_R\Vert \notag \\
+		&\le \Vert y-X(\hat{\beta}_{UR} - (X'X)^{-1}R'[R(X'X)^{-1}R]^{-1}(R\hat{\beta}_{UR}-r))\Vert \notag \\
+		&\le \Vert y-X\hat{\beta}_{UR} + X(X'X)^{-1}R'[R(X'X)^{-1}R]^{-1}(R\hat{\beta}_{UR}-r) \Vert \notag \\
+		&\le \Vert y-X\hat{\beta}_{UR}\Vert + \Vert X(X'X)^{-1}R'[R(X'X)^{-1}R]^{-1}(R\hat{\beta}_{UR}-r) \Vert \notag
+	\end{align}
+	Da Normen immer positiv sind, ist die rechte Seite offensichtlich größer als die linke Seite der Ungleichung. Damit muss dann auch $\hat{u}_{UR}'\hat{u}_{UR} \le \hat{u}_R'\hat{u}_R$ wahr sein. Die einzige Schwäche die ich hier für das Bestimmtheitsmaß sehe, ist, dass es nicht zwischen restringierten und unrestringierten Modellen unterscheidet. \\
+	$\ast$: Eigentlich müssten bei diesen Normen noch Quadrate stehen, aber da Quadrieren von positiven Zahlen eine monotone Transformation ist, ändern wir nicht die Richtung der Ungleichung.
+	
+	\subsection{Beweis in der Musterlösung}
+	Der Residualvektor im restringierten linearen Modell ist durch
+	\begin{align}
+		\hat{u}_R = y-X\hat{\beta}_R \notag
+	\end{align}
+	gegeben. Erweiterung mit $0=X\hat{\beta}_{KQ}-X\hat{\beta}_{KQ}$ führt zu
+	\begin{align}
+		\hat{u}_R &= y-X\hat{\beta}_R \notag \\
+		&= y-X\hat{\beta}_{KQ} - X\hat{\beta}_R + X\hat{\beta}_{KQ} \notag \\
+		&= y-X\hat{\beta}_{KQ} - X(\hat{\beta}_R-\hat{\beta}_{KQ}) \notag \\
+		&= \hat{u}_{UR} - X(\hat{\beta}_R - \hat{\beta}_{KQ}) \notag
+	\end{align}
+	Die Residuenquadratsumme im restringierten Modell ergibt sich somit zu
+	\begin{align}
+		\hat{u}_R'\hat{u}_R &= (\hat{u}_{UR} - X(\hat{\beta}_R - \hat{\beta}_{KQ}))'(\hat{u}_{UR} - X(\hat{\beta}_R - \hat{\beta}_{KQ})) \notag \\
+		&= \hat{u}_{UR}'\hat{u}_{UR} - \underbrace{\hat{u}_{UR}'X}_0(\hat{\beta}_R-\hat{\beta}_{KQ}) - (\hat{\beta}_R-\hat{\beta}_{KQ})\underbrace{X'\hat{u}_{UR}}_0  + (\hat{\beta}_R-\hat{\beta}_{KQ})'X'X(\hat{\beta}_R-\hat{\beta}_{KQ}) \notag \\
+		&= \hat{u}_{UR}'\hat{u}_{UR} + (\hat{\beta}_R-\hat{\beta}_{KQ})'X'X(\hat{\beta}_R-\hat{\beta}_{KQ}) \notag
+	\end{align}
+	Da $X'X\in\Mat_{k,k}(\mathbb{R})$ positiv definit ist, ist die oben aufgeführte quadratische Form in $X'X$ genau dann Null, wenn $\hat{\beta}_R=\hat{\beta}_{KQ}$ gilt. Es folgt
+	\begin{align}
+		\hat{u}_R'\hat{u}_R \ge \hat{u}_{UR}'\hat{u}_{UR} \notag
+	\end{align}
+	
+\end{document}
