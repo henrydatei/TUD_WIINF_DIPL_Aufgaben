@@ -1,0 +1,126 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage[amsmath,thmmarks,standard]{ntheorem}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R,morekeywords={confint,head}}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+\newcommand{\E}{\mathbb{E}}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\renewcommand{\E}{\mathbb{E}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+
+\title{\textbf{Multivariate Statistik, Übung 10}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Kommunalitäten sind die durch die Faktoren erklärte Varianz einer Variablen.
+		\item Mit dem Fundamentaltheorem der FA stellen die Faktoren ein statisches Modell der Variablen dar.
+		\begin{align}
+			R = \Cov(\mathcal{Z}) &= \E(\mathcal{Z}\mathcal{Z}') \notag \\
+			&= \E((L\mathcal{F}+\mathcal{U})(L\mathcal{F}+\mathcal{U})') \notag \\
+			&= \E(L\mathcal{F}\mathcal{F}'L) + \E(L\mathcal{F}\mathcal{U}') + \E(\mathcal{U}\mathcal{F}'L') + \E(\mathcal{U}\mathcal{U}') \notag \\
+			\label{fundamentaltheoremFA}
+			&= L\E(\mathcal{F}\mathcal{F}')L' + L\E(\mathcal{F}\mathcal{U}') + \E(\mathcal{U}\mathcal{F}')L' + \E(\mathcal{U}\mathcal{U}') \notag \\
+			&= LL' + \Cov(\mathcal{U}) \notag
+		\end{align}
+		\item Bei einer Einfachstruktur der Faktoren gilt:
+		\begin{itemize}
+			\item Jede Zeile von $L$ soll mindestens eine Null enthalten (Variable wird durch höchstens $k - 1$ Faktoren beschrieben)
+			\item Jede Spalte enthält mindestens $q$ Nullladungen (Faktor beschreibt höchstens $k - q$ Variablen)
+			\item Für jedes Spaltenpaar in $L$ sollten nur wenige Variablen in beiden Spalten hohe Ladungen haben. (Im Beispiel ist dies Variable $X_3$)
+		\end{itemize}
+		\item Es wird metrisches Skalenniveau benötigt, da wir auch die Differenzen zwischen Bewertungen interpretieren müssen.
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	Ich werde hier immer den auf 2 Nachkommastellen gerundeten Wert angegeben, aber zusätzlich auch den exakten Wert, da sich dieser zum Teil deutlich von dem gerundeten Wert unterscheidet.
+	
+	Zuerst testen wir mittels Bartletts-Test, ob wir überhaupt eine Faktorenanalyse machen sollten. Die Teststatistik ergibt sich zu
+	\begin{align}
+		\chi^2_{err} &= -\left(n-\frac{2\cdot k+11}{6}\right)\cdot\ln\left(\prod_{i=1}^{4} \lambda_i\right) \notag \\
+		&= -\left(6-\frac{2\cdot 4+11}{6}\right) \cdot\ln(2.91\cdot 0.82\cdot 0.27 \cdot 0.01 \quad\textcolor{red}{2.906162898\cdot 0.815503170 \cdot 0.271634856 \cdot 0.006699077}) \notag \\
+		&= -\left(6-\frac{2\cdot 4+11}{6}\right) \cdot\ln(0.01 \quad\textcolor{red}{0.004312668}) \notag \\
+		&= 13.05 \quad\textcolor{red}{15.4309} \notag
+	\end{align}
+	Der kritische Wert ist $\chi^2_{1-\alpha;\frac{k(k-1)}{2}}=\chi^2_{0.95;6}=12.59$ \textcolor{red}{12.5916}, also wird die Nullhypothese abgelehnt und eine Faktorenanalyse ist sinnvoll.
+	
+	Wir schätzen nun die Kommunalitäten mittels
+	\begin{align}
+		h_j^2 = 1-\frac{1}{r^{jj}} \notag
+	\end{align}
+	Es ergibt sich
+	\begin{center}
+		\begin{tabular}{c|cc}
+			& \textbf{Kommunalitäten ($h_j^2$)} & \textbf{Einzelrestvarianzen ($u_j^2$)} \\
+			\hline
+			Preis & 0.99 \textcolor{red}{0.9893378} & 0.01 \textcolor{red}{0.01066222} \\
+			Nützlichkeit & 0.25 \textcolor{red}{0.25} & 0.75 \textcolor{red}{0.75} \\
+			Aussehen & 0.97 \textcolor{red}{0.9706669} & 0.03 \textcolor{red}{0.02933313} \\
+			Haltbarkeit & 0.96 \textcolor{red}{0.9604938} & 0.04 \textcolor{red}{0.03950617}
+		\end{tabular}
+	\end{center}
+	
+	Da genau ein Eigenwert der reduzierten Korrelationsmatrix größer als 1 ist, wählen wir genau einen Faktor. Der Eigenwert ist $\lambda_1 = 2.82$ \textcolor{red}{2.820235871} und der zugehörige Eigenvektor ist $v_1=(0.59,-0.25,0.56,0.52)$ \textcolor{red}{$(0.5943829, -0.2517280, 0.5558792, 0.5237750)$}. Damit ergibt sich die Ladungsmatrix zu $L=\sqrt{\lambda_1}\cdot v_1$:
+	\begin{align}
+		L = \begin{pmatrix}
+			0.99 \\
+			-0.42 \\
+			0.94 \\
+			0.87
+		\end{pmatrix} \quad\textcolor{red}{\begin{pmatrix}
+			0.9981804 \\
+			-0.4227409 \\
+			0.9335190 \\
+			0.8796046
+		\end{pmatrix}} \notag
+	\end{align}
+	Unser Faktor lädt also auf die Variablen Preis, Aussehen und Haltbarkeit hoch.¸
+\end{document}

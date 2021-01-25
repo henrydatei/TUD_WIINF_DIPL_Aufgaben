@@ -1,0 +1,43 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Multivariate Statistik, Hausaufgabe 10}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Die Summe der Elemente in einer Zeile zum Quadrat sind die Kommunalitäten und stellen dar, wie viel der Varianz einer Variable durch die Faktoren erklärt wird. Logischerweise kann nicht mehr als 100\% der Varianz einer Variable erklärt werden. Wir müssen also überprüfen, ob die Kommunalitäten immer $\le 1$ sind:
+	\begin{itemize}
+		\item 1. Zeile: $0.81^2 + 0.52^2 + 0.13^2 = 0.9434$
+		\item 2. Zeile: $0.96^2 + 0.43^2 + 0.11^2 = 1.1186$ \Lightning
+		\item 3. Zeile: $0.52^2 + 0.43^2 + 0.27^2 = 0.5282$
+		\item 4. Zeile: $0.23^2 + 0.33^2 + 0.66^2 = 0.5974$
+	\end{itemize}
+	Es handelt sich also nicht um eine Ladungsmatrix.
+\end{document}
