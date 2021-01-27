@@ -1,0 +1,139 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R,morekeywords={confint,head,fitdist,ks,test}}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\CDF}{CDF}
+
+\title{\textbf{Statistik 2, Übung 12}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der MLE-Schätzer für $\hat{\mu}$ ist der Mittelwert $\bar{x}$ der Stichprobe
+		\begin{align}
+			\hat{\mu} &= \bar{x} = \frac{1}{20}(1.45+1.30+1.31+\dots+1.44) \notag \\
+			&= \frac{1}{20}\cdot 29.15 \notag \\
+			&= 1.4575 \notag
+		\end{align}
+		Der MLE-Schätzer für $\hat{\sigma}$ ist gegeben durch
+		\begin{align}
+			\hat{\sigma} &= \sqrt{\frac{\sum_{i=}^{n} (x_i-\bar{x})^2}{n}} \notag \\
+			&= 0.7848941 \notag
+		\end{align}
+		Wenn man statt durch $n$ durch $n-1$ teilt, ergibt sich eine andere Schätzung für $\hat{\sigma} = 0.8052844$. Siehe \url{https://en.wikipedia.org/wiki/Unbiased_estimation_of_standard_deviation} für mehr Informationen.
+		\item Eine Messung in der Grafik ergibt, dass der Abstand zwischen 0 und 1 auf der $y$-Achse genau 4.49 cm ist. Der maximale Abstand zwischen der empirischen Verteilungsfunktion (= Teststatistik $D$) ist 1.66 cm. Es gilt:
+		\begin{align}
+			\frac{1}{4.49\text{ cm}} &= \frac{D}{1.66\text{ cm}} \notag \\
+			D &= \frac{1.66\text{ cm}}{4.49\text{ cm}} \notag \\
+			&= 0.3697105 \notag
+		\end{align}
+		Der kritische Wert kann in der Tabelle abgelesen werden und ist 0.294. Die Nullhypothese wird also abgelehnt. Eine Durchführung dieses Test mittels R ergibt ein genaueres Ergebnis:
+		\begin{lstlisting}[style=R]
+x = c(1.45,1.30,1.31,1.18,1.20,1.70,1.22,1.30,1.26,1.23,0.95,
+4.80,1.28,1.22,1.22,1.12,1.46,1.00,1.51,1.44)
+# eventuell install.packages("fitdistrplus")
+library(fitdistrplus)
+fitdistrplus::fitdist(x,pnorm,method = "mle")
+			
+ks.test(x,'pnorm',1.4575,0.7848941)
+		\end{lstlisting}
+		\item Der Ausreißer war ein Fußgänger, der sehr schnell über die Ampel gegangen ist. Wenn man allerdings nach einer Mindest-Freigabezeit fragt, interessiert man sich tendenziell für den langsamsten Fußgänger.
+	\end{enumerate}
+	
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Es gilt für die theoretischen Quantile $v_i = \Phi^{-1}\left(\frac{i-0.5}{n}\right)$, also
+		\begin{center}
+			\begin{tabular}{c|ccccccc}
+				$i$ & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+				\hline
+				gemessene Quantile & 10 & 24 & 30 & 30 & 35 & 78 & 81 \\
+				theoretische Quantile & $-1.4652$ & $-0.7916$ & $-0.3661$ & 0 & $0.3661$ & $0.7916$ & $1.4652$
+			\end{tabular}
+		\end{center}
+		\begin{center}
+			\begin{tikzpicture}
+			\begin{axis}[
+			xmin=-1.4652, xmax=1.4652, xlabel={theoretische Quantile},
+			ymin=10, ymax=81, ylabel={gemessene Quantile},
+			samples=400,
+			axis x line=bottom,
+			axis y line=left,
+			domain=-1.4652:1.4652,
+			]
+			\addplot[mark=x,blue, only marks] coordinates {
+				(-1.4652,10)
+				(-0.7916,24)
+				(-0.3661,30)
+				(0,30)
+				(0.3661,35)
+				(0.7916,78)
+				(1.4652,81)
+			};
+			\addplot[smooth,red,mark=none] {41.14 + 27.38*x};
+			\end{axis}
+			\end{tikzpicture} \\
+			\textcolor{red}{$41.14 + 27.38\cdot x$}
+		\end{center}
+		\item Die Teststatistik ergibt sich zu $W=0.83588$, der kritische Wert ist 0.803. Die Nullhypothese wird nicht abgelehnt.
+		\item Der $p$-Wert ist recht klein, was Zweifel an der Nullhypothese weckt. Die Nullhypothese wird also abgelehnt, was man auch gut im QQ-Plot sieht: Die Punkte liegen nicht auf einer Geraden.
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	Wir testen hier auf eine diskrete Verteilung, das heißt wir können nicht den Kolmogorov-Smirnov-Test anwenden, sondern müssen auf den $\chi^2$-Anpassungstest zurückgreifen.
+	\begin{center}
+		\begin{tabular}{c|ccccccccccc|c}
+			 & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & $>9$ & $\Sigma$ \\
+			 \hline
+			$S_i$ & 18 & 24 & 56 & 63 & 61 & 39 & 26 & 6 & 5 & 2 & 0 & 300 \\
+			$p_i$ & 0.0333 & 0.1135 & 0.1929 & 0.2186 & 0.1858 & 0.1264 & 0.0716 & 0.0348 & 0.0148 & 0.0056 & 0.0027 & 1 \\
+			$np_i$ & 9.99& 34.05& 57.87& 65.58& 55.74& 37.92& 21.48& 10.44& 4.44& 1.68& 0.81 & 300
+		\end{tabular}
+	\end{center}
+	Die Teststatistik ergibt sich zu 13.8588 und der kritische Wert ist 15.5073, also kann die Nullhypothese nicht abgelehnt werden.
+\end{document}
