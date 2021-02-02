@@ -1,0 +1,42 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Multivariate Statistik, Hausaufgabe 11}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Eine Varianz-Kovarianz-Matrix enthält Varianzen, eine Korrelationsmatrix enthält Korrelationen.
+		\item Auf der Hauptdiagonalen einer Korrelationsmatrix steht die Korrelation einer Variable mit sich selber. Diese Korrelation ist logischerweise 1.
+		\item Der Eintrag der $i$-ten Zeile und $j$-ten Spalte der Korrelationsmatrix gibt die Korrelation der Variable $X_i$ mit $X_j$ an.
+		\item Varianzen kann man durch Wahl von Skalen der Variablen (z.B. von 1 bis 1 Million gegenüber einer Skala von 0 bis 1) beliebig verändern. Bei einer Hauptkomponentenanalyse der Varianz-Kovarianz-Matrix kommt dann heraus, dass die Variable mit der großen Skala viel wichtiger ist als die Variable mit der kleinen Skala. Bei der Korrelationsmatrix werden solche Effekte herausgerechnet.
+		\item Ja, da sowohl $\Cov(X_i,X_j)=\Cov(X_j,X_i)$ als auch $\Cor(X_i,X_j)=\Cor(X_j,X_i)$ gilt, folgt daraus, dass die Matrizen symmetrisch und quadratisch sind.
+	\end{enumerate}
+\end{document}

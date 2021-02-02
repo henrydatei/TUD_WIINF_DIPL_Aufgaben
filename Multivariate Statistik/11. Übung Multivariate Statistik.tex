@@ -1,0 +1,186 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage[amsmath,thmmarks,standard]{ntheorem}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R,morekeywords={confint,head}}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+\newcommand{\E}{\mathbb{E}}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\renewcommand{\E}{\mathbb{E}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+
+\title{\textbf{Multivariate Statistik, Übung 11}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Die Tabellen ergeben sich für die Studenten zu (der Durchschnittsrang ist $\bar{p}=\frac{21}{6}=\frac{7}{2}$)
+	\begin{center}
+		\begin{tabular}{cc|cc|c|c}
+			&& \multicolumn{2}{c|}{B} & & \\
+			&& 4 Stunden & 5 Stunden & $\bar{p}_A$ & $\bar{p}_A-\bar{p} = \beta_{Ai}$ \\
+			\hline
+			& ohne Hilfsmittel & 3 & 4 & $\frac{7}{2}$ & 0 \\
+			A & Formelsammlung & 5 & 6 & $\frac{11}{2}$ & 2 \\
+			& alles benutzen & 1 & 2 & $\frac{3}{2}$ & $-2$ \\
+			\hline
+			& $\bar{p}_B$ & $\frac{10}{3}$ & $\frac{11}{3}$ & \multicolumn{2}{c}{ } \\
+			& $\bar{p}_B-\bar{p} = \beta_{Bj}$ & $-\frac{1}{6}$ & $\frac{1}{6}$ & \multicolumn{2}{c}{ }
+		\end{tabular}
+	\end{center}
+	\begin{center}
+		\begin{tabular}{cc|cc|c|c}
+			&& \multicolumn{2}{c|}{B} & & \\
+			&& 4 Stunden & 5 Stunden & $\bar{p}_A$ & $\bar{p}_A-\bar{p} = \beta_{Ai}$ \\
+			\hline
+			& ohne Hilfsmittel & 6 & 1 & $\frac{7}{2}$ & 0 \\
+			A & Formelsammlung & 5 & 2 & $\frac{7}{2}$ & 0 \\
+			& alles benutzen & 4 & 3 & $\frac{7}{2}$ & 0 \\
+			\hline
+			& $\bar{p}_B$ & 5 & 2 & \multicolumn{2}{c}{ } \\
+			& $\bar{p}_B-\bar{p} = \beta_{Bj}$ & $\frac{3}{2}$ & $-\frac{3}{2}$ & \multicolumn{2}{c}{ }
+		\end{tabular}
+	\end{center}
+	Dem ersten Studenten sind die erlaubten Hilfsmittel wichtiger, dem zweiten Studenten die Zeit.
+	
+	Aggregation der Nutzenwerte und Bestimmung der relativen Wichtigkeit
+	\begin{align}
+		\beta_{jm}^\ast &= \beta_{jm} - \beta_j^{min} \notag \\
+		\tilde{\beta}_{jm} &= \frac{\beta_{jm}^\ast}{\max\left\lbrace \beta_{A1}^\ast,\beta_{A2}^\ast,\beta_{A3}^\ast\right\rbrace  + \max\left\lbrace \beta_{B1}^\ast + \beta_{B2}^\ast\right\rbrace } \notag \\
+		\bar{\beta}_{jm} &= \frac{1}{2}\cdot\sum_{i=1}^{N_j} \beta_{ji} \notag
+	\end{align}
+	Es ergibt sich
+	\begin{center}
+		\begin{tabular}{c|cc|cc|c}
+			& \multicolumn{2}{c|}{$\beta^\ast_{jm}$} & \multicolumn{2}{c|}{$\tilde{\beta}_{jm}$} & $\bar{\beta}_{jm}$ \\
+			& Student 1 & Student 2 & Student 1 & Student 2 & \\
+			\hline
+			ohne Hilfsmittel & 2 & 0 & $\frac{6}{13}$ & 0 & $\frac{3}{13}$ \\
+			Formelsammlung & 4 & 0 & $\frac{12}{13}$ & 0 & $\frac{6}{13}$ \\
+			alles erlaubt & 0 & 0 & 0 & 0 & 0 \\
+			\hline
+			4 Stunden & 0 & 3 & 0 & 1 & $\frac{1}{2}$ \\
+			5 Stunden & $\frac{1}{3}$ & 0 & $\frac{1}{13}$ & 0 & $\frac{1}{26}$
+		\end{tabular}
+	\end{center}
+	Die Wichtigkeiten sind dann
+	\begin{align}
+		W_j &= \frac{\max_j\left\lbrace \bar{\beta}_{jm}\right\rbrace }{\max\left\lbrace \beta_{A1}^\ast,\beta_{A2}^\ast,\beta_{A3}^\ast\right\rbrace  + \max\left\lbrace \beta_{B1}^\ast + \beta_{B2}^\ast\right\rbrace } \notag \\
+		W_A &= \frac{\frac{6}{13}}{\frac{6}{13} + \frac{1}{2}} = \frac{12}{25} = 48\% \notag \\
+		W_B &= \frac{\frac{1}{2}}{\frac{6}{13} + \frac{1}{2}} = \frac{13}{25} = 52\% \notag
+	\end{align}
+
+	\section*{Aufgabe 2}
+	Die traditionelle Conjoint-Analyse ist nur dann möglich, wenn 1 das am wenigsten bevorzugte Produkt ist. In der Aufgabe ist aber 1 das beste Produkt. Die Rangfolge muss also umgedreht werden (der Durchschnittsrang ist $\bar{p}=\frac{45}{9}=5$):
+	\begin{center}
+		\begin{tabular}{cc|ccc|c|c}
+			&& \multicolumn{3}{c|}{B} & & \\
+			&& 250g & 500g & 750g & $\bar{p}_A$ & $\bar{p}_A-\bar{p} = \beta_{Ai}$ \\
+			\hline
+			& Bio-Flakes & 7 & 9 & 1 & $\frac{17}{3}$ & $\frac{2}{3}$ \\
+			A & Bio-Pads & 4 & 3 & 2 & 3 & $-2$ \\
+			& Bio-Balls & 5 & 8 & 6 & $\frac{19}{3}$ & $\frac{4}{3}$ \\
+			\hline
+			& $\bar{p}_B$ & $\frac{16}{3}$ & $\frac{20}{3}$ & 3 & \multicolumn{2}{c}{ } \\
+			& $\bar{p}_B-\bar{p} = \beta_{Bj}$ & $\frac{1}{3}$ & $\frac{5}{3}$ & $-2$ & \multicolumn{2}{c}{ }
+		\end{tabular}
+	\end{center}
+	Berechnung der relativen Wichtigkeit
+	\begin{center}
+		\begin{tabular}{c|c|c|c|c}
+			& $\beta^\ast_{jm}$ & $\tilde{\beta}_{jm}$ & $\bar{\beta}_{jm}$ & $W_j$ \\
+			\hline
+			250g & $\frac{8}{3}$ & $\frac{8}{21}$ & $\frac{8}{21}$ & \\
+			500g & 0 & 0 & 0 & $\frac{10}{21}=47.6\%$ \\
+			750g & $\frac{10}{3}$ & $\frac{10}{21}$ & $\frac{10}{21}$ & \\
+			\hline
+			Bio-Flakes & $\frac{7}{3}$ & $\frac{1}{3}$ & $\frac{1}{3}$ & \\
+			Bio-Pads & $\frac{11}{3}$ & $\frac{11}{21}$ & $\frac{11}{21}$ & $\frac{11}{21}=52.4\%$ \\
+			Bio-Balls & 0 & 0 & 0 &
+		\end{tabular}
+	\end{center}
+	Die Art ist wichtiger als die Größe der Packung. Bei mehreren befragten Personen muss zwischendurch noch der Mittelwert über die normierten Teilnutzen berechnet werden; bei mehr Eigenschaften müssen noch mehr $\beta$'s berechnet werden.
+	
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Jede der drei Eigenschaften hat 3 Ausprägungen, es gibt also $3\cdot 3\cdot 3=27$ Stimuli.
+		\item Es gibt $\binom{27}{3}=2925$ Möglichkeiten aus 27 Stimuli 3 auszuwählen.
+		\item Es gibt 27 ($3\cdot 3\cdot 3$) mögliche Autos für Alternative 1. Da es keine Überlappungen gegen soll, hat man für Alternative 2 nur noch 2 Kaufpreise, 2 PS-Zahlen und 3 Kraftstoffarten zur Auswahl, also insgesamt $2\cdot 2\cdot 2=8$ Autos. In der dritten Alternative bleibt dann nur noch ein Auto mit dem letzten Kaufpreis, der letzten PS-Zahl und der letzten Kraftstoffart. Man hat also $27\cdot 8\cdot 1 = 216$ mögliche Choice-Sets ohne Überlappung.
+		\item Wenn wir jeder Person nur 10 Choice-Sets vorlegen dürfen, brauchen wir $\frac{216}{10}=21.6$ Personen. Also müssen wir mindestens 22 Personen befragen.
+		\item Um den zentrierten Nutzen zu bestimmen, müssen wir von jedem Nutzenwert den mittleren Nutzen einer Eigenschaft abziehen (bei der \textit{none}-Option muss die Summe der mittleren Nutzen aller Eigenschaften abgezogen werden). Die mittleren Nutzen sind:
+		\begin{align}
+			\bar{\beta}_1 &= \frac{21}{3} = 7 \notag \\
+			\bar{\beta}_2 &= \frac{9}{3} = 3 \notag \\
+			\bar{\beta}_3 &= \frac{6}{3} = 2 \notag \\
+			\bar{\beta}_1 + \bar{\beta}_2 + \bar{\beta}_3 &= 7+3+2=12 \notag
+		\end{align}
+		Es ergibt sich
+		\begin{center}
+			\begin{tabular}{c|c|c}
+				& zentrierter Teilnutzen & Wichtigkeit \\
+				\hline
+				15 T\EUR & 2.8 & \\
+				20 T\EUR & 4.2 & 54.4 \% \\
+				25 T\EUR & $-7$ & \\
+				\hline
+				86 PS & $-3$ & \\
+				104 PS & 1.2 & 23.3 \% \\
+				132 PS & 1.8 & \\
+				\hline
+				Benzin & 1.4 & \\
+				Diesel & 1.6 & 22.3 \% \\
+				Erdgas & $-3$ & \\
+				\hline
+				\textit{none} & $-14.8$ &
+			\end{tabular}
+		\end{center}
+		Der Kaufpreis ist am wichtigsten. Die none-Option hat den geringsten Teilnutzen, jedes Auto hat einen höheren Teilnutzen (selbst ein 25.000 \EUR\, teures Erdgas-Fahrzeug mit nur 86 PS) und würde eher gekauft werden als gar kein Auto zu haben.
+	\end{enumerate}
+	
+\end{document}
