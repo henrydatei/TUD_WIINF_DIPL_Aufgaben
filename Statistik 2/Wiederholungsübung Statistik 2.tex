@@ -1,0 +1,79 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R,morekeywords={confint,head,fitdist,ks,test}}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\CDF}{CDF}
+
+\title{\textbf{Statistik 2, Wiederholungsübung}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Es gibt genau $\binom{49}{6}$ verschiedene Möglichkeiten beim 6-aus-49-Lotto. Wir wollen jetzt die Anzahl der für uns \textit{günstigen} Möglichkeiten (alle Zahlenkombinationen, wo es genau 5 Richtige gibt) bestimmen. Bei 5 Richtigen müssen von den 6 gezogenen Zahlen 5 richtig sein, es gibt also $\binom{6}{5}$ Möglichkeiten dafür. Da auf einem Tippschein 6 Zahlen angekreuzt werden müssen, muss eine dieser Zahlen falsch sein, also aus der Menge der nicht gezogenen Zahlen kommen. Dafür gibt es $\binom{43}{1}$ Möglichkeiten. Die Wahrscheinlichkeit für das Ereignis \textit{5 Richtige} liegt also bei
+		\begin{align}
+			\frac{\binom{6}{5}\cdot\binom{43}{1}}{\binom{49}{6}} = \frac{258}{13983816} = \frac{43}{2330636} \notag
+		\end{align}
+		\item Selbiges Vorgehen wie oben, nur hier können wir das Ereignis in zwei Ereignisse \textit{kein Richtiger} und \textit{1 Richtiger} aufteilen. Die gesuchte Wahrscheinlichkeit ist also
+		\begin{align}
+			\frac{\binom{6}{0}\cdot\binom{43}{6} + \binom{6}{1}\cdot\binom{43}{5}}{\binom{49}{6}} = \frac{11872042}{13983816} = \frac{848003}{998844} \notag
+		\end{align}
+	\end{enumerate}
+	
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Ungleichung von Tschebyscheff gibt die untere Schranke für die Wahrscheinlichkeit an, dass $X\in [\mu-\varepsilon,\mu+\varepsilon]$. Hier ist $\mu=40$ und damit $\varepsilon=10$. Es folgt dann
+		\begin{align}
+			\mathbb{P}(\vert X-\mu\vert \le \varepsilon) &\ge 1\frac{\Var(X)}{\varepsilon^2} \notag \\
+			&\ge 1- \frac{5^2}{10^2} \notag \\
+			&\ge 0.75 \notag
+		\end{align}
+		\item 
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+\end{document}
