@@ -1,0 +1,209 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R,morekeywords={confint,head,fitdist,ks,test}}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\CDF}{CDF}
+
+\title{\textbf{Statistik 2, Übung 13}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Formeln zur Berechnung der Koeffizienten bei der linearen Regression sind gegeben durch
+		\begin{align}
+			\hat{\beta}_1 &= \frac{\tilde{s}_{xy}}{\tilde{s}_x^2} \notag \\
+			&= \frac{\frac{1}{n}\sum_{i=1}^{n} x_iy_i-\bar{x}\bar{y}}{\frac{1}{n}\sum_{i=1}^n x_i^2-\bar{x}^2} \notag \\
+			&= \frac{\frac{1}{9}\cdot 470.341 - 17.5778\cdot 2.6844}{\frac{1}{9}\cdot 3094.28- 17.5778^2} \notag \\
+			&= \frac{5.0743}{34.8298} \notag \\
+			&= 0.1457 \notag \\
+			\hat{\beta}_0 &= \bar{y} - \hat{\beta}_1\bar{x} \notag \\
+			&= 2.6844-0.1457\cdot 17.5778 \notag \\
+			&= 0.124 \notag
+		\end{align}
+		\item Mit \textit{Schwerpunkt} ist der Punkt $(\bar{x},\bar{y}) = (17.5778,2.6844)$ gemeint, die Überprüfung liefert
+		\begin{align}
+			\bar{y} &\overset{?}{=} \hat{\beta}_0 + \hat{\beta}_1 \cdot \bar{x} \notag \\
+			&\overset{?}{=} 0.124 + 0.1457\cdot 17.5778 \notag \\
+			&\overset{?}{=} 2.685 \approx \bar{y} \notag
+		\end{align}
+		\item Graph
+		\begin{center}
+			\begin{tikzpicture}
+				\begin{axis}[
+					xmin=8, xmax=26, xlabel=$x$,
+					ymin=0, ymax=6, ylabel=$y$,
+					samples=400,
+					axis x line=middle,
+					axis y line=middle,
+					domain=8:26,
+					]
+					\addplot[mark=none,smooth,red] {0.124 + 0.1457*x};
+					
+					\addplot[blue,mark=x,only marks] coordinates {
+						(24.6,5.53)
+						(20.4,3.38)
+						(25.1,3.06)
+						(23.3,2.7)
+						(16.8,2.12)
+						(17.4,2.11)
+						(9.1,1.9)
+						(10,1.75)
+						(11.5,1.61)
+					};
+				\end{axis}
+			\end{tikzpicture}
+		\end{center}
+		\item Ich komme hier zwar auf eine andere Varianz der Residuen, $\hat{\sigma}^2=0.7661$, was auf keine besonders gute Regressionsgerade hindeutet. $R^2$ ist hier 0.5536.
+		\item Wir führen einen rechtsseitigen Test durch: \\
+		$H_0: \hat{\beta}_1 \le 0.1$ \\
+		$H_1: \hat{\beta}_1 > 0.1$ \\
+		Die Teststatistik ergibt sich zu
+		\begin{align}
+			T &= \frac{\hat{\beta}_1 - 0.1}{\sqrt{\hat{\sigma}^2}}\sqrt{n}\sqrt{\Var(x)} \notag \\
+			&= \frac{0.1457-0.1}{\sqrt{0.7661}}\sqrt{9}\sqrt{34.8306} \notag \\
+			&= 0.9237 \notag
+		\end{align}
+		Der kritische Wert ist $t_{n-1;1-\alpha}=t_{8;0.99}=2.9980$. Die Nullhypothese kann damit nicht abgelehnt werden.
+		\item Einsetzen von $x=0$ liefert $y=0.124 + 0.1457\cdot 0 = 0.124$.
+		\item Einsetzen von $x=14.5$ liefert $y=0.124 + 0.1457\cdot 14.5=2.2361$. Das Konfidenzintervall ist dann gegeben durch
+		\begin{align}
+			KI &= \hat{y} \mp \hat{\sigma}\sqrt{1+\frac{1}{n}\left(1+\frac{(x-\bar{x})^2}{\Var(x)}\right)} \notag \\
+			&= 2.2361 \mp \sqrt{0.776}\sqrt{1+\frac{1}{9}\left(1+\frac{(14.5-17.5778)^2}{34.8306}\right)} \notag \\
+			&= [0.0250;4.4472] \notag
+		\end{align}
+	\end{enumerate}
+	
+	\section*{Aufgabe 2}
+	Im ersten Modell haben wir
+	\begin{align}
+		\hat{\alpha}_1 &= \frac{\tilde{s}_{xy}}{\tilde{s}_x^2} \notag \\
+		&= \frac{\frac{1}{n}\sum_{i=1}^{n} x_iy_i-\bar{x}\bar{y}}{\frac{1}{n}\sum_{i=1}^n x_i^2-\bar{x}^2} \notag \\
+		&= \frac{\frac{1}{10}\cdot 58.759 - 4.51\cdot 0.823}{\frac{1}{10}\cdot 415.51- 4.51^2} \notag \\
+		&= \frac{2.1642}{21.2109} \notag \\
+		&= 0.1020 \notag \\
+		\hat{\alpha}_0 &= \bar{y} - \hat{\alpha}_1\bar{x} \notag \\
+		&= 0.823-0.1020\cdot 4.51 \notag \\
+		&= 0.3630 \notag
+	\end{align}
+	Im zweiten Modell haben wir
+	\begin{align}
+		\hat{\beta}_1 &= \frac{\tilde{s}_{xy}}{\tilde{s}_x^2} \notag \\
+		&= \frac{\frac{1}{n}\sum_{i=1}^{n} x_iy_i-\bar{x}\bar{y}}{\frac{1}{n}\sum_{i=1}^n x_i^2-\bar{x}^2} \notag \\
+		&= \frac{\frac{1}{10}\cdot 20.285 - 1.8311\cdot 0.823}{\frac{1}{10}\cdot 45.1- 1.8311^2} \notag \\
+		&= \frac{0.5215}{1.1571} \notag \\
+		&= 0.4507 \notag \\
+		\hat{\beta}_0 &= \bar{y} - \hat{\beta}_1\bar{x} \notag \\
+		&= 0.823-0.4507\cdot 1.8311 \notag \\
+		&= -0.0024 \notag
+	\end{align}
+	\begin{enumerate}[label=(\alph*)]
+		\item Das Bestimmtheitsmaß ist definiert durch
+		\begin{align}
+			R^2 &= \frac{\sum_{i=1}^n (\hat{y}_i-\bar{y})^2}{\sum_{i=1}^n (y_i-\bar{y})^2} \notag \\
+			R_1^2 &= 0.938665 \notag \\
+			R_2^2 &= 0.9993375 \notag
+		\end{align}
+		Das zweite Modell hat eine höhere Erklärkraft.
+		\item Wir testen \\
+		$H_0: \hat{\beta}_0 =0$ \\
+		$H_1: \hat{\beta}_0 \neq 0$ \\
+		Die Teststatistik ergibt sich zu
+		\begin{align}
+			T &= \frac{\hat{\beta}_1 - 0}{\sqrt{\hat{\sigma}^2}\sqrt{1+\frac{\bar{x}^2}{\Var(X)}}}\sqrt{n} \notag \\
+			&= \frac{-0.0024-0}{\sqrt{0.0001948}\sqrt{1+\frac{1.8311^2}{1.1569}}}\sqrt{10} \notag \\
+			&= -0.2796 \notag
+		\end{align}
+		Der kritische Wert ist $t_{n-1;1-\frac{\alpha}{2}}=t_{10;0.995}=3.3554$. Die Nullhypothese kann damit nicht abgelehnt werden.
+		\item Wir testen: \\
+		$H_0: \hat{\beta}_1 = 0.4522$ \\
+		$H_1: \hat{\beta}_1 \neq 0.4522$ \\
+		Die Teststatistik ergibt sich zu
+		\begin{align}
+			T &= \frac{\hat{\beta}_1 - 0.4522}{\sqrt{\hat{\sigma}^2}}\sqrt{n}\sqrt{\Var(x)} \notag \\
+			&= \frac{0.0.4507-0.4522}{\sqrt{0.0001948}}\sqrt{10}\sqrt{1.1569} \notag \\
+			&= -0.3469 \notag
+		\end{align}
+		Der kritische Wert ist $t_{n-1;1-\frac{\alpha}{2}}=t_{10;0.995}=3.3554$. Die Nullhypothese kann damit nicht abgelehnt werden.
+		\item Einsetzen liefert:
+		\begin{align}
+			t_1 &= 0.363 + 0.1020 \cdot 8 \notag \\
+			&= 1.179 \notag \\
+			t_2 &= -0.0024 + 0.4507 \cdot \sqrt{8} \notag \\
+			&= 1.2724 \notag
+		\end{align}
+		\item Umstellen und Einsetzen liefert:
+		\begin{align}
+			5 &= 0.363 + 0.1020 \cdot h_1 \notag \\
+			h_1 &= \frac{5-0.363}{0.1020} \notag \\
+			&= 45.4608 \notag \\
+			5 &= -0.0024 + 0.4507 \cdot \sqrt{h_2} \notag \\
+			h_2 &= \left(\frac{5+0.0024}{0.4507}\right)^2 \notag \\
+			&= 123.1918 \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wenn man eine Substitution $z=\frac{1}{x}$ macht, so erhält man ein einfaches lineares Modell $a+bz$, von dem wir die Koeffizienten mit den bekannten Formeln bestimmen können. Wir müssen nur daran denken, dass $z$ nie explizit auszurechnen, sondern es in den Formeln einfach nur durch $\frac{1}{x}$ zu ersetzen:
+		\begin{align}
+			\hat{b} &= \frac{\frac{1}{n}\sum_{i=1}^{n} (z_i-\bar{z})(y_i-\bar{y})}{\frac{1}{n}\sum_{i=1}^n (z_i-\bar{z})^2} \notag \\
+			&= \frac{\frac{1}{n}\sum_{i=1}^{n} \left(\frac{1}{x_i}-\bar{\frac{1}{x}}\right)(y_i-\bar{y})}{\frac{1}{n}\sum_{i=1}^n \left(\frac{1}{x_i}-\bar{\frac{1}{x}}\right)^2} \notag \\
+			&= \frac{3.5}{\frac{7}{18}} \notag \\
+			&= 9 \notag \\
+			\hat{a} &= \bar{y} - \hat{b}\bar{z} \notag \\
+			&= \bar{y} - \hat{b}\bar{\frac{1}{x}} \notag \\
+			&= 5.5 - 9\cdot 0.5 \notag \\
+			&= 1 \notag
+		\end{align}
+		\item Der Wert $a$ ist so etwas wie eine Fix-Zeit, die unabhängig von der Anzahl der Reinigungskräfte immer anfällt. Hier beträgt $a$ 1 Stunde. Der Wert $b$ ist die Zeit, die eine Reinigungskraft für den gesamten Zug braucht. Mehr Reinigungskräfte brauchen dann logischerweise nur ein Bruchteil der Zeit. Hier ist $b$ 9 Stunden.
+		\item Einsetzen liefert: $1+\frac{9}{9}=2$ Stunden
+		\item Nehmen wir zum Beispiel den Punkt (0,9). Das würde bedeuten, dass 0 Reinigungskräfte den Zug in 9 Stunden reinigen. Diese Selbstreinigung wäre für die Bahn besonders kostengünstig, aber leider reinigen sich die Züge nicht von selbst. \\
+		Ein anderer unsinniger Punkt ist (7,0). 7 Reinigungskräfte können also den Zug sofort reinigen und dann direkt den nächsten Zug in nullkommanichts reinigen.
+	\end{enumerate}
+	
+\end{document}
