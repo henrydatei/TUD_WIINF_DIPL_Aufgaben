@@ -72,8 +72,179 @@
 			&\ge 1- \frac{5^2}{10^2} \notag \\
 			&\ge 0.75 \notag
 		\end{align}
-		\item 
+		\item Wir führen eine neue Zufallsvariable $\bar{X}_n$ ein, die dem Mittelwert von $n$ Messungen entspricht. Für diese Zufallsvariable gilt nun bezüglich Erwartungswert und Varianz:
+		\begin{align}
+			\E(\bar{X}_n) &= \E(X_i) = 40 \notag \\
+			\Var(\bar{X}_n) &= \frac{1}{n}\cdot\Var(X_i) = \frac{25}{n} \notag
+		\end{align}
+		Mit der Ungleichung von Tschebyscheff (und $\varepsilon=10$) folgt damit
+		\begin{align}
+			\mathbb{P}(\vert \bar{X}_n-\mu\vert \le \varepsilon) &\ge 1-\frac{\Var(\bar{X}_n)}{\varepsilon^2} \notag \\
+			&\ge 1- \frac{\frac{25}{n}}{10^2} \notag \\
+			&\ge 1- \frac{\frac{25}{9}}{10^2} \notag \\
+			&\ge \frac{35}{36} \notag
+		\end{align}
+		\item Standardisieren wir die Zufallsvariable zuerst: $\frac{X-40}{5}\sim \Phi$. Die Grenzen von 50 bzw. 30 müssen wir derselben Transformation unterziehen, sodass sich die die benötigte Wahrscheinlichkeit ergibt:
+		\begin{align}
+			\mathbb{P}(30 \le X \le 50) &= \Phi\left(\frac{50-40}{5}\right) - \Phi\left(\frac{30-40}{5}\right) \notag \\
+			&= \Phi(2) - \Phi(-2) \notag \\
+			&= 0.9545 \notag
+		\end{align}
+		Interessant ist, dass die konkreten Zahlen in dieser Aufgabe gar nicht so wichtig sind, denn es gilt allgemein:
+		\begin{itemize}
+			\item Im Intervall der Abweichung $\pm\sigma$ vom Erwartungswert sind 68,27 \% aller Messwerte zu finden
+			\item Im Intervall der Abweichung $\pm2\sigma$ vom Erwartungswert sind 95,45 \% aller Messwerte zu finden
+			\item Im Intervall der Abweichung $\pm3\sigma$ vom Erwartungswert sind 99,73 \% aller Messwerte zu finden
+		\end{itemize}
+		siehe dazu auch \url{https://de.wikipedia.org/wiki/Normalverteilung}
+		\item Bringen wir die Ideen aus (b) und (c) zusammen und standardisieren wieder zuerst: $\frac{\bar{X}_n-\E(\bar{X}_n)}{\sqrt{\Var(\bar{X}_n)}} = \frac{\bar{X}_n-40}{\frac{5}{n}}$ und dann ergibt sich:
+		\begin{align}
+			\mathbb{P}(30 \le \bar{X}_n \le 50) &= \Phi\left(\frac{50-40}{\frac{5}{n}}\right) - \Phi\left(\frac{30-40}{\frac{5}{n}}\right) \notag \\
+			&= \Phi(2n) - \Phi(-2n) \notag \\
+			&= \Phi(18) - \Phi(-18) \notag \\
+			&\approx 1 \notag
+		\end{align}
+		\item Die Breite eines Konfidenzintervalls ist
+		\begin{align}
+			2\cdot z_{1-\frac{\alpha}{2}}\frac{\sigma}{\sqrt{n}} \notag
+		\end{align}
+		Damit gilt
+		\begin{align}
+			2\cdot z_{1-\frac{\alpha}{2}}\frac{\sigma}{\sqrt{n}} &= 10 \notag \\
+			\sqrt{n} &= z_{1-\frac{\alpha}{2}}\frac{\sigma}{5} \notag \\
+			n &= \left(z_{1-\frac{\alpha}{2}}\frac{\sigma}{5}\right)^2 \notag \\
+			&= \left(1.95996\frac{5}{5}\right)^2 \notag \\
+			&= 3.8414 \notag \\
+			&\approx 4 \notag
+		\end{align}
+		\item Das Konfidenzintervall für unbekannte Varianz ist gegeben durch
+		\begin{align}
+			KI &= \left[\bar{X} - t_{n-1;1-\frac{\alpha}{2}}\frac{S}{\sqrt{n}}; \bar{X} + t_{n-1;1-\frac{\alpha}{2}}\frac{S}{\sqrt{n}}\right] \notag \\
+			&= \left[40 - 2.306\frac{\sqrt{60.5}}{\sqrt{9}}; 40 + 2.306\frac{\sqrt{60.5}}{\sqrt{9}}\right] \notag \\
+			&= [34.0212;45.9788] \notag
+		\end{align}
 	\end{enumerate}
 
 	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Ableiten der Verteilungsfunktion liefert die Dichtefunktion:
+		\begin{align}
+			f(x) = \begin{cases}
+				2a\cdot \exp(-2ax) & \text{für } x\ge 0 \\
+				0 &\text{sonst}
+			\end{cases} \notag
+		\end{align}
+		\item Aufstellen der Likelihood-Funktion:
+		\begin{align}
+			L &= \prod_{i=1}^{n} f(x_i) \notag \\
+			&= \prod_{i=1}^n 2a\cdot\exp(-2ax) \notag \\
+			&= (2a)^n\cdot\prod_{i=1}^n \exp(-2ax) \notag
+		\end{align}
+		Berechnen der log-Likelihood-Funktion, um das Produkt in eine Summe umzuwandeln:
+		\begin{align}
+			l &= n\cdot\log(2a) + \sum_{i=1}^n\log(\exp(-2ax)) \notag \\
+			&= n\cdot\log(2a) - \sum_{i=1}^n 2ax \notag \\
+			&= n\cdot\log(2a) - 2a\sum_{i=1}^{n} x_i \notag
+		\end{align}
+		Ableiten nach $a$ und Nullsetzen liefert den Likelihood-Schätzer für $a$:
+		\begin{align}
+			\frac{\partial l}{\partial a} &= 2n\frac{1}{2a} - 2\sum_{i=1}^n x_i =0 \notag \\
+			\frac{n}{a} &= 2\sum_{i=1}^n x_i \notag \\
+			a &= \frac{n}{2\sum_{i=1}^n x_i} \notag \\
+			&= \frac{1}{2\bar{x}} \notag
+		\end{align}
+		\item Der Mittelwert $\bar{x}$ ist 5, also ist $a=\frac{1}{2\bar{x}}=\frac{1}{2\cdot 5} = \frac{1}{10}$
+	\end{enumerate}
+
+	\section*{Aufgabe 4}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir führen einen rechtsseitigen Test durch: \\
+		$H_0: \mu \le 7.6$ \\
+		$H_1: \mu > 7.6$ \\
+		Die Teststatistik ergibt sich zu
+		\begin{align}
+			T &= \frac{\bar{X} - 7.6}{\sigma}\sqrt{n} \notag \\
+			&= \frac{7.8-7.6}{0.5}\sqrt{12} \notag \\
+			&= 1.3856 \notag
+		\end{align}
+		Der kritische Wert ist $z_{1-\alpha}= z_{0.95}=1.6449$ und damit kann die Nullhypothese nicht abgelehnt werden.
+		\item Das Konfidenzintervall für unbekannte Varianz ist gegeben durch
+		\begin{align}
+			KI &= \left[\bar{X} - t_{n-1;1-\frac{\alpha}{2}}\frac{S}{\sqrt{n}}; \bar{X} + t_{n-1;1-\frac{\alpha}{2}}\frac{S}{\sqrt{n}}\right] \notag \\
+			&= \left[7.8 - 2.1788\frac{0.6}{\sqrt{12}}; 7.8 + 2.1788\frac{0.6}{\sqrt{12}}\right] \notag \\
+			&= [7.4226;8.1774] \notag
+		\end{align}
+		\item Beschäftigen wir uns zuerst mit der Operationscharakteristik. Das ist die Wahrscheinlichkeit, dass wir $H_0$ nicht ablehnen. Wir lehnen $H_0$ genau dann nicht ab, wenn $T < z_{1-\frac{\alpha}{2}}$ ist, also
+		\begin{align}
+			L(\mu) &= \mathbb{P}(T \le z_{1-\frac{\alpha}{2}}) \notag \\
+			&= \mathbb{P}\left(\frac{\bar{X}-\mu_0}{\sigma}\sqrt{n} \le z_{1-\frac{\alpha}{2}}\right) \notag \\
+			&= \mathbb{P}\left(\frac{\bar{X}-\mu_0}{\sigma}\sqrt{n} \le z_{1-\frac{\alpha}{2}} + \frac{\mu_0-\mu}{\sigma}\sqrt{n}\right) \notag \\
+			&= \Phi\left(z_{1-\frac{\alpha}{2}} + \frac{\mu_0-\mu}{\sigma}\sqrt{n}\right) \notag \\
+			&= \Phi\left(1.6449 + \frac{7.6-\mu}{0.5}\sqrt{12}\right) \notag
+		\end{align}
+		Die Gütefunktion ist dann $1-L(\mu)$.
+		\item Dafür müssen wir die Gütefunktion an der Stelle $\mu=7.5$ berechnen:
+		\begin{align}
+			G(7.5) &= 1- L(7.5) \notag \\
+			&= 1- \Phi\left(1.6449 + \frac{7.6-7.5}{0.5}\sqrt{12}\right) \notag \\
+			&= 1- \Phi(2.3328) \notag \\
+			&= 0.0098 \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 5}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir führen hier einen $\chi^2$-Anpassungstest durch:
+		\begin{center}
+			\begin{tabular}{c|ccc|c}
+				Ereignis & 0 & 1 & 2 & $\Sigma$ \\
+				\hline
+				$S_i$ & 320 & 48 & 32 & 400 \\
+				$p_i$ & 0.64 & 0.32 & 0.04 & 1 \\
+				$np_i$ & 256 & 128 & 16 & 400
+			\end{tabular}
+		\end{center}
+		Die Teststatistik ergibt sich zu $T=82$, der kritische Wert ist $\chi^2_{3-1;1-\alpha}=\chi^2_{2,0.9}=4.6052$, also wird die Nullhypothese abgelehnt.
+		\item Wir führen hier einen $\chi^2$-Anpassungstest durch:
+		\begin{center}
+			\begin{tabular}{c|ccc|c}
+				Ereignis & 0 & 1 & 2 & $\Sigma$ \\
+				\hline
+				$S_i$ & 320 & 48 & 32 & 400 \\
+				$p_i$ & 0.7408 & 0.2222 & 0.0333 & $\approx$ 1 \\
+				$np_i$ & 296.32 & 88.90 & 13.33 & $\approx$ 400
+			\end{tabular}
+		\end{center}
+		Die Teststatistik ergibt sich zu $T=46.8333$, der kritische Wert ist $\chi^2_{3-1;1-\alpha}=\chi^2_{2,0.9}=4.6052$, also wird die Nullhypothese abgelehnt.
+	\end{enumerate}
+
+	\section*{Aufgabe 6}
+	Die Variable \textit{Arbeitsgeschwindigkeit} hat metrisches Skalenniveau, die Variable \textit{Qualität} hat nur ordinales Skalenniveau. Wir können hier also einen Unabhängigkeitstest mittels Rangkorrelationskoeffizient machen. Die Ränge sind
+	\begin{center}
+		\begin{tabular}{c|cccccccc}
+			Arbeiterin & A & B & C & D & E & F & F & H \\
+			\hline
+			R(Geschwindigkeit) & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\
+			R(Qualität) & 4 & 5 & 3 & 2 & 8 & 6 & 1 & 7
+		\end{tabular}
+	\end{center}
+	Die Teststatistik ergibt sich zu $T=0.1819$ und der kritische Wert für den zweiseitigen Test $H_0: \rho=0$ vs. $H_1: \rho\neq 0$ ist $z_{1-\frac{\alpha}{2}}=1.9599$. Die Nullhypothese kann also nicht abgelehnt werden (hier ist $\rho = 0.1905$).
+	
+	\section*{Aufgabe 7}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir führen hier einen Zweistichproben-$t$-Test durch. Der Mittelwert der ersten Waage ist $\bar{X}_1=1000$, der Mittelwert der zweiten Waage ist $\bar{X}_2=1000.01$. Die Varianz der ersten Waage ist $S_1^2=5\cdot 10^{-5}$, die der zweiten Waage $S_2=0.00035$. Da die Varianzen bei beiden Waagen gleich sein sollen, muss diese erst geschätzt werden:
+		\begin{align}
+			\hat{\sigma}^2 &= \frac{(n_1-1)S_1^2 + (n_2-1)S_2^2}{n_1+n_2-2} \notag \\
+			&= \frac{(5-1)\cdot 5\cdot 10^{-5} + (5-1)\cdot 0.00035}{5+5-2} \notag \\
+			&= 2\cdot 10^{-4} \notag
+		\end{align}
+		Die Teststatistik ergibt sich dann zu
+		\begin{align}
+			T &= \frac{\bar{X}_1-\bar{X}_2}{\sqrt{\hat{\sigma}^2\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}} \notag \\
+			&= \frac{1000-1000.01}{\sqrt{2\cdot 10^{-4}\left(\frac{1}{5}+\frac{1}{5}\right)}} \notag \\
+			&= -1.1180 \notag
+		\end{align}
+		Der kritische Wert ist $t_{n_1+n_2-2;1-\frac{\alpha}{2}}=t_{8;0.95}=1.8595$, die Nullhypothese kann damit nicht abgelehnt werden.
+		\item Die Nullhypothese wird dann abgelehnt, wenn $\vert T\vert > t_{krit}$, also dann, wenn $t_{krit}$ 1.180 unterschreitet.
+	\end{enumerate}
 \end{document}
