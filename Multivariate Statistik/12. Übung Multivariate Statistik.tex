@@ -1,0 +1,129 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage[amsmath,thmmarks,standard]{ntheorem}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R,morekeywords={confint,head}}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+\newcommand{\E}{\mathbb{E}}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\renewcommand{\E}{\mathbb{E}}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{lem}{Lemma}
+
+\title{\textbf{Multivariate Statistik, Übung 12}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Wir benutzen die Identitäten $k_{ij}=f_{ij}\cdot k_{\cdot\cdot}$, $k_{i\cdot}=f_{i\cdot}\cdot k_{\cdot\cdot}$ und $k_{\cdot j}=f_{\cdot j}\cdot k_{\cdot\cdot}$. Dann ergibt sich:
+	\begin{align}
+		\sum_{i=1}^{p}\sum_{i=1}^q \frac{\left(k_{ij}-\frac{k_{i\cdot}k_{\cdot j}}{k_{\cdot\cdot}}\right)^2}{\frac{k_{i\cdot}k_{\cdot j}}{k_{\cdot\cdot}}} &= \sum_{i=1}^{p}\sum_{i=1}^q \frac{\left(f_{ij}\cdot k_{\cdot\cdot}-\frac{f_{i\cdot}\cdot k_{\cdot\cdot}\cdot f_{\cdot j}\cdot k_{\cdot\cdot}}{k_{\cdot\cdot}}\right)^2}{\frac{f_{i\cdot}\cdot k_{\cdot\cdot}\cdot f_{\cdot j}\cdot k_{\cdot\cdot}}{k_{\cdot\cdot}}} \notag \\
+		&= \sum_{i=1}^p\sum_{i=1}^q \frac{\left(k_{\cdot\cdot}\left[f_{ij} - f_{i\cdot}f_{\cdot j}\right]\right)^2}{f_{i\cdot}f_{\cdot j}\cdot k_{\cdot\cdot}} \notag \\
+		&= \sum_{i=1}^p \sum_{i=1}^q \frac{k_{\cdot\cdot}^2(f_{ij}-f_{i\cdot}f_{\cdot j})^2}{f_{i\cdot}f_{\cdot j}\cdot k_{\cdot\cdot}} \notag \\
+		&= \sum_{i=1}^p \sum_{i=1}^q \frac{k_{\cdot\cdot}(f_{ij}-f_{i\cdot}f_{\cdot j})^2}{f_{i\cdot}f_{\cdot j}} \notag \\
+		&= k_{\cdot\cdot}\sum_{i=1}^p\sum_{i=1}^q \frac{(f_{ij}-f_{i\cdot}f_{\cdot j})^2}{f_{i\cdot}f_{\cdot j}} \notag
+	\end{align}
+
+	\section*{Aufgabe 2}
+	Der Term $\frac{k_{i\cdot}k_{\cdot j}}{k_{\cdot\cdot}}$ drückt die erwartete Anzahl bei Unabhängigkeit aus. Die Teststatistik ist also eine Art relative Abweichung zur Unabhängigkeit.
+	
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die (unvollständige) Kontingenztafel lautet
+		\begin{center}
+			\begin{tabular}{c|cc|c}
+				& Zulassung & Ablehnung & $\Sigma$ \\
+				\hline
+				Soziologie & 12 & 88 & 100 \\
+				Maschinenbau & $x$ & $y$ & $x+y$ \\
+				Sportwissenschaften & 25 & 25 & 50 \\
+				\hline
+				$\Sigma$ & $37+x$ & $113+y$ & $150+x+y$
+			\end{tabular}
+		\end{center}
+		Wir wissen, dass $\frac{37+x}{150+x+y}=0.484$ und $\frac{x}{x+y}=7\cdot\frac{12}{100}$ ist. Aus der zweiten Gleichung erhalten wir
+		\begin{align}
+			\frac{x}{x+y} &= \frac{84}{100} \notag \\
+			x &= \frac{84}{100}x + \frac{84}{100}y \notag \\
+			\frac{16}{100}x &= \frac{84}{100}y \notag \\
+			y &= \frac{16}{84}x \notag
+		\end{align}
+		Aus der ersten Gleichung erhalten wir:
+		\begin{align}
+			\frac{37+x}{150+x+y} &= 0.484 \notag \\
+			37+x &= 72.6 + 0.484x + 0.484y \notag \\
+			\frac{129}{250}x &= 35.6 + 0.484y \notag \\
+			\frac{129}{250}x &= 35.6 + 0.484\cdot\frac{16}{84}x \notag \\
+			\frac{89}{210}x &= 35.6 \notag \\
+			x &= 84 \notag \\
+			y &= 16 \notag \notag
+		\end{align}
+		\item Die Tabelle der relativen Häufigkeiten ist dann
+		\begin{center}
+			\begin{tabular}{c|cc|c}
+				& Zulassung & Ablehnung & $\Sigma$ \\
+				\hline
+				Soziologie & 0.048 & 0.352 & 0.4 \\
+				Maschinenbau & 0.336 & 0.064 & 0.4 \\
+				Sportwissenschaften & 0.1 & 0.1 & 0.2 \\
+				\hline
+				$\Sigma$ & 0.484 & 0.516 & 1
+			\end{tabular}
+		\end{center}
+		\item Wir benutzen den $\chi^2$-Unabhängigkeitstest, weil wir nur nominale Daten haben. \\
+		$H_0:$ Studiengang und Zulassung sind unabhängig \\
+		$H_1:$ Studiengang und Zulassung sind nicht unabhängig \\
+		Die Teststatistik ergibt sich zu
+		\begin{align}
+			T &= k_{\cdot\cdot}\sum_{i=1}^p\sum_{i=1}^q \frac{(f_{ij}-f_{i\cdot}f_{\cdot j})^2}{f_{i\cdot}f_{\cdot j}} \notag \\
+			&= 103.83 \notag
+		\end{align}
+		Der kritische Wert ist $\chi^2_{(k-1)(l-1);1-\alpha} = \chi^2_{2\cdot 1;1-0.05} = 5.9915$. Damit wird $H_0$ abgelehnt und $H_1$ angenommen. Es besteht also ein Zusammenhang zwischen Studiengang und Zulassung.
+	\end{enumerate}
+	
+\end{document}
