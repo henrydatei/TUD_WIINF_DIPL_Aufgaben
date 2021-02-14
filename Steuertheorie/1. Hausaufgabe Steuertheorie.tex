@@ -1,0 +1,280 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\title{\textbf{Steuertheorie, Hausaufgabe 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der Grenzsteuersatz und Durchschnittssteuersatz ist
+		\begin{align}
+			\frac{\partial T_1}{\partial y} &= \begin{cases}
+				0 & y \le y_0 \\
+				0.3 & y < y_0
+			\end{cases} \notag \\
+			\frac{T_1}{y} &= \begin{cases}
+				0 & y \le y_0 \\
+				0.3 - \frac{y_0}{y} & y > y_0
+			\end{cases} \notag
+		\end{align}
+		Es handelt sich um einen indirekt progressiven Steuertarif mit Freibetrag.
+		\begin{center}
+			\begin{tikzpicture}
+				\begin{axis}[
+					xmin=0, xmax=1, xlabel=$x$,
+					ymin=0, ymax=0.5,
+					samples=400,
+					axis x line=middle,
+					axis y line=middle,
+					domain=0:1,
+					%yticklabels={,,},
+					xticklabels={,,},
+					xtick style={draw=none},
+					%ytick style={draw=none},
+					restrict y to domain=0:0.5
+					]
+					\addplot[mark=none,smooth,blue] {0.3*(x-0.2)};
+					\draw[blue] (axis cs: 0,0) -- (axis cs: 0.2,0);
+					
+					\addplot[mark=none,smooth,red,domain=0.2:1] {0.3};
+					\addplot[mark=none,smooth,green!80!black] {0.3-0.2/(3.3*x)};
+					
+				\end{axis}
+			\end{tikzpicture} \\
+			\textcolor{blue}{Tarifverlauf}, \textcolor{red}{Grenzsteuersatz}, \textcolor{green!80!black}{Durchschnitsssteuersatz}
+		\end{center}
+		\item Der Grenzsteuersatz und Durchschnittssteuersatz ist
+		\begin{align}
+			\frac{\partial T_1}{\partial y} &= \begin{cases}
+				0 & y \le y_0 \\
+				0.3 & y < y_0
+			\end{cases} \notag \\
+			\frac{T_1}{y} &= \begin{cases}
+				0 & y \le y_0 \\
+				0.3 & y > y_0
+			\end{cases} \notag
+		\end{align}
+		Es handelt sich um einen proportionalen Steuertarif.
+		\begin{center}
+			\begin{tikzpicture}
+				\begin{axis}[
+					xmin=0, xmax=1, xlabel=$x$,
+					ymin=0, ymax=0.5,
+					samples=400,
+					axis x line=middle,
+					axis y line=middle,
+					domain=0:1,
+					%yticklabels={,,},
+					xticklabels={,,},
+					xtick style={draw=none},
+					%ytick style={draw=none},
+					restrict y to domain=0:0.5
+					]
+					\addplot[mark=none,smooth,blue,domain=0.2:1] {0.3*x};
+					\draw[blue] (axis cs: 0,0) -- (axis cs: 0.2,0);
+					
+					\addplot[mark=none,smooth,red,domain=0.2:1] {0.3};
+					\addplot[mark=none,smooth,green!80!black, domain=0.2:1] {0.3};
+					
+				\end{axis}
+			\end{tikzpicture} \\
+			\textcolor{blue}{Tarifverlauf}, \textcolor{red}{Grenzsteuersatz}, \textcolor{green!80!black}{Durchschnitsssteuersatz}
+		\end{center}
+		\item Der Grenzsteuersatz und Durchschnittssteuersatz ist
+		\begin{align}
+			\frac{\partial T_1}{\partial y} &= 0.3 \notag \\
+			\frac{T_1}{y} &= 0.3-\frac{y_0}{y} \notag
+		\end{align}
+		Es handelt sich um einen indirekt progressiven Steuertarif.
+		\begin{center}
+			\begin{tikzpicture}
+				\begin{axis}[
+					xmin=0, xmax=1, xlabel=$x$,
+					ymin=-0.2, ymax=0.5,
+					samples=400,
+					axis x line=middle,
+					axis y line=middle,
+					domain=0:1,
+					%yticklabels={,,},
+					xticklabels={,,},
+					xtick style={draw=none},
+					%ytick style={draw=none},
+					restrict y to domain=-0.2:0.5
+					]
+					\addplot[mark=none,smooth,blue] {0.3*(x-0.2)};
+					
+					\addplot[mark=none,smooth,red] {0.3};
+					\addplot[mark=none,smooth,green!80!black] {0.3-0.2/(3.3*x)};
+					
+				\end{axis}
+			\end{tikzpicture} \\
+			\textcolor{blue}{Tarifverlauf}, \textcolor{red}{Grenzsteuersatz}, \textcolor{green!80!black}{Durchschnitsssteuersatz}
+		\end{center}
+		\item Der Grenzsteuersatz und Durchschnittssteuersatz ist
+		\begin{align}
+			\frac{\partial T_1}{\partial y} &= 0.6y \notag \\
+			\frac{T_1}{y} &= 0.3y \notag
+		\end{align}
+		Es handelt sich um einen direkt progressiven Steuertarif.
+		\begin{center}
+			\begin{tikzpicture}
+				\begin{axis}[
+					xmin=0, xmax=1, xlabel=$x$,
+					ymin=0, ymax=0.5,
+					samples=400,
+					axis x line=middle,
+					axis y line=middle,
+					domain=0:1,
+					%yticklabels={,,},
+					xticklabels={,,},
+					xtick style={draw=none},
+					%ytick style={draw=none},
+					restrict y to domain=0:0.5
+					]
+					\addplot[mark=none,smooth,blue] {0.3*x^2};
+					
+					\addplot[mark=none,smooth,red] {0.6*x};
+					\addplot[mark=none,smooth,green!80!black] {0.3*x};
+					
+				\end{axis}
+			\end{tikzpicture} \\
+			\textcolor{blue}{Tarifverlauf}, \textcolor{red}{Grenzsteuersatz}, \textcolor{green!80!black}{Durchschnitsssteuersatz}
+		\end{center}
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Bei einer Bruttowertsteuer gilt $p=q(1-\tau)$ und damit
+		\begin{align}
+			\frac{p-q}{q} = \frac{q(1-\tau)-q}{q} = (1-\tau)-1 = -\tau \notag
+		\end{align}
+		Bei einer Nettowertsteuer gilt $q=p(1+\theta)$ und damit
+		\begin{align}
+			\frac{p-q}{q} = \frac{p - p(1+\theta)}{p(1+\theta)} = \frac{1-(1+\theta)}{1+\theta} = \frac{-\theta}{1+\theta} \notag
+		\end{align}
+		Die Umrechnung sieht wie folgt aus
+		\begin{align}
+			q(1-\tau) &= \frac{q}{1+\theta} \notag \\
+			1-\tau &= \frac{1}{1+\theta} \notag \\
+			\Rightarrow \tau &= 1-\frac{1}{1+\theta} \notag \\
+			\Rightarrow \theta &= \frac{1}{1-\tau}-1 \notag
+		\end{align}
+		\item Es handelt sich um eine Nettowertsteuer: Die Umsatzsteuer kommt auf den Nettopreis drauf. In 100 \EUR\, Bruttowert sind 84.03 \EUR\, Nettowert und 15.97 \EUR\, Umsatzsteuer enthalten. Die Quote beträgt also 15.97 \%.
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	Zuerst der Beweis:
+	\begin{align}
+		\frac{\partial T}{\partial y} = \frac{\partial (t\cdot y)}{\partial y} = \underbrace{\frac{\partial t}{\partial y}}_{0}\cdot y + t\cdot\underbrace{\frac{\partial y}{\partial y}}_{1} = t \notag
+	\end{align}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Steueraufkommenselastizität gibt an, um wie viel Prozent sich das Steueraufkommen ändert, wenn sich die Bemessungsgrundlage um 1 Prozent ändert.
+		\item Es gilt $\alpha(y)=T'(y)\cdot \frac{1}{t(y)}$. Damit gilt für einen proportionalen Steuertarif $\alpha=1$, für einen progressiven $\alpha>1$ und für einen regressiven $\alpha<1$.
+		\item Es gilt
+		\begin{align}
+			\rho(y) &= \frac{\partial x}{\partial y} \cdot\frac{y}{x} \notag \\
+			&= \frac{\partial (y-T(y))}{\partial y} \cdot\frac{y}{y-T(y)} \notag \\
+			&= \left(\frac{\partial y}{\partial y} - \frac{\partial T(y)}{\partial y}\right)\cdot\frac{y}{y-T(y)} \notag \\
+			&= \frac{y-T'(y)\cdot y\cdot\frac{t}{t}}{y-T(y)} \notag \\
+			&= \frac{y-\alpha(y)\cdot T(y)}{y-T(y)} \notag
+		\end{align}
+		Wenn $\alpha>1$, dann Zähler $<$ Nenner und damit $\rho<1$. \\
+		Wenn $\alpha=1$, dann Zähler $=$ Nenner und damit $\rho=1$. \\
+		Wenn $\alpha<1$, dann Zähler $>$ Nenner und damit $\rho>1$.
+		\item Für $T(y)=a\cdot y^\beta$ gilt
+		\begin{align}
+			\alpha(y) = \frac{a\cdot\beta\cdot y^{\beta-1}\cdot y}{a\cdot y^\beta} = \frac{a\cdot\beta\cdot y^\beta}{a\cdot y^\beta} = \beta \notag
+		\end{align}
+		Für $T(y)=y-ay^p$ ist $x=y-(y-ax^p)=ay^p$ und damit
+		\begin{align}
+			\rho(x) = \frac{a\cdot p\cdot y^{p-1}\cdot y}{a\cdot y^p} = \frac{a\cdot p\cdot y^p}{a\cdot y^p} = p \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 4}
+	\begin{enumerate}[label=(\alph*)]
+		\item Es gilt $T=\theta\cdot w^N\cdot N(w^B)$ und damit
+		\begin{align}
+			\frac{\partial T}{\partial\theta} &= w^N\cdot N(w^B) + \theta\cdot w^N\cdot\frac{\partial N(w^B)}{\partial w^B}\underbrace{\frac{\partial w^B}{\partial \theta}}_{w^N} \notag \\
+			&= w^N\cdot N(w^B)\left(1+\theta\cdot \underbrace{w^N}_{\frac{w^B}{1+\theta}} \cdot \frac{\partial N(w^B)}{\partial w^B}\cdot\frac{1}{N(w^B)}\right) \notag \\
+			&= w^N\cdot N(w^B)\left(1+\frac{\theta}{1+\theta}\cdot \underbrace{w^B\cdot\frac{\partial N(w^B)}{\partial w^B}\cdot\frac{1}{N(w^B)}}_{\eta}\right) \notag \\
+			&= w^N\cdot N(w^B)\left(1+\frac{\theta}{1+\theta}\eta\right) \notag
+		\end{align}
+		Das Steueraufkommen sinkt genau dann, wenn
+		\begin{align}
+			1+\frac{\theta}{1+\theta}\eta &< 0 \notag \\
+			1+\frac{\theta}{1+\theta}(-3) &< 0 \notag \\
+			-\frac{3\theta}{1+\theta} &< -1 \notag \\
+			-3\theta &< -(1+\theta) \notag \\
+			-2\theta &< -1 \notag \\
+			\theta &> \frac{1}{2} \notag
+		\end{align}
+		\item $\eta=-3$ ist schon sehr unelastisch, wenn die nachfrage noch unelastischer wird, kann der Steuersatz noch weiter angehoben werden, die Nachfrage reagiert aber kaum $\Rightarrow$ Steueraufkommen steigt.
+	\end{enumerate}
+
+	\section*{Aufgabe 5}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der Staat maximiert $T=x(GZB(x) - GK(x))$, also
+		\begin{align}
+			\frac{\partial T}{\partial x} &= GZB'\cdot x + GZB - (GK' \cdot x) = 0 \notag \\
+			GZB + GZB'\cdot x &= GK + GK'\cdot x \notag
+		\end{align}
+		Die Grenzausgabenfunktion ist dann $A'=GK + GK'\cdot x = 2+x+x=2+2x$.
+		\item Die Grenzerlösfunktion ist $E'=GZB + GZB'\cdot x = 14-2x-2x = 14-4x$.
+		\item Im Gleichgewicht gilt dann
+		\begin{align}
+			E' &= A' \notag \\
+			2+2x &= 14-4x \notag \\
+			12 &= 6x \notag \\
+			x &= 2 \notag
+		\end{align}
+		Die Steuer ist dann $GZB(2) - GK(2) = 6$ und das Steueraufkommen $T=2\cdot 6=12$.
+		\item Diagramm
+		\begin{center}
+			\begin{tikzpicture}[scale=0.9]
+				\begin{axis}[
+					xmin=0, xmax=8,
+					ymin=0, ymax=15,
+					samples=400,
+					axis x line=middle,
+					axis y line=middle,
+					domain=0:8,
+					]
+					\addplot[mark=none,smooth,blue] {14-4*x};
+					\addplot[mark=none,smooth,blue,dashed] {14-2*x};
+					\addplot[mark=none,smooth,red] {2+2*x};
+					\addplot[mark=none,smooth,red,dashed] {2+x};
+					
+					\draw[dotted] (axis cs: 2,0) -- (axis cs: 2,10) -- (axis cs: 0,10);
+					\draw[dotted] (axis cs: 2,4) -- (axis cs: 0,4);
+					
+					\draw[<->] (axis cs: 0.5,4) to node[midway,right] {$t$} (axis cs: 0.5,10);
+					
+				\end{axis}
+			\end{tikzpicture} \\
+			\textcolor{blue}{Grenzausgabenfunktion/Grenzzahlungbereitschaft}, \textcolor{red}{Grenzerlösfunktion/Grenzkosten}
+		\end{center}
+	\end{enumerate}
+	
+\end{document}
