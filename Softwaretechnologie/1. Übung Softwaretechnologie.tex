@@ -1,0 +1,88 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Softwaretechnologie, Übung 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Datei \texttt{Book.java} stellt die Klasse \texttt{Book} zur Verfügung. Ein Objekt der Klasse \texttt{Book} hat dabei einen Titel (mit Datentyp \texttt{String}), einen Konstruktor und eine Funktion \texttt{toString()}, die den Titel des Buches zurückgibt.
+		\item Die Datei \texttt{Library.java} stellt die Klasse \texttt{Library} zur Verfügung. Ein Objekt dieser Klasse enthält ein Array von Büchern und eine Nummer. Diese Nummer bestimmt den Platz eines Buches im Array. Bei der Instanziierung wird ein Array mit genau 10 Plätzen erstellt und ein Text ausgegeben. Mit der Funktion \texttt{register(Book book)} wird ein neues Buch zur Bibliothek hinzugefügt, danach wird die Nummer um 1 erhöht und es erfolgt wieder eine Ausgabe.
+		\item Die Datei \texttt{HelloLibrary} stellt die Klasse \texttt{HelloLibrary} zur Verfügung. Diese besitzt auch eine \texttt{main}-Methode, die beim Starten des Programms ausgeführt wird. Aktuell ist die Datei leer und wird im Verlauf der Übung ausgefüllt.
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Library \texttt{lib} wird folgendermaßen erstellt:
+		\begin{lstlisting}[style=java]
+Library lib = new Library();
+		\end{lstlisting}
+		\item Die beiden Bücher werden so erstellt und heißen \textit{Titel 1} und \textit{Titel 2}.
+		\begin{lstlisting}[style=java]
+Book book1 = new Book("Titel 1");
+Book book2 = new Book("Titel 2");
+		\end{lstlisting}
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	Die Aufnahme der Bücher in die Bibliothek erfolgt über die \texttt{register}-Methode:
+	\begin{lstlisting}[style=java]
+lib.register(book1);
+lib.register(book2);
+	\end{lstlisting}
+
+	\section*{Aufgabe 4}
+	Der Output auf der Konsole ist \\
+	\texttt{Hello, I am a small library for at most 10 books. \\
+	A new book is registered: Titel 1 \\
+	A new book is registered: Titel 2}
+	
+\end{document}
