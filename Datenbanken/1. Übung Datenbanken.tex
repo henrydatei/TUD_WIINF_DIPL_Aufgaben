@@ -1,0 +1,80 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Datenbanken, Übung 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Es werden Daten wie Text, Zeit, Ort, Account, App/Desktop, verwendete Hashtags, erwähnte User, Anzahl Likes/Retweets, ... generiert. Man kann diese Daten in Datenbanken speichern. Wenn jemand auf Like derückt, werden auch da Daten erzeugt: Account, welcher Tweet, Zeit, Ort, App/Desktop, ... 
+		\item Wenn der Tweet gelöscht wird, was passiert dann mit den Likes/Antworten/Retweets, die sich auf den gelöschten Tweet beziehen? Nutzerkonto kann aber einfach gelöscht werden.
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Performance ist aber katastrophal.
+		\item Wird vielleicht jetzt noch nicht benötigt, aber in Zukunft.
+		\item Welcher Entwickler kann denn bitte kein SQL?
+		\item Es können aber sehr schnell Inkonsistenzen auftreten.
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	A und B haben jeweils 1000 \EUR\, und A überweist B 100 \EUR, während B A 200 \EUR\, überweist. Wenn die Transaktionen gleichzeitig ausgeführt werden, wird bei A das Geld abgezogen, aber weil die Transaktion von B nach A gleichzeitig läuft, ließt B den alten Kontostand von A ein, und erhöht diesen. Selbiges läuft auf der Seite von A ab: Es wird der alte Kontostand von B eingelesen, bei dem noch nicht das Geld für die Transaktion abgezogen war, weil der Schreibzugriff noch nicht erfolgt war.
+	
+	\section*{Aufgabe 4}
+	\begin{enumerate}[label=(\alph*)]
+		\item Externe Ebene: stellt die Daten dar, z.B. in Tabellen \\
+		Logische Ebene: enthält die Relationen \\
+		Physische Ebene: kümmert sich um die Speicherung der Daten
+		\item Änderungen an Schichten sollen keine Auswirkungen auf die andere Schicht haben
+	\end{enumerate}
+	
+\end{document}
