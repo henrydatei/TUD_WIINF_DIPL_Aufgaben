@@ -1,0 +1,150 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Grundlagen des Finanzmanagements, Übung 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 5.8: Die verschiedenen Bedeutungen der Zinssätze}
+	Insgesamt wurde eine Rendite von 34.39 \% erwirtschaftet.
+	\begin{enumerate}[label=(\alph*)]
+		\item Pro Periode ist der Zinssatz $r=\sqrt[10]{1.3439}-1=0.03$, damit wird im Jahr $1.03^2-1=0.0609$ erwirtschaftet.
+		\item Pro Periode ist der Zinssatz $r=\sqrt[60]{1.3439}-1=0.0049$, damit wird im Jahr $1.0049^{12}-1=0.0604$ erwirtschaftet.
+	\end{enumerate}
+	Der Zinssatz bei beiden Zahlungen sollte bei $\sqrt[5]{1.3439}-1=0.0609$ liegen, aber durch Rundungsfehler kommt es zu kleinen Abweichungen.
+
+	\section*{Aufgabe 5.24: Die Determinanten von Zinssätzen}
+	\begin{enumerate}[label=(\alph*)]
+		\item Ja kann er. Einige Geldinstitute haben mittlerweile Strafzinsen für hohe Einlagen.
+		\item Ja kann er. Wenn die Inflation deutlich größer als das Wachstum des Geldes ist.
+	\end{enumerate}
+
+	\section*{Aufgabe 1K5: Finanz- und Investitionsmathematik}
+	\begin{enumerate}[label=(\alph*)]
+		\item Zuerst muss der Barwert am Anfang des Renteneintritts berechnet werden. Dafür gilt:
+		\begin{align}
+			BW &= \underbrace{\frac{q^n-1}{q^{n+1}-q^n}}_{\text{nach. Barwertfaktor}} \cdot 30000 \text{ \EUR} \notag \\
+			&= \frac{1.04^{10}-1}{1.04^{11} - 1.04^{10}} \cdot 30000 \text{ \EUR} \notag \\
+			&= 243326.87 \text{ \EUR} \notag
+		\end{align}
+		Der Zins von 6 \% jährlich impliziert, dass der Monatszinssatz bei $\sqrt[12]{1.06}-1=0.00487$ liegt. Um die Renteneinzahlung $R$ zu berechnen, gilt:
+		\begin{align}
+			243326.87 \text{ \EUR} &= \underbrace{\frac{q^n-1}{q-1}}_{\text{nach. Endwertfaktor}} \cdot R \notag \\
+			R &= 243326.87 \text{ \EUR} \cdot \frac{q-1}{q^n-1} \notag \\
+			&= 243326.87 \text{ \EUR} \cdot \frac{0.00487}{1.00487^{12\cdot 25}-1} \notag \\
+			&=  359.64 \text{ \EUR} \notag
+		\end{align}
+		\item Bisher befinden sich in der Rentenkasse
+		\begin{align}
+			& 359.64 \text{ \EUR} \cdot \frac{q^n-1}{q-1} \notag \\
+			&= 359.64 \text{ \EUR} \cdot \frac{1.00487^{12\cdot 15}-1}{0.00487} \notag \\
+			&= 106080.60 \text{ \EUR} \notag
+		\end{align}
+		Die restlichen 137246.27 \EUR\, müssen in 5 Jahren eingezahlt werden, das bedeutet, dass die monatlich zu zahlende Summe $R$ ist:
+		\begin{align}
+			137246.27 \text{ \EUR} &= \underbrace{\frac{q^n-1}{q-1}}_{\text{nach. Endwertfaktor}} \cdot R \notag \\
+			R &= 137246.27 \text{ \EUR} \cdot \frac{q-1}{q^n-1} \notag \\
+			&= 137246.27 \text{ \EUR} \cdot \frac{0.00487}{1.00487^{12\cdot 5}-1} \notag \\
+			&= 1975.02 \text{ \EUR} \notag
+		\end{align}
+		\item Das Auszahlungsschema ist jetzt monatlich, der Zinssatz ist jetzt also $\sqrt[12]{1.04}-1=0.00327$. Der Barwert des ersten Jahres ist
+		\begin{align}
+			BW_1 &= \frac{q^n-1}{q^{n+1}-q^n} \cdot 2500 \text{ \EUR} \notag \\
+			&= \frac{1.00327^{12}-1}{1.00327^{13}-1.00327^{12}} \cdot 2500 \text{ \EUR} \notag \\
+			&= 29371.96 \text{ \EUR} \notag
+		\end{align}
+		In den folgenden Jahren ist zugleich ein höherer Barwert nötig, weil die Rente steigt (um 4 \% pro Jahr), aber auf der anderen Seite hat das Geld mehr Zeit sich durch den Zins (4 \% pro Jahr) zu vermehren. Glücklicherweise heben sich beide Effekte genau auf, sodass der Barwert der gesamten Rente gleich
+		\begin{align}
+			BW = 10 \cdot BW_1 = 293719.60 \text{ \EUR} \notag
+		\end{align}
+		ist. Die verursachten Mehrkosten sind also $293719.60 \text{ \EUR} - 243326.87 \text{ \EUR} = 50392.73 \text{ \EUR}$.
+	\end{enumerate}
+	
+	
+	\section*{Aufgabe 2K90: Investitionsrechnung mit Inflation}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der nominale Zins nach Steuern ist
+		\begin{align}
+			0.12 \cdot (1-0.4) = 0.072 \notag
+		\end{align}
+		Der reale Zins vor Steuern ist
+		\begin{align}
+			\frac{0.12-0.03}{1+0.03} = 0.0874 \notag
+		\end{align}
+		Der reale Zins nach Steuern ist dann
+		\begin{align}
+			\frac{0.072-0.03}{1+0.03} = 0.0408 \notag
+		\end{align}
+		\item Die Zahlungsströme sind:
+		\begin{center}
+			\begin{tabular}{C{4cm}|C{1cm}|c|c|c|c}
+				\textbf{Periode} & 0 & 1 & 2 & 3 & 4 \\
+				\hline
+				\multirow{2}{4cm}{nominaler Zahlungsstrom nach Steuern} & \multirow{2}{1cm}{-150} & $40\cdot(1-0.4)$ & $50\cdot (1-0.4)$ & $60\cdot (1-0.4)$ & $70\cdot (1-0.4)$ \\
+				& & 24 & 30 & 36 & 42 \\ 
+				\hline
+				\multirow{2}{4cm}{realer Zahlungsstrom vor Steuern} & \multirow{2}{1cm}{-150} & $\frac{40}{1.03}$ & $\frac{50}{1.03^2}$ & $\frac{60}{1.03^3}$ & $\frac{70}{1.03^4}$ \\
+				& & 38.38 & 47.13 & 54.91 & 62.19 \\
+				\hline
+				\multirow{2}{4cm}{realer Zahlungsstrom vor Steuern} & \multirow{2}{1cm}{-150} & $38.38\cdot(1-0.4)$ & $47.13\cdot(1-0.4)$ & $54.91\cdot(1-0.4)$ & $62.19\cdot(1-0.4)$ \\
+				& & 23.03 & 28.28 & 32.95 & 37.32
+			\end{tabular}
+		\end{center}
+		\item Die Kapitalwerte sind:
+		\begin{itemize}
+			\item $KW_1 = -150 + \frac{24}{1.12} + \frac{30}{1.12^2} + \frac{36}{1.12^3} + \frac{42}{1.12^4} = -52.34$
+			\item $KW_2 = -150 + \frac{38.38}{1.12} + \frac{47.13}{1.12^2} + \frac{54.91}{1.12^3} + \frac{62.19}{1.12^4} = 0.45$
+			\item $KW_3 = -150 + \frac{23.03}{1.12} + \frac{28.28}{1.12^2} + \frac{32.95}{1.12^3} + \frac{37.32}{1.12^4} = -59.72$
+		\end{itemize}
+		\item Der einzig entscheidende Kapitalwert ist der reale nach Steuern. Da dieser negativ ist, sollte das Projekt nicht durchgeführt werden. Würde es keine Steuern geben, so sollte das Projekt gerade so durchgeführt werden.
+	\end{enumerate}
+	
+\end{document}
