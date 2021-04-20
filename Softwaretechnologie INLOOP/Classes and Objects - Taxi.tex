@@ -1,0 +1,170 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	breaklines=true,postbreak=\mbox{\space}
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{INLOOP Softwaretechnologie, Classes and Objects - Taxi}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{vollständiger Code}
+	Datei \texttt{Human.java}
+	\begin{lstlisting}[style=java,tabsize=2]
+public class Human {
+	private String forname;
+	private String name;
+	
+	public Human(String forname, String name) {
+		this.forname = forname;
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public String getForename() {
+		return forname;
+	}
+	
+	public String toString() {
+		return forname + " " + name;
+	}
+}
+	\end{lstlisting}
+	
+	Datei \texttt{Taxi.java}
+	\begin{lstlisting}[style=java,tabsize=2]
+public class Taxi {
+	private Human driver;
+	private Human[] passengers;
+	private int numberGuests;
+	
+	public Taxi(Human driver) {
+		this.driver = driver;
+		this.passengers = new Human[4];
+		this.numberGuests = 0;
+	}
+	
+	public String getDriverName() {
+		return driver.getForename() + " " + driver.getName();
+	}
+	
+	public void add(Human passenger) {
+		if(numberGuests >= 4) {
+			System.out.println("We are sorry, " + passenger + ". The taxi is full.");
+		}
+		else {
+			for(int i = 0; i <= numberGuests; i++) {
+				if(passengers[i] == null) passengers[i] = passenger;
+			}
+			numberGuests++;
+			System.out.println(passenger + " gets in.");
+		}
+	}
+	
+	public String toString() {
+		if(numberGuests == 0) {
+			return "This is the taxi of " + driver + ". He takes nobody along.";
+		}
+		if(numberGuests == 1) {
+			return "This is the taxi of " + driver + ". He takes " + passengers[0] + " along.";
+		}
+		if(numberGuests == 2) {
+			return "This is the taxi of " + driver + ". He takes " + passengers[0] + " and " + passengers[1] + " along.";
+		}
+		if(numberGuests == 3) {
+			return "This is the taxi of " + driver + ". He takes " + passengers[0] + ", " + passengers[1] + " and " + passengers[2] + " along.";
+		} 
+		else {
+			return "This is the taxi of " + driver + ". He takes " + passengers[0] + ", " + passengers[1] + ", " + passengers[2] + " and " + passengers[3] + " along.";
+		}
+	}
+	
+	public Human[] allGetOut() {
+		if(numberGuests == 0) {
+			Human[] returnArray = new Human[0];
+			numberGuests = 0;
+			return returnArray;
+		}
+		else {
+			Human[] oldpassengers = new Human[numberGuests];
+			for(int i = 0; i < numberGuests; i++) {
+				oldpassengers[i] = passengers[i];
+			}
+			numberGuests = 0;
+			return oldpassengers;
+		}
+	}
+}
+	\end{lstlisting}
+
+	\section*{Erklärung}
+	Die Klasse \texttt{Human} ist ziemlich einfach, an der Klasse \texttt{Taxi} habe ich mir am Anfang ziemlich den Kopf zerbrochen\footnote{Ich programmiere gerne in Python, und dort kann man Array dynamisch in der Größe ändern. Das ist sehr sinnvoll, insbesondere dann wenn die Größe des Arrays sich ständig ändern soll. Das ist auch bei dieser Aufgabe so. Man kann das anders lösen, aber ich habe mir dann einen einfacheren, aber leider auch einige Verrenkungen im Quelltext auslösenden, Ansatz überlegt.}. Ich initialisiere das Array \texttt{passengers} einfach schon mit 4 Plätzen, die standardmäßig mit \texttt{null} belegt werden. Gleichzeitig speichere ich die Anzahl der Gäste im Taxi ab. 
+	
+	Das Hinzufügen von neuen Gästen hab ich wieder kompliziert gelöst, indem ich mit einer for-Schleife nach dem ersten freien Platz im Array gesucht habe, aber eigentlich müsste das auch so gehen:
+	\begin{lstlisting}[style=java]
+public void add(Human passenger) {
+	if(numberGuests >= 4) {
+		System.out.println("We are sorry, " + passenger + ". The taxi is full.");
+	}
+	else {
+		passengers[numberGuests] = passenger;
+		numberGuests++;
+		System.out.println(passenger + " gets in.");
+	}
+}	
+	\end{lstlisting}
+
+	Auch die Funktion \texttt{toString()} hätte man sicherlich schöner lösen können. Aber da muss man aufpassen, wann man ein Komma für die Aufzählung ausgibt und an welche Stelle das "and" muss. Das war mir dann doch zu viel Aufwand, sowass ich  hier einfach eine Reihe an if-Anweisungen hingeschrieben habe. Beim Erstellen dieses Dokuments ist mir dann noch eingefallen, dass es dafür eigentlich die \texttt{switch}-Verzweigung gibt...
+	
+	Besonders schlecht im Programmierstil ist dann die \texttt{allGetOut()}-Funktion. Hätte ich das \texttt{passenger}-Array am Anfang versucht dynamisch zu implementieren, sodass man zuerst mit einem Array der Größe 0 startet und bei jedem weiteren einsteigenden Gast dass Array um eins vergrößert, hätte man hier nicht solche Verrenkungen machen müssen. Aber egal, wenn im Taxi keine Gäste sind, so erstellte ich einfach ein Array der Größe 0 und gebe das zurück. Wenn Gäste im Taxi sitzen, so erstellte ich ein neues Array \texttt{oldpassengers}, was ich auch gleich in der richtigen Größe initialisieren kann. Ich iteriere mich dann durch dass \texttt{passengers}-Array durch und kopiere die Einträge dieses Arrays an die entsprechende Stelle im \texttt{oldpassengers}-Array\footnote{Die offensichtliche Lösung, \texttt{oldpassengers = passengers}, funktioniert nicht, da die Arrays in den meisten Fällen nicht die selbe Größe haben, z.B. dann, wenn weniger als 4 Gäste im Taxi sitzen.}. Zum Schluss setze ich noch den Gäste-Counter wieder auf 0 und gebe \texttt{oldpassengers} zurück.
+	
+\end{document}
