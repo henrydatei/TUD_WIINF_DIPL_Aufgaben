@@ -1,0 +1,115 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Grundlagen des Finanzmanagements, Tutorium 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 5.27: Die Determinanten von Zinssätzen}
+	Der Barwert ist
+	\begin{align}
+		BW &= \frac{100 \text{ \EUR}}{1.0199} + \frac{100 \text{ \EUR}}{1.0241^2} + \frac{100\text{ \EUR}}{1.0274^3} \notag \\
+		&= 285.61 \text{ \EUR} \notag
+	\end{align}
+	Mir ist nicht ganz klar, wie ich die Tabelle zu verstehen habe, aber wenn die Tabelle unterschiedliche Zinssätze für Finanzprodukte, die über eine gewisse Anzahl von Jahren laufen sollen, angibt, dann ist der durchschnittliche Zins der drei Anleihen über 1, 2 und 3 Jahre genau
+	\begin{align}
+		r = \sqrt[6]{1.0199\cdot 1.0241^2\cdot 1.0274^3} -1 = 0.0250 \notag
+	\end{align}
+	also 2.50 \%.
+
+	\section*{Aufgabe 1K123: Betriebliche Finanzwirtschaft}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wenn beide einen Festnetzanschluss haben und $x$ Minuten miteinander telefonieren, sind ihre monatlichen Kosten
+		\begin{align}
+			K_F(x) = 20\text{ \EUR}+0.07\text{ \EUR}\cdot x \notag
+		\end{align}
+		Bei einem Mobiltarif sind ihre Kosten
+		\begin{align}
+			K_M(x) = 10\text{ \EUR}+0.06\text{ \EUR} \cdot x + H \notag
+		\end{align}
+		wobei $H$ eine monatlicher Beitrag für die Handys ist, die ja auch mit angeschafft werden müssen. Man kann sich $H$ als Rate für einen Annuitätenkredit über 800 \EUR, 3 Jahre Laufzeit, monatlicher Ratenzahlung vorstellen. Der monatliche Zins ist
+		\begin{align}
+			r_m = \sqrt[12]{1.05}-1 = 0.004074 \notag
+		\end{align}
+		Die monatliche Rate $H$ ist dann also:
+		\begin{align}
+			H &= 800\text{ \EUR}\cdot \frac{(1+r_m)^{3\cdot 12}\cdot r_m}{(1+r_m)^{3\cdot 12}-1} \notag \\
+			&= 23.936797 \text{ \EUR} \notag
+		\end{align}
+		Gleichsetzen der beiden Kostenfunktionen führt zu einer Mindestgesprächsdauer von $x=1393.6797$ Minuten/Monat, damit sich der Mobilvertrag lohnt.
+		\item Wenn man die monatlichen Telefonrechnungen als Teil eines Zahlungsstroms interpretiert, ergeben sich hier die folgenden Barwerte:
+		\begin{align}
+			BW_F &= (20\text{ \EUR}+0.07\text{ \EUR}\cdot x)\cdot RBF_{nach} \notag \\
+			BW_M &= 800\text{ \EUR}+(10\text{ \EUR}+0.06\text{ \EUR} \cdot x)\cdot RBF_{nach} \notag
+		\end{align}
+		In diesem Fall ist $x=2\cdot 30\cdot 2\cdot 60=7200$ und $RBF_{nach}$:
+		\begin{align}
+			RBF_{nach} &= \frac{q^n-1}{q^{n+1}-q^n} \notag \\
+			&= \frac{1.004074^{36}-1}{1.004074^{37}-1.004074^{36}} \notag \\
+			&= 33.421347 \notag
+		\end{align}
+		Damit ergibt sich $BW_F=17512.78583$ \EUR\, und $BW_M=15572.23537$ \EUR.
+		\item selber Ansatz wie bei (b), nur dass sich jetzt der Rentenbarwertfaktor ändert:
+		\begin{align}
+			RBF_{nach} &= \frac{\left[(1+g)\cdot\frac{1}{q}\right]^n-1}{1+g-q} \notag \\
+			&= \frac{\left[(1-0.01)\cdot\frac{1}{1.004074}\right]^{36}-1}{1-0.01-1.004074} \notag \\
+			&= 28.307186 \notag
+		\end{align}
+		Damit ergibt sich ein Barwert von $BW_M=13312.21821$.
+		\item Jeder telefoniert also noch 1 Stunde nicht zu seinem Ehepartner, es müssen also nur noch 2 Stunden täglich bezahlt werden. Dann ist der Barwert
+		\begin{align}
+			BW_M=800 \text{ \EUR}+(10\text{ \EUR}+0.06\text{ \EUR}\cdot 3600)\cdot RBF_{nach} = 8353.224422 \text{ \EUR} \notag
+		\end{align}
+		\item Das pure Telefonieren mit den Handys bringt eine Ersparnis von 0.01 \EUR\, pro Minute. Um also 10 \EUR\, gegenüber dem Festnetztarif zu sparen, muss man 1000 Minuten pro Monat telefonieren. Wenn nun die Grundgebühr im Mobiltarif wegfällt, so müssen 10 \EUR\, weniger durchs telefonieren gespart werden, es reichen als 393.6797 Minuten pro Monat aus, damit der Mobilfarif billiger als der Festnetztarif ist.
+	\end{enumerate}
+	
+	
+\end{document}
