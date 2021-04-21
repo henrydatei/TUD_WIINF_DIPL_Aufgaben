@@ -1,0 +1,96 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage[unicode]{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=blue,
+	filecolor=blue,
+	linkcolor=blue,
+	urlcolor=blue
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Öffentliches Recht, Übung 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: Staatsbegriff}
+	\begin{enumerate}[label=(\alph*)]
+		\item Bundesstaaten behalten ihre Staatlichkeit und sind an der Willensbildung des Ganzen beteiligt. Die Bundesländer haben eine eigene Verfassung und können in ihrem Zuständigkeitsbereich selbst völkerrechtliche Verträge schließen.
+		\item Die Aufteilung des Bundesgebiets in Bundesländer mit eigener Staatsqualität spiegelt sich im Bundesstaatsprinzip, Art. 20 I GG, wider und ist durch die Ewigkeitsgarantie des Art. 79 III GG gesichert.
+		\item Ein Wesensmerkmal der bundesstaatlichen Ordnung (Föderalismus) besteht darin, dass sowohl der Bund als auch die Länder eigene Staatsgewalt besitzen und damit Gesetze erlassen können. Man spricht dann von Bundes- beziehungsweise Landesrecht. Die Ausübung staatlicher Befugnisse und die Erfüllung staatlicher Aufgaben ist grundsätzlich Sache der Länder (Artikel 30 Grundgesetz). Auch das Recht der Gesetzgebung haben grundsätzlich die Länder (Artikel 70 Grundgesetz). Der Bund darf nur staatliche Befugnisse übernehmen, Aufgaben erfüllen oder Gesetze erlassen, wenn dies das Grundgesetz ausdrücklich zulässt. Tatsächlich liegen jedoch die meisten Gesetzgebungszuständigkeiten beim Bund. Es gibt laut Grundgesetz zwei Arten von Zuständigkeiten des Bundes für die Gesetzgebung: die ausschließliche und die konkurrierende Gesetzgebungszuständigkeit:
+		\begin{itemize}
+			\item Ausschließliche Gesetzgebungszuständigkeit meint, dass der Bund das alleinige Recht hat, Gesetze zu erlassen. Die Länder haben in diesem Fall die Befugnis zur Gesetzgebung nur, wenn sie hierzu durch ein Bundesgesetz ausdrücklich ermächtigt sind (Artikel 71 Grundgesetz). Das Staatsangehörigkeitsrecht, das Waffen- und Sprengstoffrecht oder die Erzeugung und Nutzung der Kernenergie zu friedlichen Zwecken sind Beispiele für Bereiche, in denen der Bund die ausschließliche Gesetzgebungszuständigkeit hat. Die Bereiche der ausschließlichen Gesetzgebung sind vor allem im Artikel 73 Grundgesetz aufgeführt.
+			\item Im Bereich der konkurrierenden Gesetzgebungszuständigkeit des Bundes (Artikel 72 Grundgesetz) dürfen die Länder nur dann gesetzgeberisch tätig werden, solange und soweit der Bund von seiner Gesetzgebungszuständigkeit keinen Gebrauch gemacht hat. Das Straf- oder das Arbeitsrecht sind beispielsweise Gebiete der konkurrierenden Gesetzgebung. Das Grundgesetz zählt in Artikel 74 Bereiche auf, die unter die konkurrierende Gesetzgebungszuständigkeit des Bundes fallen. Es gibt drei Konstellationen, in denen der Bund von der konkurrierenden Gesetzgebungszuständigkeit Gebrauch machen kann:
+			\begin{itemize}
+				\item Grundsätzlich kann der Bund tätig werden, ohne dass zusätzliche Bedingungen erfüllt sein müssen (Artikel 72 Absatz 1 Grundgesetz).
+				\item Auf bestimmten Gebieten hat der Bund das Gesetzgebungsrecht aber nur, wenn und soweit die Herstellung gleichwertiger Lebensverhältnisse im Bundesgebiet oder die Wahrung der Rechts- oder Wirtschaftseinheit im gesamtstaatlichen Interesse eine bundesgesetzliche Regel\-ung erforderlich macht (Artikel 72 Absatz 2 Grundgesetz, "Erforderlichkeitsklausel"). Davon sind beispielsweise das Aufenthaltsrecht für Ausländer oder das Lebensmittelrecht betroffen. Insgesamt fallen im Artikel 74 Absatz 1 die Nummern 4, 7, 11, 13, 15, 19a, 20, 22, 25 und 26 unter diese Bedingung.
+				\item In einem dritten Bereich hat schließlich der Bund zwar die Gesetzgebungskompetenz, doch haben die Länder eine Abweichungskompetenz (Artikel 72 Absatz 3 Grundgesetz). Dies gehört zu den großen Neuerungen der Föderalismusreform 2006: Durch die Abweichungsgesetzgebung können die Länder bei bestimmten Materien, die durch die Abschaffung der bisherigen Rahmengesetzgebung des Bundes in den Bereich der konkurrierenden Gesetzgebungszuständigkeit fallen, von den jeweiligen Bundesgesetzen abweichen. Betroffen sind das Jagdwesen (ohne das Recht der Jagdscheine), der Naturschutz und die Landschaftspflege (ohne die allgemeinen Grundsätze des Naturschutzes, das Recht des Artenschutzes oder des Meeresnaturschutzes), die Bodenverteilung, die Raumordnung, der Wasserhaushalt (ohne stoff- oder anlagenbezogene Regelungen) sowie die Hochschulzulassung und die Hochschulabschlüsse.
+			\end{itemize}
+		\end{itemize}
+		\item Der Begriff Verwaltungskompetenz (auch Verwaltungszuständigkeit) bezeichnet im deutschen öffent\-lichen Recht die Kompetenz der Exekutive, Gesetze auszuführen. Die Ausführung von Gesetzen geschieht durch deren Anwendung auf Einzelfälle. Dies fällt in die Zuständigkeit sowohl des Bundes als auch der Bundesländer. Wessen Behörden für den Vollzug von Gesetzen zuständig sind, wird durch das Grundgesetz in Art. 30 sowie durch Art. 83 - Art. 91 GG geregelt.
+		\begin{itemize}
+			\item Der Vollzug von Landesgesetzen fällt gemäß Art. 30 GG in den Zuständigkeitsbereich der Länder, die ihr Recht in eigener Angelegenheit ausführen. Daher entscheiden diese darüber, wie sie ihr Recht ausführen, bestimmen also insbesondere das Verwaltungsverfahren. Die Länder haben in diesem Bereich also die Organisationshoheit, kraft derer sie entscheiden, welche Behörden sie einrichten und welche Aufgaben sie ihnen zuweisen. Der Bund ist am Vollzug von Landesgesetzen grundsätzlich nicht beteiligt.
+			\item Beim Vollzug von Bundesgesetzen ist zwischen Landeseigenverwaltung, Bundesauftragsverwaltung und bundeseigener Verwaltung zu unterscheiden. Den Grundsatz des Vollzugs von Bundesgesetzen hält Art. 83 GG fest. Hiernach erfolgt der Vollzug von Bundesgesetzen durch die Länder. Dies stellt den rechtlichen und praktischen Regelfall dar.
+			\begin{itemize}
+				\item Landeseigenverwaltung, Art. 84 GG: Vollziehen die Länder Bundesgesetze in eigener Verantwortung, handelt es sich um Landeseigenverwaltung. Bei der Landeseigenverwaltung bestimmen die Länder gemäß Art. 84 Absatz 1 Satz 1 GG das Verwaltungsverfahren. Auch hier haben die Länder also die Organisationshoheit. Der Bund führt gemäß Art. 84 Absatz 3 Satz 1 GG allerdings die Rechtsaufsicht über die Verwaltungstätigkeit der Länder. In deren Rahmen prüft er, ob die Länder die Bundesgesetze in rechtmäßiger Weise umsetzen.
+				\item Bundesauftragsverwaltung, Art. 85 GG: Für Materien, die das Grundgesetz ausdrücklich benennt, führen die Länder Bundesgesetze im Auftrag des Bundes aus. Dies wird in der Rechtswissenschaft als Bundesauftragsverwaltung bezeichnet. Für einige Bereiche ist die Bundesauftragsverwaltung zwingend angeordnet. Dies trifft beispielsweise gemäß Art. 90 Absatz 3 GG auf die Verwaltung der Bundesstraßen zu. In anderen Bereichen besitzt der Bund die Möglichkeit, eine Bundesauftragsverwaltung anzuordnen. Hiervon hat er etwa gemäß Art. 87c GG in Verbindung mit § 24 des Atomgesetzes für die Verwaltung in Angelegenheiten des Atomrechts Gebrauch gemacht.
+				\item Bundeseigenverwaltung, Art. 86-90 GG: Schließlich kann der Bund seine Gesetze selbst ausführen. Dies wird als Bundeseigenverwaltung oder bundeseigene Verwaltung bezeichnet. Auch diese ist nur in Angelegenheiten möglich, die das Grundgesetz ausdrücklich benennt. Erforderlich ist eine Bundeseigenverwaltung etwa gemäß Art. 87 Absatz 1 GG im Bereich des Auswärtigen Diensts sowie der Bundesfinanzverwaltung. Weiterhin in bundeseigener Verwaltung geführt werden beispielsweise die Bundeswehrverwaltung (Art. 87b Absatz 1 Satz 1 GG), die Bundeseisenbahnverkehrsverwaltung (Art. 87e Absatz 1 Satz 1 GG) und die Deutsche Bundesbank (Art. 88 GG). Darüber hinaus darf der Bund gemäß Art. 87 Absatz 3 Satz 1 GG für Angelegenheiten, für die ihm die Gesetzgebung zusteht, selbständige Bundesoberbehörden sowie Körperschaften und Anstalten des öffentlichen Rechts errichten. Auf dieser Rechtsgrundlage wurden etwa das Kraftfahrt-Bundesamt und das Bundeskartellamt errichtet. Ungeschriebene Kompetenzen des Bundes, wie sie im Bereich der Gesetzgebung anerkannt sind, kommen nach allgemeiner Auffassung in der Rechtswissenschaft im auch im Bereich der Verwaltung in Frage. Sie sind jedoch lediglich in Ausnahmefällen zulässig, um einen Widerspruch zu Art. 83 GG zu vermeiden.
+			\end{itemize}
+		\end{itemize}
+		\item Das Grundgesetz von 1949 hat die Formulierung des Art. 13 WRV ("Reichsrecht bricht Landesrecht.") übernommen in seinen eigenen Art. 31 und dabei das Wort "Reichsrecht" durch "Bundesrecht" ersetzt. Im Sinne der Normenhierarchie stellt der Artikel 31 damit das Bundesrecht über das Landesrecht. Gemeint ist das gesamte Bundesrecht, sodass zum Beispiel ein Bundesgesetz über einer Landesverfassung steht.
+		\item Soweit Landesgrundrechte enger als Bundesgrundrechte gefasst sind oder im Widerspruch zu ihnen stehen, gehen die Bundesgrundrechte gemäß Art. 31 GG vor.
+		\item Der Grundsatz der Bundestreue bzw. des bundesfreundlichen Verhaltens begründet über das geschrieb\-ene Recht hinaus Rechte und Pflichten von Bund und Ländern. Er verpflichtet Bund und Länder, "bei der Wahrnehmung ihrer Kompetenzen die gebotene und ihnen zumutbare Rücksicht auf das Gesamtinteresse des Bundesstaates und auf die Belange der Länder zu nehmen". Er gilt im Verhältnis von Bund und Ländern, aber auch zwischen den Ländern. Die aus dem Prinzip bundesfreundlichen Verhaltens ableitbaren Pflichten reichen von Informations-, Abstimmungs-, und Zusammenarbeitsgeboten bis zur Verpflichtung, eine Kompetenz im Einzelfall nicht auszuüben bzw. sie in einer bestimmten Weise wahrzunehmen.
+	\end{enumerate}
+	
+	Quellen:
+	\begin{itemize}
+		\item \url{https://de.wikipedia.org/wiki/Verwaltungskompetenz}
+		\item \url{https://www.bundestag.de/parlament/aufgaben/gesetzgebung_neu/gesetzgebung/bundesstaatsprinzip-255460}
+		\item \url{https://de.wikipedia.org/wiki/Bundesrecht_bricht_Landesrecht#Bundesrepublik_Deutschland}
+		\item \url{https://www.juracademy.de/grundrechte/bundes-landesgrundrechte.html}
+		\item \url{https://www.juracademy.de/staatsorganisationsrecht/bundesstaatsprinzip.html}
+	\end{itemize}
+
+	\section{Aufgabe 2: Demokratieprinzip}
+	\begin{enumerate}[label=(\alph*)]
+		\item Art. 20 I GG (demokratischer und sozialer Bundesstaat) und Art. 28 I 1 GG (sozialer Rechtsstaat)
+		\item Soziale Gerechtigkeit: Herstellung tatsächlicher Chancengleichheit (z.B. BAföG und Prozesskostenbeihilfe) sowie Schutz der "Schwachen gegen die Starken“ (z.B. Arbeitsrecht und Verbraucherschutz). Soziale Sicherheit: Schaffung oder Erhaltung von Einrichtungen, die für den Fall des Fehlens eigener Daseinsreserven in Krisen die notwendige Daseinshilfe gewähren (z.B. Sozialversicherungssystem nach dem SGB I-XI und Sozialhilfe nach dem SGB XII).
+		\item Als staatsorganisationsrechtliches Strukturprinzip vermittelt das Sozialstaatsprinzip aus Art. 20 I GG selbst keine Ansprüche gegen den Staat. Es handelt sich dabei um eine Staatszielbestimmung gerichtet auf die Herstellung sozialer Gerechtigkeit, sozialer Sicherheit und die Chancengleichheit im Rahmen der rechtsstaatlichen Ordnung.
+		\item Das Sozialstaatsprinzip enthält einen Geltungsauftrag an den Gesetzgeber. Angesichts seiner Weite und Unbestimmtheit lässt sich daraus jedoch kein Gebot entnehmen, soziale Leistungen in einem bestimmten Umfang zu gewähren. Aus Art. 1 I GG i.V.m. Art. 20 I GG folgt lediglich, dass der Staat die Mindestvoraussetzungen für ein menschenwürdiges Dasein seiner Bürger schaffen muss.
+		\item Das Grundgesetz gewährt allen Menschen das Recht auf ein menschenwürdiges Leben – unabhängig von ihrem Einkommen, ihrer Herkunft und ihrem Aufenthaltsstatus. Aus Art. 1 Abs. 1 und Art. 20 Abs. 1 Grundgesetz, also der Menschenwürde und dem Sozialstaatsprinzip, hat das Bundesverfassungsgericht 2010 das Grundrecht auf Gewährleistung eines menschenwürdigen Existenzminimums abgeleitet. Die Höhe der Leistungen muss der Gesetzgeber nachvollziehbar und sachlich differenziert begründen. Politisch begründete Leistungskürzungen, beispielsweise um Schutzsuchende abzuschrecken, sind nicht zulässig. Diesen Anforderungen genügen die Leistungen im Asylbewerberleistungsgesetz nicht. Der Gesetzgeber hat nicht nachvollziehbar begründet, warum Asylsuchende in Sammelunterkünften einen niedrigeren Bedarf haben als andere Leistungsempfänger.
+		\item Das Sozialstaatsprinzip enthält kein einklagbares Recht und ist deshalb nur ein Postulat. Es legt bei den Staatszielbestimmungen lediglich fest, dass Deutschland ein sozialer Staat ist. Über die Ausgestaltung des Sozialstaats muss von der Politik entschieden werden. Das Grundgesetz enthält auch, anders als die vorhergehende Weimarer Verfassung, keine eindeutigen sozialen Grundrechte.
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://freiheitsrechte.org/existenzminimum/}
+		\item \url{https://de.wikipedia.org/wiki/Sozialstaatsprinzip}
+	\end{itemize}
+	
+\end{document}
