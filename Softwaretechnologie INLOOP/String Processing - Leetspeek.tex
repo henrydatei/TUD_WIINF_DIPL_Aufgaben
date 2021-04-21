@@ -1,0 +1,96 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{INLOOP Softwaretechnologie, String Processing - Leetspeek}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{vollständiger Code}
+	Datei \texttt{Leet.java}
+	\begin{lstlisting}[style=java,tabsize=2]
+class Leet {
+	public static String toLeet(String normal) {
+		String l1 = normal.replace("elite", "1337");
+		String l2 = l1.replace("cool", "k3wl");
+		String l3 = l2.replace("!", "!!!11");
+		String l4 = l3.replace("ck", "xx");
+		String l5 = l4.replace("ers", "0rz");
+		String l6 = l5.replace("er", "0rz");
+		String l7 = l6.replace("en", "n");
+		String l8 = l7.replace("e", "3");
+		String l9 = l8.replace("t", "7");
+		String l10 = l9.replace("o", "0");
+		String l11 = l10.replace("a", "@");
+		
+		return l11;
+	}
+	
+	public static String[] allToLeet(String[] normals) {
+		String[] leets = new String[normals.length];
+		for (int i = 0; i < normals.length; i++) {
+			leets[i] = toLeet(normals[i]);
+		}
+		
+		return leets;
+	}
+}
+	\end{lstlisting}
+
+	\section*{Erklärung}
+	Wir führen immer eine Ersetzung durch und speichern das Zwischenergebnis in einer neuen Variable. Sicherlich kann man das auch direkter machen, in etwa so:
+	\begin{lstlisting}[style=java]
+String leet = normal.replace("elite", "1337").replace("cool", "k3wl") ...;
+	\end{lstlisting}
+	In der Funktion \texttt{allToLeet()} erstellen wir uns zuerst ein Array der passenden Länge, was wir dann auch später zurückgeben wollen. In einer for-Schleife laufen wir dann durch das Array \texttt{normals} durch und füllen die entsprechenden Stellen in unserem \texttt{leets}-Array.
+	
+	
+\end{document}
