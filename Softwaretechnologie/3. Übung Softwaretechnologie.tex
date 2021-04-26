@@ -1,0 +1,150 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Softwaretechnologie, Übung 3}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Testfalltabelle
+		\begin{center}
+			\begin{tabular}{c|c|c|c|c}
+				\textbf{Testfall} & \textbf{erwarteter Status} & \textbf{Klasse} & \textbf{Einkommen} & \textbf{erwartete Ausgabe} \\
+				\hline
+				E1 & Exception & Einwohner & -1 & IllegalArgumentException \\
+				E2 & int & Einwohner & 0 & 1 \\
+				E3 & int & Einwohner & 20 & 2 \\
+				E4 & int & Einwohner & 25 & 2 \\
+				E5 & int & Einwohner & 19 & 1
+			\end{tabular}
+ 		\end{center}
+		\item JUnit-Testfallklasse
+		\begin{lstlisting}[style=java]
+import junit.framework.TestCase;
+
+public class EinwohnerTest extends TestCase { 
+	protected Einwohner einwohner;
+	
+	protected void setUp() {
+		this.einwohner = new Einwohner();
+	}
+	
+	public void testE1() {
+		try {
+			einwohner.setEinkommen(-1);
+			fail("No Exception thrown");
+		} catch(IllegalArgumentException e){
+			System.out.println("Cry :(");
+			assertEquals("Du Lappen, kein Einkommen ist negativ!", e.getMessage());
+		} catch (Exception e) {
+			fail("Wrong Exception thrown");
+		}
+	}
+	// assertEquals(boolean expected, boolean actual)
+	public void testE2() {
+		einwohner.setEinkommen(0);
+		assertEquals(1, einwohner.steuer());
+	}
+	
+	public void testE3() {
+		einwohner.setEinkommen(20);
+		assertEquals(2, einwohner.steuer());
+	}
+	
+	public void testE4() {
+		einwohner.setEinkommen(25);
+		assertEquals(2, einwohner.steuer());
+	}
+	
+	public void testE5() {
+		einwohner.setEinkommen(19);
+		assertEquals(1, einwohner.steuer());
+	}
+		
+}
+		\end{lstlisting}
+		\item Testfalltabelle \#2 für weitere Klassen
+		\begin{center}
+			\begin{tabular}{c|c|c|c|c}
+				\textbf{Testfall} & \textbf{erwarteter Status} & \textbf{Klasse} & \textbf{Einkommen} & \textbf{erwartete Ausgabe} \\
+				\hline
+				A1 & Exception & Adel & -1 & IllegalArgumentException \\
+				A2 & int & Adel & 0 & 20 \\
+				A3 & int & Adel & 221 & 22 \\
+				A4 & int & Adel & 225 & 22 \\
+				A5 & int & Adel & 19 & 20 \\
+				A6 & int & Adel & 220 & 22 \\
+				K1 & Exception & Koenig & -1 & IllegalArgumentException \\
+				K2 & int & Koenig & 1000 & 0 \\
+				L1 & Exception & Koenig & -1 & IllegalArgumentException \\
+				L2 & int & Leibeigener & 0 & 1 \\
+				L3 & int & Leibeigener & 12 & 1 \\
+				L4 & int & Leibeigener & 32 & 2 \\
+				L4 & int & Leibeigener & 37 & 2
+			\end{tabular}
+		\end{center}
+		\item Code:
+		\begin{lstlisting}[style=java]
+import junit.framework.TestSuite;
+
+public class Test {
+	public static void main(String[] args) {
+		TestSuite suite = new TestSuite();
+		suite.addTest(new EinwohnerTest());
+		suite.run();
+	}
+}
+		\end{lstlisting}
+	\end{enumerate}
+	
+\end{document}
