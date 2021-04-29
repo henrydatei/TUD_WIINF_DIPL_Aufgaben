@@ -1,0 +1,118 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{hyperref}
+\usepackage{parskip}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 1, Test 1}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der Mittelwert ist
+		\begin{align}
+			\mu &= \frac{16\cdot 180 + 17\cdot 170 + 29\cdot 160 + 37\cdot 150 + 22\cdot 140 + 31\cdot 130 + 37\cdot 120 + 48\cdot 110 + 31\cdot 100 + 27\cdot 90 + 70\cdot 80}{365} \notag \\
+			&= 120.3288 \notag
+		\end{align}
+		\item Der Median ist das mittlere Element der Messreihe, also das $\lceil\frac{365}{2}\rceil=183$. Element. Das ist 120.
+		\item Die empirische Varianz ist
+		\begin{align}
+			\tilde{s}^2 &= \frac{16(180-120.3288)^2 + 17(170-120.3288) + \dots + 70(80-120.3288)}{365} \notag \\
+			&= 945.6453 \notag
+		\end{align}
+		\item Die Stichprobenvarianz ist
+		\begin{align}
+			s^2 &= \frac{16(180-120.3288)^2 + 17(170-120.3288) + \dots + 70(80-120.3288)}{364} \notag \\
+			&= 948.2433 \notag
+		\end{align}
+		\item Das 25\%-Quantil ist das $\lceil 0.25\cdot 365\rceil = 92$. Element, also 90. \textcolor{red}{Im Forum steht, dass der Test aber 150 als richtigen Wert akzeptiert.}
+		\item Das 75\%-Quantil ist das $\lceil 0.75\cdot 365\rceil = 274$. Element, also 150. \textcolor{red}{Im Forum steht, dass der Test aber 90 als richtigen Wert akzeptiert.}
+	\end{enumerate}
+	
+	 In $K_1$ sind 16 + 17 + 29 + 37 + 22 + 31 = 152 Studenten, in $K_2$ sind 37 + 48 + 31 = 116 Studenten, in $K_3$ sind 27 + 70 = 97 Studenten. Die Klassenmitten sind 155, 110, 85, damit ist der Mittelwert der klassierten Daten
+	 \begin{align}
+	 	\mu &= \frac{152\cdot 155 + 116\cdot 110 + 97\cdot 85}{365} \notag \\
+	 	&= 122.0959 \notag
+	 \end{align}
+	 
+	 Mindestens 150 Punkte haben $\frac{16+17+29+37}{365}=0.2712329$ der Studenten erreicht.
+	 
+	 Nur 90 oder weniger Punkte haben $\frac{29+70}{365}=0.2657 = \hat{F}(90)$ der Studenten erreicht. \textcolor{red}{Der Test nimmt aber nur 0.808219.}
+	 
+	 Übrigens scheinen das die Prüfungsergebnisse der letzten Statistik 1 Klausur im SS2020 gewesen zu sein: \url{https://wwilq.wiwi.tu-dresden.de/ects_v2/index.php?action=output\&jahr=2020\&status=SS\&typ=PF\&prn=14530}
+
+	\section*{Aufgabe 2}
+	Der Mittelwert ist
+	\begin{align}
+		\mu &= \frac{24+21+29+14+27+13+28+13}{8} \notag \\
+		&= 21.125 \notag
+	\end{align}
+	Die Tabelle sieht so aus
+	\begin{center}
+		\begin{tabular}{c|c|c|c}
+			 & $K_1$ & $K_2$ & $K_3$ \\
+			 \hline
+			 $n(K_i)$ & 3 & 2 & 3 \\
+			 \hline
+			 $h(K_i)$ & 0.375 & 0.25 & 0.375
+		\end{tabular}
+	\end{center}
+	Und der Mittelwert der klassierten Daten ist 20.
+
+	\section*{Aufgabe 3}
+	Die Aussagen sind:
+	\begin{itemize}
+		\item Das Merkmal Lieblingsprimzahl ist stetig, da es unendlich viele Primzahlen gibt. FALSCH, stetig wäre das Merkmal nur, wenn es überabzählbar viele Primzahlen gibt, aber die gibt es nicht.
+		\item Die entscheidende Information bei einem Histogramm ist nicht die Höhe der Balken, sondern die Fläche! RICHTIG
+		\item Im Gegensatz zur induktiven Statistik beziehen sich die Ergebnisse der deskriptiven Statistik nur auf die untersuchte Datenmenge. RICHTIG
+		\item Ein Merkmalsvektor $X$ ist eine Abbildung $\Omega\to S$, wobei $S$ der Merkmalsraum ist. RICHTIG
+		\item Die empirische Verteilungsfunktion $\hat{F}$ ist linksseitig stetig und monoton steigend. FALSCH, die Funktion ist rechtsseitig stetig.
+	\end{itemize}
+
+	\section*{Aufgabe 4}
+	Richtig ist
+	\begin{itemize}
+		\item Sie können das arithmetische Mittel verwenden, wenn Sie die Vermögensangabe von Beate Heister und Karl Albrecht Junior aus Ihrem Datensatz entfernen.
+		\item Sie können den Median verwenden, da dieser robust in Bezug auf Ausreißer ist.
+	\end{itemize}
+
+	\section*{Aufgabe 5}
+	Die Merkmale sind:
+	\begin{itemize}
+		\item Adresse eines Studenten: nominal, qualitativ, diskret
+		\item Preis eines Mensa-Essens: metrisch, quantitativ, quasistetig
+		\item Hobby eines Studenten: nominal, qualitativ, diskret
+		\item durchschnittliche Länge eines Stückes Kreide im Hörsaal: metrisch, quantitativ, stetig
+		\item Datum der Klausur Statistik I: metrisch, quantitativ, diskret
+	\end{itemize}
+	
+	\section*{Aufgabe 6}
+	Term D, Term B, Term B, $\lambda = 0.25$, $L=6.58\cdot 10^{-6}$
+	
+\end{document}
