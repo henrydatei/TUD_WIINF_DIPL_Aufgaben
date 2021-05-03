@@ -1,0 +1,156 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{INLOOP Softwaretechnologie, A Basic Library}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{vollständiger Code}
+	Datei \texttt{Book.java}
+	\begin{lstlisting}[style=java,tabsize=2]
+public class Book {
+	private String title;
+	private boolean isLent;
+
+	public Book(String title) {
+		this.title = title;
+		this.isLent = false;
+		System.out.println("Book " + title + " created.");
+	}
+
+	public String toString() {
+		return title;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public boolean getLentStatus() {
+		return isLent;
+	}
+
+	public void setLentStatus(boolean status) {
+		this.isLent = status;
+	}
+}
+	\end{lstlisting}
+	Datei \texttt{Library.java}
+	\begin{lstlisting}[style=java, tabsize=2]
+public class Library {
+	private Book[] myBooks;
+	private int counter;
+
+	public Library() {
+		this.myBooks = new Book[10];
+		this.counter = 0;
+		System.out.println("Hello, I am a library, which can store up to 10 books!");
+	}
+
+	public void add(Book book) {
+		if (counter >= 10) {
+			System.out.println("The library is full!");
+		}
+		else {
+			myBooks[counter] = book;
+			counter = counter + 1;  
+			System.out.println("I added the book " + book.getTitle() + "!");
+		}
+	}
+
+	public Book search(String title) {
+		for (int i = 0; i < counter; i++) {
+			if (title.equals(myBooks[i].getTitle())) {
+				System.out.println("The book with the title " + myBooks[i].getTitle() + " exists in the library!");
+				return myBooks[i];
+			}
+		}
+		System.out.println("The book with the title " + title + " does not exist in the library!");
+		return null;
+	}
+
+	public void loan(String title) {
+		Book b = search(title);
+		if (b.getLentStatus()) {
+			System.out.println("Buch ist ausgeliehen");
+		}
+		else {
+			b.setLentStatus(true);
+			System.out.println("Buch wurde ausgeliehen");
+		}
+	}
+}
+	\end{lstlisting}
+	Datei \texttt{HelloLibrary.java}
+	\begin{lstlisting}[style=java, tabsize=2]
+public class HelloLibrary {
+		public static void main(String[] args) {
+			Library lib = new Library();
+			Book book1 = new Book("UML");
+			Book book2 = new Book("Java2");
+
+			lib.add(book1);
+			lib.add(book2);
+		}
+}
+	\end{lstlisting}
+
+	\section*{Erklärung}
+	Zur Klasse \texttt{Book} gibt es nicht viel zu sagen, außer dass Methoden und Attribute, die sich um das Leihen der Bücher drehen, nicht notwendig sind zu implementieren. Sie waren Bestandteil der ersten Übung und weil ich bei der Bearbeitung der Aufgaben keine Entwicklungsumgebung zur Hand hatte, habe ich einfach INLOOP genutzt.
+	
+	Die Klasse \texttt{Library} hat ein Array (was in der Konstruktor-Methode \texttt{Library()} mit Größe 10 initialisiert wird). Zugleich speichern wir immer ab, wie viele Bücher in dem Array sind (Variable \texttt{counter}). Da die Plätze des Arrays die Nummern 0 bis 9 haben, ist bei $n$ aktuell in der Bibliothek vorhandenen Büchern auch der $n$-te Platz im Array noch frei und man kann da das neue Buch abspeichern. Danach muss man den Counter um eins erhöhen.
+	
+	Wird ein Buch gesucht, so guckt sich der Computer in einer for-Schleife alle Bücher an und vergleicht, ob der Titel des Buches mit dem gesuchten Titel übereinstimmt. Wenn ja, so wird das Buch zurückgegeben und die Schleife beendet sich. Läuft die Schleife komplett durch und nichts wird gefunden, so wissen wir, dass das Buch nicht in der Bibliothek existiert.
+	
+\end{document}
