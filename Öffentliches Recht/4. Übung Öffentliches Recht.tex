@@ -1,0 +1,102 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage[unicode]{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=blue,
+	filecolor=blue,
+	linkcolor=blue,
+	urlcolor=blue
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Öffentliches Recht, Übung 4}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: Bundesregierung}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wahl durch Bundestag, Art. 63 GG, Verknüpfung mit der Legislaturperiode (Art. 69 II GG), Vorzeitige Beendigung u.a. bei konstruktivem Misstrauensvotum (Art. 67 GG), Vertrauensfrage (Art. 68 GG), Rücktritt
+		\item Die Kanzlerwahl kann aus bis zu drei Wahlphasen bestehen und findet mit "verdeckten Stimmzetteln", also geheim, statt. Bei diesem Verfahren dürfen nach der Geschäftsordnung des Bundestages die Stimmzettel erst vor Betreten der Wahlzelle ausgehändigt werden. Zur Wahl werden die Abgeordneten namentlich aufgerufen. Die Wahl der Bundeskanzlerin oder des Bundeskanzlers ist in Artikel 63 des Grundgesetzes (GG) geregelt. Danach wird der Bundeskanzler auf Vorschlag des Bundespräsidenten vom Bundestag ohne Aussprache gewählt. Zu einer erfolgreichen Wahl benötigt die Kanzlerkandidatin oder der Kanzlerkandidat in der ersten Wahlphase die absolute Mehrheit der Abgeordnetenstimmen. Das heißt, die Mehrheit der Mitglieder des Bundestages. Man spricht auch von der "Kanzlermehrheit". Bislang ist noch jeder Bundeskanzler in der ersten Wahlphase gewählt worden. Kommt bei der Wahl im ersten Durchgang keine absolute Mehrheit zustande, schließt sich eine zweite Wahlphase an. Der Bundestag hat nun 14 Tage Zeit, eine andere Kandidatin oder einen anderen Kandidaten zum Kanzler zu wählen. Die Zahl der Wahlgänge ist nicht begrenzt. Auch hierbei ist die absolute Mehrheit notwendig (Artikel 63 Abs. 3 GG). Ist diese zweite Phase ebenfalls nicht erfolgreich, so muss das Parlament in einer dritten Phase unverzüglich erneut abstimmen. Gewählt ist dann, wer die meisten Stimmen erhält (relative Mehrheit). Ist die Bundeskanzlerin oder der Bundeskanzler mit absoluter Mehrheit - also mit der Mehrheit der Mitglieder des Bundestages - gewählt, so muss der Bundespräsident sie oder ihn binnen sieben Tagen nach der Wahl ernennen. Erreicht die oder der Gewählte nur die relative Mehrheit (also die meisten Stimmen), muss der Bundespräsident sie oder ihn entweder binnen sieben Tagen ernennen oder den Bundestag auflösen (Artikel 63 Abs. 4 GG).
+		\item Die Kanzlerin schlägt dem Bundespräsidenten die Kandidatinnen und Kandidaten für die Ministerämter vor, und damit die Mitglieder des Bundeskabinetts. Auf gleiche Weise ist die Entlassung der Bundesminister möglich. Außerdem hat die Bundeskanzlerin den Vorsitz im Bundeskabinett und leitet die Kabinettssitzungen. Nach Artikel 65 Grundgesetz (GG) bestimmt die Bundeskanzlerin die Richtlinien der Regierungspolitik und trägt dafür die Verantwortung. Diese Richtlinienkompetenz umfasst die Vorgabe eines Rahmens für das Regierungshandeln, den die einzelnen Ministerien mit Inhalten ausfüllen. Die Bundeskanzlerin leitet die Geschäfte der Bundesregierung nach einer vom Bundeskabinett beschlossenen und vom Bundespräsidenten genehmigten Geschäftsordnung. Sie trägt die Regierungsverantwortung gegenüber dem Bundestag. Die Bundeskanzlerin entscheidet auch über ihre Stellvertreterinnen und Stellvertreter (Artikel 69 GG). Im Verteidigungsfall besitzt die Bundeskanzlerin die Befehls- und Kommandogewalt über die Streitkräfte (Artikel 115b GG).
+		\item Die Bundeskanzlerin entscheidet auch über ihre Stellvertreterinnen und Stellvertreter (Artikel 69 GG). Dieses Amt übernimmt eine Bundesministerin oder ein Bundesminister. Handelt es sich um eine Koalitionsregierung, wird gewöhnlich ein Parteimitglied des Regierungspartners zur Stellvertreterin oder zum Stellvertreter ernannt.
+		\item Bundesminister der Finanzen nach Art. 108 Abs. 3, 112, 114 Abs. 1 GG, Bundesminister der Justiz, Art. 96 Abs. 2 GG, Bundesminister der Verteidigung, Art. 65a GG
+		\item \underline{Kanzlerprinzip} = Richtlinienkompetenz des Bundeskanzlers (Art. 65 S. 1 GG). Der Bundeskanzler bestimmt die Richtlinien der Politik und trägt dafür die Verantwortung
+		
+		\underline{Ressortprinzip} = Ressortkompetenz der Minister (Art. 65 S.2 GG) Innerhalb der Richtlinien leitet jeder Minister sein Ressort selbstständig und in eigener Verantwortung
+		
+		\underline{Kabinettsprinzip} = Kollegialkompetenz der Bundesregierung. Alle wichtigen Entscheidungen werden vom Kabinett kollegial gefällt, bei Meinungsverschiedenheiten zwischen Bundesministern entscheidet das Kabinett durch Mehrheitsbeschluss
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://www.bundesregierung.de/breg-de/aktuelles/wie-funktioniert-die-kanzlerwahl--848426}
+		\item \url{https://www.bundeskanzlerin.de/bkin-de/kanzleramt/aufgaben-der-bundeskanzlerin}
+		\item \url{https://de.wikipedia.org/wiki/Bundesminister_(Deutschland)}
+	\end{itemize}
+
+	\section*{Aufgabe 2: Bundespräsident}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wahl durch die Bundesversammlung (Art. 54 GG), 5 Jahre, einmalige Wiederwahl möglich (Art. 54 II GG), Vorzeitige Beendigung u.a. im Fall der Präsidentenanklage möglich (Art. 61 II 1 GG)
+		\item Völkerrechtliche Vertretung und Repräsentation des Bundes (Art. 59 GG), Ausfertigung der Gesetze (Prüfungskompetenz) (Art. 82 I GG), Vorschlag des Bundeskanzlers (Art. 63 I GG), Ernennung und Entlassung der Bundesbeamten, Bundesrichter, Offiziere und Unteroffiziere (Art. 60 I-III GG), Begnadigungsrecht (Art. 60 II GG), ...
+		\item Nach Gegenzeichnung durch den (die) beteiligten Bundesminister und den Bundeskanzler werden die Bundesgesetze vom Bundespräsidenten unterzeichnet (Ausfertigung).
+		\item Fraglich ist zuerst, ob dem Bundespräsidenten ein formelles Prüfungsrecht zusteht. Der Wortlaut des Art. 82 I 1 GG sagt aus, dass nur "nach den Vorschriften dieses Grundgesetzes zustande gekommene[n] Gesetze“ gegengezeichnet und ausgefertigt werden. Er weist damit eine Parallele zum Wortlaut des Art. 78 GG auf, wo auch vom Zustandekommen eines Gesetzes die Rede ist. Durch diesen Artikel wird auch ein Teil des Gesetzgebungsverfahrens abgeschlossen, nämlich das Hauptverfahren nach Art. 77 GG. Hieraus kann gefolgert werden, dass dem Bundespräsidenten in jedem Fall ein formelles Prüfungsrecht zusteht. Dieses bezieht sich auch auf die Gesetzgebungskompetenz (Art. 70 ff.) und das Einleitungsverfahren (Art. 76 ff.). Teilweise wird sogar eine Prüfungspflicht des Bundespräsidenten angenommen. Es herrscht Einigkeit, dass dem Bundespräsidenten jedoch kein politisches Prüfungsrecht zusteht. Hiermit würde er in unzulässiger Weise in die politische Staatsleitung eingreifen. Noch interessanter ist aber die Frage, ob dem Bundespräsidenten auch ein materielles Prüfungsrecht zusteht. Ihre Beantwortung ergibt sich nicht eindeutig aus dem Grundgesetz. Es könnten Argumente dafür sprechen, dass dem Bundespräsidenten kein materielles Prüfungsrecht zustehen sollte. In diesem Zusammenhang wird der Standpunkt erwähnt, dass es letztendlich nur in der Kompetenz des Bundesverfassungsgerichts liegen soll, über die Verfassungsmäßigkeit eines Gesetzes, etwa im Zuge einer abstrakten Normenkontrolle, zu entscheiden. Nach einer anderen Ansicht steht dem Bundespräsidenten ein materielles Prüfungsrecht zu, wobei er die Ausfertigung eines Gesetzes jedoch nur verweigern kann, wenn dieses evident verfassungswidrig ist. Ein materielles Prüfungsrecht des Bundespräsidenten verletzt nicht das Entscheidungsmonopol des Bundesverfassungsgerichts. Gemäß Art. 20 III GG müssen alle drei Gewalten die verfassungsmäßige Ordnung von vornherein schützen. Das Bundeverfassungsgericht kann dabei immer noch rückwirkend korrigierend eingreifen, wobei es nur auf Antrag tätig wird. Nur wenn der Verfassungsverstoß evident ist, kann es dem Bundespräsidenten nicht zugemutet werden, das Gesetz auszufertigen, da nach Art. 20 III GG alle drei Gewalten, und somit auch der Bundespräsident als Teil der Exekutive, an die verfassungsmäßige Ordnung gebunden sind.
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://www.bundespraesident.de/DE/Amt-und-Aufgaben/Wirken-im-Inland/Amtliche-Funktionen/amtliche-funktionen-node.html}
+		\item \url{https://www.lecturio.de/magazin/pruefungsrecht-bundespraesident-wichtigste-fakten/}
+	\end{itemize}
+
+	\section*{Aufgabe 3: Bundesverfassungsgericht}
+	\begin{enumerate}[label=(\alph*)]
+		\item Doppelfunktion als Gericht und oberstes Verfassungsorgan
+		\item Stets geht es in den von § 31 Abs. 2 BVerfGG angesprochenen Entscheidungen um die Prüfung von Normen, meist hinsichtlich ihrer Gültigkeit oder Ungültigkeit. Ebenso wie eine Norm Allgemeinverbindlichkeit beansprucht, soll nach § 31 Abs. 2 BVerfGG die Entscheidung über die Norm Wirkung gegenüber jedermann haben. Somit wirkt die gesetzeskräftige Entscheidung nicht nur gegenüber den Verfahrensbeteiligten (wie infolge der Rechtskraft) und auch nicht nur gegenüber Staatsorganen (wie infolge der Bindungswirkung nach § 31 Abs. 1 BVerf­GG), und zwar bei § 31 Abs. 2 BVerfGG unter Einschluss des BVerfG und des parlamentarischen Gesetzgebers,[1] sondern gegenüber der Allgemeinheit.
+		\item \underline{Organstreitverfahren:} Das Bundesverfassungsgericht kann angerufen werden, wenn Streit zwischen obersten Bundesorganen oder diesen gleichgestellten Beteiligten über ihre Rechte und Pflichten aus dem Grundgesetz besteht. Ein solches Verfahren ist notwendig, weil die Organe untereinander keine Weisungsbefugnis besitzen. Indem es die wechselseitige gerichtliche Kontrolle der Verfassungsorgane ermöglicht, sichert das Organstreitverfahren die gewaltenteilige politische Willensbildung. 
+		
+		\underline{Abstrakte Normenkontrolle:} Die abstrakte Normenkontrolle steht einem begrenzten Kreis von Antragstellern offen. Unabhängig von einem konkreten Rechtsstreit und von eigener Betroffenheit des Antragstellers wird die Verfassungsmäßigkeit einer Rechtsnorm unter allen in Frage kommenden Gesichtspunkten überprüft. Das Verfahren ist in Art. 93 Abs. 1 Nr. 2 und 2a GG und §§ 76 ff. Bundesverfassungsgerichtsgesetz geregelt. 
+		
+		\underline{Konkrete Normenkontrolle:} Nur das Bundesverfassungsgericht ist dafür zuständig, über die Verfassungsmäßigkeit von Gesetzen zu entscheiden. Hält ein Fachgericht ein Gesetz, auf dessen Gültigkeit es bei der Entscheidung ankommt, für verfassungswidrig, so setzt es das Verfahren aus und holt die Entscheidung des Bundesverfassungsgerichts ein. Das Verfahren wird deswegen auch Richtervorlage genannt. Es ist in Art. 100 Abs. 1 GG sowie §§ 80 ff. Bundesverfassungsgerichtsgesetz geregelt. Jährlich gehen bis zu 100 Verfahren dieser Art beim Bundesverfassungsgericht ein. Sie sind am Aktenzeichen "BvL“ zu erkennen. 
+		
+		\underline{Verfassungsbeschwerde:} Die Verfassungsbeschwerde ermöglicht insbesondere den Bürgerinnen und Bürgern, ihre grundrechtlich garantierten Freiheiten gegenüber dem Staat durchzusetzen. Es handelt sich jedoch nicht um eine Erweiterung des fachgerichtlichen Instanzenzuges, sondern um einen außerordentlichen Rechtsbehelf, in dem nur die Verletzung spezifischen Verfassungsrechts geprüft wird. Einzelheiten sind in Art. 93 Abs. 1 Nr. 4a und 4b GG und §§ 90 ff. Bundesverfassungsgerichtsgesetz geregelt. 
+		
+		\underline{Parteiverbotsverfahren:} Parteien sind wichtige Bindeglieder zwischen den Wählerinnen und Wählern einerseits sowie dem Parlament und der Regierung andererseits. Ihre Tätigkeit soll möglichst wenig durch den Staat beeinflusst werden. Verfassungsfeindliche Parteien muss eine wehrhafte Demokratie jedoch bekämpfen können. Um beiden Gesichtspunkten gerecht zu werden, hat das Grundgesetz das Parteiverbotsverfahren nicht der Exekutive, sondern dem Bundesverfassungsgericht zugewiesen. So ist gewährleistet, dass ein unabhängiges Gericht alleine nach verfassungsrechtlichen Maßstäben entscheidet.
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://www.degruyter.com/document/doi/10.1515/jura-2018-0120/html}
+		\item \url{https://www.bundesverfassungsgericht.de/DE/Verfahren/Wichtige-Verfahrensarten/Organstreitverfahren/organstreitverfahren_node.html}
+		\item \url{https://www.bundesverfassungsgericht.de/DE/Verfahren/Wichtige-Verfahrensarten/Abstrakte-Normenkontrolle/abstrakte-normenkontrolle_node.html}
+		\item \url{https://www.bundesverfassungsgericht.de/DE/Verfahren/Wichtige-Verfahrensarten/Konkrete-Normenkontrolle/konkrete-normenkontrolle_node.html}
+		\item \url{https://www.bundesverfassungsgericht.de/DE/Verfahren/Wichtige-Verfahrensarten/Verfassungsbeschwerde/verfassungsbeschwerde_node.html}
+		\item \url{https://www.bundesverfassungsgericht.de/DE/Verfahren/Wichtige-Verfahrensarten/Parteiverbotsverfahren/parteiverbotsverfahren_node.html}
+	\end{itemize}
+	
+\end{document}
