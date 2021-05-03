@@ -1,0 +1,173 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{INLOOP Softwaretechnologie, Inheritance (Middle Age Kingdom)}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{vollständiger Code}
+	Datei \texttt{Inhabitant.java}
+	\begin{lstlisting}[style=java,tabsize=2]
+public class Inhabitant {
+	protected int income;
+
+	public Inhabitant() {
+		this.income = 0;
+	}
+
+	public int getIncome() {
+		return income;
+	}
+
+	public void setIncome(int inc) {
+		if (inc < 0) {
+			throw new IllegalArgumentException("Income negative");
+		}
+		else {
+			this.income = inc;   
+		}
+	}
+
+	public int taxableIncome() {
+		return income;
+	}
+
+	public int tax() {
+		return (int) Math.floor(Math.max(1,this.taxableIncome() * 0.1));
+	}
+}
+	\end{lstlisting}
+	Datei \texttt{Noble.java}
+	\begin{lstlisting}[style=java, tabsize=2]
+public class Noble extends Inhabitant {
+	public Noble() {
+		super();
+	}
+
+	public int tax() {
+		return (int) Math.floor(Math.max(20,this.taxableIncome() * 0.1));
+	}
+}
+	\end{lstlisting}
+	Datei \texttt{King.java}
+	\begin{lstlisting}[style=java, tabsize=2]
+public class King extends Inhabitant {
+	public King() {
+		super();
+	}
+
+	public int tax() {
+		return 0;
+	}
+}
+	\end{lstlisting}
+	Datei \texttt{Peasant.java}
+	\begin{lstlisting}[style=java,tabsize=2]
+public class Peasant extends Inhabitant {
+	public Peasant() {
+		super();
+	}
+}
+	\end{lstlisting}
+	Datei \texttt{Serf.java}
+	\begin{lstlisting}[style=java, tabsize=2]
+public class Serf extends Peasant {
+	public Serf() {
+		super();
+	}
+
+	public int taxableIncome() {
+		return Math.max(0,this.getIncome() - 12);
+	}
+}
+	\end{lstlisting}
+	Datei \texttt{Koenigreich.java}
+	\begin{lstlisting}[style=java,tabsize=2]
+public class Koenigreich {
+	public void steuerbescheid(Inhabitant i) {
+		int taxIncome = i.taxableIncome();
+		int t = i.tax();
+		System.out.println("Einwohner " + i + " hat Einkommen " + i.getIncome() + ", zahlt Steuern auf " + taxIncome + " und zahlt Steuern " + t);
+	}
+
+	public void main(String[] args) {
+		Noble n = new Noble();
+		King k = new King();
+		Peasant p = new Peasant();
+		Serf s = new Serf();
+		Serf s2 = new Serf();
+
+		n.setIncome(2000);
+		k.setIncome(3000);
+		p.setIncome(100);
+		s.setIncome(1);
+		s2.setIncome(20);
+
+		steuerbescheid(n);
+		steuerbescheid(k);
+		steuerbescheid(p);
+		steuerbescheid(s);
+		steuerbescheid(s2);
+	}
+}
+	\end{lstlisting}
+
+	\section*{Erklärung}
+	Die Klassen sind nicht besonders kompliziert aufgebaut, ein Augenmerk sollte man vielleicht auf diese Zeile legen
+	\begin{lstlisting}[style=java]
+Math.max(1,this.taxableIncome() * 0.1)
+	\end{lstlisting}
+	Hier wird das Maximum der beiden Zahlen genommen. In den meisten Fällen ist \texttt{this.taxableIncome * 0.1} größer als 1, deswegen wird auch dieser Wert von \texttt{Math.max()} zurückgegeben. Sollte aber mal der Wert von  \texttt{this.taxableIncome * 0.1} kleiner als 1 sein, weil das Einkommen zu klein ist, so ist 1 größer als dieser Wert und 1 wird von \texttt{Math.max()} zurückgegeben. Das garantiert, dass die Steuer mindestens 1 Taler beträgt.
+	
+\end{document}
