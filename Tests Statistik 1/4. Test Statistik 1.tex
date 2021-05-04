@@ -1,0 +1,97 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{hyperref}
+\usepackage{parskip}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 1, Test 4}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir können $26 + 26 + 10 = 62$ Zeichen verwenden.
+		\item Es gibt $62^6$ = 56 800 235 584 Passwörter.
+		\item Es gibt $62^1 + 62^2 + 62^3 + 62^4 + 62^5 + 62^6$ = 57 731 386 986 Passwörter.
+		\item Es gibt $62^4\cdot 10^2$ = 1 477 633 600 Passwörter.
+		\item Es gibt $62^4$ = 14 776 336 Passwörter.
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Es gibt $6! = 720$ Möglichkeiten.
+		\item Die drei Frauen können auf den Plätzen 1-3, 2-4, 3-5 und 4-6 sitzen. Bei jeder von diesen Positionen gibt es $3!=6$ Anordnungen für die Frauen und $3!=6$ Anordnungen für die Männer, das heißt die Wahrscheinlichkeit ist
+		\begin{align}
+			\frac{4\cdot 3!\cdot 3!}{720} = 0.2 \notag
+		\end{align}
+		\item Ich sitze mit meiner Freundin entweder auf den Plätzen 1/2, 2/3, 3/4, 4/5 oder 5/6. In jeder Position gibt es $2!=2$ Anordnungen für mich und meine Freundin und $4!=24$ Anordnungen für den Rest der Lerngruppe, also ist die Wahrscheinlichkeit
+		\begin{align}
+			\frac{5\cdot 2!\cdot 4!}{720} = 0.3333 \notag
+		\end{align}
+		\item Entweder sitzen die Männer auf den Plätzen 1/3/5 oder 2/4/6. In jeder Position gibt es $3!$ Anordnungen für die Männer und $3!=6$ Anordnungen für die Frauen, also ist die Wahrscheinlichkeit
+		\begin{align}
+			\frac{2\cdot 3!\cdot 3!}{720} = 0.1 \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Wahrscheinlichkeit ist $\frac{4}{6}=0.6667$.
+		\item Die Wahrscheinlichkeit, dass ich einen Platz am Zweiertisch bekomme, ist $\frac{2}{6}$, dass meine Freundin den anderen Platz bekommt, ist $\frac{1}{5}$, zusammen also $\frac{2}{6}\cdot\frac{1}{5}=0.0667$.
+		\item Ich sitze mit einer Wahrscheinlichkeit von $\frac{4}{6}$ am Vierertisch, meine Freundin mit einer Wahrscheinlichkeit von $\frac{2}{5}$ am Zweiertisch, zusammen also $\frac{4}{6}\cdot\frac{2}{5}=0.2667$.
+	\end{enumerate}
+
+	\section*{Aufgabe 4}
+	\begin{enumerate}[label=(\alph*)]
+		\item Auswahl von Sehenswürdigkeiten, die man besuchen will, aus dem Reiseführer: Kombination
+		\item Routen durch den Supermarkt, um alle benötigten Produkte in den Einkaufskorb zu legen: Permutation
+		\item Verteilung der Gäste eines Hotels zu ihren Zimmern: Permutation
+		\item Abspielreihenfolge der Songs aus einer Playlist: Permutation
+		\item Abspielreihenfolge von einigen ausgewählten Songs aus einer Playlist: Variation
+		\item Bilden von geraden, 6-stelligen Zahlen aus den Ziffern 0 - 9: Variation
+		\item Ziehen der Lotto-Zahlen bei 6-aus-49: Kombination
+	\end{enumerate}
+
+	\section*{Aufgabe 5}
+	Die Aussagen sind
+	\begin{itemize}
+		\item Ein Ereignis ist eine Menge von Elementarereignissen. RICHTIG
+		\item Ein Laplace-Experiment liegt genau dann vor, wenn die Menge der Ereignisse, $\Omega$, endlich ist. FALSCH, alle Ereignisse müssen die gleiche Wahrscheinlichkeit aufweisen
+		\item $\mathbb{P}(A\cup B) = \mathbb{P}(A) + \mathbb{P}(B)$. FALSCH, das gilt nur, wenn $A$ und $B$ disjunkt sind.
+		\item Das zu $A$ komplementäre Ereignis $\bar{A}$ ist definiert als $\bar{A}=\{w\in\Omega\mid w\notin A\}$. RICHTIG
+	\end{itemize}
+
+	\section*{Aufgabe 6}
+	Die richtigen Aussagen sind
+	\begin{itemize}
+		\item Additivität
+		\item Normiertheit
+		\item Nichtnegativität
+	\end{itemize}
+	
+\end{document}
