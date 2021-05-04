@@ -1,0 +1,132 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{er,positioning}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\def\ojoin{\setbox0=\hbox{$\bowtie$}%
+	\rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
+\def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
+\def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
+
+\title{\textbf{Datenbanken, Übung 4}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item $\text{Vorlesungen}\bowtie\text{hören}\bowtie\sigma_{\text{Name} = \text{Xenokrates}}(\text{Studenten})$
+		\item $\pi_{\text{V2.Titel}}(\rho_{V2}(Vorlesungen)\bowtie_{\text{V2.VorlNr} = \text{Vorgänger}}\text{voraussetzen}\bowtie_{\text{V1.VorlNr} = \text{Nachfolger}}\sigma_{\text{V1.Titel} = \text{Wissen...}}(\rho_{V1}(\text{Vorlesungen})))$
+		\item $S = \text{Studenten}\bowtie\text{hören}\bowtie\sigma_{\text{Titel} = \text{Grundzüge}}(Vorlesungen)$ \\
+		$\sigma_{\text{S1.MatrNr} != \text{S2.MatrNr}}(\rho_{S1}(S)\times \rho_{S2}(S))$
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item $\text{Assistenten}\bowtie_{\text{gelesen von} = \text{Boss}}\text{Vorlesungen}\bowtie\text{hören}\bowtie\sigma_{\text{Name} = \text{Fichte}}(Studenten)$
+		\item ?
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item $R\bowtie S$
+		\begin{center}
+			\begin{tabular}{c|c|c|c|c|c}
+				\textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{E} & \textbf{G} \\
+				\hline
+				$a_1$ & $b_1$ & $c_1$ & $d_1$ & $e_1$ & $g_3$ \\
+				$a_2$ & $b_2$ & $c_3$ & $d_2$ & $e_3$ & $g_1$ \\
+				$a_2$ & $b_3$ & $c_3$ & $d_2$ & $e_3$ & $g_1$
+			\end{tabular}
+		\end{center}
+		\item $R\rightouterjoin S$
+		\begin{center}
+			\begin{tabular}{c|c|c|c|c|c}
+				\textbf{A} & \textbf{D} & \textbf{G} & \textbf{C} & \textbf{D} & \textbf{E} \\
+				\hline
+				$a_1$ & $b_1$ & $g_3$ & $c_1$ & $d_1$ & $e_1$ \\
+				NULL & NULL & $g_2$ & $c_1$ & $d_3$ & $e_2$ \\
+				$a_2$ & $b_2$ & $g_1$ & $c_3$ & $d_2$ & $e_3$ \\
+				$a_2$ & $b_3$ & $g_1$ & $c_3$ & $d_2$ & $e_3$
+			\end{tabular}
+		\end{center}
+		\item $R\fullouterjoin S$
+		\begin{center}
+			\begin{tabular}{c|c|c|c|c|c}
+				\textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{E} & \textbf{G} \\
+				\hline
+				$a_1$ & $b_1$ & $c_1$ & $d_1$ & $e_1$ & $g_3$ \\
+				$a_2$ & $b_2$ & $c_3$ & $d_2$ & $e_3$ & $g_1$ \\
+				$a_2$ & $b_3$ & $c_3$ & $d_2$ & $e_3$ & $g_1$ \\
+				$a_3$ & $b_2$ & $c_2$ & $d_3$ & NULL & NULL \\
+				NULL & NULL & $g_2$ & $c_1$ & $d_3$ & $e_2$
+			\end{tabular}
+		\end{center}
+		\item $R\ltimes S$:
+		\begin{center}
+			\begin{tabular}{c|c|c|c}
+				\textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\
+				\hline
+				$a_1$ & $b_1$ & $c_1$ & $d_1$ \\
+				$a_2$ & $b_2$ & $c_3$ & $d_2$ \\
+				$a_2$ & $b_3$ & $c_3$ & $d_2$
+			\end{tabular}
+		\end{center}
+	\end{enumerate}
+	
+	\section*{Aufgabe 4}
+	\begin{enumerate}[label=(\alph*)]
+		\item $\pi_A(R) = \{X,Y,Z\}$
+		\item $\pi_A(R)\times S = \{(X,2),(X,3),(Y,2),(Y,3),(Z,2),(Z,3)\}$
+		\item $(\pi_A(R)\times S) - R = \{(X,3)\}$
+		\item $\pi_A((\pi_A(R)\times S) - R) = \{X\}$
+		\item $\pi_A(R) - \pi_A((\pi_A(R)\times S) - R) = \{Y,Z\}$
+	\end{enumerate}
+	
+\end{document}
