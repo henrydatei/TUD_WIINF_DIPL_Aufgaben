@@ -1,0 +1,277 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Softwaretechnologie, Übung 4}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Problem ist, dass man beim Casten schnell Fehler macht, die beim Kompilieren nicht erkannt werden, aber zur Laufzeit einen Fehler geben:
+		\begin{lstlisting}[style=java, tabsize=2]
+Bootle beerBottle = new Bottle();
+beerBottle.fill (new WhiteWine("Burgunder"));
+
+Beer beer = (Beer) beerBottle.empty();
+// ClassCastException
+		\end{lstlisting}
+		\item Zu jedem Drink gibt es eine Klasse, die die Flasche für diesen Drink bereitstellt.
+		\item Datei \texttt{Bottle.java}
+		\begin{lstlisting}[style=java,tabsize=2]
+public class Bottle<T extends Drink> {
+	private T content;
+		
+	public Bottle() {
+		this.content = null;
+	}
+		
+	public boolean isEmpty() {
+		if (content == null) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+		
+	public void fill(T con) {
+		if (this.isEmpty()) {
+			this.content = con;
+		}
+		else {
+			throw new IllegalStateException("Bottle not empty!");
+		}
+	}
+		
+	public T empty() {
+		if (this.isEmpty()) {
+			throw new IllegalStateException("Bottle must be filled");
+		}
+		else {
+			T oldcontent = content;
+			content = null;
+			return oldcontent;   
+		}
+	}
+}
+		\end{lstlisting}
+		Datei \texttt{Drink.java}
+		\begin{lstlisting}[style=java, tabsize=2]
+public abstract class Drink {
+		
+}
+		\end{lstlisting}
+		Datei \texttt{Beer.java}
+		\begin{lstlisting}[style=java, tabsize=2]
+public class Beer extends Drink {
+	private String brewery;
+		
+	public Beer(String brew) {
+		this.brewery = brew;
+	}
+		
+	public String getBrewery() {
+		return brewery;
+	}
+		
+	public String toString() {
+		return brewery;
+	}
+}
+		\end{lstlisting}
+		Datei \texttt{Wine.java}
+		\begin{lstlisting}[style=java,tabsize=2]
+public abstract class Wine extends Drink {
+	private String region;
+		
+	public Wine(String reg) {
+		this.region = reg;
+	}
+		
+	public String getRegion() {
+		return region;
+	}
+		
+	public String toString() {
+		return region;
+	}
+}
+		\end{lstlisting}
+		Datei \texttt{WhiteWine.java}
+		\begin{lstlisting}[style=java, tabsize=2]
+public class WhiteWine extends Wine {
+	public WhiteWine(String reg) {
+		super(reg);
+	}
+}
+		\end{lstlisting}
+		Datei \texttt{RedWine.java}
+		\begin{lstlisting}[style=java,tabsize=2]
+public class RedWine extends Wine {
+	public RedWine(String reg) {
+		super(reg);
+	}
+}
+		\end{lstlisting}
+		Datei \texttt{Bar.java}
+		\begin{lstlisting}[style=java,tabsize=2]
+public class Bar {
+	public static void main(String[] args) {
+		RedWine rw = new RedWine("Barolo");
+		WhiteWine ww = new WhiteWine("Burgunder");
+		Bottle<Beer> b = new Bottle<>();
+
+		b.fill(new Beer("Uri"));
+
+		Beer beer = b.empty();
+	}
+}
+		\end{lstlisting}
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	Datei \texttt{Book.java}
+	\begin{lstlisting}[style=java]
+public class Book implements Comparable<Book>{
+	private String isbn;
+	private String author;
+	private String title;
+
+	public Book(String isbn, String author, String title) {
+		if (isbn == null | author == null | title == null) {
+			throw new IllegalArgumentException("arguments for book can't be null");
+		}
+		this.isbn = isbn;
+		this.author = author;
+		this.title = title;
+	}
+
+	//ueberladen des Konstruktors
+	public Book(String isbn) {
+		if (isbn == null) {
+			throw new IllegalArgumentException("arguments for book can't be null");
+		}
+		this.isbn = isbn;
+	}
+
+	public String getIsbn() {
+		return this.isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+	public String getAuthor() {
+		return this.author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public String getTitle() {
+		return this.title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String toString() {
+		return this.getIsbn() + " " + this.getAuthor() + " " + this.getTitle();
+	}
+
+	// notwendig fuer binaere Suche aus dem Collections-Framework
+	public int compareTo(Book book) {
+		return this.isbn.compareTo(book.getIsbn());
+	}
+	\end{lstlisting}
+	Datei \texttt{Library.java}
+	\begin{lstlisting}[style=java,tabsize=2]
+public class Library {
+	List<Book> book_list;
+
+	public Library() {
+		book_list = new ArrayList<Book>();
+	}
+
+	// es sollte nach ISBN sortiert eingefuegt werden, da fuer die binaere Suche so einfacher
+	public sortedInsert(Book newBook) {
+		book_list.add(newBook);
+		Collections.sort(book_list);
+	}
+
+	public Book searchForISBN_new(String isbn) {
+		int index = Collections.binarySearch(book_list, new Book(isbn,"",""));
+		// was passiert, wenn die Suche nix findet?
+		// -1 kommt dann zurueck! not fast enough.. :(
+		if (index >= 0) {
+			return book_list.get(index);
+		} else {
+			return null; //besser beim Aufruf dann ueberpruefen 
+		}
+	}
+
+	public Collection<Book> searchForAuthor(String author){
+		ArrayList<Book> autorBook_list = new ArrayList<Book>();
+		for (Book book : book_list) {
+			if(book.getAuthor.equals(author)) {
+				autorBook_list.add(book);
+			}
+		}
+		return autorBook_list;
+	}
+}
+	\end{lstlisting}
+	
+\end{document}
