@@ -1,0 +1,172 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{hyperref}
+\usepackage{parskip}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 1, Test 3}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der Mittelwert der Länge ist
+		\begin{align}
+			\mu_l &= \frac{5.1 + 4.9 + 4.7 + 4.6 + 5.0 + 5.4 + 4.6 + 5.0 + 4.4 + 4.9}{10} \notag \\
+			&= 4.86 \notag
+		\end{align}
+		\item Der Mittelwert der Breite ist
+		\begin{align}
+			\mu_b &= \frac{3.5 + 3.0 + 3.2 + 3.1 + 3.6 + 3.9 + 3.4 + 3.4 + 2.9 + 3.1}{10} \notag \\
+			&= 3.31 \notag
+		\end{align}
+		\item Die Stichprobenvarianz der Länge ist
+		\begin{align}
+			s_l^2 &= \frac{(5.1-4.86)^2 + (4.9-4.86)^2 + \dots + (4.9-4.86)^2}{9} \notag \\
+			&= 0.0849 \notag
+		\end{align}
+		\item Die Stichprobenvarianz der Breite ist
+		\begin{align}
+			s_b^2 &= \frac{(3.5-3.31)^2 + (3.0-3.31)^2 + \dots + (3.1-3.31)^2}{9} \notag \\
+			&= 0.0943 \notag
+		\end{align}
+		\item Die Stichprobenkovarianz ist dann
+		\begin{align}
+			s_{lb} &= \frac{(5.1-4.86)(3.5-3.31) + (4.9-4.86)(3.0-3.31) + \dots + (4.9-4.86)(3.1-3.31)}{9} \notag \\
+			&= 0.0704 \notag
+		\end{align}
+		\item Der Korrelationskoeffizient ist dann
+		\begin{align}
+			r &= \frac{s_{lb}}{\sqrt{s^2_l}\cdot \sqrt{s_b^2}} \notag \\
+			&= \frac{0.0704}{\sqrt{0.0849} \cdot \sqrt{0.0943}} \notag \\
+			&= 0.7868 \notag
+		\end{align}
+		$\Rightarrow$ Das lässt auf einen mittleren, linearen, positiven Zusammenhang schließen.
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Zuerst müssen wir den Daten einen Rang zuordnen. Für die Michelin-Sterne gilt
+		\begin{center}
+			\begin{tabular}{c|cccccccccccc}
+				$x_i$ & 2 & 2 & 3 & 3 & 3 & 3 & 3 & 4 & 4 & 4 & 4 & 4 \\
+				\hline
+				$R(x_i)$ & 1.5 & 1.5 & 5 & 5 & 5 & 5 & 5 & 10 & 10 & 10 & 10 & 10
+			\end{tabular}
+		\end{center}
+		Für die Kreativität
+		\begin{center}
+			\begin{tabular}{c|cccccccccccc}
+				$y_i$ & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1 & 1 \\
+				\hline
+				$R(y_i)$ & 4 & 4 & 4 & 4 & 4 & 10 & 10 & 4 & 4 & 10 & 10 & 10
+			\end{tabular}
+		\end{center}
+		Der durchschnittliche Rang ist damit
+		\begin{align}
+			\bar{R} &= \frac{1.5 + 1.5 + 5 + \dots + 10 + 4 + 4 + \dots + 10}{24} \notag \\
+			&= 6.5 \notag
+		\end{align}
+		\item Der Korrelationskoeffizient nach Spearman ist dann
+		\begin{align}
+			R &= \frac{1.5\cdot 4 + 1.5\cdot 4 + \dots + 10\cdot 4 + 10\cdot 10 - 12\cdot 6.5^2}{\sqrt{1.5^2 + 1.5^2 + \dots + 10^2 - 12\cdot 6.5^2}\cdot\sqrt{4^2 + 4^2 + \dots + 10^2 - 12\cdot 6.5^2}} \notag \\
+			&= 0.396 \notag
+		\end{align}
+		Es handelt sich um einen mittleren monotonen positiven Zusammenhang.
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Kontingenztafel der absoluten Häufigkeiten ist
+		\begin{center}
+			\begin{tabular}{c|cc|c}
+				& männlich & weiblich & $\Sigma$ \\
+				\hline
+				Informatik & 15 & 5 & 20 \\
+				Wiwi & 35 & 35 & 70 \\
+				Geisteswissenschaften & 0 & 10 & 10 \\
+				\hline
+				$\Sigma$ & 50 & 50 & 100 
+			\end{tabular}
+		\end{center}
+		\item Die Kontingenztafel der relativen Häufigkeiten ist
+		\begin{center}
+			\begin{tabular}{c|cc|c}
+				& männlich & weiblich & $\Sigma$ \\
+				\hline
+				Informatik & 0.15 & 0.05 & 0.2 \\
+				Wiwi & 0.35 & 0.35 & 0.7 \\
+				Geisteswissenschaften & 0 & 0.1 & 0.1 \\
+				\hline
+				$\Sigma$ & 0.5 & 0.5 & 1 
+			\end{tabular}
+		\end{center}
+		\item $\chi^2$ ist dann
+		\begin{align}
+			\chi^2 &= 100\left(\frac{15^2}{20\cdot 50} + \frac{5^2}{20\cdot 50} + \frac{35^2}{70\cdot 50} + \frac{35^2}{70\cdot 50} + \frac{0^2}{10\cdot 50} + \frac{10^2}{10\cdot 50}-1\right) \notag \\
+			&= 15 \notag
+		\end{align}
+		\item Für $C_{max}$ gilt
+		\begin{align}
+			C_{max} &= \sqrt{\frac{2-1}{2}} \notag \\
+			&= 0.7071 \notag
+		\end{align}
+		\item Für $C$ gilt
+		\begin{align}
+			C &= \sqrt{\frac{15}{15+100}} \notag \\
+			&= 0.3612 \notag
+		\end{align}
+		\item Für $C_{Korr}$ gilt
+		\begin{align}
+			C_{Korr} &= \frac{0.3612}{0.7071} \notag \\
+			&= 0.5108 \notag
+		\end{align}
+		Es besteht also ein mittlerer Zusammenhang.
+	\end{enumerate}
+
+	\section*{Aufgabe 4}
+	\begin{enumerate}[label=(\alph*)]
+		\item Alter und Haarfarbe: Kontingenzkoeffizient
+		\item Alter und Einkommen: Bravis-Pearson, Spearman, Kontingenzkoeffizient
+		\item Abiturnote und Bachelornote: Spearman, Kontingenzkoeffizient
+		\item Preis ein Kunstwerkes und Names des Künstlers: Kontingenzkoeffizient
+		\item Körpergröße und Körpergewicht: Bravis-Pearson, Spearman, Kontingenzkoeffizient
+		\item Zufriedenheit des Kunden und Rabatt: Spearman, Kontingenzkoeffizient
+	\end{enumerate}
+
+	\section*{Aufgabe 5}
+	Die Aussagen sind
+	\begin{itemize}
+		\item Wenn der Korrelationskoeffizient nach Pearson zwischen zwei Stichproben klein ist, so sind die Merkmale unabhängig voneinander. FALSCH, die Merkmale könnten z.B. auch quadratisch voneinander abhängen.
+		\item $R_{XY}=\text{Cor}(R(X),R(Y))$. RICHTIG
+		\item Die Zuordnung $x\mapsto R(x)$ ist eineindeutig. FALSCH, da man aus $R(x)$ nicht auf x schließen kann.
+		\item Der Korrelationskoeffizient von Spearman liegt immer im Intervall $[-1,1]$. RICHTIG
+		\item Genau dann wenn $X$ und $Y$ unabhängig sind, folgt $C_{Korr}=0$. RICHTIG
+	\end{itemize}
+	
+\end{document}
