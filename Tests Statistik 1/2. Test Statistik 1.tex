@@ -1,0 +1,98 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{hyperref}
+\usepackage{parskip}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 1, Test 2}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Das 25\%-Quantil ist das $\lceil 0.25\cdot 365\rceil = 92$. Element, also 90.
+		\item Das 50\%-Quantil ist das $\lceil 0.50\cdot 365\rceil = 183$. Element, also 120.
+		\item Das 75\%-Quantil ist das $\lceil 0.75\cdot 365\rceil = 274$. Element, also 150.
+		\item Der Quartilsabstand ist $QA = \tilde{x}_{0.75} - \tilde{x}_{0.25}=150-90=60$.
+		\item $\tilde{x}_{0.25}-3QA = -90$
+		\item $\tilde{x}_{0.25}-1.5QA = 0$
+		\item $\tilde{x}_{0.75}+1.5QA = 240$
+		\item $\tilde{x}_{0.75}+3QA = 330$
+		\item Der Mittelwert ist
+		\begin{align}
+			\mu &= \frac{16\cdot 180 + 17\cdot 170 + 29\cdot 160 + 37\cdot 150 + 22\cdot 140 + 31\cdot 130 + 37\cdot 120 + 48\cdot 110 + 31\cdot 100 + 27\cdot 90 + 70\cdot 80}{365} \notag \\
+			&= 120.3288 \notag
+		\end{align}
+		\item Die Stichprobenvarianz ist
+		\begin{align}
+			s^2 &= \frac{16(180-120.3288)^2 + 17(170-120.3288)^2 + \dots + 70(80-120.3288)^2}{364} \notag \\
+			&= 948.2433 \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item $\hat{F}(0) = 0$
+		\item $\hat{F}(1) = 0$
+		\item $\hat{F}(2.34) = 0$
+		\item $\hat{F}(2.35) = 0.4$
+		\item $\hat{F}(2.36) = 0.4$
+		\item $\hat{F}(2.75) = 0.7$
+		\item $\hat{F}(3) = 0.8$
+		\item $\hat{F}(3.5) = 1$
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der mittlere Benzinpreis ist
+		\begin{align}
+			\mu &= \frac{1.234 + 1.269 + 1.365 + 1.415 + 1.494 + 1.523}{6} \notag \\
+			&= 1.3833 \notag
+		\end{align}
+		\item Die Stichprobenvarianz ist
+		\begin{align}
+			s^2 &= \frac{(1.234-1.3833)^2 + (1.269-1.3833)^2 + \dots + (1.523-1.3833)^2}{5} \notag \\
+			&= 0.0137 \notag
+		\end{align}
+		\item Sei $\mu(X)$ der Mittelwert der Daten $X$. Für den Mittelwert gilt $\mu(a\cdot X) = a\cdot\mu(X)$. Hier ist $a=1.05$, das heißt der Durchschnittspreis ändert sich um 5 \%.
+		\item Sei $s^2(X)$ die Stichprobenvarianz der Daten $X$. Für diese gilt $s^2(a\cdot X) = a^2\cdot s^2(X)$. Hier ist $a=1.05$, das heißt die Stichprobenvarianz ändert sich $a^2=1.1025$, also um 10.25 \%.
+		\item Außerdem gilt für den Mittelwert $\mu(X + b) = b + \mu(X)$. Hier ist $b=1$, das heißt der Durchschnittspreis ändert sich um einen Euro.
+		\item Für die Stichprobenvarianz gilt $s^2(X+b) = s^2(X)$, sie ändert sich also nicht.
+	\end{enumerate}
+
+	\section*{Aufgabe 4}
+	Die Aussagen sind
+	\begin{itemize}
+		\item Die Spannweite ist robust gegenüber Ausreißern. FALSCH, im Skript steht, dass die Spannweite nicht robust ist.
+		\item Es liegen mindestens $\lfloor \frac{n}{2}\rfloor$ aller Beobachtungen im Intervall $[\tilde{x}_{0.5}-QA,\tilde{x}_{0.5}+QA]$. RICHTIG, die Beobachtungen liegen sogar im Intervall $[\tilde{x}_{0.25},\tilde{x}_{0.75}] = [\tilde{x}_{0.5}-\frac{1}{2}QA,\tilde{x}_{0.5}+\frac{1}{2}QA]$.
+		\item Die empirische Varianz ist immer kleiner gleich der Stichprobenvarianz. RICHTIG
+		\item Bei einer Stichprobenschiefe $>0$ schließt man auf Linksschiefe. FALSCH, es ist Rechtsschiefe
+		\item Beim Boxplot sind Ausreißer mindestens den 1.5-fachen Quartilsabstand vom unteren bzw. oberen Quartil entfernt. RICHTIG
+	\end{itemize}
+	
+\end{document}
