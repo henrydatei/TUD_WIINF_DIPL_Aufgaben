@@ -1,0 +1,65 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{hyperref}
+\usepackage{parskip}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 1, Test 6}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item $\mathbb{P}(X=\text{männlich}) = 0.5$
+		\item $\mathbb{P}(X=\text{weiblich}) = 0.5$
+		\item $\mathbb{P}(Y=\text{zw. 75 T\EUR\, und 150 T\EUR}) = 0.2$
+		\item $\mathbb{P}(Y=\text{zw. 50 T\EUR\, und 75 T\EUR}) = 0.7$
+		\item $\mathbb{P}(Y=\text{zw. 30 T\EUR\, und 50 T\EUR}) = 0.1$
+		\item Da $X$ und $Y$ unabhängig sind, gilt $\mathbb{P}(X=\text{männlich} \cap Y = \text{zw. 75 T\EUR\, und 150 T\EUR}) = \mathbb{P}(X=\text{männlich}) \cdot \mathbb{P}(Y = \text{zw. 75 T\EUR\, und 150 T\EUR}) = 0.5 \cdot 0.2 = 0.1$ $\Rightarrow$ 10 \%
+		\item Schaut man in der Tabelle nach, dann gibt es keinen Mann, der zwischen 30 T\EUR\, und 50 T\EUR\, verdient, also ist die Wahrscheinlichkeit 1 für eine Frau.
+		\item Die Erwartungswerte sind
+		\begin{align}
+			\E(\text{Gehalt}) &= 0.2\cdot \frac{75\text{ T\EUR} + 150\text{ T\EUR}}{2} + 0.7\cdot \frac{50\text{ T\EUR} + 75\text{ T\EUR}}{2} + 0.1\cdot \frac{30\text{ T\EUR} + 50\text{ T\EUR}}{2} \notag \\
+			&= 70.250 \text{ \EUR} \notag \\
+			\E(\text{Gehalt Männer}) &= \frac{0.15}{0.5}\cdot \frac{75\text{ T\EUR} + 150\text{ T\EUR}}{2} + \frac{0.35}{0.5}\cdot \frac{50\text{ T\EUR} + 75\text{ T\EUR}}{2} \notag \\
+			&= 77.500 \text{ \EUR} \notag \\
+			\E(\text{Gehalt Frauen}) &= \frac{0.05}{0.5}\cdot \frac{75\text{ T\EUR} + 150\text{ T\EUR}}{2} + \frac{0.35}{0.5}\cdot \frac{50\text{ T\EUR} + 75\text{ T\EUR}}{2} + \frac{0.1}{0.5}\cdot \frac{30\text{ T\EUR} + 50\text{ T\EUR}}{2} \notag \\
+			&= 63.000 \text{ \EUR} \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	Die Aussagen sind
+	\begin{itemize}
+		\item Wenn die Kovarianz zwischen zwei Zufallsvariablen Null ist, so sind die Zufallsvariablen unabhängig. FALSCH, steht im Skript
+		\item Höhenlinien. FALSCH, nur wenn die Höhenlinien konzentrische Kreise wären, wären die Zufallsvariablen unabhängig.
+		\item Selbst eine lineare Transformation von zwei Zufallsvariablen ändert die Korrelation zwischen diesen Zufallsvariablen nicht. RICHTIG
+		\item Eine hohe Kovarianz deutet auf eine hohe Korrelation von zwei Zufallsvariablen hin. FALSCH, die Kovarianz ist nicht normiert, sie lässt sich z.B. durch Wahl der Zwischenstufen bei einer Befragung beliebig verändern.
+		\item bedingte Wahrscheinlichkeit. RICHTIG
+	\end{itemize}	
+\end{document}
