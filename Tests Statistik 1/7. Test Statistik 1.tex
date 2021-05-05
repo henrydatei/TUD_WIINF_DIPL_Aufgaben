@@ -1,0 +1,58 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{hyperref}
+\usepackage{parskip}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 1, Test 6}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Die Aussagen sind
+	\begin{itemize}
+		\item Eine stetige Verteilung liegt genau dann vor, wenn es überabzählbar viele Ereignisse gibt. RICHTIG
+		\item Ist die Zahl $X$ der Ereignisse in einem Intervall der Länge $T$ poissonverteilt, dann sind die Abstände $Y$ zwischen den Ereignissen exponentialverteilt. RICHTIG
+		\item Die Dichtefunktion der F-Verteilung ist linksschief. FALSCH, sie ist rechtsschief
+		\item Für eine steigende Anzahl an Freiheitsgraden strebt sowohl die Dichte der Chi-Quadrat, als auch die Dichte der t-Verteilung gegen die Dichte der Normalverteilung. RICHTIG
+		\item Die Summe von zwei normalverteilten Zufallsvariablen ist auch normalverteilt mit Erwartungswert $\mu_1 + \mu_2$ und Varianz $\sigma_1^2 + \sigma_2^2$. RICHTIG
+	\end{itemize}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Anzahl der Vögel, die sich auf einem Baum niederlassen, innerhalb eines Jahres: Poissonverteilung
+		\item Anzahl der Sechsen bei mehrmaligem Werfen eines Würfels: Binomialverteilung
+		\item Anzahl der richtigen Zahlen beim 6-aus-49 Lotto: hypergeometrische Verteilung
+		\item Anzahl der Gewinn-Lose bei einer Lotterie mit Nieten und Gewinnen bei mehrfacher Ziehung: Hypergeometrische Verteilung
+		\item Anzahl der Würfe mit einem Würfel, bis man eine Sechs bekommt: geometrische Verteilung
+		\item Anzahl der erhaltenen Emails an einem Tag: Poissonverteilung
+		\item Anzahl der Jungen bei nacheinanderfolgenden Geburten: Binomialverteilung
+		\item Anzahl der Versuche, bis man die Führerscheinprüfung bestanden hat: geometrische Verteilung
+	\end{enumerate}
+
+\end{document}
