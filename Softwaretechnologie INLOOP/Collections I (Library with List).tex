@@ -1,0 +1,147 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{INLOOP Softwaretechnologie, Collections I (Library with List)}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	Datei \texttt{Book.java}
+	\begin{lstlisting}[style=java,tabsize=2]
+package collections1;
+
+// Durch Nutzung des Interfaces Comparable<Book> ist die 
+// compareTo()-Funktion verfuegbar
+public class Book implements Comparable<Book> {
+	private String isbn;
+	private String author;
+	private String title;
+
+	public Book(String isbn) {
+		this.isbn = isbn;
+		this.title = "";
+		this.author = "";
+	}
+
+	public Book(String isbn, String author, String title){
+		this.isbn = isbn;
+		this.author = author;
+		this.title = title;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public String getIsbn() {
+		return this.isbn;
+	}
+
+	public String getAuthor() {
+		return this.author;
+	}
+
+	// Vergleich vn Buechern = Vergleich der ISBNs
+	// fuer den Vergleich der ISBNs wird compareTo von Strings verwendet
+	public int compareTo(Book book) {
+		return this.getIsbn().compareTo(book.getIsbn());
+	}
+}
+	\end{lstlisting}
+	Datei \texttt{Library.java}
+	\begin{lstlisting}[style=java,tabsize=2]
+package collections1;
+
+// wird benoetigt fuer Collections.sort() und Collections.binarySearch()
+import java.util.*;
+
+public class Library {
+	private List<Book> stock;
+
+	public Library() {
+		this.stock = new LinkedList<Book>();
+	}
+
+	public boolean insertBook(Book newBook) {
+		stock.add(newBook);
+		Collections.sort(stock);
+		return true;
+	}
+
+	public Book searchForIsbn(String isbn) {
+		int index = Collections.binarySearch(stock, new Book(isbn));
+		// wird -1 als index zurueckgegeben, ist das Buch nicht vorhanden
+		if (index >= 0) {
+			return stock.get(index);
+		}
+		else {
+			return null;
+		}
+	}
+
+	public Collection<Book> searchForAuthor(String author) {
+		ArrayList<Book> authorList = new ArrayList<Book>();
+		// for-Schleife, funktioniert genau so wie in Python
+		// for listentry in list -> for (listentry : list)
+		// jedes Element der Liste wird einmal in listentry 
+		// abgespeichert und  innerhalb der for-Schleife
+		// kann dann auf listentry zugegriffen werden
+		for (Book b : stock) {
+			if (b.getAuthor().equals(author)) {
+				authorList.add(b);
+			}
+		}
+		return authorList;
+	}
+}
+	\end{lstlisting}
+	
+\end{document}
