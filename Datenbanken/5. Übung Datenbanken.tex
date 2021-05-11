@@ -1,0 +1,102 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{er,positioning}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{sql} {language=sql}
+\lstset{language=sql,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\def\ojoin{\setbox0=\hbox{$\bowtie$}%
+	\rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
+\def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
+\def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
+
+\title{\textbf{Datenbanken, Übung 5}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Versuch, ob man einen Primärschlüssel hinzufügen kann. Wenn AB ein Schlüssel ist, dann kommt kein Fehler, ansonsten wirft das DBMS einen Fehler zurück:
+		\begin{lstlisting}[style=sql]
+ALTER TABLE R ADD PRIMARY KEY (A,B);
+		\end{lstlisting}
+		\item Alle Tupel finden, die die funktionale Abhängigkeit verletzten. Werden keine Tupel gefunden, so gilt die funktionale Abhängigkeit
+		\begin{lstlisting}[style=sql]
+SELECT * FROM R t1, R t2 
+WHERE ((t1.D = t2.D) AND (t1.E = t2.E)) 
+AND (t1.B <> t2.B);
+		\end{lstlisting}
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	Berechnung der Hülle von $B$, $B^+$, liefert $\{A,B,C,D,E,F\}$. Die Attribute $G$ und $H$ werden nicht erreicht. Somit wäre $(BG)^+ = R$ ein Schlüssel der Relation und damit ist $ABG$ nicht minimal.
+
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Es gelten $A\to B,C$ und $C\to A,B$.
+		\item $R_1\cap R_2 = \{B\}$ und für eine verlustfreie Zerlegung müsste entweder $B\to A$ oder $B\to C$ gelten. Beides ist nicht der Fall.
+		\item Ist sie nicht. Um $A\to C$ oder $C\to A$ zu prüfen, müsste zuerst ein JOIN ausgeführt werden.
+		\item $FD = \{B\to A\}$, also z.B. solche Tupel:
+		\begin{center}
+			\begin{tabular}{c|c|c}
+				\textbf{A} & \textbf{B} & \textbf{C} \\
+				\hline
+				2 & 3 & 4 \\
+				5 & 4 & 6 \\
+				7 & 8 & 10
+			\end{tabular}
+		\end{center}
+	\end{enumerate}
+	
+	\section*{Aufgabe 4}
+	\begin{enumerate}[label=(\alph*)]
+		\item $\{AG\}$, $\{CG\}$, $\{FG\}$, $\{EG\}$
+		\item ?
+	\end{enumerate}
+	
+\end{document}
