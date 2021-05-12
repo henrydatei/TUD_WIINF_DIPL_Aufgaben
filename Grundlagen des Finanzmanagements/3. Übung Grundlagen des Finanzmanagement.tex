@@ -1,0 +1,193 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Grundlagen des Finanzmanagements, Übung 3}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 9.14: Total-Payout- \& Discounted-Free-Cash-Flow-Modell}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der Preis ist
+		\begin{align}
+			P_0 = \frac{Div}{r_E-g} = \frac{3\text{ \EUR}}{0.1 - 0.04} = 50\text{ \EUR} \notag
+		\end{align}
+		\item Der Barwert $BW$ von Gesamtdividende und Rückkäufen ist
+		\begin{align}
+			BW &= \frac{1\text{ \EUR}}{0.1 - 0.04} + \frac{2\text{ \EUR}}{0.1 - 0.04} \notag \\
+			&= 50 \text{ \EUR} \notag
+		\end{align}
+		Dieser wird jetzt auf alle Aktien aufgeteilt:
+		\begin{align}
+			P_0 = \frac{BW}{\text{ausstehende Aktien}} = \frac{50\text{ \EUR}}{1} = 50 \text{ \EUR} \notag
+		\end{align}
+		\item Wir wissen jetzt, dass die Dividende 1 \EUR\, beträgt und der Aktienkurs 50 \EUR. Damit ergibt sich
+		\begin{align}
+			P_0 &= \frac{Div}{r_E-g} \notag \\
+			g &= r_E - \frac{Div}{P_0} \notag \\
+			&= 0.1 - \frac{1\text{ \EUR}}{50\text{ \EUR}} \notag \\
+			&= 0.08 \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 9.15: Total-Payout- \& Discounted-Free-Cash-Flow-Modell}
+	Mit dem Discounted-Free-Cash-Flow-Model ergibt sich
+	\begin{align}
+		V_0 &= \sum_{t=1}^{T} \frac{FCF_t}{(1+r_{WACC})^t} + \frac{1}{(1+r_{WACC})^T}\cdot\frac{FCF_{T+1}}{r_{WACC} - g_{FCF}} \notag \\
+		&= \frac{45\text{ Mio. \EUR}}{1+0.094} + \frac{50\text{ Mio. \EUR}}{(1+0.094)^2} + \frac{1}{(1+0.094)^2}\cdot\frac{50\cdot 1.05}{0.094 - 0.05} \notag \\
+		&= 1079.86\text{ Mio. \EUR} \notag \\
+		P_0 &= \frac{V_0 + \text{liquide Mittel} - \text{Schulden}}{\text{ausstehende Aktien}} \notag \\
+		&= \frac{1079.86\text{ Mio. \EUR} + 110 \text{ Mio. \EUR} - 30 \text{ Mio. \EUR}}{50 \text{ Mio.}} \notag \\
+		&= 23.20 \text{ \EUR} \notag
+	\end{align}
+	
+	\section*{Aufgabe 5K136: Investitionsrechnung mit Steuern}
+	\begin{enumerate}[label=(\alph*)]
+		\item Für jede Phase werden wir zuerst den Rentenbarwertfaktor berechnen, diesen mit der entsprechenden Dividende multiplizieren und den Wert auf den Anfang der Periode 1 abzinsen. Für die erste Phase ergibt sich damit
+		\begin{align}
+			RBF_{nach}^{(1)} &= \frac{\left(\frac{1+0.2}{1.1}\right)^5-1}{1+0.2-1.1} \notag \\
+			&= 5.450509 \notag
+		\end{align}
+		In der ersten Periode werden 1.20 \EUR\, (1 \EUR\, in Periode 0 + 20 \% Wachstum) gezahlt, das heißt die Dividenden der ersten Phase sind $D_1 = 5.450509\cdot 1.20\text{ \EUR} = 6.54 \text{ \EUR}$ wert. In der zweiten Periode gilt $q=1+g$, deswegen vereinfacht sich hier die Barwertformel erheblich:
+		\begin{align}
+			RBF_{nach}^{(2)} &= \frac{5}{1.1} = 4.545454 \notag
+		\end{align}
+		Die Dividenden in der zweiten Phase sind $1.2^5\cdot 1.1 = 2.74 \text{ \EUR}$, das heißt die Dividenden der 2. Phase sind am Anfang dieser $4.545454\cdot 2.74\text{ \EUR} = 12.44 \text{ \EUR}$ wert. Dieser Betrag muss jetzt aber noch 5 Perioden auf den Anfang von Periode 1 abgezinst werden:
+		\begin{align}
+			D_2 = 12.44\text{ \EUR}\cdot \frac{1}{(1.1)^5} = 7.73\text{ \EUR} \notag
+		\end{align}
+		Der Rentenbarwertfaktor der dritten Periode ist
+		\begin{align}
+			RBF_{nach}^{(3)} &= \frac{\left(\frac{1+0.05}{1.1}\right)^{10}-1}{1+0.05-1.1} \notag \\
+			&= 7.439812 \notag
+		\end{align}
+		Die dritte Phase startet mit einer Dividende von $1.2^5\cdot 1.1^5\cdot 1.05 = 4.21\text{ \EUR}$. Damit sind die Dividenden der dritten Phase $7.439812\cdot 4.21\text{ \EUR} = 31.31\text{ \EUR}$ wert. Abgezinst sind das:
+		\begin{align}
+			D_3 = 31.31\text{ \EUR} \cdot\frac{1}{(1.1)^{10}} = 12.07\text{ \EUR} \notag
+		\end{align}
+		Die vierte Phase ist unendlich lang, deswegen ist der Rentenbarwertfaktor
+		\begin{align}
+			RBF_{nach}^{(4)} = \frac{1}{0.1} = 10 \notag
+		\end{align}
+		In der vierten Phase werden zu Beginn $1.2^5\cdot 1.1^5\cdot 1.05^{10} = 6.53\text{ \EUR}$ gezahlt, also sind die Dividenden hier $10\cdot 6.53\text{ \EUR} = 63.50 \text{ \EUR}$ wert. Abgezinst sind das
+		\begin{align}
+			D_4 = 63.50\text{ \EUR} \cdot\frac{1}{(1.1)^{20}} = 9.70\text{ \EUR} \notag
+		\end{align}
+		Der Preis der Aktie ist die Summe der Barwerte, also
+		\begin{align}
+			P_0 &= D_1 + D_2 + D_3 + D_4 \notag \\
+			&= 6.54 \text{ \EUR} + 7.73 \text{ \EUR} + 12.07\text{ \EUR} + 9.70\text{ \EUR} \notag \\
+			&= 36.04 \text{ \EUR} \notag
+		\end{align}
+		\item Betrachtet man nur die ersten 30 Jahre in der vierten Phase, so ergibt sich folgender Rentenbarwertfaktor
+		\begin{align}
+			RBF_{nach}^{(4)} &= \frac{1.1^{30}-1}{1.1^{31} - 1.1^{30}} \notag \\
+			&= 9.426914 \notag
+		\end{align}
+		Die Dividenden sind dann nur noch $9.426914\cdot 6.53\text{ \EUR} = 61.54 \text{ \EUR}$, abgezinst sind das 9.14 \EUR. Die Differenz zwischen 9.70 \EUR\, und 9.14 \EUR\, sind 0.56 \EUR.
+		\item Durch die Einkommensteuer sinken zum einen die Dividenden um 50 \%, aber auf der anderen Seite sinkt auch der Diskontierungssatz um 50 \%, da auch auf alternative Kapitalanlagen die Steuer gezahlt werden muss.\footnote{Diese zwei Effekte wirken sich gegenteilig auf den Barwert einer Investition aus, so dass man im Allgemeinen nicht sagen kann, ob sich eine Steuer positiv oder negativ auf einen Investitionsentscheidung auswirkt. Näheres dazu kann man in der Vorlesung \textit{Steuertheorie} bei Prof. Thum erfahren.} \\
+		Das Vorgehen bei dieser Aufgabe ist das selbe wie bei (a), deswegen hier etwas kürzer aufgeschrieben:
+		\begin{center}
+			\begin{tabular}{c|c|c|c|c}
+				\textbf{Phase} & \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} \\
+				\hline
+				$RBF_{nach}$ & 6.331092 & 5.237535 & 9.523810 & 20 \\
+				Dividende in \EUR & $1.2\cdot 0.5 = 0.6$ & $2.74\cdot 0.5=1.37$ & $4.21\cdot 0.5=2.10$ & $6.53\cdot 0.5=3.26$ \\
+				$BW$ der Phase in \EUR & 3.80 & 7.18 & 20 & 65.20 \\
+				abgezinst in \EUR & 3.80 & 5.63 & 12.28 & 24.57
+			\end{tabular}
+		\end{center}
+		In Summe ergibt sich 46.28 \EUR. 
+		\item Für eine ewige geometrisch veränderliche Rente ist der Rentenbarwertfaktor
+		\begin{align}
+			RBF_{nach} = \frac{1}{r-g} \xrightarrow{r=g} \infty \notag
+		\end{align}
+		Damit ist dann auch der Barwert unendlich. Bei einer Steuererhöhung wird $r$ geringer, damit wird $RBF_{nach}$ größer und der Barwert geht gegen unendlich.
+	\end{enumerate}
+	
+	
+	\section*{Aufgabe 1K415: Aktienbewertung}
+	\begin{enumerate}[label=(\alph*)]
+		\item Es gibt
+		\begin{itemize}
+			\item Dividend-Discount-Model
+			\begin{align}
+				P_0 = \sum_{t=1}^T \frac{Div_t}{(1+r_E)^t} + \frac{P_T}{(1+r_E)^T} \notag
+			\end{align}
+			\item Total-Payout-Model
+			\begin{align}
+				P_0 &= \frac{BW(\text{Gesamtdividenden und -rückkäufe})}{\text{ausstehende Aktien}} \notag
+			\end{align}
+			\item Discounted-Free-Cash-Flow-Model
+			\begin{align}
+				V_0 &= \sum_{t=1}^T \frac{FCF_t}{(1+r_{WACC})^t} + \frac{1}{(1+r_{WACC})^T}\cdot\frac{FCF_{T+1}}{r_{WACC} - g_{FCF}} \notag
+			\end{align}
+		\end{itemize}
+		\item Der Gewinn ist Umsatz - Kosten, also $100 \text{ Mio. \EUR} - 65\text{ Mio. \EUR} = 35 \text{ Mio. \EUR}$ und damit pro Aktie 0.7 \EUR. Damit gilt dann
+		\begin{align}
+			KGV &= \frac{\text{Kurs pro Aktie}}{\text{Gewinn pro Aktie}} \notag \\
+			\text{Kurs pro Aktie} &= KGV \cdot \text{Gewinn pro Aktie} \notag \\
+			&= 15 \cdot 0.7 \text{ \EUR} \notag \\
+			&= 10.50 \text{ \EUR} \notag
+		\end{align}
+		\item Mit dem Discounted-Free-Cash-Flow-Model ergibt sich
+		\begin{align}
+			V_0 &= \frac{35\text{ Mio. \EUR}}{1.15} + \frac{35\text{ Mio. \EUR}\cdot 1.15}{1.15^2} + \dots + \frac{35\text{ Mio. \EUR}\cdot 1.15^4}{1.15^5} + \frac{1}{1.15^5}\cdot\frac{35\text{ Mio. \EUR}\cdot 1.15^4\cdot 1.075}{0.15 - 0.075} \notag \\
+			&= 588.4058 \text{ Mio. \EUR} \notag \\
+			P_0 &= \frac{V_0 + 0 - 0}{50\text{ Mio.}} \notag \\
+			&= 11.77 \text{ \EUR} \notag
+		\end{align}
+		\item Insgesamt werden 30 \% des Gewinns reinvestiert, diese werfen 25 \% Gewinn ab. Also ist $g=0.3\cdot 0.25 = 0.075$ und damit
+		\begin{align}
+			P_0 &= \frac{1.50\text{ \EUR}\cdot 0.7}{0.15 - 0.075} = 14 \text{ \EUR} \notag
+		\end{align}
+	\end{enumerate}
+	
+\end{document}
