@@ -1,0 +1,176 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=blue,
+	filecolor=blue,
+	linkcolor=blue,
+	urlcolor=blue
+}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Grundlagen des Finanzmanagements, Tutorium 3}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 9.8: Die Anwendung des Dividend-Discount-Modells}
+	\begin{enumerate}[label=(\alph*)]
+		\item Es gilt
+		\begin{align}
+			g &= \text{Thesaurierungsquote} \cdot \text{Rendite neuer Projekte} \notag \\
+			&= 0.4 \cdot 0.15 \notag \\
+			&= 0.06 \notag
+		\end{align}
+		\item Damit gilt dann
+		\begin{align}
+			P_0 &= \frac{Div}{r_E - g} \notag \\
+			&= \frac{3\text{ \EUR}}{0.12-0.06} \notag \\
+			&= 50 \text{ \EUR} \notag
+		\end{align}
+		\item Die Wachstumsrate ist dann
+		\begin{align}
+			g &= \text{Thesaurierungsquote} \cdot \text{Rendite neuer Projekte} \notag \\
+			&= 0.2 \cdot 0.15 \notag \\
+			&= 0.03 \notag
+		\end{align}
+		und damit
+		\begin{align}
+			P_0 &= \frac{Div}{r_E - g} \notag \\
+			&= \frac{4\text{ \EUR}}{0.12-0.03} \notag \\
+			&= 44.44 \text{ \EUR} \notag
+		\end{align}
+		Die Dividende sollte also nicht erhöht werden.
+	\end{enumerate}
+	
+	\section*{Aufgabe 9.11: Die Anwendung des Dividend-Discount-Modells}
+	Es ergibt sich
+	\begin{align}
+		P_0 &= \frac{0.96\text{ \$}\cdot 1.11}{1.085} + \dots + \frac{0.96\text{ \$}\cdot 1.11^5}{1.085^5} + \frac{\sum_{t=1}^{\infty} \frac{0.96\text{ \$}\cdot 1.11^5\cdot 1.052^t}{1.085^t}}{1.085^5} \notag \\
+		&= \frac{0.96\text{ \$}\cdot 1.11}{1.085} + \dots + \frac{0.96\text{ \$}\cdot 1.11^5}{1.085^5} + \frac{0.96\text{ \$}\cdot 1.11^5\cdot\sum_{t=1}^{\infty} \frac{1.052^t}{1.085^t}}{1.085^5} \notag \\
+		&= \frac{0.96\text{ \$}\cdot 1.11}{1.085} + \dots + \frac{0.96\text{ \$}\cdot 1.11^5}{1.085^5} + \frac{0.96\text{ \$}\cdot 1.11^5\cdot\overbrace{\sum_{t=1}^{\infty} \left(\frac{1.052}{1.085}\right)^t}^{(\ast)}}{1.085^5} \notag
+	\end{align}
+	Dabei ist $(\ast)$ eine geometrische Reihe mit $q=\frac{1.052}{1.085}=0.969585$. Es gilt $\sum_{t=0}^\infty q^t = \frac{1}{1-q}$ bzw. $\sum_{t=1}^\infty q^t=\frac{1}{1-q}-1$. $(\ast)$ hat damit den Wert
+	\begin{align}
+		\sum_{t=1}^\infty \left(\frac{1.052}{1.085}\right)^t &= \frac{1}{1-0.969585}-1 \notag \\
+		&= 31.878514 \notag
+	\end{align}
+	Und damit folgt für $P_0$
+	\begin{align}
+		P_0 = 38.62 \text{ \$} \notag
+	\end{align}
+	
+	\section*{Aufgabe 9.16: Bewertung auf Grundlage vergleichbarer Unternehmen}
+	Unter der Annahme, dass der Aktienkurs nur von den Gewinnen abhängt, gilt
+	\begin{align}
+		\frac{52.66\text{ \$}}{3.20} &= \frac{P_{Coca-Cola}}{2.49} \notag \\
+		P_{Coca-Cola} &= \frac{52.66\text{ \$}}{3.20} \cdot 2.49 \notag \\
+		&= 40.98 \text{ \$} \notag
+	\end{align}
+
+	\section*{Aufgabe 9.21: Informationen, Wettbewerb und Aktienkurse}
+	\begin{enumerate}[label=(\alph*)]
+		\item Es gilt
+		\begin{align}
+			\Delta P_0 &= \frac{\Delta V_0 + \Delta\text{liquide Mittel} + \Delta\text{Schulden}}{35\text{ Mio.}} \notag \\
+			\Delta V_0 &= \frac{\Delta FCF_1}{1+r_E} + \frac{\Delta FCF_2}{(1+r_E)^2} \notag \\
+			&= \frac{-180\text{ Mio. \EUR}}{1.13} + \frac{-60\text{ Mio. \EUR}}{1.13^2} \notag \\
+			&= -206.2808\text{ Mio. \EUR} \notag \\
+			\Delta P_0 &= -5.98 \text{ \EUR} \notag
+		\end{align}
+		\item Wenn man im Hochfrequenzhandel schneller als alle anderen Marktteilnehmer seine Aktie verkaufen kann, sollte man durchaus in der Lage sein, den alten Preis zu erzielen.
+	\end{enumerate}
+
+	\section*{Aufgabe 3K211: Dividendenpolitik und Steuern}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Marktkapitalisierung ist das Produkt aus Aktienkurs und Anzahl der Aktien. Damit kann man den Aktienkurs berechnen:
+		\begin{align}
+			P_{Gewe} = \frac{100 \text{ Mio. \EUR}}{5 \text{ Mio.}} = 20 \text{ \EUR} \notag
+		\end{align}
+		\item Da die beiden Unternehmen vergleichbar sind, sind die Renditen bei beiden Unternehmen gleich. Die Rendite bei Gewe ist 20 \% (Steigerung des Aktienkurses von 20 \EUR\, auf 24 \EUR\, und keine Dividendenzahlung). Damit gilt dann für Divaldi:
+		\begin{align}
+			\text{Rendite} &= \text{Dividendenrendite} + \text{Kurssteigerung} \notag \\
+			0.2 &= \frac{4\text{ \EUR}\cdot 0.75}{P_{Divaldi}} + \frac{20\text{ \EUR} - P_{Divaldi}}{P_{Divaldi}} \notag \\
+			0.2 &= \frac{4\text{ \EUR}\cdot 0.75 + 20\text{ \EUR} - P_{Divaldi}}{P_{Divaldi}} \notag \\
+			0.2\cdot P_{Divaldi} + P_{Divaldi} &= 4\text{ \EUR}\cdot 0.75 + 20 \text{ \EUR} \notag \\
+			P_{Divaldi}(0.2 + 1) &= 4\text{ \EUR}\cdot 0.75 + 20 \text{ \EUR} \notag \\
+			P_{Divaldi} &= \frac{4\text{ \EUR}\cdot 0.75 + 20 \text{ \EUR}}{0.2 + 1} \notag \\
+			&= 19.17 \text{ \EUR} \notag
+		\end{align}
+		Die Marktkapitalisierung ist dann $19.17\text{ \EUR}\cdot 2\text{ Mio.} = 38.34\text{ Mio. \EUR}$.
+		\item Durch die Steuer auf Kursgewinne sinkt die Rendite von Gewe auf
+		\begin{align}
+			\text{Rendite} = \frac{(24\text{ \EUR} - 20\text{ \EUR})\cdot 0.75}{20\text{ \EUR}}  = 0.15 \notag
+		\end{align}
+		Damit gilt dann
+		\begin{align}
+			\text{Rendite} &= \text{Dividendenrendite} + \text{Kurssteigerung} \notag \\
+			0.15 &= \frac{4\text{ \EUR}\cdot 0.75}{P_{Divaldi}} + \frac{(20\text{ \EUR} - P_{Divaldi})\cdot 0.75}{P_{Divaldi}} \notag \\
+			0.15 &= \frac{4\text{ \EUR}\cdot 0.75 + (20\text{ \EUR} - P_{Divaldi})\cdot 0.75}{P_{Divaldi}} \notag \\
+			0.15\cdot P_{Divaldi} + 0.75\cdot P_{Divaldi} &= 4\text{ \EUR}\cdot 0.75 + 20 \text{ \EUR}\cdot 0.75 \notag \\
+			P_{Divaldi}(0.15 + 0.75) &= 4\text{ \EUR}\cdot 0.75 + 20 \text{ \EUR}\cdot 0.75 \notag \\
+			P_{Divaldi} &= \frac{4\text{ \EUR}\cdot 0.75 + 20 \text{ \EUR}\cdot 0.75}{0.15 + 0.75} \notag \\
+			&= 20 \text{ \EUR} \notag
+		\end{align}
+		\item Der Nachweis über die Irrelevanz der Dividendenpolitik für den Marktwert von Aktiengesellschaften ist in die finanzwirtschaftliche Literatur unter dem Begriff der Gewinnthese eingegangen. Die Argumentation von Modigliani/Miller basiert im Wesentlichen auf der Annahme des indifferenten Verhaltens rational handelnder Anteilseigner gegenüber heutiger Dividendenzahlungen und zukünftiger Kurswertsteigerungen infolge höherer Thesaurierungsquoten. Diese Bewertungsindifferenz basiert auf der Annahme des vollkommenen Kapitalmarktes. Einerseits können aufgrund dieser Annahmen Unternehmen ihre durch Dividendenzahlungen induzierte Finanzierungslücke durch Aufnahme zusätzlichen Kapitals ohne Beachtung etwaiger Finanzierungsrestriktionen schließen. Andererseits können die Anteilseigner zu den gleichen Bedingungen ihre Liquiditätspräferenzen befriedigen. Die Dividendenpolitik kann somit keinen Einfluss auf das Aktionärsvermögen haben. Die Gewinnthese stellt damit die Gegenthese zur Dividendenthese dar. (\url{http://www.wirtschaftslexikon24.com/d/gewinnthese/gewinnthese.htm})
+		\item Die Dividendenthese unterstellt die Gültigkeit der Gegenwartsvorliebe für Kapitalanlageentscheidungen und folgert daraus, dass die meisten Aktionäre sichere Gewinnausschüttungen gegenüber ungewissen, in späteren Jahren möglicherweise durch höhere Thesaurierungsquoten erzielbaren Kurswertsteigerungen präferieren. (\url{http://www.wirtschaftslexikon24.com/d/dividendenthese/dividendenthese.htm})
+		\item ?
+		\item Der Nennwert einer Aktie ist $\frac{\text{Eigenkapital}}{\# \text{ Aktien}} = \frac{10\text{ Mio. \EUR}}{1\text{ Mio.}} = 10\text{ \EUR}$. Da die Dividende am nächsten Tag kommt, reduziert sich der Preis einer Aktie auf 9.75 \EUR. Da der Aktionär G. Irig 7.500 \EUR\, Cashflow haben will, muss er Aktien verkaufen. Sei dazu $x$ die Anzahl der Aktien, die er behalten will und auf die er eine Dividende von 0.25 \EUR\, bekommt:
+		\begin{align}
+			7500\text{ \EUR} &= x\cdot 0.25\text{ \EUR} + (10000-x)\cdot 9.75\text{ \EUR} \notag \\
+			7500\text{ \EUR} - 10000\cdot 9.75\text{ \EUR} &= (0.25\text{ \EUR} - 9.75\text{ \EUR})\cdot x \notag \\
+			x &= \frac{7500\text{ \EUR} - 10000\cdot 9.75\text{ \EUR}}{0.25\text{ \EUR} - 9.75\text{ \EUR}} \notag \\
+			&= 9473.68 \notag
+		\end{align}
+		G. Irig darf also höchstens 9473 Aktien behalten, die restlichen 527 verkauft er. Sein Cashflow ist damit $9473\cdot 0.25\text{ \EUR} + 527\cdot 9.75\text{ \EUR} = 7506.50 \text{ \EUR}$.
+	\end{enumerate}
+	
+	
+\end{document}
