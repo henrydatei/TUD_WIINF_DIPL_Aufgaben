@@ -1,0 +1,108 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage[unicode]{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=blue,
+	filecolor=blue,
+	linkcolor=blue,
+	urlcolor=blue
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Öffentliches Recht, Übung 5}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: Definition Grundrechte}
+	\begin{enumerate}[label=(\alph*)]
+		\item Grundrechte sind Rechte des Individuums und verpflichten den Staat. Ihre Besonderheit gegenüber anderen subjektiven Rechten liegt in ihrem Verfassungsrang. Sie verlangen dem Staat Rechtfertigung ab.
+		\item Oft wird unterschieden zwischen Menschenrechten, die jedem Menschen zustehen, und Bürgerrechten, die nur Bürgern der Bundesrepublik in vollem Umfang zustehen. Zu den Menschenrechten gehören zum Beispiel das Recht auf freie Meinungsäußerung, die Glaubens- und Gewissensfreiheit oder das Prinzip der Gleichheit vor dem Gesetz. Oft beginnen die Menschenrechtsartikel mit den Worten \textit{Jeder hat das Recht...}. Diese Grundrechte haben alle Menschen von Geburt an. Als Bürgerrechte bezeichnet man hingegen die Grundrechte, die nur deutschen Staatsbürgern zugebilligt werden. Hierzu zählen zum Beispiel das Wahlrecht, die Vereinigungsfreiheit und das Recht auf freie Berufswahl. Die entsprechenden Grundgesetzartikel beginnen häufig mit den Worten \textit{Alle Deutschen haben das Recht...}.
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://www.bpb.de/politik/grundfragen/24-deutschland/40426/grundrechte}
+	\end{itemize}
+
+	\section*{Aufgabe 2: Grundrechtsfunktionen}
+	\begin{enumerate}[label=(\alph*)]
+		\item Statuslehre nach Georg Jellinek
+		\begin{itemize}
+			\item Status negativus (Abwehrrechte): Abwehr von Eingriffen in Freiheit und Eigentum = Zustand, in dem der Einzelne seine Freiheit vom Staat hat und dieser Status ausgeformt und abgesichert wird durch die Grundrechte (Freiheit vom Staat)
+			\item Status positivus (Schutzrechte): = Zustand, in dem der Einzelne seine Freiheit nicht ohne den Staat haben kann, sondern er für die Schaffung und Erhaltung seiner freien Existenz auf staatliche Vorkehrungen angewiesen ist (Freiheit durch den Staat)
+			\item Status activus (staatsbürgerliche Rechte): = Zustand, in dem der Einzelne seine Freiheit in und für den Staat betätigt (Freiheit im und für den Staat)
+		\end{itemize}
+		\item Grundrechtsfunktionen
+		\begin{itemize}
+			\item Subjektiv-rechtliche Dimension (Unmittelbarer Rechtsanspruch des Grundrechtsträgers gegen den Staat)
+			\begin{itemize}
+				\item Abwehrrechte (gegen staatliche Eingriffe)
+				\item Leistungs- und Teilhaberechte
+				\item Gleichbehandlungsrechte
+			\end{itemize}
+			Als subjektiv-öffentliche Rechte enthalten die Grundrechte eine konkrete Begünstigung des Einzelnen. Die subjektiv- rechtliche Funktion der Grundrechte zeigt sich oft schon am Wortlaut eines Grundrechts: Manche Grundrechte werden ausdrücklich als \textit{Recht auf} (Art. 2 I und II 1 GG) oder als \textit{Recht} (z.B. Art. 5 I 1, und Art. 7 IV GG) gewährleistet. Andere Grundrechte verwenden den Begriff der \textit{Freiheit} (z.B. Art. 2 II 2 GG), der ebenfalls ein rechtliches Dürfen zum Ausdruck bringen soll.
+			\item Objektiv-rechtliche Dimension (Objektive Wertentscheidung der Grundrechte)
+			\begin{itemize}
+				\item Mittelbare Drittwirkung der Grundrechte
+				\item Schutzpflichten
+				\item Einrichtungsgarantien
+			\end{itemize}
+			BVerfG: die Grundrechte enthalte nicht allein Abwehrrechte des Einzelnen gegen die öffentliche Gewalt, sondern stellen zugleich objektiv-rechtliche Wertentscheidungen der Verfassung dar, die für alle Bereiche der Rechtsordnung gelten und Richtlinien für Gesetzgebung, Verwaltung und Rechtsprechung geben. In ihrer objektiv-rechtlichen Funktion enthalten die Grundrechte damit objektive Gewährleistungen, die den Staat allgemein, d.h. unabhängig vom Einzelnen binden und i.d.R. durch den Gesetzgeber zu konkretisieren sind
+		\end{itemize}
+		\item Unmittelbare Bindungswirkung der Grundrechte bedeutet, dass die im Grundgesetz enthaltenen Grundrechte nicht lediglich eine Absichtserklärung sind, sondern dass sie unmittelbar gelten. Daher wird oft auch nur kurz von Grundrechtsbindung gesprochen. Damit ist der Ausdruck also der Name bzw. die Substantivierung dessen, was Art. 1 Abs. 3 GG in verbaler grammatischer Form bestimmt: \textit{Die nachfolgenden Grundrechte binden Gesetzgebung, vollziehende Gewalt und Rechtsprechung als unmittelbar geltendes Recht.}
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://de.wikipedia.org/wiki/Unmittelbare_Bindungswirkung}
+	\end{itemize}
+
+	\section*{Aufgabe 3: Adressaten}
+	\begin{enumerate}[label=(\alph*)]
+		\item Grundrechtsberechtigte
+		\begin{itemize}
+			\item Natürliche Personen
+			\item Juristische Personen/Organisationen
+		\end{itemize}
+		\item Grundrechtsfähigkeit: beginnt grundsätzlich mit der Geburt und endet mit dem Tod $\to$ Fristenlösungs\-urteil (BVerfG): Auch der nasciturus kann grundrechtsfähig sein, im Hinblick auf das Recht auf Leben und körperliche Unversehrtheit (Art. 2 II 1 GG), $\to$ Mephisto-Beschluss (BVerfG): die Menschenwürde und das allgemeine Persönlichkeitsrecht erstrecken sich auch über den Tod hinaus
+		\item Grundrechte gelten auch für juristische Personen, wenn sie ihrem Wesen nach auf diese anwendbar sind (Art. 19 III GG). Der Begriff der jur. Person ist weiter zu verstehen als im Zivilrecht. Art. 19 III GG erstreckt sich nicht nur auf vollrechtsfähige Personenvereinigungen, sondern auch auf teilrechtsfähige Personengemeinschaften (z.B. OHG, Verein).
+		\item Privatpersonen nicht, Staatsgewalt schon: Unmittelbare Grundrechtsbindung von Legislative und Judikative im wesentlichen unproblematisch, Exekutive = Umfassend zu verstehen und erfasst über die Verwaltung hinaus auch die Regierung, die Bundeswehr sowie Personen die von der Verwaltung zur Erfüllung ihrer Aufgaben eingesetzt werden. Erfasst werden auch Träger mittelbarer Staatsgewalt (z.B. Gemeinden, Kreise, Hochschulen, öffentlich-rechtliche Rundfunkanstalten. Wird die vollziehende Gewalt öffentlich-rechtlich tätig, so ist sie unmittelbar an die Grundrechte gebunden (Art. 1 III GG). Grundrechtsbindung ebenfalls, bei Verwaltungstätigkeit in privatrechtlicher Form. (Keine Flucht ins Privatrecht!)
+	\end{enumerate}
+
+	\section*{Aufgabe 4: Schutzgüter}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der Begriff Rechtsgut (auch Schutzgut) ist ein Überbegriff für die geschützten Interessen einzelner Menschen (= Individualrechtsgüter) oder der Allgemeinheit (= Universalrechtsgüter). Rechtsgüter des Einzelnen sind beispielsweise: Leben, Freiheit, körperliche Unversehrtheit (Gesundheit), Ehre, Eigentum und Besitz, Hausrecht.
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://www.repetico.de/card-68849864}
+	\end{itemize}
+	
+\end{document}
