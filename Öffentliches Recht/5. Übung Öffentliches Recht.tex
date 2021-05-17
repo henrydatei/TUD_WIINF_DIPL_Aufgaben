@@ -1,0 +1,144 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage[unicode]{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=blue,
+	filecolor=blue,
+	linkcolor=blue,
+	urlcolor=blue
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Öffentliches Recht, Übung 5}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: Staatsgewalten (Grundlagen)}
+	\begin{enumerate}[label=(\alph*)]
+		\item Diese drei Gewalten sollen sich gegenseitig kontrollieren, damit keiner seine Macht missbraucht und zum Beispiel Gesetze macht, die für alle Bürger schlecht sind.
+		\item \underline{Exekutive:} Das Wort Exekutive kommt aus dem Lateinischen. \textit{Executio} bedeutet dort \textit{ausführen}. Die Exekutive in einem Staat ist also die ausführende Gewalt. Sie muss dafür sorgen, dass die Gesetze, die die Legislative beschlossen hat, auch im Alltag der Menschen umgesetzt werden. Zur Exekutive gehören die ganzen Behörden, wie etwa die Polizei oder die Finanzämter. Auch die Mitglieder der Bundesregierung und der Landesregierungen sind Teil der Exekutive in Deutschland.
+		
+		\underline{Legislative:} Die Legislative ist also der Teil eines Staates, der Gesetze beschließen darf. Meistens sind das die Parlamente. In Deutschland gehören zum Beispiel der Bundestag, der Bundesrat und die Parlamente der Bundesländer zur Legislative.
+		
+		\underline{Judikative:} Die Judikative ist nämlich die rechtsprechende Gewalt eines Landes - also die Gerichte. Dazu gehören Bundesgerichte wie das Bundesverfassungsgericht, aber auch Gerichte auf lokaler Ebene, wie zum Beispiel ein Amtsgericht. Die Gerichte haben verschiedene Aufgaben: Manche entschieden, wie Bürger bestraft werden, die gegen ein Gesetz verstoßen haben. An anderen Gerichten wird zum Beispiel überprüft, ob ein Gesetz der Verfassung widerspricht. Richter dürfen sich von niemandem beeinflussen lassen - auch nicht von der Regierung oder von Mitgliedern der Legislative.
+		\item \underline{horizontal:} Klassische Aufteilung der Staatsgewalt auf drei Teilgewalten: Legislative, Exekutive und Judikative
+		
+		\underline{vertikale:} Aufteilung der Staatsgewalt auf den Gesamtstaat Bundesrepublik Deutschland und die einzelnen Bundesländer.
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://kinder.wdr.de/tv/neuneinhalb/mehrwissen/lexikon/g/lexikon-gewaltenteilung-staatsgewalten-100.html}
+		\item \url{https://staatsrecht.honikel.de/de/gewaltenteilung.htm}
+	\end{itemize}
+
+	\section*{Aufgabe 2: Gesetzgebung}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die ausschließliche Gesetzgebung in Deutschland sieht vor, dass allein der Bund berechtigt ist, einige Bereiche durch Rechtsnormen zu regeln (Gesetzgebung). Einzig wenn die Bundesländer in einem Bundesgesetz dazu ermächtigt werden, dürfen diese nach den Vorschriften dieses Bundesgesetzes Teilbereiche selbst regeln. Die gesetzliche Grundlage bilden die Artikel 71 und 73 des Grundgesetzes. – Daneben gibt es eine ausschließliche Gesetzgebungszuständigkeit der Länder. Beispiele: Staatsangehörigkeitsregelungen, Waffen- und Sprengstoffrecht, Kernenergierecht, Notariatswesen, Urheberrecht
+		\item Eine konkurrierende Gesetzgebung bedeutet in föderalen Staaten, dass sowohl der Staat als auch dessen Gliedstaaten über eine Gesetzgebungskompetenz auf demselben Rechtsgebiet verfügen und zu klären ist, wer sie wahrnehmen darf. Die ausschließliche Gesetzgebung in Deutschland sieht vor, dass allein der Bund berechtigt ist, einige Bereiche durch Rechtsnormen zu regeln (Gesetzgebung). Einzig wenn die Bundesländer in einem Bundesgesetz dazu ermächtigt werden, dürfen diese nach den Vorschriften dieses Bundesgesetzes Teilbereiche selbst regeln.
+		\item bürgerliches Recht, Personenstandswesen, Aufenthalts- und Niederlassungsrecht von Ausländern, Steuerrecht, Strafrecht
+		\item siehe \url{https://de.wikipedia.org/wiki/Konkurrierende_Gesetzgebung}
+		\item Einleitungsverfahren (Gesetzesinitiative), Hauptverfahren, Abschlussverfahren
+		\item Bundesrat, Bundesregierung und Bundestag
+		\item Der verfassungspolitische Rang und die Bedeutung des Bundesrates ergeben sich hauptsächlich aus seinen Mitentscheidungsrechten bei Zustimmungsgesetzen. Diese Gesetze können nur zustande kommen, wenn Bundesrat und Bundestag sich einig sind. Bei einem endgültigen Nein des Bundesrates sind Zustimmungsgesetze gescheitert. Das Grundgesetz geht vom Grundfall des nicht zustimmungsbedürftigen Gesetzes aus. Gesetze, die der ausdrücklichen Zustimmung des Bundesrates bedürfen, sind nämlich explizit im Grundgesetz aufgeführt. Alle Gesetze, die nicht einer der dort genannten Materien zugeordnet werden können, sind demnach so genannte Einspruchsgesetze. Der Einfluss des Bundesrates ist geringer als bei zustimmungsbedürftigen Gesetzen. Er kann seine abweichende Meinung dadurch zum Ausdruck bringen, dass er Einspruch gegen das Gesetz einlegt. Der Einspruch des Bundesrates kann durch den Deutschen Bundestag überstimmt werden.
+		\item Ein vom Bundestage beschlossenes Gesetz kommt zustande, wenn der Bundesrat zustimmt, den Antrag gemäß Artikel 77 Abs. 2 nicht stellt, innerhalb der Frist des Artikels 77 Abs. 3 keinen Einspruch einlegt oder ihn zurücknimmt oder wenn der Einspruch vom Bundestage überstimmt wird. Funktionen des Bundespräsidenten:
+		\begin{itemize}
+			\item Die nach den Vorschriften dieses Grundgesetzes zustande gekommenen Gesetze werden vom Bundespräsidenten nach Gegenzeichnung ausgefertigt und im Bundesgesetzblatte verkündet. Rechtsverordnungen werden von der Stelle, die sie erläßt, ausgefertigt und vorbehaltlich anderweitiger gesetzlicher Regelung im Bundesgesetzblatte verkündet.
+			\item Jedes Gesetz und jede Rechtsverordnung soll den Tag des Inkrafttretens bestimmen. Fehlt eine solche Bestimmung, so treten sie mit dem vierzehnten Tage nach Ablauf des Tages in Kraft, an dem das Bundesgesetzblatt ausgegeben worden ist.
+		\end{itemize}
+		\item \underline{Gesetzesinitiativen:} Gesetzesvorlagen werden beim Deutschen Bundestag durch die Bundesregierung, den Bundesrat oder aus der Mitte des Bundestages eingebracht. Im letzten Fall muss der Antrag von fünf Prozent der Abgeordneten oder von einer Fraktion unterstützt werden. In den beiden anderen Fällen muss das jeweilige Organ - Bundeskabinett oder Bundesrat - einen Beschluss über die Einbringung fassen. Im Bundesrat werden Einbringungsbeschlüsse mit absoluter Mehrheit auf Antrag eines oder mehrerer Länder gefasst.
+		
+		\underline{Stellungnahme:} Gesetzesinitiativen des Bundesrates werden über die Bundesregierung an den Bundestag weitergeleitet. Die Bundesregierung kann innerhalb von sechs Wochen - in besonderen Fällen innerhalb von drei oder neun Wochen - eine Stellungnahme dazu abgeben. Bei Gesetzentwürfen der Bundesregierung hat der Bundesrat in einem so genannten ersten Durchgang das Recht, sich noch vor dem Deutschen Bundestag zu dem Entwurf zu äußern. Er kann innerhalb von sechs Wochen - in besonderen Fällen innerhalb von drei oder neun Wochen - eine Stellungnahme zum Regierungsentwurf abgeben. Die Bundesregierung legt ihre Ansicht dazu in einer Gegenäußerung dar. Der Gesetzentwurf wird dann gemeinsam mit der Stellungnahme und der Gegenäußerung beim Bundestag eingebracht.
+		
+		\underline{Gesetzesbeschluss des Deutschen Bundestages:} Der Deutsche Bundestag behandelt Gesetzentwürfe in der Regel in drei Lesungen. Am Ende der ersten Lesung steht die Überweisung des Entwurfs an einen oder mehrere Ausschüsse. Im Anschluss an die Beratungen in den Ausschüssen finden die zweite und dritte Lesung statt. Während in der zweiten Lesung hauptsächlich Änderungsanträge vorgebracht werden, ist die dritte Lesung regelmäßig der Schlussabstimmung vorbehalten.
+		
+		\underline{Zweiter Durchgang im Bundesrat:} Alle im Bundestag verabschiedeten Gesetze werden dem Bundesrat zugeleitet. In diesem so genannten zweiten Durchgang sind die Handlungsmöglichkeiten des Bundesrates davon abhängig, ob der Gesetzesbeschluss seiner Zustimmung bedarf oder nicht. Handelt es sich um ein Zustimmungsgesetz, hat der Bundesrat drei Handlungsmöglichkeiten: er kann dem Gesetz zustimmen, seine Zustimmung verweigern oder den Vermittlungsausschuss anrufen. Im Fall eines nicht zustimmungsbedürftigen Einspruchsgesetzes muss der Bundesrat zunächst darüber entscheiden, ob er den Vermittlungsausschuss anruft oder nicht. Denn bevor der Bundesrat Einspruch gegen ein Gesetz einlegen kann, muss ein Vermittlungsverfahren abgeschlossen worden sein.
+		
+		\underline{Vermittlungsverfahren:} Während der Bundesrat den Vermittlungsausschuss zu allen vom Bundestag beschlossenen Gesetzen anrufen kann, können Bundestag und Bundesregierung den Ausschuss nur dann einschalten, wenn der Bundesrat einem zustimmungsbedürftigen Gesetz zuvor seine Zustimmung verweigert hat. In den Sitzungen des Vermittlungsausschusses wird versucht, eine Einigung zwischen den divergierenden Auffassungen von Bundestag und Bundesrat zu finden. Der Ausschuss kann Vorschläge zur Änderung des Gesetzesbeschlusses unterbreiten oder empfehlen, den Gesetzesbeschluss ganz aufzuheben. Wenn in der zweiten wegen der gleichen Sache einberufenen Sitzung kein Einigungsvorschlag beschlossen wird, kann jedes Mitglied den Abschluss des Verfahrens beantragen. Wird in der darauf folgenden Sitzung auch keine Einigung erzielt, ist das Verfahren - ohne Einigung - abgeschlossen. Ein weiteres Ergebnis des Vermittlungsverfahrens kann die Bestätigung des Gesetzesbeschlusses des Bundestages sein.
+		
+		\underline{Erneute Beratung:} Der Vermittlungsausschuss kann nur Vorschläge zur Beilegung von Konflikten zwischen Bundesrat und Bundestag machen, nicht jedoch selbst Gesetzesänderungen beschließen. Die Einigungsvorschläge des Vermittlungsausschusses bedürfen der Bestätigung durch den Deutschen Bundestag und den Bundesrat. Schlägt der Vermittlungsausschuss vor, das Gesetz zu ändern, muss der Bundestag über die Änderungsvorschläge abstimmen. Der Bundesrat beschließt dann über das dergestalt geänderte Gesetz. Bestätigt der Ausschuss den Gesetzesbeschluss des Bundestages oder wird das Verfahren ohne Einigung abgeschlossen, muss nur noch der Bundesrat sich mit der - dann unveränderten - Vorlage befassen. In beiden Fällen hat der Bundesrat über die Zustimmung beziehungs\-weise Einspruchseinlegung zu entscheiden.
+		
+		\underline{Einspruch des Bundesrates:} Einspruch kann der Bundesrat nur binnen zwei Wochen einlegen. Die Frist beginnt mit dem Eingang des neuen Beschlusses des Bundestages oder der Mitteilung des Vorsitzenden des Vermittlungsausschusses über den Ausgang des Verfahrens. Bei Zustimmungsgesetzen gibt es keine feste Fristbestimmung. Hier muss der Bundesrat lediglich in angemessener Zeit Beschluss fassen. Der Einspruch des Bundesrates kann vom Deutschen Bundestag überstimmt werden.
+		
+		\underline{Gegenzeichnung, Ausfertigung und Verkündung:} Hat der Bundesrat einem Gesetz zugestimmt oder darauf verzichtet, Einspruch einzulegen oder wurde der Einspruch des Bundesrates vom Bundestag überstimmt, ist das parlamentarische Gesetzgebungsverfahren erfolgreich abgeschlossen. Das Gesetz muss nunmehr noch vom zuständigen Minister oder der zuständigen Ministerin und der Bundeskanzlerin gegengezeichnet, vom Bundespräsidenten ausgefertigt und im Bundesgesetzblatt verkündet werden.
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://de.wikipedia.org/wiki/Ausschlie%C3%9Fliche_Gesetzgebung}
+		\item \url{https://de.wikipedia.org/wiki/Konkurrierende_Gesetzgebung}
+		\item \url{https://iurratio.de/journal/die-entstehung-von-gesetzen}
+		\item \url{https://www.bundestag.de/services/glossar/glossar/I/initiativrecht-246984}
+		\item \url{https://www.bundesrat.de/DE/aufgaben/gesetzgebung/zust-einspr/zust-einspr-node.html#doc4353672bodyText2}
+		\item \url{https://www.gesetze-im-internet.de/gg/art_78.html}
+		\item \url{https://www.gesetze-im-internet.de/gg/art_82.html}
+		\item \url{https://www.bundesrat.de/DE/aufgaben/gesetzgebung/verfahren/verfahren.html}
+	\end{itemize}
+
+	\section*{Aufgabe 3: Verwaltung}
+	\begin{enumerate}[label=(\alph*)]
+		\item\underline{Landeseigenverwaltung (Art. 83 GG):} Die Länder führen die Bundesgesetze als eigene Angelegenheit aus, soweit dieses Grundgesetz nichts anderes bestimmt oder zuläßt.
+		
+		\underline{Bundeseigenverwaltung (Art. 86 GG):} Führt der Bund die Gesetze durch bundeseigene Verwaltung oder durch bundesunmittelbare Körperschaften oder Anstalten des öffentlichen Rechtes aus, so erläßt die Bundesregierung, soweit nicht das Gesetz Besonderes vorschreibt, die allgemeinen Verwaltungsvor\-schriften. Sie regelt, soweit das Gesetz nichts anderes bestimmt, die Einrichtung der Behörden.
+		
+		\underline{Bundesauftragsverwaltung (Art. 85 GG):}
+		\begin{itemize}
+			\item Führen die Länder die Bundesgesetze im Auftrage des Bundes aus, so bleibt die Einrichtung der Behörden Angelegenheit der Länder, soweit nicht Bundesgesetze mit Zustimmung des Bundesrates etwas anderes bestimmen. Durch Bundesgesetz dürfen Gemeinden und Gemeindeverbänden Aufgaben nicht übertragen werden.
+			\item Die Bundesregierung kann mit Zustimmung des Bundesrates allgemeine Verwaltungsvorschriften erlassen. Sie kann die einheitliche Ausbildung der Beamten und Angestellten regeln. Die Leiter der Mittelbehörden sind mit ihrem Einvernehmen zu bestellen.
+			\item Die Landesbehörden unterstehen den Weisungen der zuständigen obersten Bundesbehörden. Die Weisungen sind, außer wenn die Bundesregierung es für dringlich erachtet, an die obersten Landesbehörden zu richten. Der Vollzug der Weisung ist durch die obersten Landesbehörden sicherzustellen.
+			\item Die Bundesaufsicht erstreckt sich auf Gesetzmäßigkeit und Zweckmäßigkeit der Ausführung. Die Bundesregierung kann zu diesem Zwecke Bericht und Vorlage der Akten verlangen und Beauftragte zu allen Behörden entsenden.
+		\end{itemize}
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://www.gesetze-im-internet.de/gg/art_83.html}
+		\item \url{https://www.gesetze-im-internet.de/gg/art_86.html}
+		\item \url{https://www.gesetze-im-internet.de/gg/art_85.html}
+	\end{itemize}
+
+	\section*{Aufgabe 4: Rechtsprechung}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der Justizgewährungsanspruch ist das subjektive öffentliche Recht des Einzelnen gegen den Staat auf Entscheidung seines Privatrechtsstreits. Das Grundrecht auf effektiven Rechtsschutz (bisweilen auch Rechtsweggarantie oder Rechtsschutzgarantie genannt) verbürgt das Recht auf Anrufung staatlicher Gerichte.
+		\item \underline{Verfassungsgerichtsbarkeit:} Die Verfassungsgerichtsbarkeit prüft die Vereinbarkeit von Hoheitsakten, insbesondere Gesetzen, mit der jeweiligen Verfassung. Sie hat dabei die Möglichkeit, solche Akte als verfassungswidrig zu erklären.
+		
+		\underline{Fachgerichtsbarkeit:} Die Unterteilung in die verschiedenen Instanzen bei Gerichten. Für die Gebiete der ordentlichen, der Verwaltungs-, der Finanz-, der Arbeits- und der Sozialgerichtsbarkeit errichtet der Bund als oberste Gerichtshöfe den Bundesgerichtshof, das Bundesverwaltungsgericht, den Bundesfinanzhof, das Bundesarbeitsgericht und das Bundessozialgericht. Über die Berufung der Richter dieser Gerichte entscheidet der für das jeweilige Sachgebiet zuständige Bundesminister gemeinsam mit einem Richterwahlausschuß, der aus den für das jeweilige Sachgebiet zuständigen Ministern der Länder und einer gleichen Anzahl von Mitgliedern besteht, die vom Bundestage gewählt werden. Zur Wahrung der Einheitlichkeit der Rechtsprechung ist ein Gemeinsamer Senat der in Absatz 1 genannten Gerichte zu bilden. Das Nähere regelt ein Bundesgesetz.
+		\item Die Richter sind unabhängig und nur dem Gesetze unterworfen. Die hauptamtlich und planmäßig endgültig angestellten Richter können wider ihren Willen nur kraft richterlicher Entscheidung und nur aus Gründen und unter den Formen, welche die Gesetze bestimmen, vor Ablauf ihrer Amtszeit entlassen oder dauernd oder zeitweise ihres Amtes enthoben oder an eine andere Stelle oder in den Ruhestand versetzt werden. Die Gesetzgebung kann Altersgrenzen festsetzen, bei deren Erreichung auf Lebenszeit angestellte Richter in den Ruhestand treten. Bei Veränderung der Einrichtung der Gerichte oder ihrer Bezirke können Richter an ein anderes Gericht versetzt oder aus dem Amte entfernt werden, jedoch nur unter Belassung des vollen Gehaltes.
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://www.rechteasy.at/wiki/effektiver-rechtsschutz/}
+		\item \url{https://de.wikipedia.org/wiki/Verfassungsgerichtsbarkeit}
+		\item \url{https://de.wikipedia.org/wiki/Gerichtsorganisation_in_Deutschland}
+		\item \url{https://www.gesetze-im-internet.de/gg/art_95.html}
+		\item \url{https://www.gesetze-im-internet.de/gg/art_97.html}
+	\end{itemize}
+	
+\end{document}
