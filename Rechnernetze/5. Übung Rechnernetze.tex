@@ -1,0 +1,97 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Rechnernetze, Übung 5}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item \textit{Token} ist als Bitfolge 1010100 1101111 1101011 1100101 1101110. Da keine 5 hintereinander folgenden Einsen auftreten muss kein, Bitstuffing durchgeführt werden, das heißt es wird vorne und hinten nur noch die Rahmenbegrenzung hinzugefügt werden.
+		\item Übertragungsfehler können die Buchstaben verändern.
+		\item Prüfsummen
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Interpretationen sind: 001111 = B, 101111 = C, 000111 = B, 100001 = A oder B, 101010 = A
+		\item $d=3$
+		\item Erkennen $d-1=2$, Korrigieren $\frac{d-1}{2}=1$
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Bei einem ungeraden Paritätsbit erwarten wir eine ungerade Anzahl an Einsen in der Bitfolge. Bei 101010 sind es 6 Einsen, es gab also einen Übertragungsfehler. 101010 enthält 5 Einsen, es ist wahrscheinlich fehlerfrei (wenn es zwei Bitfehler gibt, fällt der Fehler nicht auf).
+		\item Im ersten Beispiel ist die zweite Zeile falsch, sowie die zweite Spalte, die 1 in der zweiten Zeile und zweiten Spalte ist also falsch. \\
+		Im zweiten Beispiel ist die zweite und dritte Zeile falsch, die Spalten sind korrekt. Der Fehler ist also in einer der 4 Spalten, in den Zeilen 2 und 3. \\
+		Es kann natürlich sein, dass noch mehr Fehler drinnen sind, diese können ur nicht erkannt werden. Es ist daher sinnvoll, den ganzen Block bei einem Fehler erneut zu senden.
+	\end{enumerate}
+
+	\section*{Aufgabe 4}
+	\begin{enumerate}[label=(\alph*)]
+		\item Das Generatorpolyom hat Grad $r=5$, seine Bitrepräsentation ist 110101. Die Sicherungssequenz ist damit der Rest der folgenden Polynomdivision: 1010001101$\vert$00000 $\div$ 110101, wobei an die Nachricht noch 5 Nullen angehängt wurden. Der Rest ist 1110, dieser wird auf 5 Bits aufgefüllt: 01110. Insgesamt wird dann folgende Bitfolge übertragen: 1010001101$\vert$01110.\footnote{Eine sehr schöne Seite, die diese Aufgabe vollautomatisch berechnet ist \url{https://www.ghsi.de/pages/subpages/Online\%20CRC\%20Calculation/index.php?Polynom=110101\&Message=28D}. Hier isr das Polynom schon eingetragen und die Nachricht in Hexadezimalschreibweise: $1010001101_2 = 28D_{16}$}
+		\item Der Rest der Polynomdivision 1010001101$\vert$01110 $\div$ 110101 ist 0, also wurde alles richtig übertragen.
+		\item Wenn als Ergebnis der obigen Polynomdivision nicht 0 rauskommt, gab es einen Fehler.
+	\end{enumerate}
+
+	\section*{Aufgabe 5}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der Sender sendet etwas und wartet dann, bis eine Bestätigung ankommt. Erst dann sendet er das nächste Datenpaket.
+		\item 50\%-Effizienz bedeutet, dass man nur in 50\% der Zeit senden kann und die anderen 50\% der zeit warten muss. Da das Signal 20 ms braucht, bis es beim Empfänger ist, kann der Sender nur 20 ms senden und nochmals 20 ms warten, die Gesamtzeit sind also 40 ms. Es gilt:
+		\begin{align}
+			t &= \frac{F}{b} \notag \\
+			F &= b\cdot t \notag \\
+			&= 40\frac{\text{kBit}}{s}\cdot 40\text{ ms} \notag \\
+			&= 1600\text{ Bit} \notag
+		\end{align}
+	\end{enumerate}
+	
+\end{document}
