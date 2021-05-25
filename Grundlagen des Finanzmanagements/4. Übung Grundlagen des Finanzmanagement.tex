@@ -1,0 +1,241 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\title{\textbf{Grundlagen des Finanzmanagements, Übung 4}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 10.2: Historische Erträge von Aktien und Anleihen}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der Gewinn aus diesem Geschäft ist 6 \EUR\, (5 \EUR\, Kursgewinn + 1 \EUR\, Dividende), also ist die Rendite
+		\begin{align}
+			r = \frac{6\text{ \EUR}}{50\text{ \EUR}} = 12\text{ \%} \notag
+		\end{align}
+		\item Die Dividendenrendite ist $\frac{1\text{ \EUR}}{50\text{ \EUR}} = 2\text{ \%}$; die Kurssteigerungsrate ist $\frac{5\text{ \EUR}}{50\text{ \EUR}}=10\text{ \%}$.
+	\end{enumerate}
+
+	\section*{Aufgabe 10.7 + 10.8: Gemeinsames vs. Unabhängiges Risiko}
+	Das Risiko der Kredite der Bank A ist unabhängig, das der Bank ist abhängig. Wie wir mit der Berechnung der Varianz sehen werden, trägt Bank A das geringere Risiko.
+	
+	Bei Bank A wird der Zufallsversuch \textit{Kredit zurückzahlen} 100 mal wiederholt. Da der Versuch selber ein Laplace-Experiment ist, ist die Zufallsvariable $X = $ \textit{zurückgezahlte Kredite} binomialverteilt mit $p=0.95$ und $n=100$. Der Erwartungswert ist $np=95$ Kredite á 1 Million Euro werden im Schnitt zurückgezahlt. Die Varianz ist $np(1-p)=4.75$.
+	
+	Bei Bank B ist der Erwartungswert $\E=0.95\cdot 100\text{ Mio. \EUR} = 95\text{ Mio. \EUR}$. Die Varianz ist aber hier:
+	\begin{align}
+		\Var = 0.95(100\text{ Mio. \EUR} - 95\text{ Mio. \EUR})^2 + 0.05(0-95\text{ Mio. \EUR})^2 = 475 \notag
+	\end{align}
+	
+	\section*{Aufgabe 5K92: CAPM}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der Erwartungswert $\E(P_{VZ})$ des Preises der Vorzugsaktie ist
+		\begin{align}
+			\E(P_{VZ}) = 0.2\cdot 80 + 0.5\cdot 110 + 0.3\cdot 140 = 113 \notag
+		\end{align}
+		Die erwartete Rendite ist also 13 \%. Die Varianz des Preises ist
+		\begin{align}
+			\Var(P_{VZ}) = 0.2(80-113)^2 + 0.5(110-113)^2 + 0.3(140-113)^2 = 441 \notag
+		\end{align}
+		Damit ist $\SD(P_{VZ})=\sqrt{\Var(P_{VZ})}=21$ und damit ist die Standardabweichung der Rendite 21 \%. Die Kovarianz zwischen Preis der Vorzugsaktie und des Marktportfolios ist
+		\begin{align}
+			\Cov(P_{VZ},P_M) = 0.2(80-113)(90-112) + 0.5(110-113)(110-112) + 0.3(140-113)(130-112) = 294 \notag
+		\end{align}
+		Damit ist die Kovarianz der Renditen 0.0294.
+		\item Die Gleichgewichtsrendite ist
+		\begin{align}
+			r_{GG} &= r_f + \beta(r_M-r_f) \notag \\
+			\beta &= \frac{\Cov(r_i,r_m)}{\Var(r_M)} \notag
+		\end{align}
+		Damit ergibt sich für die beiden Aktien:
+		\begin{itemize}
+			\item Stammaktie: $\beta = \frac{0.0382}{0.14^2}=1.9490 \Rightarrow r_{GG}=18.643\text{ \%}$ 
+			\item Vorzugsaktie: $\beta = \frac{0.0294}{0.14^2}=1.5 \Rightarrow r_{GG}=15.5\text{ \%}$
+		\end{itemize}
+		\item Die CAPM-Preisgleichung ist
+		\begin{align}
+			P_{0,i} = \frac{\E(P_i) - \frac{\E(P_M) - (1+r_f)P_M}{\Var(r_M)}\cdot\Cov(r_i,r_M)}{1+r_f} \notag
+		\end{align}
+		Damit ergibt sich:
+		\begin{align}
+			P_{0,ST} &= \frac{119 - \frac{112 - 1.05\cdot 100}{0.14^2}\cdot 0.0382}{1.05} = 100.34 \notag \\
+			P_{0,VZ} &= \frac{113 - \frac{112 - 1.05\cdot 100}{0.14^2}\cdot 0.0294}{1.05} = 97.62 \notag
+		\end{align}
+		\item Die Stammaktie liegt also über der Wertpapierlinie, die Vorzugsaktie darunter.
+	\end{enumerate}
+	
+	\section*{Aufgabe 4K104: Portfoliotheorie}
+	\begin{enumerate}[label=(\alph*)]
+		\item keine Transaktionskosten, Steuern, Friktionen, beliebige Teilbarkeit der Wertpapiere, vollständiger Wettbewerb, d.h. alle sind Preisnehmer, Informationen stehen allen gleichzeitig und kostenlos zur Verfügung, alle Anleger verhalten sich rational
+		\item Bei 5 Wertpapieren umfasst die Varianz-Kovarianz-Matrix 25 Einträge, aber diese ist symmetrisch, weil $\Cov(X,Y)=\Cov(Y,X)$. Damit muss die Hauptdiagonale und die Hälfte der in der Matrix verbleibenden Lücken gefüllt werden, also $5+\frac{25-5}{2}=15$ Varianzen und Kovarianzen. Ähnlich ist es bei 100 Wertpapieren: Hier müssen $100+\frac{100^2-100}{2}=5050$ Varianzen und Kovarianzen berechnet werden. Allgemein müssen für $n$ Wertpapiere
+		\begin{align}
+			\frac{n(n+1)}{2} \notag
+		\end{align}
+		Varianzen und Kovarianzen berechnet werden.
+		\item Die Varianz eines Portfolios $Z$ mit der Zusammensetzung $\alpha$ von Aktie A und $(1-\alpha)$ von Aktie B hat die Varianz:
+		\begin{align}
+			\Var(Z) &= \Var(\alpha\cdot\Var(A) + (1-\alpha)\cdot\Var(B)) \notag \\
+			&= \alpha^2\cdot\Var(A) + (1-\alpha)^2\cdot\Var(B) - 2\alpha(1-\alpha)\cdot\underbrace{\Cov(A,B)}_{0} \to\min \notag \\
+			\frac{\partial \Var(Z)}{\partial\alpha} &= 2\alpha\cdot\Var(A) - 2(1-\alpha)\cdot\Var(B) = 0 \notag \\
+			2\alpha\cdot\Var(A) &= 2(1-\alpha)\cdot\Var(B) \notag \\
+			\alpha\cdot\Var(A) &= \Var(B) - \alpha^2\cdot\Var(B) \notag \\
+			\alpha(\Var(A) + \Var(B)) &= \Var(B) \notag \\
+			\alpha &= \frac{\Var(B)}{\Var(A) + \Var(B)} \notag
+		\end{align}
+		Damit ergibt sich $\alpha=\frac{0.2^2}{0.15^2+0.2^2}=0.64$. Die erwartete Rendite ist dann
+		\begin{align}
+			\E(r) = 0.64\cdot 15\text{ \%} + 0.36\cdot 20\text{ \%} = 16.8\text{ \%} \notag
+		\end{align}
+		Und die Varianz und Standardabweichung:
+		\begin{align}
+			\Var(r) &= 0.64^2\cdot 0.15^2 + 0.36\cdot 0.2^2 = 0.0144 \notag \\
+			\SD(r) &= \sqrt{0.0144} = 12\text{ \%} \notag
+		\end{align}
+		\item Der Preis der Aktie wird im Mittel
+		\begin{align}
+			\E(P) = \frac{1}{3}\cdot 400\text{ DM} + \frac{1}{3}\cdot 550\text{ DM} + \frac{1}{3}\cdot 600\text{ DM} = 516.67\text{ DM} \notag
+		\end{align}
+		sein, das wären 3.33 \% Rendite. Laut CAPM wäre aber die Rendite
+		\begin{align}
+			r = r_f + \beta(r_M-r_f) = 12.4\text{ \%} \notag
+		\end{align}
+		das heißt der aktuelle Preis der Aktie ist zu hoch (wäre er geringer, so würde die im ersten Schritt berechnete Rendite von 3.33 \% steigen). Die Aktie ist also überbewertet.
+	\end{enumerate}
+
+	\section*{Aufgabe 2K211: Portfolio Selection/CAPM}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die erwartete Rendite ist
+		\begin{align}
+			\E(r) = \frac{1}{2}\cdot 7\text{ \%} + \frac{1}{2}\cdot 11\text{ \%} = 9\text{ \%} \notag
+		\end{align}
+		Für die Standardabweichung brauchen wir noch die Kovarianz, die sich aus der Korrelation berechnen lässt:
+		\begin{align}
+			\Cor(JJ,GWI) &= \frac{\Cov(JJ,GWI)}{\SD(JJ)\cdot \SD(GWI)} \notag \\
+			\Cov(JJ,GWI) &= \Cor(JJ,GWI) \cdot \SD(JJ)\cdot \SD(GWI) \notag \\
+			&= 0.22\cdot 0.16\cdot 0.2 \notag \\
+			&= 7.04\cdot 10^{-3} \notag
+		\end{align}
+		Damit können wir die Varianz und Standardabweichung berechnen:
+		\begin{align}
+			\Var(r) &= \left(\frac{1}{2}\right)^2\cdot 0.16^2 + \left(\frac{1}{2}\right)^2\cdot 0.2^2 + 2\cdot \frac{1}{2}\cdot\frac{1}{2}\cdot 7.04\cdot 10^{-3} \notag \\
+			&= 0.01992 \notag \\
+			\SD(r) &= \sqrt{0.01992} = 14.11\text{ \%} \notag
+		\end{align}
+		\item Die Rendite bleibt gleich, denn sie hängt nicht von der Korrelation ab. Für die Standardabweichung gilt: Korrelation $\uparrow$ $\to$ Kovarianz $\uparrow$ $\to$ Varianz $\uparrow$ $\to$ Standardabweichung $\uparrow$.
+		\item Der Anteil von JJ-Aktien am Portfolio: $\frac{100000}{100000+(-20000)}=\frac{5}{4}$, der Anteil von GWI-Aktien ist $\frac{-20000}{100000+(-20000)}=-\frac{1}{4}$. Damit ist die Rendite
+		\begin{align}
+			\E(r) &= \frac{5}{4}\cdot 7\text{ \%} - \frac{1}{4}\cdot 11\text{ \%} = 6\text{ \%} \notag
+		\end{align}
+		Die Varianz/Standardabweichung ist
+		\begin{align}
+			\Var(r) &= \left(\frac{5}{4}\right)^2\cdot 0.16^2 + \left(-\frac{1}{4}\right)^2\cdot 0.2^2 - 2\cdot\frac{5}{4}\cdot\frac{1}{4}\cdot 7.04\cdot 10^{-3} \notag \\
+			&= 0.0381 \notag \\
+			\SD(r) &= \sqrt{0.0381} = 19.52\text{ \%} \notag
+		\end{align}
+		\item 2:1-Portfolio: $\E(r)=8.33\text{ \%}$, $\SD(r)=11.52\text{ \%}$ \\
+		1:2-Portfolio: $\E(r)=9.66\text{ \%}$, $\SD(r)=12.19\text{ \%}$
+		\begin{center}
+			\begin{tikzpicture}
+				\begin{axis}[
+					xmin=0, xmax=0.1952, xlabel=$\sigma$,
+					ymin=0, ymax=0.0967, ylabel=$E(r)$,
+					samples=400,
+					axis x line=middle,
+					axis y line=middle,
+					]
+					\addplot[mark=x,only marks,blue] coordinates {
+						(0.1952,0.06)
+						(0.1411,0.09)
+						(0.1377,0.0833)
+						(0.1541,0.0967)
+					};
+					
+				\end{axis}
+			\end{tikzpicture}
+		\end{center}
+		Der effiziente Rand ist die Kurve, auf der diese Punkte liegen.
+		\item ?
+		\item The CAPM was introduced by Jack Treynor (1961, 1962), William F. Sharpe (1964), John Lintner (1965) and Jan Mossin (1966) independently, building on the earlier work of Harry Markowitz on diversification and modern portfolio theory. Sharpe, Markowitz and Merton Miller jointly received the 1990 Nobel Memorial Prize in Economics for this contribution to the field of financial economics. Fischer Black (1972) developed another version of CAPM, called Black CAPM or zero-beta CAPM, that does not assume the existence of a riskless asset. This version was more robust against empirical testing and was influential in the widespread adoption of the CAPM. (\url{https://en.wikipedia.org/wiki/Capital_asset_pricing_model})
+	\end{enumerate}
+
+	\section*{Aufgabe 1K212: Dividend-Discount-Modell/Aktienbewertung}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der Barwert der gesamten Dividenden und Aktienrückkäufen ist
+		\begin{align}
+			BW = \frac{75\text{ \%}\cdot 10000\text{ Mio. \EUR}}{0.2-0.05} = 50000\text{ Mio. \EUR} \notag
+		\end{align}
+		und damit
+		\begin{align}
+			P_0 = \frac{BW}{\text{Anzahl Aktien}} = \frac{50000\text{ Mio. \EUR}}{200\text{ Mio.}} = 250\text{ \EUR} \notag
+		\end{align}
+		\item Wenn in Zukunft keine Dividenden mehr ausgeschüttet werden, ist das Unternehmen nach dem Dividend-Discount-Modell wertlos.
+		\item Es gilt:
+		\begin{align}
+			\Delta V_0 = \frac{-600\text{ Mio. \EUR}}{1.15} + \frac{-200\text{ Mio. \EUR}}{1.15^2} = -672.9679\text{ Mio. \EUR} \notag
+		\end{align}
+		und damit
+		\begin{align}
+			\Delta P_0 = \frac{\Delta V_0}{\text{Anzahl Aktien}} = \frac{-672.9679\text{ Mio. \EUR}}{200\text{ Mio.}} = -3.36\text{ \EUR} \notag
+		\end{align}
+		\item Auf einem vollkommenen Kapitalmarkt nicht, da alle die Information zum selben Zeitpunkt besitzen und damit der Preis sofort fällt.
+		\item Die Renditen der einzelnen Aktien sind:
+		\begin{align}
+			r_{Pear} &= 3\text{ \%}+2.5(12\text{ \%}-3\text{ \%}) = 25.5\text{ \%} \notag \\
+			r_{BFAS} &= 3\text{ \%}+0.5(12\text{ \%}-3\text{ \%}) = 7.5\text{ \%} \notag
+		\end{align}
+		Die Rendite des Portfolios ist dann
+		\begin{align}
+			\E(r) = \frac{2}{3}\cdot 25.5\text{ \%} + \frac{1}{3}\cdot 7.5\text{ \%} = 19.5\text{ \%} \notag
+		\end{align}
+		\item Durch Auswahl von unkorrelierten Aktien kann das Risiko auf das systematische Risiko des Kapitalmarktes verringert werden.
+	\end{enumerate}
+	
+\end{document}
