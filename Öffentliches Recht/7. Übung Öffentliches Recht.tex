@@ -1,0 +1,126 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage[unicode]{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=blue,
+	filecolor=blue,
+	linkcolor=blue,
+	urlcolor=blue
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Öffentliches Recht, Übung 7}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: Prüfungsaufbau}
+	\underline{Eröffnung des Schutzbereiches:} Der vom Grundrecht erfasste und geschützte Lebensbereich (= Schutzbereich oder Normbereich), d.h. der aus der Lebenswirklichkeit durch die Grundrechtsnorm als Schutzgegenstand herausgeschnittene Bereich muss gegeben sein. Hiervon ist der "Regelungsbereich" abzugrenzen; dieser beschreibt den Lebensbereich, in dem das Grundrecht gilt und in dem es den Schutzbereich erst noch genauer bestimmt – z.B. Art. 8 I GG betrifft im Regelungsbereich Versammlungen, vom Schutzbereich werden aber nur friedlich, waffenlose Versammlungen erfasst. 
+	\begin{itemize}
+		\item Persönlicher Schutzbereich: Kann die Person Träger des in Betracht kommenden Grundrechts sein? Hier sind die Probleme Deutschen/EU-Bürger- oder Jedermannsgrundrecht sowie die Anwendbarkeit auf juristische Personen des öffentlichen sowie des privaten Rechts nach Art. 19 III GG zu verorten. 
+		\item Sachlicher Schutzbereich: Was wird sachlich vom Grundrecht geschützt? Welches Verhalten fällt in den Schutzbereich? 
+	\end{itemize}
+
+	\underline{Eingriff in den Schutzbereich:} Der klassische Eingriffsbegriff (Handeln durch Rechtsakt, Finalität, Unmittelbarkeit, Anordnung mit Befehl und Zwang) ist mittlerweile überholt. Definition: Jedes staatliche Handeln, das dem Einzelnen ein Verhalten, das in den Schutzbereich eines Grundrechts fällt, ganz oder teilweise unmöglich macht. Problem: Unmittelbarkeit des Eingriffs (BVerfG nimmt bei Fehlen ggf. gleichzustellende grundrechtsrelevante Beeinträchtigung an), z.B. Warnung vor best. Lebensmitteln durch Verbraucherschutzminister. Abwägung anhand der Zielrichtung des Handelns, grundrechtstypische Gefährdungslage, Intensität der Beeinträchtigung, Schutzzweck des jeweiligen Grundrechts vornehmen. 
+	
+	\underline{Verfassungsrechtliche Rechtfertigung des Eingriffs (= Schranke):} Grundrechte sind nicht grenzenlos gewähr\-leistet, sondern unterliegen Einschränkungen. Dabei ist je nach Art der dem Gesetzgeber gewährten Möglichkeit der Schrankenziehung zu unterscheiden:
+	\begin{itemize}
+		\item Grundrechte mit einfachem Gesetzesvorbehalt (Einschränkung oder Regelung "durch oder auf Grund eines Gesetzes", z.B. Art. 2 I, 5 I, 8 II und 12 I 2 GG): Beschränkung entweder durch Gesetz oder aufgrund einer stattlichen Handlung, die sich auf ein Gesetz als Ermächtigungsgrundlage stützt (z.B. bei Verwaltungsakt oder Rechtsverordnung).
+		\item Grundrechte mit qualifiziertem Gesetzesvorbehalt enthalten nähere Anforderungen an das einschränk\-ende Gesetz, die direkt im GG stehen, z.B. Art. 11 II GG. 
+		\item Grundrechte ohne Gesetzesvorbehalt bzw. schrankenlos gewährte Grundrechte werden begrenzt durch kollidierendes Verfassungsrecht bzw. Rechtsgüter von Verfassungsrang (sogenannte "verfassungsimmanente Schranken"), z.B. Art. 5 III 1 GG; dabei auch Staatszielbestimmungen (Art. 20 a GG) relevant. Kompetenztitel aus Art. 73 ff. GG nur dann solches kollidierendes Verfassungsrecht, wenn durch Auslegung dahingehende Wertung (z.B. Art. 73 I Nr. 14 GG Atomkraft, str.!)
+	\end{itemize}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://www.jura.uni-passau.de/uploads/media/AG_Staatsrecht_2_Grundrechtspruefungschema_01.pdf}
+	\end{itemize}
+
+	\section*{Aufgabe 2: Schutzbereich}
+	\underline{Persönlicher Schutzbereich:} betrifft die Frage, wer sich auf ein bestimmtes Grundrecht berufen kann (Grundrechtsberechtigte)
+	
+	\underline{Sachlicher Schutzbereich:} betrifft die Frage was sachlich vom Grundrecht geschützt wird bzw. welches Verhalten in den Schutzbereich fällt. (z.B. ist bei der Versammlungsfreiheit zu prüfen, ob eine Versammlung vorliegt)
+
+	\section*{Aufgabe 3: Eingriff}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der klassische Eingriffsbegriff hat vier Voraussetzungen. Er verlangt, dass ein Eingriff: final und nicht bloß unbeabsichtigte Nebenfolge eines auf andere Ziele gerichteten Staatshandelns ist, unmittelbar und nicht bloß zwar beabsichtigte, aber mittelbare Folge des Staatshandelns ist, Rechtsakt mit rechtlicher und nicht bloß tatsächlicher Wirkung ist, mit Befehl und Zwang angeordnet bzw. durchgesetzt wird. Moderner Eingriffsbegriff: Ein Eingriff in den Schutzbereich des Grundrechts liegt bei jeder staatlichen Maßnahme vor, die ein grundrechtlich geschütztes Verhalten ganz oder teilweise unmöglich macht.
+		\item Mittelbare Eingriffe sind solche, bei denen die Beeinträchtigung nicht beim Adressaten, sondern bei einem Dritten eintritt (Beispiel: Genehmigung eines Atomkraftwerkes). Faktische Eingriffen fehlt die Rechtsförmigkeit (Beispiel: Videoüberwachung).
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://de.wikipedia.org/wiki/Eingriff_(Grundrechte)}
+	\end{itemize}
+
+	\section*{Aufgabe 4: Verfassungsrechtliche Rechtfertigung}
+	\begin{enumerate}[label=(\alph*)]
+		\item Schranke = Verfassungsrechtliche Rechtfertigung des Eingriffs, das Grundrecht, in das eingegriffen wurde, muss überhaupt einschränkbar sein, d.h. es muss eine Grundrechtsschranke bestehen (Schrankenvorbehalt). 
+		\begin{itemize}
+			\item Verfassungsunmittelbare Schranke: Das Grundrecht selbst enthält eine Einschränkungsmöglich\-keit, ohne dass der Gesetzgeber tätig werden muss (z. B. Art. 9 Abs. 2 GG, wonach Vereine, deren Tätigkeit den Strafgesetzen zuwiderläuft, verboten sind).
+			\item Verfassungsimmanente Schranke: Obwohl ein Grundrecht nach seinem Wortlaut ohne Vorbehalt gewährt wird (z.B. Kunstfreiheit, Art. 5 Abs. 3 GG), wird jedes Grundrecht zum Schutze wichtiger Verfassungsgüter und der Grundrechte Dritter eingeschränkt. So darf z.B. durch die Ausübung der grundsätzlich unbeschränkten Kunstfreiheit nicht das Leben Dritter gefährdet werden. In diesem Bereich besteht die Pflicht des Gesetzgebers, durch Gesetze die für den Lebensbereich erforderlichen Leitlinien` selbst zu bestimmen und zu konkretisieren (BVerfG NJW 2003, 3111, sog. Kopftuchentscheidung).
+		\end{itemize}
+		\item Formelle Verfassungsmäßigkeit: Gesetzgebungskompetenz (Art. 70 ff. GG) und Gesetzgebungsverfahren (im Bund: Art. 76 ff. GG) \\
+		Materielle Verfassungsmäßigkeit: ggf. Anforderungen des qualifizierten Gesetzesvorbehalts (z.B. "allgemeines Gesetz" i.S.d. Art. 5 Abs. 2 GG),  Schranken-Schranken (Grundsatz der Verhältnismäßigkeit, Wesensgehaltsgarantie (Art. 19 Abs. 2 GG), Verbot von Einzelfallgesetzen (Art. 19 Abs. 1 S. 1 GG), Zitiergebot (Art. 19 Abs. 1 S. 2 GG), Bestimmtheitsgebot),  Sonstige verfassungsrechtliche Anforderungen (z.B. Rechtsstaatsprinzip
+		\item Verhältnismäßigkeit
+		\begin{itemize}
+			\item Legitimer Zweck und legitimes Mittel: Legitime Zwecke sind grundsätzlich alle öffentlichen Interessen (gibt es mehrere Zwecke sollten alle genannt werden). Ausnahmen:
+			\begin{itemize}
+				\item Vorbehaltlose Grundrechte (legitime Zwecke beschränkt auf Schutz von Verfassungsgütern)
+				\item Qualifizierte Gesetzesvorbehalte (z.B. Art. 11 Abs. 2, Art. 13 Abs. 2, Art. 13 Abs. 7 GG)
+				\item Zweckbeschränkungen (z.B. Drei-Stufen-Theorie im Rahmen des Art. 12 GG)
+			\end{itemize}
+			Die Frage der Legitimität des Mittels wirft selten Probleme auf. Zu beachten ist allerdings, dass es per se illegitime Mittel gibt (z.B. Zensur, Art. 5 I S. 3 GG und Todesstrafe, Art. 102 GG).
+			\item Geeignetheit: Hier werden nur solche Mittel ausgesondert, die zur Erreichung des Zweckes "schlechthin ungeeignet" sind. Es genügt also wenn das Mittel die Erreichung des Zwecks zumindest fördert. Dem Gesetzgeber wird zudem ein Prognosespielraum zugestanden.
+			\item Erforderlichkeit: Erforderlichkeit liegt vor, wenn kein milderes Mittel zur Zweckerreichung in Frage kommt oder mildere Mittel zur Zweckerreichung nicht gleich geeignet sind In Bezug auf die gleiche bzw. bessere Eignung ist dem Gesetzgeber eine Einschätzungsprärogative (auch Einschätzungs- und Beurteilungsspielraum) eingeräumt. Im Rahmen des Vergleichs mehrerer Mittel sind Eigenart und Intensität des Eingriffs, die Zahl der Betroffenen, belastende oder begünstigende Einwirkungen auf Dritte und Nebenwirkungen der belastenden Maßnahme zu berücksichtigen.
+			\item Angemessenheit (Verhältnismäßigkeit i.e.S.): Hier muss die Schwere des Grundrechtseingriffs mit dem Nutzen des verfolgten Zweckes abgewogen werden. Die Angemessenheit ist dann gewahrt, wenn der Grundrechtseingriff nicht außer Verhältnis zum verfolgten Zweck steht.
+		\end{itemize}
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{http://www.rechtslexikon.net/d/grundrechtsschranken/grundrechtsschranken.htm}
+		\item \url{https://www.uni-trier.de/fileadmin/fb5/prof/OEF004/Aktuelles_Semester_-_Guenzel/Erasmus.GR/6.Aufbauhinweise.Grundrechtspruefung.pdf}
+		\item \url{https://www.jura.fu-berlin.de/studium/lehrplan/projekte/hauptstadtfaelle/tipps/Uebersicht_-Die-Verhaeltnismaessigkeitspruefung-in-der-Fallbearbeitung/index.html}
+	\end{itemize}
+
+	\section*{Aufgabe 5: Aktueller Kontext}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die rechtliche Grundlage für die aktuellen Maßnahmen, mit denen die Regierung die Ausbreitung des Coronavirus eindämmen will, ist das Infektionsschutzgesetz (IfSG). Im Fall einer Pandemie ermöglicht es das Infektionsschutzgesetz, unsere Grundrechte teilweise weitreichend einzuschränken. Diese Einschränkungen müssen allerdings verhältnismäßig sein.
+		\item Das IfSG enthält Generalermächtigungen für Maßnahmen der zuständigen Behörde, übertragbare Krankheiten zu verhüten (§ 16 IfSG) und sodann deren weitere Ausbreitung durch notwendige Schutzmaßnahmen zu verhindern (§ 28 IfSG).  §§ 29 bis 31 IfSG spezifizieren die Maßnahmen etwas, benennen aber bei Weitem nicht die im Laufe dieser Pandemie ergriffenen Maßnahmen, die mit massiven Grundrechtseingriffen verbunden sind. § 28a IfSG zählt grundrechtsrelevante Maßnahmen auf
+		\item Mit den Corona-Maßnahmen griff der Staat in unsere Grundrechte ein - und tut das nach wie vor: So berühren beispielsweise Kontaktbeschränkungen und Maskenpflicht die Allgemeine Handlungsfreiheit. Restaurantschließungen und Veranstaltungsverbote greifen in die Berufsfreiheit von Restaurantbetreibern und Künstler ein, und Reisebeschränkungen in das Recht auf Freizügigkeit der Touristen.
+		\item Es gibt bereits einen Aufsatz darüber, sind 15 Seiten: \url{https://rsw.beck.de/rsw/upload/NVwZ/Extra_5-2021.pdf}
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://freiheitsrechte.org/corona-und-grundrechte/}
+		\item \url{https://www.haufe.de/recht/weitere-rechtsgebiete/strafrecht-oeffentl-recht/moegliche-behoerdenmassnahmen-zur-eindaemmung-des-coronavirus_204_510706.html}
+		\item \url{https://www.tagesschau.de/inland/corona-grundrechte-101.html}
+	\end{itemize}
+	
+\end{document}
