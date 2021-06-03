@@ -1,0 +1,215 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Rechnernetze, Übung 6}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Dijkstra-Algorithmus
+		\begin{center}
+			\begin{tabular}{c|c|ccccc}
+				\textbf{permanente Knoten} & \textbf{Arbeitsknoten} & $d(B)$ & $d(C)$ & $d(D)$ & $d(E)$ & $d(F)$ \\
+				\hline
+				A & A & \underline{3} & 4 & $\infty$ & $\infty$ & $\infty$ \\
+				A, B & B & 3 & \underline{4} & 8 & 5 & $\infty$ \\
+				A, B, C & C & 3 & 4 & \underline{5} & 5 & $\infty$ \\
+				A, B, C, D & D & 3 & 4 & 5 & \underline{5} & 9 \\
+				A, B, C, D, E & E & 3 & 4 & 5 & 5 & \underline{9}
+			\end{tabular}
+		\end{center}
+		Jetzt sind alle Knoten markiert und der kürzeste Weg von A nach F geht über A $\to$ C $\to$ D $\to$ F und ist 9 Einheiten lang.
+		\item Dijkstra-Algorithmus
+		\begin{center}
+			\begin{tabular}{c|c|ccccc}
+				\textbf{permanente Knoten} & \textbf{Arbeitsknoten} & $d(B)$ & $d(C)$ & $d(D)$ & $d(E)$ & $d(F)$ \\
+				\hline
+				A & A & \underline{3} & 4 & $\infty$ & $\infty$ & $\infty$ \\
+				A, B & B & 3 & \underline{4} & $\infty$ & 5 & $\infty$ \\
+				A, B, C & C & 3 & 4 & $\infty$ & \underline{5} & $\infty$ \\
+				A, B, C, E & E & 3 & 4 & $\infty$ & 5 & \underline{11} \\
+			\end{tabular}
+		\end{center}
+		Knoten D wird nie markiert. Der kürzeste Weg von A nach F geht nun über A $\to$ B $\to$ E $\to$ F und ist 11 Einheiten lang.
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Subnetze sind Teilnetze eines größeren Netzwerks. Das Internet bildet dabei das größte, weltumspannende Rechnernetzwerk und besteht aus unzähligen Subnetzen, welche wiederum selbst mehrere Subnetze enthalten können. Damit wird ein hierarchisches Routing ermöglicht. \\
+		$\Rightarrow$ Vorteile: keine neuen Netzwerkadressen erforderlich, Subnetzadressen müssen außerhalb der Organisation nicht bekannt sein, Routingtabellen nicht unnötig vergrößert, Basis für klassenloses Routing (CIDR – Classless Interdomain Routing); variable Netzmasken nutzen Adressbereiche besser aus
+		\item Subnetzadresse = Adresse AND Subnetzmaske
+		\begin{center}
+			\begin{tabular}{cr|r|r|r||c|c|c|c}
+				Adresse & 129 & 44 & 0 & 7 & 10000001 & 00101100 & 00000000 & 00000111 \\
+				Subnetzmaske & 255 & 255 & 128 & 0 & 11111111 & 11111111 & 10000000 & 00000000 \\
+				\hline
+				Subnetzadresse & 129 & 44 & 0 & 0 & 10000001 & 00101100 & 00000000 & 00000000
+			\end{tabular}
+		\end{center}
+		\begin{center}
+			\begin{tabular}{cr|r|r|r||c|c|c|c}
+				Adresse & 129 & 44 & 0 & 7 & 10000001 & 00101100 & 11100000 & 00001111 \\
+				Subnetzmaske & 255 & 255 & 128 & 0 & 11111111 & 11111111 & 11000000 & 00000000 \\
+				\hline
+				Subnetzadresse & 129 & 44 & 192 & 0 & 10000001 & 00101100 & 11000000 & 00000000
+			\end{tabular}
+		\end{center}
+		\item Die Subnetzmaske $M_1$ besteht aus 17 Einsen, maximal können 32 Einsen als Adresse verteilt werden. Das bedeutet es können noch $2^{32-17}=2^{15}$ Adressen im Subnetz verteilt werden. Ähnlich für $M_2$, hier können noch $2^{32-18}=2^{14}$ Adressen verteilt werden.
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Es gilt
+		\begin{center}
+			\begin{tabular}{c|c|c|c|c|c|c}
+				\textbf{Netz} & \textbf{IP von} & \textbf{IP bis} & \textbf{Netzadresse} & \textbf{Subnetzmaske} & \textbf{CIDR} & \textbf{Hosts} \\
+				\hline
+				A & 141.30.0.0 & 141.30.255.255 & 141.30.0.0 & 255.255.0.0 & /16 & $2^{16}$ \\
+				B & 172.16.0.0 & 172.17.255.255 & 172.16.0.0 & 255.254.0.0 & /15 & $2^{17}$ \\
+				C & 141.76.40.0 & 141.30.43.255 & 141.76.40.0 & 255.255.252.0 & /22 & $2^{10}$
+			\end{tabular}
+		\end{center}
+		Immer 2 Adressen sind in einem Subnetz reserviert, die Anzahl an Endgeräten verringert sich damit um 2.
+		\item Weiterleitungstabelle für Router ZIH
+		\begin{center}
+			\begin{tabular}{c|cc|c|c|c}
+				\textbf{Typ} & \multicolumn{2}{c|}{\textbf{Filter}} & \textbf{Gateway} & \textbf{Interface} & \textbf{Bemerkung} \\
+				\hline
+				C & 10.10.10.0 & 30 & & eth3 & Transitnetz zu Router INF \\
+				C & 141.30.0.0 & 16 & & eth1 & angeschlossenes Subnetz A \\
+				S & 141.76.0.0 & 16 & 10.10.10.2 & & Subnetz INF über Router INF (Gateway) \\
+				C & 172.16.0.0 & 15 & & eth2 & angeschlossenes Subnetz B \\
+				D* & 0.0.0.0 & 0 & = DFN x (188.1.x.x) & & Standardroute (default route) über DFN
+			\end{tabular}
+		\end{center}
+		\item Weiterleitungstabelle für Router INF
+		\begin{center}
+			\begin{tabular}{c|cc|c|c|c}
+				\textbf{Typ} & \multicolumn{2}{c|}{\textbf{Filter}} & \textbf{Gateway} & \textbf{Interface} & \textbf{Bemerkung} \\
+				\hline
+				C & 10.10.10.0 & 30 & & eth1 & Transitnetz zu Router INF \\
+				S & 141.76.40.0 & 22 & 141.76.29.33 & & Statische Route (Umleitung über Firewall) \\
+				D & 0.0.0.0 & 0 & 10.10.10.1 & & Standardroute (default route)
+			\end{tabular}
+		\end{center}
+		\item Weiterleitung von Paketen
+		\begin{center}
+			\begin{tabular}{c|c|c}
+				\textbf{Zieladresse} & \textbf{Router INF} & \textbf{Router ZIH} \\
+				\hline
+				172.17.56.78 & Weiterleitung an ZIH & Zustellung an Subnetz B \\
+				141.76.42.42 & Weiterleitung an Firewall & Weiterleitung an INF \\
+				9.9.9.9 & Weiterleitung an ZIH & Weiterleitung an DFN
+			\end{tabular}
+		\end{center}
+	\end{enumerate}
+
+	\section*{Aufgabe 4}
+	\begin{enumerate}[label=(\alph*)]
+		\item Ermittlung von MAC-Adressen
+		\begin{itemize}
+			\item Sender sendet eine ARP-Anforderung (ARP Request) inkl. der gesuchten IP-Adresse an Broadcast-Adresse (ff:ff:ff:ff:ff:ff)
+			\item Host mit angefragter IP-Adresse hat sich gemeldet und seine MAC-Adresse in ARP-Antwort (ARP Reply) zurückgesendet (alternativ: keine Antwort $\to$ Timeout)
+			\item Information wird ARP-Tabelle (ARP Cache) vorübergehend gespeichert, sodass künftige Anfragen schneller beantwortet werden können.
+		\end{itemize}
+		IPv6: Neighbor Discovery Protocol übernimmt die Aufgaben von ARP.
+		\item Gratuitous ARP bezeichnet Antwortpakete (ARP Response) für die es keine Anfrage gab. $\Rightarrow$ Risiko: Man-in-the-Middle
+	\end{enumerate}
+
+	\section*{Aufgabe 5}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Pakete verlassen den Rechner in der Annahme dass die MTU auf dem Weg dem üblichen Standard (bei Ethernet: 1500 Byte Nutzdaten) entspricht. Pakete mit dieser Standard-MTU passen jedoch nicht mehr durch den Link zwischen den VPN-Gateways und müssen daher fragmentiert werden. 
+		\item Bei IPv4 erfolgt die Fragmentierung auf dem Weg, also auf dem Router, der feststellt, dass die MTU eines Links zu klein ist. Falls das Don't-fragment-Bit gesetzt ist erfolgt eine ICMP-Fehlermeldung (T:3/C:4). Bei IPv6 werden zu große Pakete auf dem Weg nicht fragmentiert, stattdessen erhält der Sender direkt die ICMP-Nachricht Packet too big, welche auch die maximale MTU auf dem Pfad (Path MTU) enthält. Der Sender des ursprünglichen Pakets muss das Paket nun entsprechend der PMTU fragmentieren und erneut senden.
+	\end{enumerate}
+
+	\section*{Aufgabe 6}
+	\begin{enumerate}[label=(\alph*)]
+		\item IPv4 benutzt 32-Bit-Adressen. Somit sind maximal ca. 4,3 Mrd Adressen möglich. Auf Grund der anfänglichen Einteilung der Adressen in Klassen entfallen jedoch sehr viele Adressen ungenutzt. IPv6 verwendet 128-Bit-Adressen, was $3,4\cdot 10^{38}$ (340 Sextillionen) Adressen erlaubt. (um Faktor $7,9\cdot 10^{28}$ mal mehr als bei IPv4).
+		\item Vorteile
+		\begin{itemize}
+			\item Vergrößerung des Adressraums
+			\item Vereinfachung Header $\to$ weniger Rechenaufwand in Vermittlungsstellen, insb. Router
+			\item automatische, zustandslose Konfiguration (Zuweisung von Adressen)
+			\item Vereinfachung von mobiler Netzwerkteilnahme
+			\item Implementierung von Sicherheitsmerkmalen (IPsec) innerhalb des IPv6-Standards.
+			\item Qualitäts- und Mehrzielmerkmale werden unterstützt
+		\end{itemize}
+		Herausforderungen beim Übergang von IPv4 zu IPv6
+		\begin{itemize}
+			\item Berechnungen in Netzwerkgeräten (insb. Vermittlungsstellen) sind i.d.R. aus Effizienzgründen in Hardware realisiert. $\to$ Umstellung von 32-Bit-Berechnung auf 128-Berechnungen somit nicht trivial und von Hardware abhängig.
+			\item Viele Altgeräte erlauben keine Hardwareänderungen. $\to$ Immenses Kostenproblem durch Phasing-out von Altgeräten
+			\item Selbst wenn die Hardware unproblematisch wäre, kann IPv4 nicht von heute auf morgen abgeschaltet und durch IPv6 ersetzt werden. $\to$ Gleichzeitiger Übergangsbetrieb notwendig (bspw. DualStack).
+			\item Erwerb von IP-Adressen ist immer mit Verwaltung und Kosten verbunden. $\to$ Provider wollen Geld verdienen (Kunden schröpfen), nicht Geld ausgeben (Investieren).
+			\item Weiterbildung der Administratoren
+		\end{itemize}
+		\item Für IPv6 wird kein DHCP mehr benötigt, um einen Host mit einer IP-Adresse zu versehen.
+		\begin{itemize}
+			\item Link-lokale IPv6-Adresse erzeugen (erzeugt automatisch eine zugehörige Multicast-Gruppe)
+			\item Nachricht an erzeugte Multicast-Gruppe senden, fehlende Antwort signalisiert, dass Adresse frei ist
+			\item Host sendet an ff02::2/128 (alle Router) eine Anfrage zur Mitteilung der Konfiguration
+			\item Router antwortet mit Konfiguration, insb. vorhanden(en) Präfix(en)
+			\item Globale Unicast-Adresse wird erzeugt (erzeugt automatisch eine zugehörige Multicast-Gruppe)
+			\item Nachricht an erzeugte Multicast-Gruppe senden, fehlende Antwort signalisiert, dass Adresse frei ist
+			\item Adresszuweisung und Bekanntmachung
+		\end{itemize}
+	\end{enumerate}
+
+	\section*{Aufgabe 7}
+	\begin{enumerate}[label=(\alph*)]
+		\item Feld: Protocol, Wert: 1 (ICMP), Internet Control Message Protocol, Austausch von Informations- und Fehlermeldungen, hier: ICMP Echo Request  ist Host erreichbar? (Ping), jedes Protokoll hat eine durch die IANA festgelegte Nummer, z.B. UDP = 17, TCP = 6
+		\item Felder: Source und Destination,  Sender = 192.168.1.102, Empfänger = 128.59.23.100
+		\item ja, wegen TTL – Time to Live in der Nachricht ist TTL auf 1 gesetzt, jeder Router verringert TTL um mindestens 1, wenn TTL 0 erreicht ist, sendet der Router ICMP Typ 11 (Time-to-live exceeded), hier ist das schon beim 1. Router auf dem Weg zum Empfänger der Fall
+		\item Paket ist nicht fragmentiert, da "more fragments" nicht gesetzt ist
+		\item source und destination bleiben gleich, totalLength kann sich ändern, identification muss sich ändern (hochzählen), TTL kann sich ändern (typischerweise hochgezählt für das hier verwendete traceroute-Beispiel), header checksum kann sich ändern, wird sich meist ändern, da immer mindestens 1 Feld verändert wird
+	\end{enumerate}
+	
+\end{document}
