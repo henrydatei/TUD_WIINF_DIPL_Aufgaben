@@ -1,0 +1,186 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{er,positioning}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{sql} {language=sql}
+\lstset{language=sql,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Hul}{Hul}
+
+\def\ojoin{\setbox0=\hbox{$\bowtie$}%
+	\rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
+\def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
+\def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
+
+\title{\textbf{Datenbanken, Übung 6}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Linksreduktion:
+		\begin{itemize}
+			\item $CE\in\Hul(F_1,D)$: nein
+			\item $CE\in\Hul(F_1,C)$: nein
+		\end{itemize}
+		Rechtsreduktion:
+		\begin{itemize}
+			\item $A\to BC$
+			\begin{itemize}
+				\item $B\in\Hul(F_1-(A\to BC) \cup (A\to C), A)$: nein
+				\item $C\in\Hul(F_1-(A\to BC) \cup (A\to B), A)$: ja, $A\to B\to CD$ $\Rightarrow$ neue Menge $F_1'$
+			\end{itemize} 
+			\item $B\to CD$
+			\begin{itemize}
+				\item $C\in\Hul(F_1'-(B\to CD) \cup (B\to D), B)$: nein
+				\item $D\in\Hul(F_1'-(B\to CD) \cup (B\to C), B)$: nein
+			\end{itemize}
+			\item $CD\to CE$
+			\begin{itemize}
+				\item $C\in\Hul(F_1'-(CD\to CE) \cup (CD\to E), CD)$: ja, $C\to C$ $\Rightarrow$ neue Menge $F_1''$
+				\item $E\in\Hul(F_1''-(CD\to E) \cup (CD\to \emptyset), CD)$: nein
+			\end{itemize}
+			\item $B\to EF$
+			\begin{itemize}
+				\item $E\in\Hul(F_1''-(B\to EF) \cup (B\to F), B)$: ja, $B\to CD\to E$ $\Rightarrow$ neue Menge $F_1'''$
+				\item $F\in\Hul(F_1'''-(B\to F) \cup (B\to \emptyset), B)$: nein
+			\end{itemize}
+		\end{itemize}
+		Streichen von leeren Mengen auf der rechten Seite: nichts zu tun \\
+		Zusammenfassen
+		\begin{align}
+			F_1''' = \{A\to B, B\to CDF, CD\to E\} \notag
+		\end{align}
+		\item Linksreduktion
+		\begin{itemize}
+			\item $BDE\in\Hul(F_2,C)$: nein
+			\item $BDE\in\Hul(F_2,B)$: ja, $B\to C\to DE$ und $B\to B$ $\Rightarrow$ neue Menge $F_2'$
+		\end{itemize}
+		Rechtsreduktion
+		\begin{itemize}
+			\item $A\to BE$
+			\begin{itemize}
+				\item $B\in\Hul(F_2'-(A\to BC) \cup (A\to C), A)$: nein
+				\item $C\in\Hul(F_2'-(A\to BC) \cup (A\to B), A)$: ja, $A\to B\to C$ $\Rightarrow$ neue Menge $F_2''$
+			\end{itemize}
+			\item $B\to BDE$
+			\begin{itemize}
+				\item $B\in\Hul(F_2''-(B\to BDE) \cup (B\to DE), B)$: ja, $B\to B$ $\Rightarrow$ neue Menge $F_2'''$
+				\item $D\in\Hul(F_2'''-(B\to DE) \cup (B\to E), B)$: ja, $B\to C\to DE$ $\Rightarrow$ neue Menge $F_2^{(4)}$
+				\item $E\in\Hul(F_2^{(4)}-(B\to E) \cup (B\to \emptyset), B)$: ja, $B\to C\to DE$ $\Rightarrow$ neue Menge $F_2^{(5)}$
+			\end{itemize}
+			\item $D\to F$
+			\begin{itemize}
+				\item $D\in\Hul(F_2^{(5)} - (D\to F) \cup (D\to\emptyset), D)$: nein
+			\end{itemize}
+			\item $E\to EG$
+			\begin{itemize}
+				\item $E\in\Hul(F_2^{(5)} - (E\to EG) \cup (E\to G), E)$: ja, $E\to E$ $\Rightarrow$ neue Menge $F_2^{(6)}$
+				\item $G\in\Hul(F_2^{(6)} - (E\to G) \cup (E\to \emptyset), E)$: nein
+			\end{itemize}
+			\item $B\to C$
+			\begin{itemize}
+				\item $C\in\Hul(F_2^{(6)} - (B\to C) \cup (B\to\emptyset), B)$: nein
+			\end{itemize}
+			\item $C\to DE$
+			\begin{itemize}
+				\item $D\in\Hul(F_2^{(6)} - (C\to DE) \cup (C\to E), C)$: nein
+				\item $E\in\Hul(F_2^{(6)} - (C\to DE) \cup (C\to D), C)$: nein
+			\end{itemize}
+		\end{itemize}
+		Entfernen der FDs mit leerer Menge rechts: $B\to\emptyset$ wird entfernt \\
+		Zusammenfassen:
+		\begin{align}
+			F_2^{(6)} = \{A\to B, D\to F, E\to G, B\to C, C\to DE\} \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Ist die Tabelle in erster Normalform? ja \\
+		Um zu überprüfen, ob die Tabelle auch in 2. NF ist, müssen zuerst die funktionalen Abhängigkeiten und daraus ein Schlüssel bestimmt werden:
+		\begin{itemize}
+			\item Signatur $\to$ Titel
+			\item Benutzer $\to$ Straße, PLZ, Ort
+			\item Vorgang $\to$ Datum, Benutzer
+			\item PLZ $\to$ Ort
+		\end{itemize}
+		$\Rightarrow$ Schlüssel: \{Signatur, Vorgang\}. Wir sehen, dass Benutzer/Datum/Straße/PLZ/Ort nur von \{Vorgang\} funktional abhängig ist, aber nicht von dem kompletten Schlüssel \{Signatur, Vorgang\}. Ähnliches gilt für den Titel. Damit ist die Relation nicht in 2. NF, aber wir können sie in die 2. NF bringen:
+		\begin{itemize}
+			\item $R_1:$ \underline{Vorgang}, Datum, Benutzer, Straße, Ort, PLZ
+			\item $R_2:$ \underline{Signatur}, Titel
+			\item $R_3:$ \underline{Vorgang, Signatur}
+		\end{itemize}
+		\item Betrachten wir die Relation Benutzer $\to$ Straße, PLZ, Ort. Hier ist weder Benutzer ein Superschlüssel, noch ist \{Straße, PLZ, Ort\} Teil eines Kandidatenschlüssels. Selbiges gilt für PLZ $\to$ Ort. Diese funktionalen Abhängigkeiten müssen noch in eigene Relationen gesteckt werden:
+		\begin{itemize}
+			\item $R_1$: \underline{Benutzer}, Straße, PLZ
+			\item $R_2$: \underline{PLZ}, Ort
+			\item $R_3$: \underline{Vorgang}, Datum, Benutzer
+		\end{itemize}
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Tabelle ist nicht mal in 1. NF, also unnormalisiert, da Produkt nicht atomar ist.
+		\item Verk\_Nr, Produkt\_Name $\to$ Umsatz
+		\item Die Relation
+		\begin{itemize}
+			\item $R_1$: \underline{Verk\_Nr}, Verk\_Name, Verk\_Ort
+			\item $R_2$: \underline{Verk\_Nr, Produkt\_Name}, Umsatz
+		\end{itemize}
+		ist schon in 3. NF.
+		\item Neue Produkte können nicht eingefügt werden ohne sie verkauft zu haben und wenn Verkäufer kündigen werden auch die Produkte gelöscht. $\Rightarrow$ INSERT- und DELETE-Anomalie
+	\end{enumerate}
+	
+	\section*{Aufgabe 4}
+	Die Liste der Determinanten ist $\{A, B, C\}$. Die Kandidatenschlüssel sind $\{A\}$ oder $\{B\}$. Damit ist $C$ kein Schlüssel und die funktionale Abhängigkeit $C\to D$ wird in eine eigene Relation ausgelagert. Damit sind die Relationen dann
+	\begin{itemize}
+		\item $R_1$: \underline{$A$}, $B$, $C$ (man könnte auch $B$ als Schlüssel wählen)
+		\item $R_2$: \underline{$C$}, $D$
+	\end{itemize}
+	
+\end{document}
