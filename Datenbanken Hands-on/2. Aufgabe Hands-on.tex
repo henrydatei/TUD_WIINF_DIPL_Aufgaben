@@ -1,0 +1,322 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{er,positioning}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage{longtable}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{sql} {language=sql}
+\lstdefinestyle{python} {language=python, morekeywords={with, as}}
+\lstset{basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\def\ojoin{\setbox0=\hbox{$\bowtie$}%
+	\rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
+\def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
+\def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
+
+\title{\textbf{Datenbanken, Hands-on 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+
+	\section*{Aufgabe 1}
+	Problem sind hier die zusammengesetzten Attribute \textit{comments} und \textit{categories}. In \textit{comments} gibt es Informationen über die Seitenzahl, die Anzahl an Abbildungen und die Anzahl an Tabellen. Zudem gibt es noch weitere Informationen bezüglich der Veröffentlichung. Wie man \textit{categories} aufspalten soll, ohne eine weitere Relation hinzuzufügen, ist mir nicht klar. Das Paper mit den meisten Kategorien hat 5 Kategorien, man könnte also Attribute wie \textit{category1}, \textit{category2}, \textit{category3}, \textit{category4} und \textit{category5} hinzufügen. Wirklich sauber ist der Ansatz allerdings nicht und er bricht zusammen, wenn mal ein Paper mit 6 Kategorien hinzugefügt wird. Aber aus Mangel an alternativen Lösungsvorschlägen besteht dann die Relation aus den folgenden Attributen:
+	\begin{itemize}
+		\item \textit{id}
+		\item \textit{submitter}
+		\item \textit{author}
+		\item \textit{title}
+		\item \textit{pages}
+		\item \textit{figures}
+		\item \textit{tables}
+		\item \textit{comment}
+		\item \textit{category1}
+		\item \textit{category2}
+		\item \textit{category3}
+		\item \textit{category4}
+		\item \textit{category5}
+		\item \textit{abstract}
+		\item \textit{update\_date}
+	\end{itemize}
+	Es sind 15 Attribute.
+
+	\section*{Aufgabe 2}
+	Die funktionalen Abhängigkeiten sind damit
+	\begin{itemize}
+		\item \textit{id} $\to$ alles
+		\item subcategory $\to$ topcategory (steht so in der Aufgabenstellung: \textit{Jede Unterkategorie hat genau eine Überkategorie, z.B. AI kommt nur als Unterkategorie von cs vor})
+	\end{itemize}
+	Ich habe mir noch einen Alternativaccount für OPAL organisiert und konnte so an die Musterlösung kommen. Aus dieser kann man leider nur die funktionalen Abhängigkeiten bestimmen, aber für die restlichen Aufgaben sind keine Informationen vorhanden:
+	\begin{itemize}
+		\item \textit{id} $\to$ \{\textit{title}, \textit{submitter}, \textit{number\_pages}, \textit{number\_figures}, \textit{comments}, \textit{abstract}, \textit{update\_date}, \textit{author}\}
+		\item \textit{sub\_category} $\to$ \textit{top\_category}
+	\end{itemize}
+	Der einzige Schlüsselkandidat ist dann nur \textit{id}.
+
+	\section*{Aufgabe 3}
+	Mit diesen Abhängigkeiten kann man jetzt 3 Relationen erstellen:
+	\begin{itemize}
+		\item $R_1$: \underline{\textit{id}}, \textit{title}, \textit{submitter}, \textit{pages}, \textit{figures}, \textit{tables}, \textit{comment}, \textit{abstract}, \textit{update\_date}, \textit{author}
+		\item $R_2$: \underline{\textit{sub\_category}}, \textit{top\_category}
+		\item $R_3$: \textit{id}, \textit{sub\_category}
+	\end{itemize}
+	
+	\section*{Aufgabe 4}
+	Erstellen der Datenbanken:
+	\begin{lstlisting}[style=sql, tabsize=2]
+CREATE TABLE `papers` ( 
+	`id` VARCHAR(100) NOT NULL,
+	`title` TEXT NOT NULL,
+	`submitter` TEXT NOT NULL,
+	`pages` INT NOT NULL,
+	`figures` INT NULL,
+	`tables` INT NULL,
+	`comment` TEXT NULL,
+	`abstract` TEXT NOT NULL,
+	`update_date` DATE NOT NULL,
+	`author` TEXT NOT NULL,
+	PRIMARY KEY  (`id`)
+) ENGINE = INNODB;
+CREATE TABLE `categoryAssignment` (
+	`sub_category` VARCHAR(100) NOT NULL,
+	`top_category` VARCHAR(100) NOT NULL,
+	PRIMARY KEY (`sub_category`)
+) ENGINE = INNODB;
+CREATE TABLE `categories` (
+	`id` VARCHAR(100) NOT NULL,
+	`sub_category` VARCHAR(100) NOT NULL,
+	FOREIGN KEY (`id`) REFERENCES `papers`(`id`),
+	FOREIGN KEY (`sub_category`) REFERENCES `categoryAssignment`(`sub_category`)
+) ENGINE = INNODB;
+	\end{lstlisting}
+	Jetzt müssen die Datenbanken befüllt werden. Ich nutze hier Python um die INSERT-Befehle zu erzeugen, die ich dann vom Datenbank-Server ausführen lasse. Wir kümmern uns zuerst um die Relation $R_2$:
+	\begin{lstlisting}[style=python, tabsize=2]
+import json
+
+# brauchen wir spaeter um Duplikate nicht in die Datenbank einzutragen
+# eigentlich sollte die DB Duplikate selber erkennen, aber wir machen das lieber selber
+subCategorys = []
+
+with open("arxiv.json") as json_file:
+	# parsen der JSON-Datei
+	f = json.load(json_file)
+
+	# durchiterieren durch alle Paper in der Datei
+	for entry in f:
+		# Umwandeln der durch Leerzeichen getrennten "Liste" in ein Array
+		# z.B. categories = ["math.CA", "math.FA"]
+		categories = entry["categories"].split(" ")
+
+		# fuer jede Kategorie
+		for category in categories:
+			topCategory = category.split(".")[0] # z.B. "math"
+			subCategory = category.split(".")[1] # z.B. "CA"
+			if subCategory not in subCategorys:
+				# kein Duplikat
+				subCategorys.append(subCategory)
+				sql = "INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES (\"{}\",\"{}\");".format(subCategory, topCategory)
+				print(sql)
+	\end{lstlisting}
+	Das liefert uns den folgenden Output:
+	\begin{lstlisting}[style=sql, tabsize=2]
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("CC","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("DM","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("LO","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("CR","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("DS","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("NE","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("AI","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("LG","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("SC","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("CG","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("NI","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("CV","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("CY","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("DL","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("IR","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("HC","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("NT","math");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("DC","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("PL","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("MS","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("RO","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("stat-mech","cond-mat");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("data-an","physics");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("CL","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("dis-nn","cond-mat");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("CE","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("PF","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("PR","math");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("GT","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("FL","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("OH","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("QM","q-bio");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("DB","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("MA","cs");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("AO","nlin");
+INSERT INTO `categoryAssignment`(`sub_category`, `top_category`) VALUES ("NA","cs");
+	\end{lstlisting}
+	Damit können wir uns jetzt um die Relation $R_1$ kümmern. Da die Qualität der Daten ziemlich mies ist, müssen allerhand Ersetzungen von problematischen Zeichen, wie Anführungszeichen, Slashes etc., durchgeführt werden. Die Extraktion der Anzahl an Seiten, Tabellen und Abbildungen erfolgt mit Regular Expressions ($\to$ Einführung in die theoretische Informatik).
+	\begin{lstlisting}[style=python,tabsize=2]
+import json
+import re
+
+def getPagesFiguresTables(string):
+	# Anzahl Seiten
+	result = re.search("[0-9]+ pages", string)
+	if result:
+		pages = result.group().split(" ")[0]
+	else:
+		pages = "NULL"
+
+	# Anzahl Abbildungen
+	result = re.search("[0-9]+ figures", string)
+	if result:
+		figures = result.group().split(" ")[0]
+	else:
+		figures = "NULL"
+
+	# Anzahl Tabellen
+	result = re.search("[0-9]+ tables", string)
+	if result:
+		tables = result.group().split(" ")[0]
+	else:
+		tables = "NULL"
+
+	# den Rest des Kommentars koennte man auch noch extrahieren, aber ich habe keine Lust den Code dafuer zu schreiben
+	commentRest = "NULL"
+
+	return pages, figures, tables, commentRest
+
+with open("arxiv.json") as json_file:
+	# parsen der JSON-Datei
+	f = json.load(json_file)
+
+	# durchiterieren durch alle Paper in der Datei
+	for entry in f:
+		id = entry["id"]
+		submitter = entry["submitter"]
+		title = entry["title"].strip().replace("\n", " ")
+		comments = entry["comments"]
+		# replace \ -> \\
+		# replace ' -> \'
+		# replace " -> \"
+		# replace <newline> -> <space>
+		abstract = entry["abstract"].replace('\\', '\\\\').replace("\'", "\\'").replace("\"", '\\"').strip().replace("\n", " ")
+		update_date = entry["update_date"]
+		author = entry["author"]
+
+		pages, figures, tables, comment = getPagesFiguresTables(comments)
+
+		sql = "INSERT INTO `papers`(`id`, `title`, `submitter`, `pages`, `figures`, `tables`, `comment`, `abstract`, `update_date`, `author`) VALUES (\"{}\",\"{}\",\"{}\",{},{},{},{},\"{}\",\"{}\",\"{}\");".format(id, title, submitter, pages, figures, tables, comment, abstract, update_date, author)
+		print(sql)
+	\end{lstlisting}
+	Da kommen 100 SQL-Befehle raus, die ich aus Gründen der Übersichtlichkeit hier nicht hinkopiere.
+	
+	Damit sind unsere Tabellen mit den Primärschlüsseln gefüllt, sodass wir nun die Relation $R_3$ mit Daten füllen können.
+	\begin{lstlisting}[style=python,tabsize=2]
+import json
+
+with open("arxiv.json") as json_file:
+	# parsen der JSON-Datei
+	f = json.load(json_file)
+
+	# durchiterieren durch alle Paper in der Datei
+	for entry in f:
+		# Umwandeln der durch Leerzeichen getrennten "Liste" in ein Array
+		# z.B. categories = ["math.CA", "math.FA"]
+		id = entry["id"]
+		categories = entry["categories"].split(" ")
+
+		# fuer jede Subkategorie den Verweis setzen
+		for category in categories:
+			subCategory = category.split(".")[1] # z.B. "CA"
+			sql = "INSERT INTO `categories`(`id`, `sub_category`) VALUES (\"{}\",\"{}\");".format(id, subCategory)
+			print(sql)
+	\end{lstlisting}
+	Hier werden 168 SQL-Befehle erzeugt.
+	
+	Damit sind alle Daten in der Datenbank und wir können endlich die Aufgaben lösen:
+	\begin{itemize}
+		\item Anzahl der Veröffentlichungen in Computer Science:
+		\begin{lstlisting}[style=sql, tabsize=2]
+SELECT count(DISTINCT `categories`.`id`) 
+FROM `categories`, `categoryAssignment` 
+WHERE `categories`.`sub_category` = `categoryAssignment`.`sub_category` 
+AND `categoryAssignment`.`top_category` = "cs";
+		\end{lstlisting}
+		Es sind 100 (man würde auch von der Informatik-Fakultät nichts anderes erwarten, als dass der gesamte Datensatz nur Paper über Informatik enthält).
+		\item Anzahl der Zeichen des kürzesten Autors:
+		\begin{lstlisting}[style=sql,tabsize=2]
+SELECT `author`, LENGTH(`author`) AS `laenge` 
+FROM `papers`
+ ORDER BY `laenge` ASC;
+		\end{lstlisting}
+		Der Name ist \textit{Fajie Li} mit insgesamt 8 Zeichen Länge, aber der Name ist nur 7 Zeichen lang.
+		\item Seitenanzahl aller Veröffentlichungen:
+		\begin{lstlisting}[style=sql,tabsize=2]
+SELECT SUM(`pages`)  FROM `papers`;
+		\end{lstlisting}
+		Es sind 1704 Seiten. Ein Paper hat einen Appendix, aber die Seiten von dem sollen nicht mitgezählt werden. Deswegen wurden diese Daten auch nicht mit ihn die DB aufgenommen.
+		\item Anzahl der Abbildungen in \textit{The Complexity of HCP in Digraps with Degree Bound Two}:
+		\begin{lstlisting}[style=sql,tabsize=2]
+SELECT `figures` 
+FROM `papers` 
+WHERE `title` = "The Complexity of HCP in Digraps with Degree Bound Two";
+		\end{lstlisting}
+		Es sind 4 Abbildungen.
+		\item Autor mit den meisten Veröffentlichungen:
+		\begin{lstlisting}[style=sql,tabsize=2]
+SELECT `author`, COUNT(`author`) AS `anzahl` 
+FROM `papers` 
+GROUP BY `author` 
+ORDER BY `anzahl` DESC;
+		\end{lstlisting}
+		Es ist Tshilidzi Marwala mit 8 Veröffentlichungen.
+	\end{itemize}
+	
+\end{document}
