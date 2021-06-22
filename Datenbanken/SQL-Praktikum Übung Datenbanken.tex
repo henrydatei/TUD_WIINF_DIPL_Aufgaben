@@ -1,0 +1,214 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{er,positioning}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{sql} {language=sql}
+\lstset{language=sql,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Hul}{Hul}
+
+\def\ojoin{\setbox0=\hbox{$\bowtie$}%
+	\rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
+\def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
+\def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
+
+\title{\textbf{Datenbanken, SQL-Praktikum}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Gesucht sind Name und Einwohnerzahl aller Städte in absteigender Reihenfolge ihrer Einwohnerzahl. [3051]
+	\begin{lstlisting}[style=sql,tabsize=2]
+SELECT name, population
+FROM City
+ORDER BY population DESC
+	\end{lstlisting}
+
+	\section*{Aufgabe 2}
+	Ermitteln Sie alle Städte (Name), die sowohl an einem Fluss als auch an einem See liegen. [2]
+	\begin{lstlisting}[style=sql,tabsize=2]
+SELECT city
+FROM located
+WHERE river IS NOT NULL AND lake IS NOT NULL
+	\end{lstlisting}
+
+	\section*{Aufgabe 3}
+	Gesucht sind Name und Einwohnerzahl alle deutschen Städte in absteigender Reihenfolge ihrer Einwohnerzahl. [86]
+	\begin{lstlisting}[style=sql,tabsize=2]
+SELECT name, population
+FROM city
+WHERE country = 'D'
+ORDER BY population DESC
+	\end{lstlisting}
+	
+	\section*{Aufgabe 4}
+	 Ermitteln Sie alle Sprachen (Name), die in Ländern Europas gesprochen werden. [24]
+	\begin{lstlisting}[style=sql,tabsize=2]
+SELECT DISTINCT l.name
+FROM language l 
+INNER JOIN encompasses e ON l.country = e.country 
+WHERE e.continent = 'Europe'
+	\end{lstlisting}
+	
+	\section*{Aufgabe 5}
+	Ermitteln Sie alle Sprachen (Name), die in Ländern der EU gesprochen werden, und in wie vielen Ländern (der EU) sie gesprochen werden, absteigend geordnet nach Anzahl der Länder. [11]
+	\begin{lstlisting}[style=sql,tabsize=2]
+SELECT l.name, count(m.country)
+FROM language AS l 
+INNER JOIN is_member AS m ON l.country = m.country 
+WHERE m.organization = 'EU' AND m.type = 'member' 
+GROUP BY l.name 
+ORDER BY 2 DESC
+	\end{lstlisting}
+	
+	\section*{Aufgabe 6}
+	Gesucht sind Name, Einwohnerzahl und Name des Landes aller Hauptstädte, in denen mehr als 30\% der Bevölkerung des Landes leben, in absteigender Reihenfolge ihrer Einwohnerzahl. [17]
+	\begin{lstlisting}[style=sql,tabsize=2]
+SELECT s.name, s.population, c.name
+FROM city AS s 
+INNER JOIN country c ON s.name = c.capital AND s.country = c.code 
+WHERE s.population > 0.3 * c.population
+ORDER BY s.population DESC
+	\end{lstlisting}
+	
+	\section*{Aufgabe 7}
+	Bestimmen Sie alle Länder (Name) mit mindestens einem über 4.000 m hohen Berg. [21]
+	\begin{lstlisting}[style=sql,tabsize=2]
+SELECT DISTINCT c.name
+FROM country c 
+INNER JOIN geo_mountain gm ON c.code = gm.country 
+INNER JOIN mountain m ON gm.mountain = m.name
+WHERE m.height > 4000
+	\end{lstlisting}
+	
+	\section*{Aufgabe 8}
+	Gesucht sind alle Länder (Name) mit mindestens einer Stadt, welche mehr Einwohner hat als die Hauptstadt des Landes. [18]
+	\begin{lstlisting}[style=sql,tabsize=2]
+SELECT DISTINCT c.name
+FROM country c 
+INNER JOIN city s ON c.code = s.country 
+INNER JOIN city hs ON c.capital = hs.name AND c.code = hs.country
+WHERE s.population > hs.population
+	\end{lstlisting}
+	
+	\section*{Aufgabe 9}
+	Ermitteln Sie die Namen aller Länder mit Millionenstädten sowie der jeweiligen Gesamtpopulation aller Millionenstädte eines Landes in Reihenfolge dieser Gesamtpopulation. [68]
+	\begin{lstlisting}[style=sql,tabsize=2]
+SELECT c.name, SUM(s.population)
+FROM city s 
+INNER JOIN country c ON s.country = c.code 
+WHERE s.population > 1000000
+GROUP BY c.name
+ORDER BY 2
+	\end{lstlisting}
+	
+	\section*{Aufgabe 10}
+	Gesucht sind alle Länder (Name), die an Deutschland grenzen, sowie deren gesamte Grenzlänge. [9]
+	\begin{lstlisting}[style=sql,tabsize=2]
+SELECT c.name, sum(b2.length) AS laenge
+FROM country c 
+INNER JOIN borders b1 ON c.code = b1.country1 OR c.code = b1.country2 
+INNER JOIN borders b2 ON c.code = b2.country1 OR c.code = b2.country2
+WHERE c.code != 'D' AND (b1.country1 = 'D' OR b1.country2 = 'D')
+GROUP BY c.name	
+	\end{lstlisting}
+	
+	\section*{Aufgabe 11}
+	Ermitteln Sie die Namen aller Länder, deren Anteil an Einwohnern, welche in den Millionenstädten des Landes leben, größer als 30\% ist, aufsteigend geordnet nach diesem Anteil. [6]
+	\begin{lstlisting}[style=sql,tabsize=2]
+SELECT c.name, sum(s.population)*100/c.population AS anteil 
+FROM city s 
+INNER JOIN country c ON s.country = c.code 
+WHERE s.population > 1000000 
+GROUP BY c.name
+HAVING sum(s.population) > 0.3 * c.population
+ORDER BY anteil
+	\end{lstlisting}
+	
+	\section*{Aufgabe 12}
+	Gesucht sind alle Länder (Name), die mehr Seen als Berge haben, in aufsteigender Reihenfolge der Anzahl der Seen. Es sollen nur Länder berücksichtigt werden, in denen es sowohl Seen als auch Berge gibt. [12]
+	\begin{lstlisting}[style=sql,tabsize=2]
+SELECT c.name, count(DISTINCT gl.lake) AS "anzahl see", 
+count(DISTINCT gm.mountain) AS "anzahl berge"
+FROM country c 
+INNER JOIN geo_lake gl ON c.code = gl.country 
+INNER JOIN geo_mountain gm ON c.code = gm.country
+GROUP BY c.name
+HAVING count(DISTINCT gl.lake) > count(DISTINCT gm.mountain) 
+ORDER BY "anzahl see"
+	\end{lstlisting}
+	
+	\section*{Aufgabe 13}
+	Bestimmen Sie alle Länder (Name), die mehr Nachbarstaaten als Deutschland haben. [3]
+	\begin{lstlisting}[style=sql,tabsize=2]
+SELECT c.name, count(*) AS "anzahl nachbarn"
+FROM country c 
+INNER JOIN borders b ON c.code = b.country1 OR c.code = b.country2 
+GROUP BY c.name
+HAVING count(*) > (SELECT count(*)
+	FROM borders b
+	WHERE b.country1 = 'D' OR b.country2 = 'D')
+	\end{lstlisting}
+	
+	\section*{Aufgabe 14}
+	Bestimmen Sie die Stadt mit der größten Einwohnerzahl und das Land, in dem sie liegt. [1]
+	\begin{lstlisting}[style=sql,tabsize=2]
+SELECT c.name, s.name 
+FROM country c 
+INNER JOIN city s ON c.code = s.country
+ORDER BY s.population DESC
+LIMIT 1
+	\end{lstlisting}
+	oder
+	\begin{lstlisting}[style=sql, tabsize=2]
+SELECT c.name, s.name
+FROM country c 
+INNER JOIN city s ON c.code = s.country 
+WHERE s.population = (SELECT MAX(population) FROM city)
+	\end{lstlisting}
+	
+\end{document}
