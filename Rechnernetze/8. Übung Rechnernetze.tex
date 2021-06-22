@@ -1,0 +1,136 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Rechnernetze, Übung 8}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Anzahl der Frames berechnen:
+		\begin{align}
+			n &= 1+\left\lceil \frac{\text{Byte Cycles} - 512}{\text{Start Limiter} + F + \text{Inter Frame Gap}}\right\rceil \notag \\
+			&= 1+\left\lceil \frac{8192 - 512}{8 + 64 + 8}\right\rceil \notag \\
+			&= 97 \notag
+		\end{align}
+		Damit
+		\begin{align}
+			\eta &= \frac{n\cdot F}{n(\text{Start Limiter} + F + \text{Inter Frame Gap}) + H_{ext}} \notag \\
+			&= \frac{97\cdot 64}{97\cdot (8+64+8) + 448} \notag \\
+			&= \frac{6208}{8208} = 0.7563 \notag
+		\end{align}
+		\item Fast Ethernet
+		\begin{align}
+			\eta = \frac{F}{\text{Start Limiter} + max(F,F_{min}) + \text{Inter Frame Gap}} = \frac{128}{8+128+12} = 0.8649 \notag
+		\end{align}
+		Gigabit Ethernet
+		\begin{align}
+			\eta = \frac{F}{\text{Start Limiter} + max(F,F_{min}) + \text{Inter Frame Gap}} = \frac{128}{8+512+8} = 0.2424 \notag
+		\end{align}
+		Gigabit Ethernet mit Bursting und ohne Jumbo Frames ($n=8$)
+		\begin{align}
+			\eta = \frac{n\cdot F}{n(\text{Start Limiter} + F + \text{Inter Frame Gap}) + \underbrace{512-F}_{H_{ext}}} = \frac{8\cdot 128}{8\cdot (8+128+8) + 512 - 128} = \frac{2}{3} \notag
+		\end{align}
+		Gigabit Ethernet mit Bursting und mit Jumbo Frames ($n=55$)
+		\begin{align}
+			\eta = \frac{n\cdot F}{n(\text{Start Limiter} + F + \text{Inter Frame Gap}) + \underbrace{512-F}_{H_{ext}}} = \frac{55\cdot 128}{55\cdot (8+128+8) + 512 - 128} = 0.8478 \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Fairness = gleichberechtigten (kein Vordrängeln) und gleichmäßigen (Verteilung der Ressourcen über einen Zeitraum) in einem Netzwerk.
+		\item Während ein Fahrzeug wartet, weil gerade ein anderes über die Kreuzung fährt, kann ein drittes Fahrzeug kommen, einen Request stellen und eventuell vor dem zweiten Fahrzeug fahren.
+		\item Wenn ein Fahrzeug an eine Kreuzung kommt, sendet es einen Request an den Server und erst dann, wenn das Fahrzeug fahren darf, kommt die Rückantwort des Servers. Der Server hat intern eine Warteschlange an bisher eingetroffenen Requests und arbeitet diese nacheinander (oder priorisiert für Krankenwagen etc.) ab. Dieses Protokoll hat nur das Problem, dass ein Fahrzeug nicht wissen kann, ob seine Anfrage beim Server angekommen ist oder ob man einfach nur lange warten muss - aber so fühle ich mich auch oft an Kreuzungen :D
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item Jede Quelle bekommt erstmal $\frac{30}{4}=7.5$ Kapazität. Die ersten beiden Quellen brauchen gar nicht so viel Leistung, die überschüssige Kapazität teilen wir auf die beiden ungesättigten Quellen auf, so dass diese nur 8.75 Kapazität statt 12 bzw. 15 bekommen.
+		\item In jeder Iteration bekommt eine Quelle $i$ die folgende Kapazität:
+		\begin{align}
+			k_{i,neu} = k_{i,alt} + \text{zu verteilende Kapazität} \cdot \frac{g_i}{\sum_{\text{ungesättigt}} g_i} \notag
+		\end{align}
+		In der ersten Iteration gilt damit:
+		\begin{itemize}
+			\item Quelle 1: $k_i=16\cdot\frac{2.5}{8}=5$
+			\item Quelle 2: $k_i=16\cdot\frac{4}{8}=8$
+			\item Quelle 3: $k_i=16\cdot\frac{0.5}{8}=1$
+			\item Quelle 4: $k_i=16\cdot\frac{1}{8}=2$
+		\end{itemize}
+		Es bleibt ein Überschuss von 7 Einheiten, die auf die Quellen 3 und 4 verteilt werden müssen:
+		\begin{itemize}
+			\item Quelle 3: $k_i=1+7\cdot\frac{0.5}{1.5}=3.33$
+			\item Quelle 4: $k_i=4+7\cdot\frac{1}{1.5}=8.67$
+		\end{itemize}
+		Damit entsteht ein Überschuss von 1.67 bei Quelle 4, damit bekommt Quelle 3:
+		\begin{itemize}
+			\item Quelle 3: $k_i=3.33+1.67\cdot\frac{0.5}{0.5}=5$ 
+		\end{itemize}
+	\end{enumerate}
+
+	\section*{Aufgabe 4}
+	Beim Choke-Verfahren gilt (hier mit $\alpha = 0.3$)
+	\begin{align}
+		\alpha\cdot \text{Last}_{alt} + (a-\alpha)\cdot\text{Last}_{aktuell} = \text{Last}_{neu} \notag
+	\end{align}
+	Und wenn die neue Last über dem Schwellwert liegt, so wird ein Choke-Paket gesendet.
+	\begin{itemize}
+		\item $0\cdot 0.3 + 0.7\cdot 1 = 0.7$
+		\item $0.7\cdot 0.3 + 0.7\cdot 5 = 3.71$
+		\item $3.71\cdot 0.3 + 0.7\cdot 8 = 6.71$
+		\item $6.71\cdot 0.3 + 0.7\cdot 9 = 8.31 \Rightarrow$ Choke-Paket wird gesendet
+		\item $8.31\cdot 0.3 + 0.7\cdot 9 = 8.79 \Rightarrow$ Choke-Paket wird gesendet
+		\item $8.79\cdot 0.3 + 0.7\cdot 7 = 7.54$
+		\item $7.54\cdot 0.3 + 0.7\cdot 2 = 3.66$
+	\end{itemize}
+	
+\end{document}
