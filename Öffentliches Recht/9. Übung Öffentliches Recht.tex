@@ -1,0 +1,104 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage[unicode]{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=blue,
+	filecolor=blue,
+	linkcolor=blue,
+	urlcolor=blue
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Öffentliches Recht, Übung 9}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: Begriff und Gegenstände der Verwaltung}
+	\underline{allgemeines Verwaltungsrecht:} Das allgemeine Verwaltungsrecht regelt die grundlegenden Rechtsinstitute und Verfahrensweisen, die dem Grunde nach in jedem Verwaltungsverfahren – unabhängig von dem jeweiligen Sachgebiet – anzutreffen sind und benötigt werden können. Im Einzelnen betrifft das allgemeine Verwaltungsrecht die Rechtsquellen des Verwaltungsrechts, die Handlungsformen der Verwaltung, das Verfahren für das Zustandekommen von Verwaltungsakten, die zwangsweise Durchsetzung von Verwaltungsentscheidungen (Verwaltungsvollstreckung), die Nutzung einer Anstalt des öffentlichen Rechts und die Nutzung öffentlicher Sachen, das Recht der öffentlich-rechtlichen Schadensersatz- und Entschädigungsleistungen und die Organisation der Verwaltung.
+	
+	\underline{besonderes Verwaltungsrecht:} Das besondere Verwaltungsrecht ist das "spezielle Verwaltungsrecht", das auf die Erfordernisse jeweils bestimmter, sachlicher Verwaltungsaufgaben besonders zugeschnitten ist. Die Bestimmungen des besonderen Verwaltungsrechts treten neben das allgemeine Verwaltungsrecht, indem sie auf dessen Bestimmungen aufbauen, sie ergänzen oder auch modifizieren. Umgekehrt vervollständigt das allgemeine Verwaltungsrecht das besondere dort, wo letzteres keine eigenständigen Regelungen getroffen hat. Die folgende Aufstellung gibt eine mögliche, verbreitete systematische Strukturierung des besonderen Verwaltungsrechts wieder, ohne dass diese Aufstellung vollständig, in jeder Hinsicht überschneidungsfrei oder gar die einzig richtige wäre: das Ordnungsrecht bzw. das Recht der Gefahrenabwehr, das Kommunalrecht, das Raumordnungs-, Bau- und Fachplanungsrecht, das Wirtschaftsverwaltungs- und Wirtschaftsaufsichtsrecht, das Umweltrecht, ...
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://de.wikipedia.org/wiki/Verwaltungsrecht_(Deutschland)}
+	\end{itemize}
+
+	\section*{Aufgabe 2: Rechtsquellen der Verwaltung}
+	\begin{enumerate}[label=(\alph*)]
+		\item Das Ermessen räumt einem behördlichen Entscheidungsträger gewisse Freiheiten bei der Rechtsanwendung ein. Enthält eine Rechtsnorm auf der Rechtsfolgenseite ein Ermessen, so trifft die Behörde keine gebundene Entscheidung, sondern kann unter mehreren möglichen Entscheidungen wählen. In bestimmten Situationen wird das Ermessen so stark eingeengt, dass nur noch eine Entscheidung richtig (rechtsfehlerfrei) ist. Dann spricht man von Ermessensreduzierung auf Null (oder Ermessensreduktion auf Null). Aus der Ermessensreduzierung auf Null ergibt sich eine gebundene Entscheidung. Einen Sonderfall stellt das sogenannte intendierte Ermessen dar. Die Rechtsfigur des intendierten Ermessens geht auf die Rechtsprechung des Bundesverwaltungsgerichts zurück. Als klassisches Beispiel einer Vorschrift mit intendiertem Ermessen gilt § 15 Abs. 2 S. 1 GewO, wonach die zuständige Behörde einen Gewerbebetrieb schließen kann, wenn dieser ohne die vorgeschriebene gewerberechtliche Erlaubnis geführt wird. Die Norm wird so ausgelegt, dass die Betriebsschließung die vom Gesetzgeber vorgezeichnete (Regel-)Entscheidung ist. Das Absehen von der Maßnahme ist hiernach der Ausnahmefall.
+		\item § 40 VwVfG: \textit{Ist die Behörde ermächtigt, nach ihrem Ermessen zu handeln, hat sie ihr Ermessen entsprechend dem Zweck der Ermächtigung auszuüben und die gesetzlichen Grenzen des Ermessens einzuhalten.}
+		\item \underline{Ermessensunterscheitung:} Ermessensausfall (auch als Ermessensnichtgebrauch oder Ermessensunterschreitung bezeichnet) liegt vor, wenn die Behörde das ihr zustehende Ermessen gar nicht ausübt, etwa weil sie nicht erkennt, dass ihr überhaupt ein Ermessen zusteht oder weil sie es absichtlich unterlässt. \underline{Ermessensüberschreitung} ist anzunehmen, wenn sich die Behörde nicht an den Rahmen hält, der vom Gesetz als äußerste Entscheidungsgrenze vorgegeben wird, d. h. eine Rechtsfolge gewählt wird, die generell oder im Einzelfall unzulässig ist. \underline{Ermessensfehlgebrauch} (oder Ermessensmissbrauch) bedeutet, dass die Behörde den Sinn und Zweck des Gesetzes nicht richtig erkennt und ihre Ermessensentscheidung auf fehlerhafte Überlegungen stützt.
+	\end{enumerate}
+
+		Quellen:
+	\begin{itemize}
+		\item \url{https://de.wikipedia.org/wiki/Ermessen}
+		\item \url{https://www.gesetze-im-internet.de/vwvfg/__40.html}
+	\end{itemize}
+
+	\section*{Aufgabe 3: Gesetzmäßigkeit der Verwaltung (Wdh.)}
+	Grundsatz vom Vorrang des Gesetzes: kein Handeln gegen das Gesetz
+	
+	Grundsatz vom Vorbehalt des Gesetzes: kein Handeln ohne Gesetz
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://de.wikipedia.org/wiki/Verwaltungsrecht_(Deutschland)}
+	\end{itemize}
+
+	\section*{Aufgabe 4: Organisation der Verwaltung}
+	\begin{enumerate}[label=(\alph*)]
+		\item \underline{Unmittelbare Staatsverwaltung:} Die Verwaltung innerhalb der Länder wird in unmittelbare und mittelbare Staatsverwaltung unterteilt. Die unmittelbare Staatsverwaltung wird vom Land selbst in seiner Funktion als Hoheitsträger mit eigener Rechtspersönlichkeit als Körperschaft des öffentlichen Rechts ausgeübt. Es bedient sich hierbei der rechtlich unselbstständigen Landesbehörden. (Verwaltungs-)Träger der unmittelbaren Staatsverwaltung ist das Land. \underline{Mittelbare Staatsverwaltung:} Bei der mittelbaren Staatsverwaltung werden die Verwaltungsaufgaben des Staates anders als bei der unmittelbaren Staatsverwaltung nicht durch eigene staatliche Behörden der Länder erfüllt, sondern rechtlich selbstständigen Verwaltungsträgern zur Erledigung übertragen. Öffentlich-rechtlich organisierte Träger dieser mittelbaren Staatsverwaltung sind Körperschaften, Stiftungen und Anstalten des öffentlichen Rechts.
+		\item Die öffentliche Verwaltung ist in der Bundesrepublik Deutschland hauptsächlich in drei verschiedene Trägerschaften aufgeteilt: Bund, Länder und Kommunen.
+		\item Die Ausübung der staatlichen Befugnisse und die Erfüllung der staatlichen Aufgaben ist in erster Linie Sache der Länder. Die Gemeinden und Gemeindeverbände haben darüber hinaus das Recht zur Selbstverwaltung. So bestimmt es das Grundgesetz in den Artikeln 20, 28 und 30.
+		\item Unter "Bundesauftragsverwaltung" wird die Ausführung von Bundesgesetzen durch die Verwaltungsbehörden der Länder bezeichnet. Grundsätzlich haben die Länder die Verwaltungshoheit inne und führen Bundesgesetze nur als eigene Angelegenheit aus. Doch in bestimmten Fällen muss die Bundesauftragsverwaltung praktiziert werden, was bedeutet, dass die Länder eine Verwaltung im Auftrag des Bundes vornehmen. Dis ist beispielsweise generell bei der Verwaltung von Bundesstraßen sowie von Geldleistungen des Bundes der Fall, kann aber auch beispielsweise bei der Wehr- und Zivildienstverwaltung, der Kernenergieverwaltung oder bei der Durchführung des Lastenausgleichs für Kriegsschäden angewendet werden.
+		\item Der Vollzug von Bundesgesetzen durch bundeseigene Verwaltung ist nur möglich, sofern das Grundgesetz dies anordnet oder zu einer entsprechenden Regelung ermächtigt. Beispiele für bundeseigene Verwaltung sind der Auswärtige Dienst und die Bundesfinanzverwaltung (Art. 87 Abs. 1 S. 1) sowie die Bundespolizei. Auch für Kernbereiche der Verkehrsinfrastruktur soll ein bundesweit einheitlicher Gesetzesvollzug sichergestellt werden, etwa für den Eisenbahnverkehr (Art. 87e Abs. 1 S. 1), die Bundeswasserstraßen und den Luftverkehr (Art. 87d Abs. 1 S.1).
+		\item Kommunale Selbstverwaltung nennt man die Selbstverwaltung der Verwaltungseinheiten der Kommunalebene (sogenannte kommunale Gebietskörperschaften). Die kommunale Selbstverwaltung ist eines der Grundprinzipien unseres demokratischen Gemeinwesens und hat in Deutschland durch die Selbstverwaltungsgarantie in Artikel 28 Absatz 2 Satz 1 des Grundgesetzes der Bundesrepublik Deutschland (GG) Verfassungsrang. Das Selbstverwaltungsrecht bedeutet vor allem, dass die Gemeinden im Rahmen des eigenen Wirkungskreises ihre Aufgaben unabhängig und eigenverantwortlich ohne Weisungen von übergeordneten Stellen erfüllen. Das Selbstverwaltungsrecht sichert den Gemeinden einen Aufgabenbereich zu, der grundsätzlich alle Angelegenheiten der örtlichen Gemeinschaft umfasst (Allzuständigkeit der Gemeinde). Das Selbstverwaltungsrecht umfasst neben der Gebietshoheit als Ausdruck des räumlich-persönlichen Hoheitsbereichs insbesondere folgende Bereiche:
+		\begin{itemize}
+			\item die Satzungshoheit, das heißt die Befugnis der Gemeinde, ihre eigenen Angelegenheiten durch den selbstverantwortlichen Erlass von Satzungen zu regeln,
+			\item die Personalhoheit, das heißt die Befugnis, eigenes Personal auszuwählen, anzustellen, zu befördern und zu entlassen,
+			\item die Finanzhoheit, das heißt das Recht der Gemeinde, ihre Einnahmen- und Ausgabenwirtschaft im Rahmen eines geordneten Haushaltswesens selbständig zu führen,
+			\item die Planungshoheit, das heißt die Befugnis, die bauliche Entwicklung in der Gemeinde zu ordnen,
+			\item die Organisationshoheit, das heißt das Recht der Gemeinde, die eigene innere Organisation nach ihrem Ermessen auszurichten, und
+			\item die Verwaltungshoheit, das heißt das Recht der Gemeinde, jeweils im Rahmen der gesetzlichen Regelungen die zur Durchführung von Gesetzen, Verordnungen und Satzungen notwendigen Verwaltungsakte zu erlassen und gegebenenfalls zwangsweise durchzusetzen.
+		\end{itemize}
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://www.juracademy.de/kommunalrecht-baden-wuerttemberg/staatsverwaltung.html}
+		\item \url{https://www.bpb.de/politik/grundfragen/24-deutschland/40472/traeger-der-oeffentlichen-verwaltung}
+		\item \url{https://www.im.nrw/themen/verwaltung/strukturen-und-aufgaben/verwaltung-auf-drei-ebenen}
+		\item \url{https://www.juraforum.de/lexikon/bundesauftragsverwaltung}
+		\item \url{https://www.bundestag.de/parlament/grundgesetz/gg-serie-10-bundesgesetze-bundesverwaltung-634552}
+		\item \url{https://www.stmi.bayern.de/kub/komselbstverwaltung/index.php}
+	\end{itemize}
+	
+\end{document}
