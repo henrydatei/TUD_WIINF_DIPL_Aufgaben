@@ -1,0 +1,142 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=blue,
+	filecolor=blue,
+	linkcolor=blue,
+	urlcolor=blue
+}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\epsilon}{\varepsilon}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\DeclareMathOperator{\SD}{SD}
+
+\title{\textbf{Grundlagen des Finanzmanagements, Tutorium 5}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 4K126: Investitions- und Finanzierungstheorie}
+	\begin{enumerate}[label=(\alph*)]
+		\item Für einen Fremdkapitalgeber ist das Bereitstellen von Fremdkapital solange risikolos, wie er garantiert sein Geld + Zinsen zurückbekommt. Bei dem Investitionsobjekt kommen in jedem Fall mindestens 795 000 \EUR\, zurück, das Geld muss für Kredit $K$ + Zinsen $Z$ reichen, also
+		\begin{align}
+			\text{795 000 \EUR} &= K + Z \notag \\
+			&= 1.06\cdot K \notag \\
+			K &= \text{750 000 \EUR} \notag
+		\end{align}
+		Mit 750 000 \EUR\, Fremdkapital besteht das Investitionsobjekt nur noch aus weiteren 250 000 \EUR\, Eigenkapital, das heißt der Verschuldungsgrad ist 3.
+		\item Der erwartete Bruttorückfluss ist
+		\begin{align}
+			\E(\text{Bruttorückfluss}) = \frac{\text{795 000 \EUR} + \text{1 200 000 \EUR} + \text{1 500 000 \EUR}}{3} = \text{1 165 000 \EUR} \notag
+		\end{align}
+		also ein \textit{Gewinn} von 165 000 \EUR. Das entspricht 16.5 \%.
+		\item Die Leverage-Formel lautet
+		\begin{align}
+			r_E = r_U + \underbrace{\frac{D}{E}}_{\text{Verschuldungsgrad}}\left(r_U - r_D\right) \notag
+		\end{align}
+		\begin{itemize}
+			\item Verschuldungsgrad 1: $r_E=0.165 + 1(0.165 - 0.06) = 0.27$
+			\item Verschuldungsgrad 2: $r_E=0.165 + 2(0.165 - 0.06) = 0.375$
+			\item Verschuldungsgrad 3: $r_E=0.165 + 3(0.165 - 0.06) = 0.48$
+		\end{itemize}
+		\item Von dem zu erwartenden Bruttorückfluss müssen Kreditsumme, Zinsen und eingesetztes Eigenkapital abgezogen werden, der Rest sind die \textit{Zinsen} des Eigenkapitals, also 1 165 000 \EUR\, - 750 000 \EUR\, - 45 000 \EUR\, - 250 000 \EUR\, = 120 000 \EUR. Und das entspricht $r_E = $ 48 \%.
+		\item Schauen wir uns die Zufallsvariable $Y$ als den Rest des Bruttorückflusses nach Abzug von Fremdkapital, Zinsen und Eigenkapital an. Für einen Verschuldungsgrad von 0 hat $Y$ die Ausprägungen -205 000 \EUR, 200 000 \EUR\, und 500 000 \EUR. Mit $\mu=$ 165 000 \EUR\, folgt $\sigma^2=$ 83 450 000 \EUR\, und damit $\sigma=$ 288 889 \EUR. Bei einem Eigenkapital von 1 Million \EUR\, ist das $\sigma(r_E)=$ 28.89 \%. 
+		
+		Bei einem Verschuldungsgrad von 3 hat $Y$ die Ausprägungen -250 000 \EUR, 155 000 \EUR\, und 455 000 \EUR. $\mu=$ 120 000 \EUR, aber $\sigma^2$ bleibt gleich. Bei jetzt aber nur 250 000 \EUR\, Eigenkapital folgt $\sigma(r_E)=$ 115.55 \%.
+		\item Offensichtlich ist $\sigma$ unabhängig vom Verschuldungsgrad und $\sigma(r_E)=\frac{\text{288 889 \EUR}}{E}$ lässt auf einen inversen Zusammenhang schließen.
+	\end{enumerate}
+	
+	\section*{Aufgabe 4K149: Kapitalstruktur}
+	\begin{enumerate}[label=(\alph*)]
+		\item Offensichtlich ist der Marktwert des Gesamtkapitals 20 000 \EUR, $r_D=\frac{\text{1 000 \EUR}}{\text{10 000 \EUR}}=10\%$, $r_E=\frac{100\text{ Aktien}\cdot \text{12 \EUR\, Dividende/Aktie}}{\text{10 000 \EUR}}=12\%$ und damit $r_{GK}=\frac{\text{10 000 \EUR}}{\text{20 000 \EUR}}\cdot 10\% + \frac{\text{10 000 \EUR}}{\text{20 000 \EUR}}\cdot 12\%=11\%$. Da das Unternehmen Vollausschüttung betreibt, können wir aus den Ausgaben die Einnahmen bestimmen. Die Ausgaben sind 1 000 \EUR\, + 100 $\cdot$ 12 \EUR\, = 2 200 \EUR, was also dem Betriebsergebnis entsprechen muss.
+		\item Das Fremdkapital ändert sich gar nicht, nur das Eigenkapital steigt um 5 000 \EUR\, und damit $r_E=\frac{100\text{ Aktien}\cdot \text{12 \EUR\, Dividende/Aktie}}{\text{15 000 \EUR}}=8\%$ und $r_{GK}=\frac{\text{10 000 \EUR}}{\text{25 000 \EUR}}\cdot 10\% + \frac{\text{15 000 \EUR}}{\text{25 000 \EUR}}\cdot 8\%=8.8\%$. Das Betriebsergebnis ändert sich nicht, weil sich die Ausgaben nicht ändern und damit ändert sich auch nicht die Dividende.
+		\item Das Unternehmen B ist unterbewertet, verspricht aber die gleichen Ausschüttungen wie A. Damit sollte man sein Kapital aus A abziehen und in B stecken. Der Verkauf aller Anteile von A bringt $C=a\cdot \text{10 000 \EUR}$. Jetzt nimmt man noch einen Kredit auf, in Höhe von
+		\begin{align}
+			NOM &= C\cdot\frac{L_A-L_B}{L_B+1} \notag \\
+			&= C \notag
+		\end{align}
+		mit $L_A=1$ (Verschuldungsgrad 1) und $L_B=0$ (Verschuldungsgrad 0). Das gesamte Kapital in Höhe von $2a\cdot \text{10 000 \EUR}$ steckt man nun in B und erhält als Arbitragegewinn
+		\begin{align}
+			\text{Arbitragegewinn} = \frac{C+NOM}{E_B}\cdot\text{Nettogewinn}_B - NOM\cdot r_f - a\cdot\text{Nettogewinn}_A \notag
+		\end{align}
+		mit
+		\begin{itemize}
+			\item Nettogewinn$_B=$ 2 200 \EUR, da kein Kredit abbezahlt werden muss.
+			\item $r_f=0.1$, da dieser auf dem Kapitalmarkt überall identisch ist und Unternehmen A 10\% FK-Zinsen zahlen muss.
+			\item Nettogewinn$_A=$ 2 200 \EUR\ - 1 000 \EUR\, = 1 200 \EUR.
+			\item Unternehmen B gehört der gleichen leistungswirtschaftlichen Risikoklasse wie Unternehmen A an, damit sind die WACC's der Unternehmen gleich. Das bedeutet
+			\begin{align}
+				0.11 &= r_{WACC}^B = \frac{\text{Bruttoergebnis}}{E_B+D_B} \notag \\
+				E_B &= \text{20 000 \EUR} \notag
+			\end{align}
+			Allerdings würde das nur gelten, wenn B fair bewertet wäre. Weiterhin gilt für das Eigenkapital $E_B=\text{\# Aktien}\cdot P$. Der Preis pro Aktie des Unternehmens B ist im Gleichgewicht 100 \EUR, genau wie der Preis einer Aktie von Unternehmen A ($\frac{\text{10 000 \EUR}}{100\text{ Aktien}}$), da ja beide Unternehmen der selben leistungswirtschaftlichen Risikoklasse angehören. Das heißt von Unternehmen B werden 200 Aktien gehandelt. Da der Preis einer Aktie von B kleiner als der faire Preis von 100 \EUR\, ist, ist der Marktwert des Eigenkapitals $E_B=200\cdot (100\text{ \EUR}-\epsilon)$.
+		\end{itemize}
+		Damit ergibt sich
+		\begin{align}
+			\text{Arbitragegewinn} &= \frac{2a\cdot\text{10 000 \EUR}}{200\cdot (100\text{ \EUR}-\epsilon)}\cdot\text{2 200 \EUR} - a\cdot\text{10 000 \EUR}\cdot 0.1 - a\cdot\text{1 200 \EUR} \notag \\
+			&= \frac{100a}{100\text{ \EUR}-\epsilon}\cdot \text{2 200 \EUR} - a\cdot \text{2 200 \EUR} \notag \\
+			&= \frac{a\cdot\epsilon\cdot\text{2 200 \EUR}}{100\text{ \EUR} - \epsilon} \notag
+		\end{align}
+		Der individuelle Zinssatz ist dann
+		\begin{align}
+			r_i &= \frac{\frac{C+NOM}{E_B}\cdot\text{Nettogewinn}_B - NOM\cdot r_f}{C} \notag \\
+			&= \frac{\frac{a\cdot 1000\text{ \EUR}\cdot (\epsilon + 120\text{ \EUR})}{100\text{ \EUR}-\epsilon}}{a\cdot\text{10 000 \EUR}} \notag \\
+			&= \frac{\epsilon + 120\text{ \EUR}}{10(100\text{ \EUR} - \epsilon)} \notag
+		\end{align}
+		Und damit ist der Barwert dann
+		\begin{align}
+			BW(\text{Arbitragegewinn}) &= \frac{\text{Arbitragegewinn}}{r_i} \notag \\
+			&= \frac{\frac{a\cdot\epsilon\cdot\text{2 200 \EUR}}{100\text{ \EUR} - \epsilon}}{\frac{\epsilon + 120\text{ \EUR}}{10(100\text{ \EUR} - \epsilon)}} \notag \\
+			&= \frac{a\cdot\epsilon\cdot\text{22 000 \EUR}}{\epsilon + 120\text{ \EUR}} \notag
+		\end{align}
+	\end{enumerate}
+	
+\end{document}
