@@ -1,0 +1,268 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{longtable}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Rechnernetze, Übung 9}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Interpretation:
+		\begin{itemize}
+			\item \textit{www}: hostname
+			\item \textit{inf}: subdomain
+			\item \textit{tu-dresden}: domain
+			\item \textit{de}: toplevel-domain
+		\end{itemize}
+		\item Client sendet Namen, zu dem er die IP wissen will. DNS-Server organisiert die IP, indem er selbst in seiner Tabelle nachschaut, oder, wenn es keinen passenden Eintrag gibt, fragt er einen übergeordneten DNS-Server. Hat der DNS-Server die IP beschafft, sendet er sie an den Client zurück.
+		\item \texttt{dig www.example.com A} liefert
+		\begin{lstlisting}[tabsize=2]
+; <<>> DiG 9.10.6 <<>> www.example.com A
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 44774
+;; flags: qr rd ra ad; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;www.example.com.		IN	A
+
+;; ANSWER SECTION:
+www.example.com.	2197	IN	A	93.184.216.34
+
+;; Query time: 62 msec
+;; SERVER: 208.67.222.222#53(208.67.222.222)
+;; WHEN: Thu Jun 24 13:23:31 CEST 2021
+;; MSG SIZE  rcvd: 60
+		\end{lstlisting}
+		und damit die IP-Adresse 93.184.216.34. 
+		
+		\texttt{dig tu-dresden.de MX} liefert
+		\begin{lstlisting}[tabsize=2]
+; <<>> DiG 9.10.6 <<>> tu-dresden.de MX
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 26730
+;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;tu-dresden.de.			IN	MX
+
+;; ANSWER SECTION:
+tu-dresden.de.		2932	IN	MX	20 mailin5.zih.tu-dresden.de.
+tu-dresden.de.		2932	IN	MX	20 mailin6.zih.tu-dresden.de.
+
+;; Query time: 62 msec
+;; SERVER: 208.67.222.222#53(208.67.222.222)
+;; WHEN: Thu Jun 24 13:24:39 CEST 2021
+;; MSG SIZE  rcvd: 94
+		\end{lstlisting}
+		und damit die Adressen mailin5.zih.tu-dresden.de und mailin6.zih.tu-dresden.de. 
+		
+		\texttt{dig tu-dresden.de} liefert
+		\begin{lstlisting}[tabsize=2]
+; <<>> DiG 9.10.6 <<>> tu-dresden.de
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 41062
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;tu-dresden.de.			IN	A
+
+;; ANSWER SECTION:
+tu-dresden.de.		600	IN	A	141.76.39.140
+
+;; Query time: 62 msec
+;; SERVER: 208.67.222.222#53(208.67.222.222)
+;; WHEN: Thu Jun 24 13:26:17 CEST 2021
+;; MSG SIZE  rcvd: 58
+		\end{lstlisting}
+		und \texttt{dig www.tu-dresden.de} liefert
+		\begin{lstlisting}[tabsize=2]
+; <<>> DiG 9.10.6 <<>> www.tu-dresden.de
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 61835
+;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;www.tu-dresden.de.		IN	A
+
+;; ANSWER SECTION:
+www.tu-dresden.de.	4450	IN	CNAME	tucms.wcms.tu-dresden.de.
+tucms.wcms.tu-dresden.de. 600	IN	A	141.76.39.140
+
+;; Query time: 62 msec
+;; SERVER: 208.67.222.222#53(208.67.222.222)
+;; WHEN: Thu Jun 24 13:27:19 CEST 2021
+;; MSG SIZE  rcvd: 87
+		\end{lstlisting}
+		Ein CNAME Resource Record (CNAME RR) ist im Domain Name System (DNS) dazu vorgesehen, einer Domäne einen weiteren Namen zuzuordnen. Die Abkürzung "CNAME“" steht für \textit{canonical name} (engl. \textit{canonical} = anerkannt) und bezeichnet daher den primären, quasi echten Namen. (\url{https://de.wikipedia.org/wiki/CNAME_Resource_Record}). 
+		
+		\texttt{dig \_ldap.\_tcp.google.com SRV} liefert
+		\begin{lstlisting}[tabsize=2]
+; <<>> DiG 9.10.6 <<>> _ldap._tcp.google.com SRV
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 53873
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;_ldap._tcp.google.com.		IN	SRV
+
+;; ANSWER SECTION:
+_ldap._tcp.google.com.	86400	IN	SRV	5 0 389 ldap.google.com.
+
+;; Query time: 63 msec
+;; SERVER: 208.67.222.222#53(208.67.222.222)
+;; WHEN: Thu Jun 24 13:31:41 CEST 2021
+;; MSG SIZE  rcvd: 85
+		\end{lstlisting}
+		\item 1 Tag = 86400 Sekunden. Damit ist die Tabelle
+		\begin{center}
+			\begin{tabular}{c|c|c|c|c}
+				\textbf{NAME} & \textbf{TTL} & \textbf{CLASS} & \textbf{TYPE} & \textbf{VALUE} \\
+				\hline
+				jupiter & 86400 & IN & A & 117.186.1.1 \\
+				jupiter & 86400 & IN & AAAA & 2001:db8:85a3:8d3::1 \\
+				saturn & 86400 & IN & A & 117.186.1.2 \\
+				saturn & 86400 & IN & AAAA & 2001:db8:85a3:8d3::2 \\
+				rn-edu.de. & 86400 & IN & NS & sonne \\
+				sonne & 86400 & IN & A & 117.186.1.3 \\
+				sonne & 86400 & IN & AAAA & 2001:db8:85a3:8d3::3 \\
+				\_sip.\_tcp.rn-edu.de. & 86400 & IN & SRV & 0 0 5060 mond.rn-edu.de. \\
+				\_sip.\_udp.rn-edu.de. & 86400 & IN & SRV & 0 0 5060 mond.rn-edu.de. \\
+				mond & 86400 & IN & A & 117.186.1.4 \\
+				mond & 86400 & IN & AAAA & 2001:db8:85a3:8d3::4 \\
+			\end{tabular}
+		\end{center}
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	Bei Base64 wird das ASCII-Alphabet, in dem jedes Zeichen aus 8 Bit besteht (insgesamt $2^8=256$ mögliche Zeichen), in ein Alphabet transformiert, in welchem die Zeichen nur 6 Bit benötigen (insgesamt $2^6=64$ mögliche Zeichen). Dazu nimmt man 3 Zeichen des ASCII-Alphabetes (24 Bit) und wandelt diese in 4 Zeichen des Base64-Alphabets um (24 Bit). Falls solche Gruppen aus 3 Zeichen nicht voll werden, füllt man diese einfach auf 24 Bit auf. Bei 20.000 Byte Binärdatei gibt es 6.666 volle Gruppen und 1 Gruppe, die mit einem Zeichen aufgefüllt werden muss, also insgesamt 6.667 Gruppen. Jede Gruppe wird durch 4 Zeichen des Base64-Alphabets repräsentiert, sodass wir auf insgesamt 26.668 Byte kommen. Nach je 76 Byte wird ein CR-LF gesendet, das sind insgesamt 351 á 2 Byte. Insgesamt werden nun also 27.370 Byte gesendet.
+	
+	Moderne Webanwendungen nutzen Base64-Codierung zur Übertragung von Binärdaten zwischen Client und Browser. Base64-Codierung kann dabei clientseitig im Browser (JavaScript) durchgeführt werden.
+
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item DNS-Request stellen, Daten vom Webserver holen und darstellen
+		\item URL: gaia.cs.umass.edu/cs453/index.html \\
+		HTTP-Version: 1.1 \\
+		persistente Verbindung: ja, wird angefragt \\
+		IP ist nicht Bestandteil von HTTP
+		\item Statuscode 200 $\to$ Dokument wurde gefunden \\
+		Datum der Antwort: Tue, 07 Mar 2006 12:39:45GMT \\
+		letzte Modifikation: Sat, 10 Dec 2005 18:27:46GMT \\
+		Größe in Bytes: 3874 \\
+		ersten 5  Bytes: <!doc \\
+		persistente Verbindung wurde aufgebaut
+		\item Protokoll: HTTP, Dienst: Programm, welches Funktionen über Schnittstellen bereitstellt
+	\end{enumerate}
+
+	\section*{Aufgabe 4}
+	Tabelle
+	\begin{center}
+		\begin{longtable}{c|c|c|c|c}
+			\textbf{Absender} & \textbf{Ziel} & \textbf{Protokoll} & \textbf{Methode/Antwort} & \textbf{Inhalt} \\
+			\hline
+			Client & DNS-Server & DNS & query & URL vom Webserver (www.heise.de) \\
+			DNS-Server & Client & DNS & query response & IP vom Webserver \\
+			Client & Webserver & TCP & SYN & \\
+			Webserver & Client & TCP & SYN, ACk & \\
+			Client & Webserver & TCP & ACK & \\
+			Client & Webserver & HTTP & GET /tools & Ziel-URL \\
+			Webserver & Client & TCP & ACK & \\
+			Webserver & Client & HTTP & 200 OK & Dokumentdaten \\
+			Client & Webserver & TCP & ACK & \\
+			Webserver & Client & TCP & ACK & \\
+			Client & Webserver & TCP & TCP Keep-alive & \\
+			Webserver & Client & TCP & TCP Keep-alive & \\
+			\dots & \dots & \dots & \dots & \\
+			Webserver & Client & TCP & FW & \\
+			Client & Webserver & TCP & ACK
+		\end{longtable}
+	\end{center}
+
+	\section*{Aufgabe 5}
+	\begin{enumerate}[label=(\alph*)]
+		\item Schichten:
+		\begin{itemize}
+			\item Sicherungsschicht: Quelle und Ziel sind der vorangegangene und nachfolgende Knoten, Protokoll z.B. HDLC oder PPP
+			\item Vermittlungsschicht: Quelle und Ziel sind der vorangegangene und nachfolgende Knoten, Protokoll z.B. IP
+			\item Transportschicht: Quelle: 141.76.42.42, Ziel: 141.30.111.111, Protokoll: z.B. TCP
+		\end{itemize}
+		Auf dem Rückweg vertauschen sich Quelle und Ziel.
+		\item ?
+	\end{enumerate}
+
+	\section*{Aufgabe 6}
+	\begin{enumerate}[label=(\alph*)]
+		\item Manager $\leftarrow$ GET $\leftarrow$ Agent \\
+		Manager $\rightarrow$ RESPONSE $\rightarrow$ Agent
+		\item Manager $\leftarrow$ GETBULK $\leftarrow$ Agent \\
+		Manager $\rightarrow$ RESPONSE $\rightarrow$ Agent
+		\item Manager $\rightarrow$ TRAP $\rightarrow$ Agent
+		\item Manager $\leftarrow$ SET $\leftarrow$ Agent \\
+		Manager $\rightarrow$ RESPONSE $\rightarrow$ Agent
+	\end{enumerate}
+	
+\end{document}
