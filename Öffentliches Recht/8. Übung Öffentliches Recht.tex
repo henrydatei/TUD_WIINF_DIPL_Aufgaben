@@ -1,0 +1,158 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage[unicode]{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=blue,
+	filecolor=blue,
+	linkcolor=blue,
+	urlcolor=blue
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Öffentliches Recht, Übung 8}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: Menschenwürde - Grundlagen und Schutzbereich (Art. 1 I GG)}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wenn etwas immer einen Wert hat, sagt man: Es hat eine Würde. ... Menschenwürde bedeutet, dass jeder Mensch wertvoll ist, weil er ein Mensch ist. In Artikel 1 (1) des Grundgesetzes steht: Die Würde des Menschen ist unantastbar.
+		\item Sachlicher Schutzbereich: Der Schutzbereich umfasst sowohl das Recht zu leben (körperliches Dasein) bzw. zu sterben (Selbsttötung, Einstellung lebensverlängernder Maßnahmen), als auch das Recht auf Gesundheit im biologisch-physischen und psychischen Sinn.
+		\item Art. 9 I GG: Vereinigungfreiheit: Eine Vereinigung ist ein Zusammenschluss von mindestens zwei Personen. Es ist nebensächlich, ob diese abstrakte Wünsche, wie ein Verein zur Rettung der Menschheit, oder eine profitorientierte Gesellschaft, wie eine AG oder GmbH, verfolgen. Dieses nur Deutschen zustehende Grundrecht der Vereinsfreiheit, das aber durch Menschenrechtskonvention und Vereinsgesetz auch Ausländern zugestanden wird, hat eine erhebliche Drittwirkung, das heißt, es gilt auch zwischen Verein und Privatpersonen.
+		\item Der Schutzbereich des Art. 1 I GG umfasst nicht nur den Zeitraum von der Geburt bis zum Tode, sondern beginnt bereits vor der Geburt und geht über den Tod hinaus
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://www.bpb.de/nachschlagen/lexika/lexikon-in-einfacher-sprache/249974/menschenwuerde}
+		\item \url{https://www.uni-heidelberg.de/institute/fak2/mussgnug/billau/Definitionen.doc}
+		\item \url{https://www.lecturio.de/magazin/art-9-i-gg-vereinigungfreiheit/}
+		\item \url{https://www.juraindividuell.de/pruefungsschemata/die-menschenwuerde-art-1-i-gg/}
+	\end{itemize}
+
+	\section*{Aufgabe 2: Menschenwürde - Eingriff und verfassungsrechtliche Rechtfertigung}
+	\begin{enumerate}[label=(\alph*)]
+		\item \textit{Die Würde des Menschen ist unantastbar}, 1 GG ist die Würde des Menschen unantastbar. Auch freiwillig kann niemand auf seine Menschenwürde verzichten. Dieses Grundrecht garantiert jenes Existenzminimum, das ein menschenwürdiges Dasein erst ausmacht.
+		\item Aus der Menschenwürde ergibt sich nach dem Verständnis des Bundesverfassungsgerichts der Anspruch eines jeden Menschen, in allen staatlichen Verfahren stets als Subjekt und nie als bloßes Objekt behandelt zu werden. jeder einzelne Mensch hat damit ein Mitwirkungsrecht, er muss staatliches Verhalten, das ihn betrifft, selber beeinflussen können. 
+		\item Ein Eingriff in den Schutzbereich der Menschenwürde ist immer dann anzunehmen, wenn dem Betroffenen in menschenverachtender Weise seine Menschqualität abgesprochen und er zum Objekt eines beliebigen Verhaltens degradiert wird.
+		\item Eingriff in den Schutzbereich: Degradierung zum bloßen Objekt (\textit{Objektformel}). $\to$ Verfassungsrechtliche Rechtfertigung: nicht möglich!
+	\end{enumerate}
+
+		Quellen:
+	\begin{itemize}
+		\item \url{https://www.dwds.de/wb/unantastbar}
+		\item \url{https://initiative-tageszeitung.de/lexikon/wuerde-des-menschen/}
+		\item \url{https://www.grundrechteschutz.de/gg/menschenwurde-2-255#die-objektformel-des-bundesverfassungsgerichts}
+		\item \url{https://www.juraindividuell.de/pruefungsschemata/die-menschenwuerde-art-1-i-gg/}
+		\item \url{https://www.lecturio.de/magazin/art-1-i-gg-schutz-der-menschenwuerde/}
+	\end{itemize}
+
+	\section*{Aufgabe 3: Meinungsfreiheit - Grundlagen und Schutzbereich (Art. 5 I 1 Alt. 1 GG)}
+	\begin{enumerate}[label=(\alph*)]
+		\item Jeder Mensch, ohne Rücksicht auf seine Staatsangehörigkeit oder sein Alter. Grundrechtsträger sind auch juristische Personen des Privatrechts. ... Umstritten ist, ob auch Tatsachenbehauptungen unter die Meinungsfreiheit fallen.
+		\item Auszug aus dem Lüth – Urteil: \textit{Das Grundrecht auf freie Meinungsäußerung ist als unmittelbarster Ausdruck der menschlichen Persönlichkeit in der Gesellschaft eines der vornehmsten Menschenrechte überhaupt. Für eine freiheitlich-demokratische Staatsordnung ist es schlechthin konstituierend, denn es ermöglicht erst die ständige geistige Auseinandersetzung, den Kampf der  Meinungen, der ihr Lebenselement ist. Es ist in gewissem Sinn die Grundlage jeder Freiheit überhaupt.} (BVerfGE 7, 198 (208)).
+		\item Ausgeschlossen vom Schutzbereich sind jedoch erwiesene oder bewusst unwahre Tatsachenäußerungen ohne Bezug zu einem bestehenden Werturteil. Bei einer herabsetzenden Äußerung ist erst dann der Charakter einer Schmähung gegeben, wenn in ihr nicht mehr die Auseinandersetzung mit der Sache, sondern die Diffamierung und Herabsetzung der Person im Vordergrund steht. Schmähkrittik fällt nicht in den Schutzbereich
+		\item 1 Var. 1 GG garantiert auch die sog. negative Meinungsfreiheit, d.h. die Freiheit, seine Meinung nicht zu äußern und nicht zu verbreiten.
+		\item Als Drittwirkung entfaltendes Grundrecht auf Seiten des sich äußernden Nutzers kommt die Meinungsfreiheit aus Art. 5 Abs. 1 GG und der allgemeine Gleichheitsgrundsatz aus Art. 3
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://www.ipsen-kf.jura.uni-osnabrueck.de/Kontrollfragen/Staatsrecht/pd_fr_10.pdf}
+		\item \url{https://www.dwds.de/wb/Meinung}
+		\item \url{https://www.juraindividuell.de/pruefungsschemata/medien-informations-und-meinungsfreiheit/}
+		\item \url{https://www.iurastudent.de/definition/schm%C3%A4hkritik}
+		\item \url{https://www.repetitorium-hemmer.de/rep_pdf/23__12331_U&%23776%3Bbersicht_6_-_5_I_GG.pdf}
+		\item \url{https://www.juracademy.de/grundrechte/meinungsfreiheit-schutzbereich.html}
+		\item \url{http://www.rechtstheorie.uni-koeln.de/die-mittelbare-drittwirkung-von-grundrechten-bei-facebook-account-sperren-und-stadionverboten/}
+	\end{itemize}
+
+	\section*{Aufgabe 4: Meinungsfreiheit - Eingriff und verfassungsrechtliche Rechtfertigung}
+	\begin{enumerate}[label=(\alph*)]
+		\item Ein Eingriff in die Meinungsfreiheit ist gegeben, wenn durch ein staatliches Handeln die Ausübung der Meinungsfreiheit ganz oder teilweise unmöglich gemacht wird (z.B. Ge- oder Verbote, Sanktionen).
+		\item 118 Abs. 1 S. 1 WRV gewährte jedem Deutschen das Recht, innerhalb der Schranken der allgemeinen Gesetze seine Meinung durch Wort, Schrift, Druck, Bild oder in sonstiger Weise frei zu äußern. ... 1 WRV garantierte Meinungsfreiheit konnte danach durch allgemeine Gesetze beschränkt werden.
+		\item Die Wechselwirkungstheorie besagt, dass ein Grundrecht einschränkendes Gesetz, auch wenn der Gesetzesvorbehalt des Grundrechts keine Grenzen beinhaltet, nicht einseitig wirken darf, sondern die Bedeutung des einzuschränkenden Grundrechts berücksichtigen und dessen Wesensgehalt bewahren muss.
+		\item Es ist kein eigenständiges Grundrecht
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{https://www.lecturio.de/magazin/mediengrundrechte-meinungsfreiheit-informationsfreiheit/}
+		\item \url{https://www.juracademy.de/grundrechte/kommunikationsgrundrechte-rechtfertigung-eingriff.html}
+		\item \url{https://www.uni-trier.de/fileadmin/fb5/prof/OEF005/Einfuehrung_Grundrechte/Folien_Probevorlesung_Trier__Proelss_.pdf}
+		\item \url{https://staatsrecht.honikel.de/de/lexikon.htm?b=Wechselwirkungstheorie}
+		\item \url{https://www.jura.fu-berlin.de/fachbereich/einrichtungen/oeffentliches-recht/lehrende/heintzenm/veranstaltungen/archiv/0405ss/v_GK_II/GRUND1_04.pdf}
+	\end{itemize}
+
+	\section*{Aufgabe 5: Gleichheitsgebot - Allgemeiner Gleichheitssatz (Art. 3 I GG)}
+	\begin{enumerate}[label=(\alph*)]
+		\item 3 I GG zu prüfen. 2. Träger: alle Menschen (via Art. 19 III GG inländische jurist. Person)... $\to$ Alle Menschen sind Grundrechtsträger
+		\item Am Anfang der Prüfung des Art. 3 I GG steht die Frage, ob eine verfassungsrechtlich relevante Ungleichbehandlung vorliegt. Eine rechtlich relevante Ungleichbehandlung liegt nach der Rspr. des Bundesverfassungsgerichts dann vor, wenn wesentlich Gleiches ungleich behandelt wird.
+		\item Im Grundsatz basiert die Prüfung des Art. 3 I GG auf einem ganz einfachen Satz: Er ist verletzt, wenn wesentlich Gleiches ohne sachlichen Grund ungleich behandelt wird. Das ist der Fall, wenn eine Personengruppe oder Situation rechtlich anders behandelt wird als eine vergleichbare andere Personengruppe oder Situation.
+		\item \underline{Willkürformel:} Nach der Willkürformel des Bundesverfassungsgerichts ist \textit{der Gleichheitssatz (…) verletzt, wenn sich ein vernünftiger, sich aus der Natur der Sache ergebender oder sonst wie sachlich einleuchtender Grund für die gesetzliche Differenzierung oder Gleichbehandlung nicht finden lässt, kurzum, wenn die Bestimmung als willkürlich bezeichnet werden muss}. Die Willkürformel vermag somit eine Ungleichbehandlung zu rechtfertigen, sofern diese auf nur irgendeinem sachlichen Grund beruht. \underline{neue Formel:} Die sog. neue Formel differenziert nach der Intensität, mit der eine Ungleichbehandlung die Betroffenen beeinträchtigt: \textit{Aus dem allgemeinen Gleichheitssatz ergeben sich je nach Regelungsgegenstand und Differenzierungsmerkmalen unterschiedliche Grenzen für den Gesetzgeber, die stufenlos von gelockerten, auf das Willkürverbot beschränkten Bindungen bis hin zu strengen Verhältnismäßigkeitsanforderungen reichen können.} Der strenge Verhältnismäßigkeitsmaßstab ist bei Regelungen, die Personengruppen verschieden behandeln oder sich auf die Wahrnehmung von Grundrechten nachteilig auswirken, anzulegen. Die Abstufung zwischen bloßem Willkürverbot bis zu einer strengen Bindung an Verhältnismäßigkeitserfordernisse ist auch für die Frage von Bedeutung, inwieweit dem Gesetzgeber bei der Beurteilung der Ausgangslage und der möglichen Auswirkungen der von ihm getroffenen Regelung eine Einschätzungsprärogative zukommt
+		\item Ja das tut sie, siehe \url{https://www.juracademy.de/recht-interessant/article/allgemeine-gleichheitssatz-neue-formel} 
+	\end{enumerate}
+
+	Quellen
+	\begin{itemize}
+		\item \url{http://tu-freiberg.de/sites/default/files/media/ffentliches-recht-3419/art._3.pdf}
+		\item \url{http://wwwuser.gwdg.de/~staatsl/downloads/bk/2/gleichheitsr.pdf}
+		\item \url{https://www.juraindividuell.de/artikel/art-3-gg-in-der-klausur/}
+		\item \url{https://www.reguvis.de/xaver/vergabeportal/start.xav?start=%2F%2F*%5B%40attr_id%3D%27vergabeportal_13652715787%27%20and%20%40outline_id%3D%27vergabeportal_RechtspflichtTransparenzEuropVergaberecht_13652545675%27%5D}
+	\end{itemize}
+	
+	\section*{Aufgabe 6: Gleichheitsgebot - Besondere Gleichheitssätze (Art. 3 II und III GG)}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wann ist eine Benachteiligung wegen beruflicher Anforderungen zulässig? Eine unterschiedliche Behandlung wegen des Geschlechts, einer Behinderung etc. ist gemäß § 8 AGG ausnahmsweise erlaubt, wenn eine bestimmte Ausprägung dieser Merkmale (sprich: Mann-Sein, Frau-Sein, Nichtbehindert-Sein etc.). Art. 3 III 1 GG statuiert strenge Diskriminierungsverbote. D.h., der Gesetzgeber darf nach den in Art. 3 III 1 GG genannten Kriterien grundsätzlich nicht differenzieren, wenn dies zur Benachteiligung oder Bevorzugung von Personen führt, auf die diese Kriterien zutreffen.
+		\item Zu beachten ist in diesem Zusammenhang noch, dass die Gleichheitsrechte zu den Freiheitsrechten grundsätzlich in keinem Ausschließlichkeitsverhältnis stehen. Soweit die Bürger eines Landes durch ein Landesgesetz anders behandelt werden als die Bürger in einem anderen Land durch die dortigen Landesgesetze, kann von vornherein kein Verstoß gegen Art. 3 I GG vorliegen. Es fehlt hier bereits an der wesentlichen Gleichheit. Diese liegt nur vor, wenn die betroffenen Bürger derselben Rechtsetzungsgewalt unterworfen sind. Entsprechendes gilt für Satzungen verschiedener Gemeinden, Universitäten etc. Eine Ungleichbehandlung höherer Intensität wird bei personenbezogenen und nicht bloß sachbezogenen Ungleichbehandlungen angenommen. Letztere sind allerdings dann von höherer Intensität, wenn durch die sachliche Ungleichbehandlung der Gebrauch grundrechtlich geschützter Freiheiten erschwert wird.
+		\item Zunächst ist zu prüfen, ob eine rechtliche Ungleichbehandlung \textit{wegen} eines der in Art. 3 III GG genannten Kriterien erfolgt ist. Der Begriff \textit{wegen} beinhaltet, dass eines der Kriterien des Art. 3 III GG ursächlich für die Diskriminierung gewesen sein muss (Kausalitätsmodell)
+		\item Spezielle Differenzierungsverbote enthält der Art. 3 III GG. Verboten ist demnach eine rechtliche Ungleichbehandlung (Differenzierungen) wegen des Geschlechts, der Abstammung, der Rasse, der Sprache, der Heimat, der Herkunft, des Glauben, der religiösen oder politischen Anschauung bzw. einer Behinderung. 
+		\item Es ist dem Gesetzgeber nicht generell untersagt, nach der Staatsangehörigkeit zu differenzieren (vgl. BVerfGE 116, 243). Nach dem allgemeinen Gleichheitssatz bedarf es für die Anknüpfung an die Staatsangehörigkeit als Unterscheidungsmerkmal jedoch eines hinreichenden Sachgrundes.
+	\end{enumerate}
+	
+	Quellen:
+	\begin{itemize}
+		\item \url{https://www.hensche.de/Rechtsanwalt_Arbeitsrecht_Handbuch_Diskriminierung_Erlaubte_Benachteiligungen.html}
+		\item \url{http://wwwuser.gwdg.de/~staatsl/downloads/bk/2/gleichheitsr.pdf}
+		\item \url{https://www.bundesverfassungsgericht.de/SharedDocs/Entscheidungen/DE/2012/02/ls20120207_1bvl001407.html}
+	\end{itemize}
+	
+	\section*{Aufgabe 7: Gleichheitsgebot - Racial Profiling}
+	\begin{enumerate}[label=(\alph*)]
+		\item Im Sinne des Diskriminierungsverbotes aus Art. 3 Abs. 3 S. 1 GG dürfen deutsche Behörden bei der Anwendung der Gesetze keine Person aufgrund ihrer Rasse diskriminieren. So entschied am 21. April 2016 das Oberverwaltungsgericht Rheinland-Pfalz. Was als Selbstverständlichkeit erscheint, wird von Seite der Klagenden zu Recht als \textit{Meilenstein im Kampf gegen die rechtswidrige Praxis des Racial Profiling} bezeichnet. Das Urteil des OVG Rheinland-Pfalz erging im Fall einer verdachtsunabhängigen Personenkontrolle durch die Bundespolizei, wie sie im grund- und menschenrechtlichen Diskurs seit langer Zeit heftiger Kritik ausgesetzt ist.
+		\item Ein sehr schwieriges Thema... es hängt von der Ansicht des Richters ab
+	\end{enumerate}
+
+	Quellen:
+	\begin{itemize}
+		\item \url{http://grundundmenschenrechtsblog.de/polizeikontrolle-verstoesst-gegen-art-3-abs-3-gg-das-ovg-rheinland-pfalz-setzt-ein-zeichen-gegen-racial-profiling/}
+		\item \url{https://www.degruyter.com/document/doi/10.1515/jura-2020-2580/html}
+	\end{itemize}
+	
+\end{document}
