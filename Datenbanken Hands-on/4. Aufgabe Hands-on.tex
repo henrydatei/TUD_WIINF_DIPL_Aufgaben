@@ -1,0 +1,172 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{er,positioning}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage{longtable}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{sql} {language=sql}
+\lstdefinestyle{python} {language=python, morekeywords={with, as}}
+\lstset{basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\def\ojoin{\setbox0=\hbox{$\bowtie$}%
+	\rule[-.02ex]{.25em}{.4pt}\llap{\rule[\ht0]{.25em}{.4pt}}}
+\def\leftouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie}}
+\def\rightouterjoin{\mathbin{\bowtie\mkern-5.8mu\ojoin}}
+\def\fullouterjoin{\mathbin{\ojoin\mkern-5.8mu\bowtie\mkern-5.8mu\ojoin}}
+
+\title{\textbf{Datenbanken, Hands-on 4}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+
+	\section*{Aufgabe 1}
+	Wir definieren dazu am Anfang des Quelltextes eine Variable \texttt{neuaufbau}, deren Wert wir auf 0 setzen. Weiterhin müssen wir den Wert dieser Variable immer dann um 1 erhöhen, wenn die Funktion \texttt{rehash\_tables()} aufgerufen wird:
+	\begin{lstlisting}[style=python,tabsize=2]
+def rehash_tables(self) -> None:
+	global neuaufbau
+	neuaufbau = neuaufbau + 1
+	# create new hash functions
+	...
+	\end{lstlisting}
+	Das Keyword \texttt{global} ist hier nötig, weil die Variable außerhalb der Funktion definiert wurde und damit normalerweise nicht veränderbar innerhalb der Funktion ist. Mit \texttt{global} kann man das ändern. Nach durchlaufen des Skripts hat \texttt{neuaufbau} dann den Wert von 841, das heißt die Hashtabellen wurden 841 mal neu aufgebaut.
+
+	\section*{Aufgabe 2}
+	Hierfür legen wir uns ein Dictionary an, welches alle Sprachen und die Anzahl wie oft diese vertrieben worden sind, enthält:
+	\begin{lstlisting}[style=python,tabsize=2]
+counter = {sprache: 0 for sprache in languages_list}
+	\end{lstlisting}
+	Wir ändern dann einen Teil der \texttt{insert()}-Funktion:
+	\begin{lstlisting}[style=python,tabsize=2]
+tmp: Node = self.hash_table_1[self.hash_func_1(key)]
+self.hash_table_1[self.hash_func_1(key)] = Node(key, value)
+key = tmp.key
+value = tmp.value
+# sprache (value) wurde vertrieben -> counter erhoehen
+counter[value] = counter[value] + 1
+
+if self.hash_table_2[self.hash_func_2(key)] == None:
+self.hash_table_2[self.hash_func_2(key)] = Node(key, value)
+return True
+
+# same as before for the other hash_table
+tmp: Node = self.hash_table_2[self.hash_func_2(key)]
+self.hash_table_2[self.hash_func_2(key)] = Node(key, value)
+key = tmp.key
+value = tmp.value
+# sprache (value) wurde vertrieben -> counter erhoehen
+counter[value] = counter[value] + 1
+	\end{lstlisting}
+	Ganz zum Schluss lassen wir dieses Dictionary noch sortieren mittels
+	\begin{lstlisting}[style=python,tabsize=2]
+print(sorted(counter.items(), key=lambda x: x[1], reverse=True))
+	\end{lstlisting}
+	und erhalten
+	\begin{lstlisting}[style=python]
+[('C', 6812), ('Basic', 6377), ('C#', 5710), ('Ada', 5155), ('C++', 4998), ('D', 4291), ('Kotlin', 4093), ('Perl', 3709), ('PHP', 3609), ('Prolog', 3540), ('MATLAB', 3439), ('Javascript', 3357), ('Eiffel', 3241), ('Pascal', 3193), ('Erlang', 3112), ('Fortran', 3109), ('Lisp', 2874), ('Go', 2808), ('Smalltalk', 2594), ('Ruby', 2355), ('Scala', 2109), ('Haskell', 2055), ('Python', 2030), ('SQL', 1866), ('F#', 1732), ('Java', 1710), ('Swift', 1260), ('TypeScript', 228)]
+	\end{lstlisting}
+	Offensichtlich wurde C mit 6812 mal am öftesten aus dem Nest vertrieben.
+	
+	\section*{Aufgabe 3}
+	Die Löschfunktion ist
+	\begin{lstlisting}[style=python, tabsize=2]
+def delete(self, value):
+	# check hash table 1
+	for n in self.hash_table_1:
+		try:
+			if n.value == value:
+				self.hash_table_1[self.hash_func_1(n.key)] = None
+				break
+		except Exception as e:
+			pass
+
+	# check hash table 2
+	for n in self.hash_table_2:
+		try:
+			if n.value == value:
+				self.hash_table_2[self.hash_func_2(n.key)] = None
+				break
+		except Exception as e:
+			pass
+	\end{lstlisting}
+	Und dann noch
+	\begin{lstlisting}[style=python,tabsize=2]
+language_cuckoo.delete("Erlang")
+language_cuckoo.delete("Python")
+language_cuckoo.delete("TypeScript")
+language_cuckoo.insert(8, "Erlang")
+language_cuckoo.insert(27, "TypeScript")
+language_cuckoo.insert(21, "Python")
+language_cuckoo.print_hash_tables()
+	\end{lstlisting}
+	ergibt die folgenden Hashtables
+	\begin{center}
+		\begin{tabular}{c|c|c}
+			\textbf{Position} & \textbf{Hashtable 1} & \textbf{Hashtable 2} \\
+			\hline
+			0 & (0, Ada) & (1, Basic) \\
+			1 & & (13, Javascript) \\
+			2 & (14, Kotlin) & \\
+			3 & (24, Smalltalk) & \\
+			4 & (2, C) & (12, Java) \\
+			5 & (25, SQL) & \\
+			6 & (16, MATLAB) & (10, Go)  \\
+			7 & (26, Swift) & (22, Ruby) \\
+			8 & (4, C++) & (8, Erlang) \\
+			9 & (27, TypeScript) & (21, Python) \\
+			10 & (18, Perl) & (7, F\#) \\
+			11 & (9, Fortran) & (19, PHP) \\
+			12 & (6, Eiffel) & (5, D) \\
+			13 & (23, Scala) & (17, Pascal) \\
+			14 & (20, Prolog) & (3, C\#) \\
+			15 & (11, Haskell) & (15, Lisp)
+		\end{tabular}
+	\end{center}
+	An der letzten Position der zweiten Hashtabelle steht also Lisp.
+	
+	\section*{Aufgabe 4}
+	Der Programmcode in (d) verläuft fälschlicherweise richtig. Problem ist hier, dass wir in der ersten Hashtabelle an der Position \texttt{hash2} nachschauen, obwohl die richtige Position hier \texttt{hash1} wäre. Selbiges für die 2. Hashtabelle.
+\end{document}
