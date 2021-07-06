@@ -1,0 +1,87 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Softwaretechnologie, Übung 12}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Kontextmodell
+		\begin{center}
+			\includegraphics[width=0.50\textwidth]{./Aufgabe12_1a}
+		\end{center}
+		\item Anwendungsfalldiagramm
+		\begin{center}
+			\includegraphics[width=0.50\textwidth]{./Aufgabe12_1b}
+		\end{center}
+		\item Top-Level-Architektur
+		\begin{center}
+			\includegraphics[width=0.50\textwidth]{./Aufgabe12_1c}
+		\end{center}
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Zustände: ohneEPostName, EPostnameReserviert, registriert, bereitFuerIdentifikation, identifizierend, identifiziert, freigeschaltet
+		\item Verhaltenszustandsmaschine
+		\begin{center}
+			\includegraphics[width=0.75\textwidth]{./Aufgabe12_2b}
+		\end{center}
+	\end{enumerate}
+
+	\section*{Aufgabe 3}
+	\begin{center}
+		\includegraphics[width=0.75\textwidth]{./Aufgabe12_3}
+	\end{center}
+	
+\end{document}
