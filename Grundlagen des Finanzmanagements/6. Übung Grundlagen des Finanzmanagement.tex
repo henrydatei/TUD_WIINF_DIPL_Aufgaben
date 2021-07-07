@@ -1,0 +1,153 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\title{\textbf{Grundlagen des Finanzmanagements, Übung 6}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 16.6: Insolvenzkosten und Unternehmenswert}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der erwartete Unternehmenswert ist
+		\begin{align}
+			\E(\text{Unternehmenswert}) = \frac{150\text{ Mio. \EUR} + 135\text{ Mio. \EUR} + 90\text{ Mio. \EUR} + 80\text{ Mio. \EUR}}{4} = 115\text{ Mio. \EUR} \notag
+		\end{align}
+		Dieser Wert muss noch abgezinst werden, sodass der Anfangswert des Eigenkapitals $\frac{115\text{ Mio. \EUR}}{1.05}=109.52\text{ Mio. \EUR}$ ist.
+		\item In 50\% der Fälle kann das Fremdkapital komplett zurückgezahlt werden, in den anderen 50\% nicht. In diesen Fällen geht das Unternehmen insolvent und die Fremdkapitalgeber holen sich noch die restlichen Werte des Unternehmens:
+		\begin{align}
+			BW=\frac{0.5\cdot 100\text{ Mio. \EUR} + 0.25\cdot (95\text{ Mio. \EUR}\cdot 0.75) + 0.25\cdot (80\text{ Mio. \EUR}\cdot 0.75)}{1.05} = 78.87\text{ Mio. \EUR} \notag
+		\end{align}
+		\item Das Fremdkapital ist also nur 78.87 Mio. \EUR\, wert, aber 100 Mio. \EUR\, werden ausgezahlt, damit ist die Rendite $r=\frac{100\text{ Mio. \EUR}}{78.87\text{ Mio. \EUR}}=26.79\%$. Die erwartete Rendite ist dann
+		\begin{align}
+			\E(r) = \frac{0.5\cdot 100\text{ Mio. \EUR} + 0.25\cdot (95\text{ Mio. \EUR}\cdot 0.75) + 0.25\cdot (80\text{ Mio. \EUR}\cdot 0.75)}{78.87\text{ Mio. \EUR}} = 5\%\notag
+		\end{align}
+		\item Der Wert des Eigenkapitals ist
+		\begin{align}
+			\E(\text{Eigenkapital}) = \frac{0.25(\text{ Mio. \EUR} + 35\text{ Mio. \EUR} + 0\text{ Mio. \EUR} + 0\text{ Mio. \EUR})}{1.05} = 20.24\text{ Mio. \EUR} \notag
+		\end{align}
+		Der Wert des Gesamtkapitals ist damit 20.24 Mio. \EUR\, + 78.87 Mio. \EUR\, = 99.11 Mio. \EUR.
+		\item Der Preis einer Aktie ist $\frac{109.52\text{ Mio. \EUR}}{10\text{ Mio. Aktien}} = 10.95\text{ \EUR/Aktie}$.
+		\item Sofort nach der Ankündigung sinkt der Wert des Eigenkapitals auf 99.11 Mio. \EUR, damit auch der Kurs der Aktie auf 9.91 \EUR/Aktie. Mit den 78.87 Mio. \EUR\, Fremdkapital können 7.96 Mio. Aktien gekauft werden, es verbleiben 2.04 Mio. Aktien auf dem Markt. Damit ist der Preis einer Aktie $\frac{20.24\text{ Mio. \EUR}}{2.04\text{ Mio. Aktien}}=9.92\text{ \EUR/Aktie}$ (eigentlich sollte der Preis bei 9.91 bleiben, es handelt sich hier um Rundungsfehler). Das Insolvenzrisiko wird also eingepreist.
+	\end{enumerate}
+
+	\section*{Aufgabe 16.14: Motivation der Manager}
+	\begin{enumerate}[label=(\alph*)]
+		\item Durch Fremdkapitalgeber kann eine weitere Kontrollinstanz ins Unternehmen eingebracht werden, wenn denn die Verträge richtig gemacht sind. Weiterhin kann man mit Fremdkapital Steuern sparen.
+		\item Das Nettoergebnis sinkt um den Euro Zinsen, steigt aber gleichzeitig um 0.35 durch den Tax Shield. Insgesamt sinkt das Nettoergebnis um 0.65. Damit sinkt auch die Verschwendung um 0.065, was die Ausschüttung um 0.585 reduziert.
+		\item An Eigenkapitalgeber werden zwar 0.585 weniger ausgeschüttet, aber an Fremdkapitalgeber 1 mehr. In Summe also eine Steigerung von 0.415.
+	\end{enumerate}
+	
+	\section*{Aufgabe 16.16: Asymmetrische Information \& Kapitalstruktur}
+	\begin{enumerate}[label=(\alph*)]
+		\item In jedem Fall gilt, dass der Schaden durch eine Aufnahme von Fremdkapital 20 Mio. \EUR\, ist. Ist der wahre Wert des Unternehmens 12.50 \EUR, so ist das Unternehmen überbewertet (Investoren sind bereit mehr zu zahlen, als das Unternehmen wert ist). Daraus kann das Unternehmen bei Eigenkapitalemission einen Profit schlagen:
+		\begin{align}
+			(13.50\text{ \EUR} - 12.50\text{ \EUR})\cdot\frac{500\text{ Mio. \EUR}}{13.50\text{ \EUR}} = 37 \text{ Mio. \EUR} \notag
+		\end{align}
+		Der Nutzen bei einer Eigenkapitalemission ist also größer als der Schaden bei Aufnahme von Fremdkapital. Die Manager entscheiden sich in diesem Fall für eine Eigenkapitalemission. \\
+		Ist der wahre Wert der Unternehmens 14.50 \EUR, so ist das Unternehmen unterbewertet und bei einer Eigenkapitalemission würde ein Schaden von 37 Mio. \EUR\, entstehen. In diesem Fall würden sich die Manager für die Aufnahme von Fremdkapital entscheiden, da diese weniger Schaden verursacht.
+		\item Das Unternehmen ist überbewertet, damit sinkt der Preis auf 12.50 \EUR.
+		\item Das Unternehmen ist unterbewertet, damit sinkt der Preis auf 14.50 \EUR.
+		\item Jetzt hat Fremdkapital keine Nachteile mehr, hingegen würde das Management bei einer Emission von Eigenkapital die Informationsasymmetrie verlieren und der Aktienkurs würde sinken. Das will kein Management, deswegen wird sich hier immer für Fremdkapital entschieden.
+	\end{enumerate}
+	
+	\section*{Aufgabe 4K243: Kapitalstruktur und Verschiedenes}
+	\begin{enumerate}[label=(\alph*)]
+		\item Für den Zinnsatz nach Steuern gilt $r_{nom}(1-\tau)$ und für die Inflation gilt $\frac{r-i}{r+i}$, zusammen also
+		\begin{align}
+			\frac{0.1(1-0.4) - 0.025}{1+0.025} = 3.41\%\notag
+		\end{align}
+		\item Das Steuerparadoxon sagt, dass unter bestimmten Umständen ein Steuersystem dafür sorgen kann, dass es sich lohnt zu investieren gegenüber einer Welt ohne Steuern. Dazu schauen wir uns den Barwert einer Investition an:
+		\begin{align}
+			BW = \sum_{t=1}^{\infty} \frac{z_t-\tau(z_t-a_t)}{(1+r+\tau r)^t} \notag
+		\end{align}
+		mit $z_t$ Zahlungsüberschuss, $a_t$ Abschreibungsbetrag, der den Ertrag senkt und damit als Tax Shield wirkt und $\tau$ als Steuer. Zum einen sinkt durch die zu zahlende Steuer der Gewinn, aber weil auch andere Kapitalanlagemöglichkeiten besteuert werden, sinkt auch der Zinssatz mit dem diskontiert werden muss. Die Bemessungsgrundlage bei Ertragswertabschreibung ist damit $z_t-a_t=z_t + \Delta BW_t$, wobei $\Delta BW_t$ die Wertänderung der Investition durch die Länge der Laufzeit ist. Mit $a_t=-\Delta BW_t$ führt dies zu einem investitionsneutralen Steuersystem. Für weitere Informationen siehe Johansson-Samuelson-Theorem bzw. die Vorlesung \textit{Steuertheorie} von Prof. Thum. Das Steuerparadoxon tritt dann auf, wenn $a_t>\Delta BW_t$ ist.
+		\item Es gilt $V=\frac{\text{Fremdkapital}}{\text{Eigenkapital}}$ und das Eigenkapital hat einen Wert von 1 Mio. \EUR.
+		\begin{itemize}
+			\item $GK_{nom}=EK+FK=EK+V\cdot EK=\text{1 Mio. \EUR}\cdot (V+1)$
+			\item $G=\frac{1}{2}\cdot FK=\frac{1}{2}\cdot V\cdot EK = \text{0.5 Mio. \EUR}\cdot V$
+			\item $L=\frac{V^2}{8}\cdot GK_{nom}=\frac{V^2}{8}\cdot \text{1 Mio. \EUR}\cdot (V+1)=\text{0.125 Mio. \EUR}\cdot V^2(V+1)$
+			\item $GK_{Markt}=GK_{nom}+G-L=-\text{0.125 Mio. \EUR}\cdot V^3-\text{0.125 Mio. \EUR}\cdot V^2+\text{1.5 Mio. \EUR}\cdot V+\text{1 Mio. \EUR}$
+		\end{itemize}
+		\begin{center}
+			\begin{tikzpicture}
+			\begin{axis}[
+			xmin=0, xmax=3, xlabel=$V$,
+			ymin=0, ymax=4, ylabel={Mio. Euro},
+			samples=400,
+			axis x line=middle,
+			axis y line=middle,
+			domain=0:3,
+			]
+			\addplot[mark=none,smooth,blue] {x+1};
+			\addplot[mark=none,smooth,red] {-0.125*x^3 - 0.125*x^2 + 1.5*x + 1};
+			
+			\end{axis}
+			\end{tikzpicture} \\
+			\textcolor{blue}{$GK_{nom}$}, \textcolor{red}{$GK_{Markt}$}
+		\end{center}
+		Für das Maximum gilt
+		\begin{align}
+			\frac{\partial GK_{Markt}}{\partial V} &= -0.375\text{ Mio. \EUR}\cdot V^2 - 0.25\text{ Mio. \EUR}\cdot V + 1.5\text{ Mio. \EUR} = 0 \notag \\
+			0 &= -0.375V^2 - 0.25V + 1.5 \notag \\
+			&= V^2 - \frac{2}{3}V + 4 \notag \\
+			V_{1/2} &= -\frac{\frac{2}{3}}{2} \pm \sqrt{\frac{\left(\frac{2}{3}\right)^2}{4}+4} \notag \\
+			&= -\frac{1}{3} \pm \sqrt{\frac{37}{9}} \notag \\
+			V_1 &= 1.6943 \notag \\
+			V_2 &= -2.3609 \notag
+		\end{align}
+		Es bringt dem Unternehmen nicht viel $GK_{Markt}$ zu optimieren, lieber sollte $EK_{Markt}$ optimiert werden.
+		\item Moral Hazard: Bei einem Ghostwriter kann der Auftraggeber in der Regel nicht kontrollieren, wie gut der Ghostwriter gearbeitet hat. Das gibt dem Ghostwriter den Anreiz möglichst wenig zu tun. Verhindern lässt sich das durch z.B. ein externes Qualitätssiegel. \\
+		Adverse Selektion: Der Kunde weiß, dass der Ghostwriter wohl nur schlampig arbeiten wird, deswegen ist er bereit auch nur deutlich weniger für dessen Leistung zu bezahlen.
+	\end{enumerate}
+	
+\end{document}
