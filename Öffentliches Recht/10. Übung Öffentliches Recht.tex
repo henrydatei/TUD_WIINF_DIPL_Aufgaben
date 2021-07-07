@@ -1,0 +1,88 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage[unicode]{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=blue,
+	filecolor=blue,
+	linkcolor=blue,
+	urlcolor=blue
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Öffentliches Recht, Übung 10}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: Begriff}
+	\underline{Behörde:} Gemäß § 1 IV VwVfG (Bund) wird der verwaltungsverfahrensrechtliche Behördenbegriff bestimmt. Danach ist eine Behörde jede Stelle, die Aufgaben der öffentlichen Verwaltung wahrnimmt.
+	
+	\underline{Hoheitliche Maßnahme:} Hoheitlich ist die Maßnahme, wenn sie in einem Über-/ Unterordnungsverhältnis ergeht.
+	
+	\underline{Auf dem Gebiet des öffentlichen Rechts:} Hier ist das öffentliche Recht im Sinne des Verwaltungsrechts gemeint. Beachtet werden sollte, dass nur die Rechtsgrundlage öffentlich-rechtlicher Natur sein muss, nicht aber die Rechtsfolge.
+	
+	\underline{Regelung:} Eine Regelung ist gegeben, wenn die Maßnahme final auf eine Rechtsfolge gerichtet ist. Der Maßnahme muss also rechtsgestaltende Wirkung zukommen.
+	
+	\underline{Einzelfall:} Ein Einzelfall liegt vor, wenn die Maßnahme konkret-individueller Natur ist. Somit teilt sich hier die Prüfung in 2 Teile. Zum einen muss die Maßnahme konkret (sachliche Prüfung) und zum anderen individuell (persönliche Prüfung) sein.
+	
+	\underline{Unmittelbare Rechtswirkung nach außen (Außenwirkung):} Die Maßnahme hat Außenwirkung, wenn sie final darauf gerichtet ist Rechtsfolgen gegenüber einem Rechtssubjekt herbeizuführen, das außerhalb des handelnden Verwaltungsträgers steht.
+	
+	Quellen:
+	\begin{itemize}
+		\item \url{https://www.juraindividuell.de/pruefungsschemata/der-verwaltungsakt-gemaess-35-vwvfg/}
+	\end{itemize}
+
+	\section*{Aufgabe 2: Bestandskraft und Rechtmäßigkeitsvoraussetzungen von Verwaltungsakten }
+	\begin{enumerate}[label=(\alph*)]
+		\item Bestandskraft eines Verwaltungsaktes bedeutet, dass selbst ein rechtswidriger – nicht aber rechtsunwirksamer (!) – Verwaltungsakt dauerhaft rechtswirksam wird, wenn er nicht fristgemäß (vgl. §§ 70, 74 VwGO [Verwaltungsgerichtsordnung] oder erfolglos angefochten wurde.
+		\item Ein Verwaltungsakt ist demjenigen Beteiligten bekannt zu geben, für den er bestimmt ist oder der von ihm betroffen wird. ... (2) Ein schriftlicher Verwaltungsakt, der im Inland durch die Post übermittelt wird, gilt am dritten Tag nach der Aufgabe zur Post als bekannt gegeben.
+		\item Der Verwaltungsakt wird mit dem Inhalt wirksam, mit dem er bekannt gegeben wird. Ein Verwaltungsakt bleibt wirksam, solange und soweit er nicht zurückgenommen, widerrufen, anderweitig aufgehoben oder durch Zeitablauf oder auf andere Weise erledigt ist.
+		\item ?
+		\item Die sofortige Vollziehung setzt einen wirksamen Verwaltungsakt (VA) i.S.d. § 35 VwVfG voraus. Sie betrifft die Wirkung von Rechtsbehelfen gegen wirksam erlassene Verwaltungsakte.
+		\item Ein Verwaltungsakt ist nichtig, soweit er an einem besonders schwerwiegenden Fehler leidet und dies bei verständiger Würdigung aller in Betracht kommenden Umstände offensichtlich ist. Ein nichtiger Verwaltungsakt ist unwirksam. Weist der betreffende Verwaltungsakt einen dieser in § 44 Abs. 3 VwVfG – nicht enumerativ – genannten Fehler auf, so ist er nicht allein schon deshalb nichtig. Ist der Verwaltungsakt in einem solchen Fall nicht noch aus anderen Gründen rechtswidrig, so ist er nicht nichtig.
+		\item Die Rücknahme und der Widerruf sind Instrumente der Behörde, mit denen sie entweder selbstinitiiert oder auf Antrag des Bürgers, Verwaltungsakte außerhalb eines Rechtsbehelfsverfahrens aufheben kann.
+		\item Anspruch auf Aufhebung eines bestandskräftigen rechtswidrigen Gebührenbescheides. Nach § 51 Abs. 5 i.V.m. § 48 Abs. 1 Satz 1 VwVfG kann sich ein Anspruch auf Rücknahme eines bestandskräftigen rechtswidrigen Verwaltungsaktes ergeben, wenn ein Aufrechterhalten für den Betroffenen \textit{schlechthin unerträglich} ist.
+		\item Bei einer Ermessensentscheidung hat der Kläger grds. nur einen Anspruch auf ermessensfehlerfreie Entscheidung der Behörde, nicht auf den VA selbst (Ausnahme: Ermessensreduzierung auf Null). - Die \textit{Adressatentheorie} gilt bei der Verpflichtungsklage nicht!
+	\end{enumerate}
+
+		Quellen:
+	\begin{itemize}
+		\item \url{https://www.juraforum.de/lexikon/bestandskraft-eines-verwaltungsaktes}
+		\item \url{https://www.gesetze-im-internet.de/vwvfg/__41.html}
+		\item \url{https://www.jura.uni-bonn.de/fileadmin/Fachbereich_Rechtswissenschaft/Einrichtungen/Lehrstuehle/Koenig/_AG_-_Allgemeines_Verwaltungsrecht/AG_Verwaltungsrecht_Termin_4.pdf}
+		\item \url{https://www.juraindividuell.de/pruefungsschemata/sofortige-vollziehung-eines-va-nach-80-ii-nr-4-vwgo/}
+		\item \url{https://www.gesetze-im-internet.de/vwvfg/__44.html}
+		\item \url{https://www.haufe.de/sozialwesen/sgb-office-professional/nichtigkeit-von-verwaltungsakten_idesk_PI434_HI523864.html}
+		\item \url{https://www.juracademy.de/allgemeines-verwaltungsrecht/nichtigkeit-verwaltungsakt.html}
+		\item \url{https://www.juraindividuell.de/artikel/aufhebung-von-verwaltungsakten-widerruf-ruecknahme/}
+		\item \url{https://www.rechtslupe.de/verwaltungsrecht/anspruch-auf-aufhebung-eines-bestandskraeftigen-rechtswidrigen-gebuehrenbescheides-315216}
+		\item \url{https://www.uni-trier.de/fileadmin/fb5/prof/OEF004/SoSem_08_Junk/Schema_VK.pdf}
+	\end{itemize}
+	
+\end{document}
