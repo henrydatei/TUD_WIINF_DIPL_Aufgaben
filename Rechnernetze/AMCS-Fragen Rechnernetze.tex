@@ -1,0 +1,1284 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{AMCS-Fragen Rechnernetze}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section{Einführung}
+	
+	Welche der folgenden Protokolle sind verbindungsorientiert? 
+	\begin{itemize}
+		\item UDP (User Datagram Protocol)
+		\item \textbf{TCP (Transmission Control Protocol)}
+		\item \textbf{ISDN-Telefonnetz}
+		\item IP (Internet Protocol)
+	\end{itemize}
+
+	Ordnen Sie die Schichten im ISO/OSI-Referenzmodell zu!
+	\begin{enumerate}
+		\item Bitübertragung
+		\item Sicherung
+		\item Vermittlung
+		\item Transport
+		\item Sitzung
+		\item Darstellung
+		\item Anwendung
+	\end{enumerate}
+	
+	Welche Aufgabe werden von der Transportschicht übernommen?
+	\begin{itemize}
+		\item \textbf{Flußsteuerung zwischen Endsystemen}
+		\item Komprimierung
+		\item Wegewahl/Routing
+		\item \textbf{Sichere Ende-zu-Ende-Kommunikation}
+		\item \textbf{Multiplexing}
+		\item Elektrische Kopplung
+	\end{itemize}
+
+	Ordnen Sie die Protokollaufrufe für einen Verbindungsaufbau nach ihrer Reihenfolge! 
+	\begin{enumerate}
+		\item ConReq
+		\item ConInd
+		\item ConRsp
+		\item ConCnf
+		\item DatReq
+		\item DatInd
+	\end{enumerate}
+
+	Ein Dienst im Sinne des ISO/OSI-Referenzmodells ist ... 
+	\begin{itemize}
+		\item ... die horizontale Kommunikation zwischen zwei Prozessen auf zwei Hosts derselben Ebene. (virtuelle/gedachte Direktkommunikation)
+		\item \textbf{... eine vertikale Kommunikation zwischen zwei Schichten auf einem Host.}
+		\item  ... ist die Regel, die das Format und die Bedeutung der von den Partnereinheiten innerhalb einer Schicht ausgetauschten Rahmen, Pakete oder Nachrichten festlegt.  
+	\end{itemize}
+
+	Welche Netzstrukturen gehören zu den Broadcast-Topologien? 
+	\begin{itemize}
+		\item Stern
+		\item \textbf{Ring}
+		\item Baum
+		\item \textbf{Bus}
+		\item \textbf{Satellit}
+	\end{itemize}
+
+	Sie möchten in Ihrer Wohnung 2 Rechner und 2 mobile Geräte miteinander koppeln. Zu welcher Netzklasse würde dieses Netz zugeordnet?
+	\begin{itemize}
+		\item WAN
+		\item PAN
+		\item MAN
+		\item \textbf{LAN}
+		\item NFC
+	\end{itemize}
+
+	Ordnen Sie die verschiedenen Netztechnologien der passenden Netzklasse zu! 
+	\begin{itemize}
+		\item Ethernet - LAN
+		\item Bluetooth - PAN
+		\item DSL - MAN
+		\item 5G - WAN
+	\end{itemize}
+
+	 Welcher Schicht werden Ethernet-Switches im Referenzmodell zugeordnet?
+	 \begin{itemize}
+	 	\item Schicht 1
+	 	\item \textbf{Schicht 2}
+	 	\item Schicht 3
+	 	\item Schicht 4
+	 \end{itemize}
+ 
+ 	Ordnen Sie die Schichten in das Internet-Modell ein! 
+ 	\begin{enumerate}
+ 		\item Sicherungsschicht
+ 		\item Internetschicht
+ 		\item Transportschicht
+ 		\item Answendungsschicht
+ 	\end{enumerate}
+ 
+ 	Welcher Schicht im Internetmodell sind die Protokolle TCP und UDP zugeordnet?
+ 	\begin{itemize}
+ 		\item Netzzugangsschicht
+ 		\item Internetschicht
+ 		\item \textbf{Transportschicht}
+ 		\item Anwendungsschicht
+ 	\end{itemize}
+ 
+ 	Wie erfolgt die Vermittlung mit dem Internet Protokoll (IP)?
+ 	\begin{itemize}
+ 		\item nachrichten-orientiert
+ 		\item verbindungs-orientiert 
+ 		\item \textbf{paket-orientiert}
+ 	\end{itemize}
+	
+	\section{Bitübertragungschicht}
+	
+	Wie nennt man die Einheit, die angibt, wieviele Signalschritte pro Sekunde kodiert werden?
+	\begin{itemize}
+		\item Bitrate
+		\item Bandbreite
+		\item \textbf{Baudrate}
+		\item Schrittrate
+	\end{itemize}
+
+	Laut dem Nyquist-Theorem ... 
+	\begin{itemize}
+		\item ... steigt die Bitrate $b$ exponentiell mit der Abtastfrequenz $f_a$.
+		\item  ... wird die Bitrate umso kleiner, je größer die Anzahl der Signalschritte ist. 
+		\item \textbf{... ist die Bitrate $b$ immer kleiner als die doppelte Bandbreite, wenn wir binär (also mit 2 Signalstufen) abtasten.} 
+	\end{itemize}
+
+	Welche Aussagen treffen auf die Manchester-Kodierung zu? 
+	\begin{itemize}
+		\item ... erfordert, dass Sender und Empfänger gleich getaktet sind.
+		\item \textbf{... wird durch Anwenden der XOR Operation auf das Taktsignal und den Datenstrom (NRZ-Signal) erzeugt.}
+		\item \textbf{... ist ein selbsttaktender Code.}
+		\item ... erzeugt keinen Overhead.
+		\item \textbf{... "1" werden durch keine Pegeländerung kodiert.}
+	\end{itemize}
+
+	Bitte sortieren Sie die Übertragungsmedien entsprechend der verfügbaren Bandbreite. Beginnen Sie mit der geringsten Bandbreite. 
+	\begin{enumerate}
+		\item Twisted Pair
+		\item Koaxialkabel
+		\item Zellularfunk (GSM)
+		\item Satellitenkommunikation
+		\item Lichtwellenleiter
+	\end{enumerate}
+
+	In welcher Topologie sind die verschiedenen Ebenen der strukturierten Verkabelung jeweils verbunden? 
+	\begin{itemize}
+		\item Ring
+		\item Binärbaum
+		\item \textbf{Stern}
+		\item Bus
+	\end{itemize}
+
+	Was bedeutet der Begriff \textit{Switched Medium}?
+	\begin{itemize}
+		\item Die Bandbreite des Übertragungskanals wird auf alle Teilnehmer gleichmäßig aufgeteilt. 
+		\item Die Übertragung über das Medium wird je nach Bedarf an- und ausgeschaltet. 
+		\item \textbf{Allen Teilnehmern wird abwechselnd (bei Bedarf) die gesamte Bandbreite des Übertragungsmediums exklusiv freigegeben. }
+	\end{itemize}
+
+	Welche Multiplexing-Verfahren werden bei GSM verwendet? 
+	\begin{itemize}
+		\item Codemultiplex
+		\item \textbf{Frequenzmultiplex}
+		\item \textbf{Zeitmultiplex}
+		\item \textbf{Raummultiplex}
+		\item Orthogonales Frequenzmultiplex
+	\end{itemize}
+
+	Bei welchen Übertragungstechnologien wird Orthogonales Frequenzmultiplex verwendet?
+	\begin{itemize}
+		\item GSM
+		\item \textbf{5G}
+		\item ISDN
+		\item \textbf{Kabelnetze}
+		\item \textbf{WiFi}
+		\item Lichtwellenleiter
+	\end{itemize}
+
+	Welche Eigenschaften treffen auf digitale Signale zu? 
+	\begin{itemize}
+		\item \textbf{Wertdiskret}
+		\item Zeitkontinuierlich
+		\item \textbf{Zeitdiskret}
+		\item Wertkontinuierlich
+	\end{itemize}
+
+	Wie groß muss die Abtastrate eines analogen Signals laut Shannon-Theorem mindestens sein?
+	\begin{itemize}
+		\item kleiner als die doppelte Grenzfrequenz des analogen Signals 
+		\item mindestens halb so groß wie die Grenzfrequenz des analogen Signals
+		\item größer als die dreifache Grenzfrequenz des analogen Signals
+		\item \textbf{größer als die doppelte Grenzfrequenz des analogen Signals }
+	\end{itemize}
+
+	Welche Schritte sind notwendig, um ein digitales Signal über einen analogen Kanal zu übertragen? Ordnen Sie die Schritte nach ihrer Reihenfolge.
+	\begin{enumerate}
+		\item Digitale Modulation
+		\item Analoge Modulation
+		\item Empfang des modulierten Signals
+		\item Analoge Demodulation
+		\item Digitale Demodulation
+		\item Synchronisation auf Sender
+	\end{enumerate}
+
+	Orden Sie die Modulationsarten richtig zu! 
+	\begin{itemize}
+		\item Phasenmodulation: Bei der binären "0" wird ein Signal mit einer Phase von 0$^\circ$ ausgesendet, bei "1" ein Signal mit der Phase 180$^\circ$
+		\item Frequenzmodulation: Bei der binären "0" wird eine niedrige Frequenz $f_0$ ausgesendet, bei "1" die höhere Frequenz $f_1$
+		\item Amplitudenmodulation: Bei der binären "0" wird eine niedrige Amplitude übertragen, bei "1" eine hohe Amplitude. 
+	\end{itemize}
+	
+	\section{Netztechnologien I}
+	
+	Wie wird bei Slotted ALOHA eine Verbesserung der Ausnutzung des Kanaldurchsatzes erreicht? 
+	\begin{itemize}
+		\item durch die Nutzung von Signaturen
+		\item \textbf{durch die Einführung von Zeitslots}
+		\item durch die Reservierung von Kanälen
+		\item durch das gleichzeitige Versenden mehrerer Pakete 
+	\end{itemize}
+
+	Ordnen Sie die unterschiedlichen CSMA-und ALOHA-Verfahren nach Ihrer Kollisionswahrscheinlichkeit! Beginnen Sie mit dem Verfahren mit der geringsten Wahrscheinlichkeit! 
+	\begin{enumerate}
+		\item Nonpersistant CSMA
+		\item 0,5-persistant CSMA 
+		\item 1-persistant CSMA
+		\item slotted ALOHA
+		\item ALOHA
+	\end{enumerate}
+
+	Welche Aussagen treffen auf das CSMA/CD-Verfahren zu? 
+	\begin{itemize}
+		\item Ein zentraler Knoten überwacht das Medium und regelt den Zugriff.
+		\item \textbf{Viele Teilnehmer teilen sich ein Übertragungsmedium (Shared Medium)}
+		\item Kollisionen werden nicht erkannt.
+		\item Jeder Teilnehmer kann auf einem exklusiven Kanal mit der Zentrale kommunizieren.
+		\item \textbf{Alle Teilnehmer überwachen das Medium.}
+		\item \textbf{Kollisionen werden erkannt und ein JAM-Signal gesendet.}
+		\item Wenn eine Kollision erkannt wurde, senden alle Teilnehmer direkt noch einmal.
+	\end{itemize}
+
+	Welches Verfahren wurde beim klassischen Ethernet verwendet? 
+	\begin{itemize}
+		\item Slotted ALOHA
+		\item Nonpersistant CSMA
+		\item 0,5-persistant CSMA
+		\item \textbf{1-persistant CSMA}
+		\item Pure ALOHA
+	\end{itemize}
+
+	Warum sind Kolisionsvermeidungsverfahren im heutigen Ethernet nicht mehr dringend notwendig?
+	\begin{itemize}
+		\item \textbf{Weil durch die Sterntopologie jeder Kanal nur durch einen Rechner exklusiv genutzt wird.}
+		\item \textbf{Durch die Verwendung von Switches und Duplexleitungen treten so gut wie keine Kollisionen mehr auf.}
+		\item Weil eine vollvermaschte Topologie verwendet wird und somit Punkt-zu-Punkt-Verbindungen entstehen.
+		\item Weil die Segmentlänge kleiner als 100 m gewählt wird.
+	\end{itemize}
+
+	Mit wie vielen Bit wird die Zieladresse im Ethernet-Frame kodiert? 
+	\begin{itemize}
+		\item 6 Bit
+		\item 32 Bit
+		\item \textbf{48 Bit}
+		\item 64 Bit
+		\item 128 Bit
+	\end{itemize}
+
+	Auf welcher Schicht im OSI/ISO-Referenzmodell werden Switches eingeordnet?
+	\begin{itemize}
+		\item Schicht 1
+		\item \textbf{Schicht 2}
+		\item Schicht 3
+		\item Schicht 4
+		\item Schicht 5
+		\item Schicht 6
+		\item Schicht 7
+	\end{itemize}
+
+	Welche Funktionen werden durch einen Switch umgesetzt?
+	\begin{itemize}
+		\item \textbf{Anpassung der Rahmenlängen zwischen verschiedenen Ethernet-Standards}
+		\item \textbf{Selektive Datenweiterleitung}
+		\item Ermitteln der besten Route durch das Internet
+		\item Kolissionserkennung
+		\item \textbf{Pufferung der Daten bei Kopplung unterschiedl. Ethernet-Standards}
+	\end{itemize}
+
+	Welche Aussagen treffen auf Cut-Through-Switches zu? 
+	\begin{itemize}
+		\item Sie prüfen erst die Prüfsumme bevor das Datenpaket weitergesendet wird.
+		\item Sie können zwischen verschiedenen Ethernet-Standards Formatanpassungen vornehmen.
+		\item \textbf{Die Daten werden ohne Zwischenspeicherung/Pufferung weitergeleitet.}
+		\item \textbf{Es können nur Kanäle mit gleicher Datenrate gekoppelt werden.}
+		\item Die Datenpakete werden komplett im Switch zwischen gepuffert und dann weitergeleitet.
+	\end{itemize}
+
+	Wie viele Kabelverbindungen zwischen 2 Switches sind notwendig, wenn man Datenpakete in 3 verschiedenen virtuellen LANs mit taggedVLAN verteilen möchte? 
+	\begin{itemize}
+		\item 3 Leitungen, weil jedes VLAN über einen getrennten Port verbunden werden muss.
+		\item 2 Leitungen für den Vollduplexbetrieb.
+		\item \textbf{1 Leitung, da die Verteilung auf die VLANs per VLAN-ID/Tag im Switch vorgenommen wird.} 
+	\end{itemize}
+
+	Ordnen Sie die verschiedenen Funktechnologien nach der Reichweite der Netzwerkverbindung. Beginnen Sie mit der kürzesten Reichweite! 
+	\begin{enumerate}
+		\item NFC
+		\item Bluetooth
+		\item ZigBee
+		\item WiFi
+		\item WiMax
+		\item LTE
+	\end{enumerate}
+
+	Welches MultipleAccess-Verfahren wird beim WLAN-Standard IEEE 802.11 verwendet? 
+	\begin{itemize}
+		\item CDMA
+		\item CSMA/CD
+		\item \textbf{CSMA/CA}
+		\item Slotted ALOHA
+		\item Pure ALOHA
+	\end{itemize}
+
+	Ein WLAN Interface Controller z.B. in einem Smartphone arbeitet ... 
+	\begin{itemize}
+		\item ... nur im Infrastruktur-Mode.
+		\item ... nur im Adhoc-Mode.
+		\item \textbf{... sowohl im Infrastruktur als auch im Adhoc-Mode. }
+		\item ... WDS mode.
+	\end{itemize}
+
+	In welcher Topologie sind die ZigBee-Router (ZR) mit den Endgeräten (ZED) verbunden? 
+	\begin{itemize}
+		\item Ring
+		\item Bus
+		\item \textbf{Stern}
+		\item vollvermascht, P2P
+	\end{itemize}
+
+	Bei der drahtlosen Bezahlung mit einem Smartphone erfolgt die Übertragung der Daten mit ...
+	\begin{itemize}
+		\item ... einem passiven RFID-Tag 
+		\item \textbf{... einem aktiven NFC-Transmitter}
+		\item ... mit einer adhoc WLAN-Verbindung 
+		\item ... mit Bluetooth 
+	\end{itemize}
+	
+	\section{Netztechnologien II}
+	
+	Welche Art von Multiplexing wird bei WiMax genutzt?
+	\begin{itemize}
+		\item \textbf{time division multiplexing}
+		\item space division multiplexing
+		\item \textbf{orthogonal frequency division multiplexing}
+		\item channel division multiplexing
+	\end{itemize}
+
+	Was bedeutet MIMO im Zusammenhang mit WiMax? 
+	\begin{itemize}
+		\item Nutzung einer Sende- und mehrerer Empfangsantennen pro Gerät
+		\item \textbf{Nutzung mehrerer Sende- und Empfangsantennen pro Gerät}
+		\item Nutzung mehrerer Sende- und einer Empfangsantenne pro Gerät 
+		\item Nutzung einer Antenne pro Gerät, die sowohl Senden als auch Empfangen kann. 
+	\end{itemize}
+
+	Für welche Größe von Netzen wird WiMax verwendet? 
+	\begin{itemize}
+		\item PAN
+		\item LAN
+		\item WAN
+		\item \textbf{MAN}
+		\item NFC
+	\end{itemize}
+
+	Welcher IEEE Standard gehört zu Resilient Packet Rings?
+	\begin{itemize}
+		\item 802.3
+		\item 802.5
+		\item 802.11
+		\item 802.16
+		\item \textbf{802.17}
+	\end{itemize}
+
+	Über welche Topology sind Resilient Packet Rings verbunden? 
+	\begin{itemize}
+		\item Dual Kupferkabel 
+		\item \textbf{Dual Glasfaser }
+		\item Wireless
+		\item Laser
+	\end{itemize}
+
+	Wie schnell kann im RPR ein Fehler entdeckt werden? (z.B. wenn eine Leitung beschädigt wird)
+	\begin{itemize}
+		\item 10 s
+		\item 100 ms
+		\item \textbf{50 ms}
+		\item 50 $\mu$s
+	\end{itemize}
+
+	In welcher Topologie sind die Stationen und Switches beim WAN/MAN-Ethernet verbunden?
+	\begin{itemize}
+		\item Ring
+		\item \textbf{Duplex P2P}
+		\item Bus
+		\item half-duplex P2P
+	\end{itemize}
+
+	Wofür werden im Carrier Ethernet sogenannte Ethernet Virtual Connections erstellt?
+	\begin{itemize}
+		\item exklusive Reservierung einer Verbindung zwischen 2 Switches
+		\item \textbf{Zusicherung einer Dienstgüte für eine konkrete Verbindung über mehrere Switches.}
+		\item Verschlüsselung der Kommunikation zwischen 2 Stationen im Ethernet
+		\item Nutzung anderer Netzwerktechnologien innerhalb des Ethernet 
+	\end{itemize}
+	
+	Wie werden bei MPLS die Label vergeben? 
+	\begin{itemize}
+		\item Jede Verbindung zwischen zwei Punkten hat ein eindeutiges Label. Ein Pfad, der eine bestimmte Verbindung verwendet, nimmt auf dieser ihr Label an.
+		\item Jeder Pfad hat ein eindeutiges Label. Jede Punkt-zu-Punkt-Verbindung nimmt für Pakete dieses Pfades das gegebene Label an. 
+		\item \textbf{Für jede Ende-zu-Ende-Kommunikation wird zwischen zwei Vermittlungsstellen ein für all ihre Ports eindeutiges Label vergeben. }
+	\end{itemize}
+
+	Was bedeuten Forward Equivalence Classes?
+	\begin{itemize}
+		\item bestimmte Pakete werden bevorzugt behandelt. 
+		\item \textbf{gleiche Behandlung aller Pakete eines Datenstroms }
+		\item die verschiedenen Ethernet-Standards sind vorwärts kompatibel.
+		\item Die Datenpakete des Vorgängers werden mit höherer Priorität weitergesendet.
+	\end{itemize}
+
+	Wie groß ist die Basisdatenrate beim SSONET (STS-1)? 
+	\begin{itemize}
+		\item 51,84 kBit/s 
+		\item 100 Mbit/s
+		\item \textbf{51,84 MBit/s}
+		\item 10 Mbit/s
+		\item 50 GBit/s
+	\end{itemize}
+
+	Sortieren Sie die verschiedenen Multiplexing-Verfahren für SSONET nach der zu erreichenden Datenrate. Beginnen Sie mit dem Verfahren, dass die höchste Datenrate ermöglicht?
+	\begin{enumerate}
+		\item DWDM - Dense Wavelength Division Multiplexing
+		\item CWDM - Coarse Wavelength Division Multiplexing 
+		\item WDM - Wavelength Division Multiplexing
+	\end{enumerate}
+	
+	\section{Sicherungsschicht}
+	
+	Was gehört zu den Aufgaben der Sicherungsschicht? 
+	\begin{itemize}
+		\item Routing der Pakete
+		\item \textbf{Bildung von Übertragungsrahmen}
+		\item \textbf{Fehlerbehandlung, Kontrolle von Prüfsummen}
+		\item Ende-zu-Ende-Sicherung von Nachrichten
+		\item \textbf{Flusskontrolle zur Überlastvermeidung}
+		\item \textbf{Interface für die Vermittlungsschicht}
+		\item Modulation der Daten auf physikalischen Übertragungskanal
+		\item Schnittstelle für die Anwendungsschicht
+	\end{itemize}
+
+	Wie groß ist die Anzahl korrigierbarer Fehler, wenn die Hamming-Distanz $d=5$ ist?
+	\begin{itemize}
+		\item 1
+		\item \textbf{2}
+		\item 3
+		\item 4
+		\item 5
+	\end{itemize}
+
+	Welche der folgenden Codes können Fehler nur erkennen jedoch nicht korrigieren? 
+	\begin{itemize}
+		\item \textbf{CRC-32}
+		\item \textbf{eindimensionale Paritätsbits}
+		\item Hamming-Code
+		\item Reed-Solomon-Code
+	\end{itemize}
+
+	Wie lange muss der Sender mindestens warten, bis er den nächsten Rahmen senden kann? 
+	\begin{itemize}
+		\item Halbe Round-Trip-Time
+		\item Doppelte Round-Trip-Zeit 
+		\item \textbf{Einfache Round-Trip-Zeit }
+		\item Ablauf des Timeouts 
+	\end{itemize}
+
+	Bitte ordnen Sie die jeweiligen Funktionen/Eigenschaften des ARQ den Übertragungsproblemen zu, die sie lösen. 
+	\begin{itemize}
+		\item verspätetes Acknowledge: Sequenznummer des ACK, ermöglicht Zuordnung zum Frame
+		\item verlorene Daten: automatische Sendewiederholung nach Timeout 
+		\item verlorene Quittung: Sequenznummer in den Daten zur Duplikaterkennung 
+	\end{itemize}
+
+	Ordnen Sie die entsprechenden Dienstprimitive den Zustandsübergängen zu!
+	\begin{itemize}
+		\item DatReq, DatInd: Verbindung aufgebaut - Verbindung aufgebaut
+		\item DisReq, DisInd: Verbindung aufgebaut - Ruhezustand
+		\item ConReq, ConInd: Ruhezustand - Verbindung im Aufbau 
+		\item ConRsp, ConCnf: Verbindung im Aufbau - Verbindung aufgebaut 
+	\end{itemize}
+
+	HDLC ist ein .... Protokoll. 
+	\begin{itemize}
+		\item byte-orientiertes
+		\item verbindungs-orientiertes
+		\item \textbf{bit-orientiertes}
+		\item paket-orientiertes 
+		\item service-orientiertes
+	\end{itemize}
+
+	Bitte ordnen Sie die Bestandteile eines Rahmens des HDLC-Protokolls in die richtige Reihenfolge!
+	\begin{enumerate}
+		\item Opening Flag 
+		\item Adresse 
+		\item Steuerung
+		\item Nutzdaten
+		\item Prüfsumme
+		\item Closing Flag
+	\end{enumerate}
+
+	In welchen der folgenden Netze kommt das Point-to-Point-Protocol zum Einsatz?
+	\begin{itemize}
+		\item \textbf{Kabelmodem}
+		\item LTE
+		\item \textbf{xDSL}
+		\item \textbf{GPRS/UMTS}
+		\item ATM
+		\item NFC
+	\end{itemize}
+	
+	\section{Vermittlungsschicht}
+	
+	Welche Aufgaben werden durch die Vermittlungsschicht erfüllt?
+	\begin{itemize}
+		\item Bildung von Übertragungsrahmen
+		\item \textbf{Routing der Pakete}
+		\item \textbf{Einheitliche Adressierung}
+		\item Ende-zu-Ende-Sicherung von Nachrichten
+		\item Modulation der Daten auf physikalischen Übertragungskanal
+		\item \textbf{Anpassung von Formaten und Adressen}
+	\end{itemize}
+
+	Ordnen Sie die Protokolle der Art der Wegewahl zu! 
+	\begin{itemize}
+		\item Global: OSPF (Open Shortest Path First) 
+		\item Lokal: HotPotato
+		\item Verteilt: RIP (Routing Information Protocol) 
+	\end{itemize}
+
+	 Welcher Algorithmus wird in OSPF verwendet, um den kürzesten Pfad zu bestimmen? 
+	 \begin{itemize}
+	 	\item Bellman-Ford Algorithmus
+	 	\item Distance Vector Routing 
+	 	\item Routing Information Protocol 
+	 	\item \textbf{Dijkstra’s Algorithmus}
+	 \end{itemize}
+ 
+ 	Wie heißen die Pakete, die bei der Überlastung eines Kanals an den Sender zurückgesendet werden?
+ 	\begin{itemize}
+ 		\item Joke-Pakete
+ 		\item \textbf{Choke-Pakete }
+ 		\item Choice-Pakete
+ 		\item Overload-Pakete
+ 		\item Stop-Pakete
+ 	\end{itemize}
+ 
+ 	Wie werden bei ECN (Explicit Congestion Notification) die Pakete markiert, um dem Sender eine Überlastsituation anzuzeigen?
+ 	\begin{itemize}
+ 		\item Byte im Paket-Header
+ 		\item Flag am Ende des Paketes
+ 		\item \textbf{Bit im Paket-Header}
+ 		\item Paket mit leerem Payload
+ 	\end{itemize}
+	
+	Was passiert beim LeakyBucket-Verfahren? 
+	\begin{itemize}
+		\item Daten werden gepuffert, um sie dann später im Bulk auszuliefern.
+		\item \textbf{Daten mit unterschiedlicher Datenrate werden gepuffert, um sie dann an einen Empfänger mit konstanter Datenrate ausliefern zu können.}
+		\item Daten werden nur solange gepuffert, bis der Puffer (Eimer) überläuft, dann werden sie verworfen.
+		\item Multimediadaten werden synchronisiert, um den Jitter zu verringern.
+	\end{itemize}
+
+	Wie groß ist der IPv4-Adressraum? 
+	\begin{itemize}
+		\item 16 Bit
+		\item \textbf{32 Bit}
+		\item 64 Bit
+		\item 128 Bit
+		\item 256 Bit
+	\end{itemize}
+
+	Wie groß ist der IPv6-Adressraum? 
+	\begin{itemize}
+		\item 16 Bit
+		\item 32 Bit
+		\item 64 Bit
+		\item \textbf{128 Bit}
+		\item 256 Bit
+	\end{itemize}
+
+	Welche der folgenden IPv4-Adressen gehören zu privaten Netzwerken? 
+	\begin{itemize}
+		\item \textbf{10.0.0.2}
+		\item 141.76.40.1
+		\item \textbf{192.168.54.3}
+		\item \textbf{192.168.0.7}
+		\item 214.15.23.1
+		\item 188.1.144.217
+	\end{itemize}
+
+	Welche Eigenschaften treffen auf das OSPF-Protokoll zu? 
+	\begin{itemize}
+		\item statisches Routing-Verfahren
+		\item \textbf{unterstützt Intra-Domain-Routing}
+		\item \textbf{Berechnung des kürzesten Pfades mit Dijkstra-Algorithmus}
+		\item \textbf{dynamisches Routing-Verfahren}
+		\item unterstützt Inter-Domain-Routing
+		\item \textbf{ist ein Link State Protocol}
+		\item verwendet Distance Vector Routing
+	\end{itemize}
+
+	Wieviele Adressen (gerundet) könnte man theoretisch mit den 128 bit langen Adressen in IPv6 vergeben?
+	\begin{itemize}
+		\item 4,3 Milliarden 
+		\item 300 Milliarden 
+		\item 640 Trilliarden
+		\item \textbf{340 Sextillionen }
+		\item 600 Billiarden
+	\end{itemize}
+
+	Ordnen Sie die Adressarten den passenden Eigenschaften zu! 
+	\begin{itemize}
+		\item Unicast: Adressen für ein einzelnes Interface 
+		\item Broadcast: Existieren nicht und wird mit Multicast-Adressen realisiert. 
+		\item Anycast: Adressen für mehrere Interfaces, wobei nur eines davon das Paket empfängt. 
+		\item Multicast: Adressen für mehrere Interfaces, die alle das selbe Paket empfangen. 
+	\end{itemize}
+
+	Mit IPv6 besteht die Möglichkeit, dass ein Interface sich selbst eine link-lokale Adresse zuweist und auf dieser Basis auch eine globale Unicast-Adresse erzeugen und sich selbst zuweisen kann. Wie lautet die link-lokale IPv6-Adresse zur MAC-Adresse 24:48:3F:8E:F1:26?
+	\begin{itemize}
+		\item fe80::2448:3FFE:FF8E:F126
+		\item fe80:2448:3FFF::FE8E:F126 
+		\item fe80::2648:3FFE:FF8E:F126
+		\item \textbf{fe80::2648:3FFF:FE8E:F126 }
+		\item fe80::2448:3FFF:FE8E:F126
+		\item fe80:2648:3FFF::FE8E:F126 
+	\end{itemize} 
+
+	In IPSec wird für die Verschlüsselung folgendes Verfahren verwendet? 
+	\begin{itemize}
+		\item RSA
+		\item Caesar-Chiffre 
+		\item \textbf{AES}
+		\item One-Time-Pad 
+		\item DES
+		\item Twofish
+	\end{itemize}
+
+	Bringen Sie die DHCP-Protokollnachrichten in die richtige Reihenfolge! 
+	\begin{enumerate}
+		\item DHCP DISCOVER 
+		\item DHCP OFFER 
+		\item DHCP REQUEST 
+		\item DHCP ACK 
+	\end{enumerate}
+	
+	\section{Transportschicht}
+	
+	Welche Aufgaben werden von der Transportschicht übernommen? 
+	\begin{itemize}
+		\item \textbf{Ende-zu-Ende-Fehlerbehandlung}
+		\item Sicherung der Punkt-zu-Punkt-Verbindung
+		\item Wegewahl durch das Netz
+		\item \textbf{Aushandlung von Dienstgüte-Eigenschaften}
+		\item \textbf{Ende-zu-Ende-Flusskontrolle}
+		\item Modulation der Daten auf ein physikalisches Übertragungsmedium
+		\item \textbf{Überlaststeuerung/Congestion Control}
+	\end{itemize}
+
+	Was versteht man unter einem Port?
+	\begin{itemize}
+		\item \textbf{Transport Service Access Point}
+		\item Network Service Access Point
+		\item IP-Schnittstelle
+		\item \textbf{standardisiert für verschiedene Anwendungsdienste}
+		\item bildet einen Host im Netzwerk ab
+		\item \textbf{bildet einen Prozess auf einem Host ab}
+	\end{itemize}
+
+	Ordnen Sie die Ports den einzelnen Diensten zu (entsprechend IANA -Standard). 
+	\begin{itemize}
+		\item 80: HTTP
+		\item 443: HTTPS
+		\item 53: Domain Name System (DNS) 
+		\item 23: Telnet
+		\item 25: Simple Mail Transfer Protocol (SMTP) 
+		\item 110: POP-3
+		\item 143: IMAP
+	\end{itemize}
+
+	Wie groß sollen die Laufnummern beim Schiebefensterprotokoll mindestens sein, damit Fehler in der Übertragung und Duplikate erkannt werden können?
+	\begin{itemize}
+		\item 0 bis $F-1$
+		\item \textbf{0 bis $F$}
+		\item 0 bis $F+1$
+		\item 0 bis $2\cdot F$
+	\end{itemize}
+
+	Was passiert bei einem Schiebefensterprotokoll der Fenstergröße 4, wenn der 2. Frame verlorengeht? Zur Fehlerbehandlung wird Go-back-n verwendet.
+	\begin{itemize}
+		\item Da keine Bestätigung für Frame 2 eintrifft, wiederholt der Sender sofort den Frame 2, bevor er Frame 3 und 4 sendet.
+		\item \textbf{Der 3. und 4. Frame werden beim Empfänger verworfen, der Sender wiederholt nach Timeout die Frames 2, 3 und 4, der Empfänger bestätigt jeweils die Ankunft} 
+		\item Der 3. und 4. Frame werden beim Empfänger gepuffert, der Sender wiederholt nach Timeout den Frame 2, der Empfänger bestätigt in einer Sammelquittung, dass 2, 3 und 4 angekommen sind. 
+		\item Der Sender verschickt alle Rahmen gemeinsam und wartet auf die Bestätigung für alle Pakete, nach Timeout wiederholt er alle Pakete noch einmal.
+	\end{itemize}
+
+	Welche der folgenden Eigenschaften sind TCP zuzuordnen? 
+	\begin{itemize}
+		\item verbindungsloses Protokoll
+		\item \textbf{verbindungsorientiertes Protokoll}
+		\item geeignet für Echtzeit-Multimedia-Anwendungen
+		\item \textbf{Reihenfolgegarantie}
+		\item \textbf{Fenster-basierte Flusskontrolle}
+		\item Datagram-basierte Kommunikation
+		\item \textbf{Congestion Control}
+	\end{itemize}
+
+	Wie groß ist der UDP-Header, wenn das UDP-Segment 64kByte groß ist? 
+	\begin{itemize}
+		\item 8 bit
+		\item 2 Byte
+		\item \textbf{8 Byte}
+		\item 16 Byte
+		\item 24 Byte
+		\item 32 Byte
+	\end{itemize}
+
+	UDP ist ein sogenannter "Best-Effort"-Dienst. Das bedeutet, dass ... 
+	\begin{itemize}
+		\item Segmente im Fehlerfall wiederholt werden.
+		\item \textbf{Segmente verloren gehen können.}
+		\item \textbf{Segmente in der falschen Reihenfolge ankommen können.}
+		\item dass die richtige Reihenfolge der Segmente garantiert wird.
+		\item dass alle Segmente einer Verbindung gemeinsam als Strom behandelt werden.
+		\item \textbf{dass jedes Segment unabhängig von anderen behandelt wird.}
+		\item \textbf{dass keine Staukontrolle stattfindet.}
+	\end{itemize}
+
+	Was geschieht beim TCP Slow Start, wenn keine Stausituation auftritt? 
+	\begin{itemize}
+		\item Die Fenstergröße ist zu Beginn sehr klein, sie wird bis zur max. Fenstergröße exponentiell erhöht. 
+		\item Die anfänglich sehr kleine Fenstergröße wird bis zu einem Schwellwert linear erhöht und dann bis zur maximalen Fenstergröße exponentiell.
+		\item \textbf{Die Fenstergröße wird bis zum Schwellwert exponentiell erhöht, dann bis zur maximalen Fenstergröße linear. }
+		\item Die Fenstergröße beginnt mit einem maximalen Wert und wird dann bei Problemen linear verringert. 
+		\item Die Fenstergröße wird bis zur maximalen Fenstergröße exponetiell erhöht und steigt danach weiter linear an, bis es zu Stausituationen kommt. 
+	\end{itemize}
+
+	 Was geschieht beim TCP Slow Start, wenn eine Stausituation auftritt?
+	 \begin{itemize}
+	 	\item \textbf{Sendefenster wird nach Timeout auf 1 gesetzt}
+	 	\item Sendefenster wird halbiert
+	 	\item Schwellwert wird verdoppelt
+	 	\item \textbf{Schwellwert wird halbiert}
+	 	\item \textbf{Timeout wird verdoppelt}
+	 	\item Timeout wird halbiert
+	 	\item Timeout wird nicht erhöht
+	 \end{itemize}
+ 
+ 	Welche Eigenschaften beschreiben das Verhalten bei Fast Recovery?
+ 	\begin{itemize}
+ 		\item \textbf{Wiederholung der Übertragung nach Erhalt dreier gleicher ACKs}
+ 		\item Timeout wird verdoppelt
+ 		\item Sendefenster wird nach Timeout auf 1 gesetzt
+ 		\item \textbf{Sendefenster wird halbiert }
+ 		\item Schwellwert wird halbiert
+ 		\item \textbf{keine Erhöhung des Timeouts}
+ 	\end{itemize}
+ 
+ 	Ordnen Sie die Filtermöglichkeiten den entsprechenden Firewall-Funktionen zu!
+ 	\begin{itemize}
+ 		\item Protokolle via TCP-Ports: Circuit Relay, Schicht 4 
+ 		\item anwendungsbezogene Authentisierung: Application Gateway, Schicht 7 
+ 		\item IP-Quell-/Zieladressen: Paketfilter, Schicht 3 
+ 		\item Domain Names (Quelle/Ziel): DNS, Schicht 7 
+ 	\end{itemize}
+	
+	\section{Netzwerkperformance}
+	
+	Welche Performance-Probleme können auf Schicht 4 durch Nutzung von TCP entstehen?
+	\begin{itemize}
+		\item Anpassung der Übertragungsgeschwindigkeit zwischen unterschiedlichen Ethernet-Varianten
+		\item \textbf{starke Drosselung der Geschwindigkeit durch Slow Start bei Paketverlusten}
+		\item Ineffiziente Wegewahlverfahren
+		\item \textbf{Wiederholte Übertragung verloren gegangener Pakete verzögert Übertragung}
+		\item \textbf{unnötige Verzögerung bei Paketverlusten, weil Timeout zu groß gewählt}
+		\item Fragmentierung und Reassemblierung von Paketen
+	\end{itemize}
+
+	Wie kann Jitter ausgeglichen werden?
+	\begin{itemize}
+		\item Drosselung der Sendegeschwindigkeit, dann gehen weniger Pakete verloren
+		\item Vergrößerung der Fenstergröße bei TCP
+		\item \textbf{Durch TCP-Sequenznummern kann richtige Reihenfolge der Pakete wiederhergestellt werden.}
+		\item \textbf{Pufferung auf Empfängerseite, dann verzögerte Wiedergabe mit gleichmäßiger Geschwindigkeit}
+		\item Pufferung auf Senderseite, um Pakete synchron zu verschicken
+	\end{itemize}
+
+	Wie groß ist (rechnerisch betrachtet) die minimale Framelänge $F$ im Gigabit Ethernet?
+	\begin{itemize}
+		\item 128 Bit
+		\item 200 Bit
+		\item 250 Bit
+		\item \textbf{2000 Bit}
+	\end{itemize}
+
+	Um welches Vielfaches erhöht sich die Framegröße von Jumbo-Frames gegenüber klassischen Ethernet-Frames? 
+	\begin{itemize}
+		\item das Doppelte 
+		\item das Dreifache 
+		\item das Vierfache 
+		\item \textbf{das 6-fache }
+		\item das 10-fache 
+	\end{itemize}
+
+	Durch welche Einflussfaktoren kann die TCP-Datenrate sinken? 
+	\begin{itemize}
+		\item durch die Verringerung der Round Trip Time
+		\item \textbf{durch die Vergrößerung der Round Trip Time}
+		\item durch die Verringerung der Entfernung zwischen Senden und Empfänger
+		\item \textbf{durch die Vergrößerung der Entfernung zwischen Sender und Empfänger}
+		\item durch die Verringerung der Paketverlustrate
+		\item \textbf{durch die Erhöhung der Paketverlustrate}
+		\item \textbf{durch die Verringerung der maximalen Segmentgröße}
+		\item durch die Erhöhung der maximalen Segmentgröße
+	\end{itemize}
+
+	Welcher Fairness-Algorithmus ermöglicht eine nahezu gleichmäßige Übertragungszeit im gesamten Netz? 
+	\begin{itemize}
+		\item FirstCome - FirstServe
+		\item Round-Robin Fair-Queueing
+		\item Round-Robin Weighted-Queueing 
+		\item \textbf{Scheduling anhand von Paketzeitstempeln}
+		\item Prioritätsbasiertes Scheduling
+	\end{itemize}
+
+	Welche Fairness-Algorithmen könnn Sie verwenden, wenn Sie Pakten einer Videokonferenzübertragung den Vorrang bei der Übertragung einräumen wollen? 
+	\begin{itemize}
+		\item Scheduling anhand von Paketzeitstempeln
+		\item \textbf{Prioritätsscheduling}
+		\item Round-Robin Fair-Queuing
+		\item \textbf{Weighted Round-Robin}
+		\item First In - First Out
+	\end{itemize}
+
+	Bei welcher Auslastung der Kanalkapazität sollte man die Übertragung bereits drosseln? 
+	\begin{itemize}
+		\item bei 50 \% 
+		\item \textbf{bei 70 - 80 \% }
+		\item bei 90 \%
+		\item erst bei voller Auslastung von 100 \%
+	\end{itemize}
+
+	Ordnen Sie den TCP Varianten die richtigen Verfahren zu! 
+	\begin{itemize}
+		\item TCP klassisch: Paketverlust führt zu "Neustart" (Slow Start) der Senderate, dann exponentielle Erhöhung bis Schwellwert 
+		\item TCP-Reno - Fast Recovery: bei Empfang von 3 Dup-Acks wird Congestion Window halbiert 
+		\item Fast-Retransmit: Sender erkennt doppelte Acks und sendet fehlendes Paket vor Ablauf des Timers für Paketverlust
+		\item FAST TCP: Paketanzahl in der Warteschlange wird gemessen, viele Pakete in der Warteschlange, Senderate wird proaktiv reduziert 
+	\end{itemize}
+
+	Welche Anpassungen am Host-System können zu Leistungssteigerungen führen?
+	\begin{itemize}
+		\item \textbf{Übertragung von Großen Jumbo-Frames}
+		\item Verkürzung der Timeouts beim TCP.
+		\item \textbf{Zusammenfassen der Schichten (Integrated Layer Processing)}
+		\item \textbf{Netzmanager in Betriebssystemkern verlegen}
+		\item \textbf{Prüfsummenberechnung während des Kopiervorgangs}
+		\item Verkürzung der Warteschlangen
+	\end{itemize}
+	
+	Auf wieviele Byte wird der TCP/IP-Header bei Robust Header Compression reduziert?
+	\begin{itemize}
+		\item 2 Byte
+		\item \textbf{3 Byte}
+		\item 5 Byte
+		\item 16 Byte
+		\item 32 Byte
+	\end{itemize}
+	
+	\section{Internetdienste}
+	
+	Was versteht man unter einem "autoritativem Datensatz" in DNS?
+	\begin{itemize}
+		\item ist ein Ressourcendatensatz der im Cache zwischengespeichert wird 
+		\item \textbf{stammt von der Stelle, die den konkreten Domain-Namen verwaltet }
+		\item wird von der root-Domain verwaltet 
+		\item ist ein Datensatz, der vom primären Name-Server einer übergeordneten Zone stammt. 
+	\end{itemize}
+
+	Eine DNS-Anfrage nach dem Host www.inf.tu-dresden.de wird von einem Client innerhalb der Domäne computer.com abgesendet. Ordnen Sie, in welcher Reihenfolge welche DNS-Server angefragt werden, wenn das iterative Vorgehen (referral) genutzt wird und alle DNS-Caches leer sind.
+	\begin{enumerate}
+		\item dns.computer.com 
+		\item Root-Nameserver 
+		\item .de Nameserver 
+		\item tu-dresden.de 
+		\item inf.tu-dresden.de 
+	\end{enumerate}
+
+	Wie viele Domänen umfasst eine DNS-Zone? 
+	\begin{itemize}
+		\item Genau einen vollständig qualifiziert Domänenname (FQDN), bspw. www.rn.inf.tu-dresden.de
+		\item Genau eine Subdomäne, bspw. rn.inf.tu-dresden.de. Weitere Subdomänen dieser Subdomäne gehören zur selben Zone. 
+		\item \textbf{Die Zone ist unabhängig von der Domäne und kann daher verschiedene/beliebig viele Domänen umfassen, die eine Autorität (Organisation/Administration/Verwaltung) zugehören. Subdomänen einer Domäne können zur selben Zone gehören, müssen es aber nicht.}
+		\item Alle Domänen unterhalb der Top-Level-Domäne, bspw. *.de 
+	\end{itemize}
+
+	Welche Protokolle werden für den Abruf der Emails vom Server durch einen Client verwendet? 
+	\begin{itemize}
+		\item SMTP
+		\item \textbf{IMAP}
+		\item MIME
+		\item HTTP
+		\item \textbf{POP3}
+	\end{itemize}
+
+	Ordnen Sie die Standardports den jeweiligen Protokollen zu! 
+	\begin{itemize}
+		\item 80: HTTP
+		\item 443: HTTPS
+		\item 53: DNS
+		\item 23: Telnet
+		\item 25: SMTP
+		\item 110: POP
+		\item 143: IMAP
+	\end{itemize}
+
+	Sie wollen eine Email an rektor@tu-dresden.de senden. Woher weiß der SMTP-Server, an welchen Server er die Nachricht senden soll?
+	\begin{itemize}
+		\item Er fragt per Broadcast alle Hosts der Domäne an, welcher Server SMTP-Nachrichten empfangen kann 
+		\item Der SMTP-Server führt eine Liste ihm bekannter Adressen und Server. 
+		\item \textbf{Er sucht im DNS nach einem Resource Record vom Typ MX. }
+		\item Er fragt beim DHCP-Server der Domäne an, der ihm die richtige IP-Adresse zurück gibt. 
+	\end{itemize}
+
+	Welche Aufgabe(n) übernimmt Base64? 
+	\begin{itemize}
+		\item Komprimierung von Binärdaten zur schnelleren Übertragung. 
+		\item \textbf{Kodierung von Binärdaten in überwiegend Buchstaben und Ziffern. }
+		\item Verschlüsselung von E-Mail-Nachrichten. 
+		\item Verschlüsselung von Anhängen.
+	\end{itemize}
+
+	Warum adressiert man Webseiten nicht direkt über eine IP-Adresse?
+	\begin{itemize}
+		\item \textbf{Die Inhalte können so auch auf mehrere Web-Server verteilt werden und ein Load Balancing durchgeführt werden.}
+		\item IP-Adressen sind nicht eindeutig, die können auch auf mehrere Hosts zeigen.
+		\item Heutige Browser können IPv6-Adressen nicht verarbeiten.
+		\item \textbf{Weil man sich die Namen einfacher merken kann als Zahlenkombinationen.}
+		\item \textbf{IP-Adressen von Webservern können sich ändern. Dann müsste man auch alle Hyperlinks ständig anpassen.}
+	\end{itemize}
+
+	Welches sind korrekte URLs für Dokumente im WWW? 
+	\begin{itemize}
+		\item \textbf{ftp://IP-Adresse des Hostrechners/Pfad/Dateiname.html}
+		\item DNS-Name des Hostrechners:Pfad:Protokoll
+		\item \textbf{https://DNS-Name des Hostrechners/Pfad/}
+		\item \textbf{http://IP-Adresse des Hostrechners/index.html}
+		\item http@DNS-Name der Domäne/Pfad/Dateiname.xml
+		\item \textbf{http://IP-Adresse des Hostrechners:Portnummer/Pfad}
+	\end{itemize}
+
+	Welches Transportprotokoll wird von HTTP verwendet? 
+	\begin{itemize}
+		\item UDP (User Datagram Protocol) 
+		\item \textbf{TCP (Transmission Control Protocol) }
+		\item TCP oder UDP (beides möglich) 
+		\item RTP
+	\end{itemize}
+
+	Was bedeutet die Angabe "Connection: Keep-Alive" im HTTP-Header? 
+	\begin{itemize}
+		\item Der HTTP-Request erfolgt asynchron.
+		\item \textbf{Die aufgebaute TCP-Verbindung wird nicht nach jedem Request-Response wieder abgebaut, sondern längerfristig aufrechterhalten.} 
+		\item Die Webseite wird immer zuerst aus dem Cache geladen. 
+		\item Kurze HTTP-Anfrage, ob der Server noch erreichbar ist. Ohne Inhaltsübertragung. 
+	\end{itemize}
+
+	Was passiert beim Caching von Webseiten? 
+	\begin{itemize}
+		\item Besonders oft nachgefragte Webseiten werden im Cache zwischengespeichert, damit sie dann beim ersten Aufruf schneller ausgeliefert werden können.
+		\item \textbf{Webseiten, die einmal abgerufen wurden, werden im Cache gespeichert und bei erneuter Anfrage sofort aus dem Cache ausgeliefert. }
+		\item Webseiten werden redundant in mehreren Webproxies gespeichert, damit sie bei vielen Anfragen performant verteilt werden können.
+		\item Für bestimmte Webseiten werden Anwendungsdaten im Browser-Speicher abgelegt, z.B. Sessiondaten. 
+	\end{itemize}
+	
+	Nach welchem Kriterium wird in CDNs entschieden, an welchen Knoten die Anfrage eines Clients weitergeleitet wird? 
+	\begin{itemize}
+		\item nach der Auslastung der Knoten
+		\item \textbf{nach der örtlichen Nähe zum Anfragenden }
+		\item nach der Länge der Warteschlage mit offenen Anfragen 
+		\item nach der IP-Range aus der die Anfrage kommt 
+		\item Die Anfragen werden zufällig an einen Knoten verteilt, was insgesamt zu einer relativ gleichmäßigen Belastung aller Server führt. 
+	\end{itemize}
+
+	SNMP Agenten sind ...
+	\begin{itemize}
+		\item zentrale Management-Geräte 
+		\item NMS (Network Management Stations)
+		\item \textbf{Netzwerkgeräte wie Router, Switches oder Hubs }
+		\item PDUs
+	\end{itemize}
+
+	Wann wird bei SNMP eine TRAP-Nachricht erzeugt?
+	\begin{itemize}
+		\item Wenn der Manager dem Agent signalisieren will, dass ein Neustart erfolgen soll. 
+		\item Als Antwort auf einen GetBulkRequest. 
+		\item \textbf{Wenn der Agent einen Alarm oder ein außergewöhnliches Ereignis an den Manager melden will, z.B. bei Pufferüberlauf.} 
+		\item Wenn der Agent alle Einstellungen verwerfen und auf Werkseinstellungen zurücksetzen soll. 
+		\item Wenn der Manager signalisiert, dass die Puffergröße verändert werden soll. 
+	\end{itemize}
+	
+	\section{Multimediakommunikation}
+	
+	Welche der folgenden Anwendungen ordnen Sie nicht dem Bereich der Multimediakommunikation zu? 
+	\begin{itemize}
+		\item IP-TV (Fernsehen über Internet)
+		\item Video on Demand (Filme nach Bedarf anschauen), Streaming-Dienste
+		\item \textbf{Videodownloads (Filme laden zum später schauen)}
+		\item Audio-Podcasts
+		\item \textbf{MP3s herunterladen zum später hören}
+		\item \textbf{Download von Bilddateien von einer Webseite}
+		\item YouTube/Vimeo
+	\end{itemize}
+
+	Welche Anforderungen ergeben sich aus der Multimediakommunikation an die Protokolle der Transportschicht? 
+	\begin{itemize}
+		\item \textbf{Echtzeitfähigkeit}
+		\item Paketwiederholung
+		\item \textbf{Reihenfolgegarantie für Pakete}
+		\item paketorientierte Vermittlung
+		\item Synchronisation von Audio und Video
+	\end{itemize}
+
+	Was glauben Sie ist eine günstige Reihenfolge, Frames in JPEG auszuliefern? 
+	\begin{itemize}
+		\item IPBB...BBP 
+		\item \textbf{IBBP...BBP}
+		\item PIBB...BB
+		\item PBB...BBI
+	\end{itemize}
+
+	Was ist die wichtigste Aufgabe von Codecs?
+	\begin{itemize}
+		\item Codecs übernehmen die Aufgabe eines Digital/Analog-Wandlers.
+		\item Codecs stellen die Paketgrößen automatisch auf sich ändernde Kommunikationsparameter ein.
+		\item \textbf{Codecs erlauben eine Anpassung des Datenstroms an den Kommunikationskanal, z.B. durch Komprimierung.}
+		\item Codecs haben auf die Effizienz der Multimediakommunikation keinerlei Auswirkung, sie wandeln die Multimediadaten nur in digitale Daten um.
+	\end{itemize}
+
+	Welche Eigenschaften treffen auf Quellkodierungen zu? 
+	\begin{itemize}
+		\item \textbf{medienabhängig}
+		\item medienunabhängig
+		\item verlustfrei
+		\item \textbf{verlustbehaftet}
+		\item \textbf{kontextbehaftet}
+		\item kontextfrei
+	\end{itemize}
+
+	Auf welchen Mechanismus greift Multimediakommunikation auf der Transportschicht (OSI-4) zurück? 
+	\begin{itemize}
+		\item Pures UDP 
+		\item \textbf{Erweiterung von UDP}
+		\item Pures TCP
+		\item Erweiterung von TCP
+	\end{itemize}
+
+	Warum nutzt man RTP für die Übertragung von Medienströmen? 
+	\begin{itemize}
+		\item Medienströme sollten so schnell wie möglich durch das Netz zugestellt werden. RTP findet die schnellste Route. 
+		\item Medienströme müssen im Netzwerk als echtzeitkritisch markiert werden. Da TCP/IP dafür keinen Header hat muss eine neue Protokollebene eingeführt werden. 
+		\item \textbf{Medienströme sollten mittels UDP durch das Netz zugestellt werden. RTP ermöglicht dem Empfänger, die korrekte Paketreihenfolge und -abspielposition wieder herzustellen. }
+	\end{itemize}
+
+	Warum ist beim Empfänger ein Puffer notwendig, bevor die Multimediadaten abgespielt werden? 
+	\begin{itemize}
+		\item \textbf{Pakete können in falscher Reihenfolge ankommen und müssen vorm Abspielen sortiert werden}
+		\item Pakete können verlorengehen und müssen wiederholt werden
+		\item \textbf{um Jitter auszugleichen}
+		\item \textbf{um Audio und Videopakete zu synchronisieren}
+		\item um das Abspielen der Pakete zu verzögern
+	\end{itemize}
+
+	Was zeichnet echtes Medien-Streaming aus?
+	\begin{itemize}
+		\item Getrennte Server für Adressierung und Streaming, Verwendung eines eigenen Protokolls zur Steuerung, sowie RTP-Medienströme.
+		\item Getrennte Server für Mediensteuerung und Medienauslieferung, Verwendung von HTTP zur Steuerung, sowie RTP-Medienströme.
+		\item \textbf{Getrennte Server für Medienbeschreibung und Medien, Verwendung eines eigenen Protokolls zur Steuerung, sowie RTP-Medienströme.}
+		\item Jeder Server trennt seine Streams durch HTTP-basierte Mediensteuerung und RTP-basierte Medienauslieferung.
+	\end{itemize}
+
+	Welche Streaming-Technologie haben Sie beim Schauen der Vorlesungsvideos verwendet? (Schauen Sie doch mal in die Entwicklerkonsole des Browsers oder nutzen Wireshark.)
+	\begin{itemize}
+		\item "echtes" Streaming 
+		\item \textbf{HTTP-Streaming}
+		\item MPEG Dash Streaming
+	\end{itemize}
+
+	Was sind die wichtigsten Funktionen von SIP?
+	\begin{itemize}
+		\item Kodierung und Komprimierung des Audiostroms
+		\item \textbf{Lokalisierung von Teilnehmern}
+		\item \textbf{Anzeige der Verfügbarkeit (Presence) von Teilnehmern }
+		\item Zerteilung des Audiostroms in Pakete
+		\item Analog-Digital-Wandlung des analogen Audiosignals
+		\item \textbf{Aushandlung von Parametern für die Kommunikation}
+		\item \textbf{Aufbau und Management einer Session, z.B. Rufweiterleitung und Abbau von Sessions} 
+		\item Zeitstempel für Jitter-Vermeidung und Synchronisation
+	\end{itemize}
+
+	Ordnen Sie die SIP-Nachrichten in die richtige Reihenfolge!
+	\begin{enumerate}
+		\item INVITE
+		\item TRYING
+		\item RINGING
+		\item OK
+		\item ACK
+		\item RTP-Session
+		\item BYE
+	\end{enumerate}
+
+	Was ist die Aufgabe eines SIP-Registrars?
+	\begin{itemize}
+		\item Er arbeitet als Vermittler (Routing) der auf der einen Seite Anfragen entgegennimmt, um dann über seine eigene Adresse eine Verbindung zu einer anderen Seite herzustellen. 
+		\item \textbf{Er registriert ein oder mehrere IP-Adressen (Geräte) zu einer bestimmten SIP-URI. }
+		\item Er erzeugt Weiterleitungen, um eingehende Anträge in einer alternativen Gruppe von URIs kontaktieren zu können 
+		\item Er verbindet ein SIP-Netz mit anderen Netzen, wie beispielsweise dem öffentlichen Fernsprechnetz.
+		\item Er ist die Schnittstelle zum Benutzer, die Inhalte darstellt und Befehle entgegennimmt, z.B. SIP-Telefon. 
+	\end{itemize}
+	
+	\section{Mobile Computing}
+	
+	Welche Aussagen treffen bei der Datenübertragung über Funksignale zu?
+	\begin{itemize}
+		\item \textbf{Die Durchdringung von Objekten wird mit zunehmender Frequenz schlechter.}
+		\item Je niedriger die Frequenz, umso höher wird die mögliche Datenrate. (Nyquist)
+		\item Um mit niedrigen Frequenzen zu funken, benötigt man mehr Energie.
+		\item \textbf{Je höher die Frequenz, desto höher ist die theoretisch mögliche Datenrate}
+		\item  \textbf{Bei sehr hohen Frequenzen ist eine Sichtverbindung (Line of sight) notwendig.}
+		\item Je höher die Frequenz, um so besser können die Signale Körper durchdringen.
+	\end{itemize}
+
+	Wie groß sollte der Mindestabstand zwischen 2 Zellen mit der gleichen Frequenz sein, wenn 12 verschiedene Zelltypen mit einem Empfangsradius von 500 Hz zur Verfügung stehen?
+	\begin{itemize}
+		\item 100
+		\item 300
+		\item \textbf{3000}
+		\item 5000
+	\end{itemize}
+
+	Was versteht man unter einem "Handover" in Mobilfunknetzen? 
+	\begin{itemize}
+		\item Den Wechsel zwischen Funkzellen unterschiedlicher Mobilfunkanbieter. 
+		\item Den Wechsel zwischen verschiedenen Funktechnologien zur Datenübertragung, z.B. zwischen LTE und 5G. 
+		\item \textbf{Den Wechsel zwischen Funkzellen bei der Bewegung innerhalb eines Mobilfunknetzes.}
+		\item Den Wechsel in andere Mobilfunknetze z.B. bei Grenzübertritt in ein anderes Land. 
+	\end{itemize}
+
+	Ordnen Sie den Ablauf bei Anfrage einer IP-Adresse über DHCP! 
+	\begin{enumerate}
+		\item DHCP DISCOVER 
+		\item DHCP OFFER 
+		\item DHCP REQUEST 
+		\item DHCP ACK 
+	\end{enumerate}
+
+	Wann versucht der Client erstmalig sein DHCP-Lease zu erneuern? 
+	\begin{itemize}
+		\item 30 \% der Lease-Time 
+		\item \textbf{50 \% der Lease-Time }
+		\item 70 \% der Lease-Time
+		\item 87,5 \% der Lease-Time 
+	\end{itemize}
+
+	Welche Art der Adressierung wird bei Mobile IPv6 standard-mäßig verwendet? 
+	\begin{itemize}
+		\item Foreign-Agent Care-of-Address
+		\item \textbf{Co-located Care-of-Address }
+		\item Home-Agent Care-of-Address
+		\item Permanent Address in allen Subnetzen
+	\end{itemize}
+
+	Welche Aussagen treffen auf TCP Fast Recovery zu? 
+	\begin{itemize}
+		\item \textbf{Wiederholung der Übertragung nach Erhalt dreier gleicher ACKs}
+		\item Timeout wird verdoppelt
+		\item Sendefenster wird nach Timeout auf 1 gesetzt
+		\item \textbf{Sendefenster wird halbiert }
+		\item Schwellwert wird halbiert
+		\item \textbf{keine Erhöhung des Timeouts}
+	\end{itemize}
+
+	Welche Erweiterungen wurden für Mobile TCP eingeführt?
+	\begin{itemize}
+		\item \textbf{Explicit Loss Notification}
+		\item Explicit Success Notification
+		\item \textbf{Explicit Congestion Notification}
+		\item \textbf{Selective Acknowledgements}
+		\item \textbf{größeres initiales Sendefenster}
+		\item linearer Anstieg der Senderate nach Slow Start
+		\item \textbf{Fast Retransmit}
+		\item Slow Retransmit
+	\end{itemize}
+
+	Ordnen Sie die Hauptkonzepte des Responsive Webdesign den richtigen Funktionen zu! 
+	\begin{itemize}
+		\item Flexible images: Erzwingt die Skalierung des Bildes zur Breite des Parent-Elements unter Wahrung der Seitenproportionen. 
+		\item CSS Media Queries: Der Gerätetyp sowie die spezifischen Eigenschaften eines Gerätes werden abgefragt. 
+		\item HTML5 Picture Element: Bereitstellung mehrerer Qualitätsstufen eines Bildes, Auswahl entsprechend Auflösung des Gerätes. 
+		\item Fluid grids: Die Größe der Seite wird durch Prozentwerte definiert und passt sich so in Relation zur Größe des Browserfensters an. 
+	\end{itemize}
+	
+	Welches sind die wichtigsten Prinzipien, die Sie bei der Entwicklung von Webseiten nach dem Mobile First Prinzip beachten müssen? 
+	\begin{itemize}
+		\item \textbf{Weniger ist mehr - Optimiert für kleinere Bildschirmgrößen}
+		\item Viele Bilder statt Text
+		\item \textbf{Touch-Eingabe und andere Gesten unterstützen}
+		\item Entwicklung unterschiedlicher Webseiten für mobile und stationäre Geräte
+		\item \textbf{Energieverbrauch minimieren}
+		\item \textbf{Datensparsamkeit wegen geringerer Bandbreiten}
+	\end{itemize}
+	
+\end{document}
