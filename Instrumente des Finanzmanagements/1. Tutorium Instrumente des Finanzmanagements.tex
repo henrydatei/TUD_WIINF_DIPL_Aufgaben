@@ -1,0 +1,157 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\title{\textbf{Instrumente des Finanzmanagements, Tutorium 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 7K231: CAPM und Portfoliotheorie}
+	\begin{enumerate}[label=(\alph*)]
+		\item Für das Marktportfolio gilt:
+		\begin{itemize}
+			\item Preis in $t=0$: 200
+			\item Preise in $t=1$: 150 ($Z_1$), 220 ($Z_2$), 240 ($Z_3$), 320 ($Z_4$)
+		\end{itemize}Die Erwartungswerte sind:
+		\begin{align}
+			\E(R_{Dai}) &= 0.2\cdot -0.4 + 0.3\cdot 0.4 + 0.3\cdot 0 + 0.2\cdot 0.6 = 0.16 \notag \\
+			\E(R_{Ika}) &= 0.2\cdot -0.1 + 0.3\cdot -0.2 + 0.3\cdot 0.4 + 0.2\cdot 0.6 = 0.16 \notag \\
+			\E(R_{Markt}) &= 0.2\cdot -0.25 + 0.3\cdot 0.1 + 0.3\cdot 0.2 + 0.2\cdot 0.6 = 0.16 \notag
+		\end{align}
+		Die Varianzen sind:
+		\begin{align}
+			\Var(R_{Dai}) &= 0.2\cdot (-0.4)^2 + 0.3\cdot 0.4^2 + 0.3\cdot 0^2 + 0.2\cdot 0.6^2 - 0.16^2 = 0.1264 \notag \\
+			\Var(R_{Dai}) &= 0.2\cdot (-0.1)^2 + 0.3\cdot (-0.2)^2 + 0.3\cdot 0.4^2 + 0.2\cdot 0.6^2 - 0.16^2 = 0.1084 \notag \\
+			\Var(R_{Dai}) &= 0.2\cdot (-0.25)^2 + 0.3\cdot 0.1^2 + 0.3\cdot 0.2^2 + 0.2\cdot 0.6^2 - 0.16^2 = 0.0739 \notag 
+		\end{align}
+		\item Die Kovarianz beträgt
+		\begin{align}
+			\Cov(R_{Dai}, R_{Ika}) = 0.2\cdot (-0.4)\cdot (-0.1) + 0.3\cdot 0.4\cdot (-0.2) + 0.3\cdot 0\cdot 0.4 + 0.2\cdot 0.6\cdot 0.6 - 0.16\cdot 0.16 = 0.0304 \notag
+		\end{align}
+		Damit ist der Korrelationskoeffizient
+		\begin{align}
+			\Cor(R_{Dai}, R_{Ika}) = \frac{0.0304}{\sqrt{0.1264}\cdot \sqrt{0.1084}} = 0.25971 \notag
+		\end{align}
+		\item Bei der Diversifikation geht es darum, die gleiche Rendite mit geringerer Volatilität zu erreichen. In den aktuellen Daten hat das Marktportfolio die gleiche Rendite wie die Einzelaktien, aber eine geringere Volatilität.
+		\item Dazu müssen wir zuerst die Betas bestimmen:
+		\begin{align}
+			\beta_{Dai} &= \frac{\Cov(R_{Dai}, R_{Markt})}{\Var(R_{Markt})} = \frac{0.1384}{0.0739} = 1.8728 \notag \\
+			\beta_{Ika} &= \frac{\Cov(R_{Ika}, R_{Markt})}{\Var(R_{Markt})} = \frac{0.0.0694}{0.0739} = 0.9391 \notag
+		\end{align}
+		Das CAPM sagt dann eine Rendite von
+		\begin{align}
+			r_{Dai} &= r_f + \beta_{Dai}(R_{Dai} - r_f) = 0.2560 \notag \\
+			r_{Ika} &= r_f + \beta_{Ika}(R_{Ika} - r_f) = 0.1533 \notag
+		\end{align}
+		voraus. Die Daidalos-Aktie bringt aber am Markt nur eine Rendite von 0.16, das heißt sie ist zu teuer. Analog ist die Aktie von Ikarus unterbewertet.
+		\item Eine überbewertete Aktie bringt in der Realität weniger Rendite als man erwartet, sie liegt also unter der Wertpapierkennlinie. Analog liegt eine unterbewertete Aktie über der Wertpapierkennlinie.
+		\item Unser Portfolio $P$ besteht aus einem Anteil $\alpha$ von Daidalos-Aktien und einem Anteil $(1-\alpha)$ aus Ikarus-Aktien. Die Varianz des Portfolios ist dann
+		\begin{align}
+			\Var(P) &= \Var(\alpha\cdot R_{Dai} + (1-\alpha)\cdot R_{Ika}) \notag \\
+			&= \alpha^2\cdot \Var(R_{Dai}) + (1-\alpha)^2\cdot \Var(R_{Ika}) + 2\alpha(1-\alpha)\cdot \Cov(R_{Dai}, R_{Ika}) \notag
+		\end{align}
+		Dieser Term muss miniert werden, also ableiten und Nullsetzen:
+		\begin{align}
+			0 &= 2\big(-2\alpha\cdot \Cov(R_{Dai},R_{Ika}) + \alpha(\Var(R_{Dai}) + \Var(R_{Ika})) + \Cov(R_{Dai}, R_{Ika}) - \Var(R_{Ika})\big) \notag \\
+			\Var(R_{Ika}) - \Cov(R_{Dai}, R_{Ika}) &= \alpha(\Var(R_{Dai}) + Var(R_{Ika}) - 2\cdot \Cov(R_{Dai}, R_{Ika})) \notag \\
+			\alpha &= \frac{\Var(R_{Ika}) - \Cov(R_{Dai}, R_{Ika})}{\Var(R_{Dai}) + Var(R_{Ika}) - 2\cdot \Cov(R_{Dai}, R_{Ika})} \notag
+		\end{align}
+		Einsetzen ergibt $\alpha = 0.4483$ und damit $\Var(P) = 0.073435$.
+	\end{enumerate}
+
+	\section*{Aufgabe 10.17: Das Beta und die Kapitalkosten}
+	\begin{enumerate}[label=(\alph*)]
+		\item $0.04 + 1.04\cdot 0.05 = 0.092$
+		\item $0.04 + 0.19\cdot 0.05 = 0.0495$
+		\item $0.04 + 2.31\cdot 0.05 = 0.1555$
+	\end{enumerate}
+	
+	\section*{Aufgabe 11.1: Die erwartete Rendite eines Portfolios}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir kaufen $\frac{100.000}{25} = 4.000$ Aktien von Goldfinger, $\frac{50.000}{80} = 625$ Aktien von Moosehead und $\frac{50.000}{2} = 25.000$ Aktien von Venture Accociates. Nach der Kursänderung ist unser Depot
+		\begin{align}
+			4.000\cdot 30\text{ \EUR} + 625\cdot 60\text{ \EUR} + 25.000\cdot 3\text{ \EUR} = 232.500\text{ \EUR} \notag
+		\end{align}
+		wert.
+		\item Die Rendite ist $\frac{32.500}{200.000} = 0.1625$.
+		\item Die neuen Anteile im Portfolio sind $\frac{16}{31}$ Goldfinger, $\frac{5}{31}$ Moosehead und $\frac{10}{31}$ Venture Accociates.
+	\end{enumerate}
+	
+	\section*{Aufgabe 11.6: Die Volatilität eines Portfolios aus zwei Aktien}
+	Wir brauchen die Kovarianz der beiden Aktien: $\Cov(A,W) = \sigma_A\cdot\sigma_W\cdot \Cor(A,W) = 0.045$
+	\begin{enumerate}[label=(\alph*)]
+		\item offensichtlich 0.3
+		\item $\sigma = \sqrt{\left(\frac{3}{4}\right)^2\cdot 0.3^2 + \left(\frac{1}{4}\right)^2\cdot 0.6^2 + 2\cdot \frac{3}{4}\cdot\frac{1}{4}\cdot 0.045} = 0.3$
+		\item $\sigma = \sqrt{\left(\frac{1}{2}\right)^2\cdot 0.3^2 + \left(\frac{1}{2}\right)^2\cdot 0.6^2 + 2\cdot \frac{1}{2}\cdot\frac{1}{2}\cdot 0.045} = 0.3674$
+	\end{enumerate}
+
+	\section*{Aufgabe 11.20: Risiko versus Ertrag}
+	\begin{enumerate}[label=(\alph*)]
+		\item $\E(R_P) = \frac{1}{2}\cdot 0.12 + \frac{1}{2}\cdot 0.2 = 0.16$ \\
+		$\sigma_P = \sqrt{\left(\frac{1}{2}\right)^2\cdot 0.4^2 + \left(\frac{1}{2}\right)^2\cdot 0.3^2}=0.25$
+		\item Nein, die Rendite bleibt gleich, aber Volatilität nimmt zu.
+		\item Ja, wir tauschen Hershey und die neue Aktie. Damit steigt die Rendite, aber die Volatilität bleibt gleich.
+	\end{enumerate}
+
+		\section*{Aufgabe 11.23: Risikolose Anlageformen und Kreditaufnahme}
+	\begin{enumerate}[label=(\alph*)]
+		\item Bestimmen wir zuerst die Anteile in unserem Portfolio: Der Kredit hat ein Gewicht von $\frac{-15.000}{100.000} = -0.15$ und damit hat das gesamte Geld einen Anteil von 1.15.
+		\begin{align}
+			\E(R) &= -0.15\cdot 0.04 + 1.15\cdot 0.15 = 0.1665 \notag \\
+			\sigma &= \sqrt{(-0.15)^2\cdot 0^2 + 1.15^2\cdot 0.25^2} = 0.2875 \notag
+		\end{align}
+		\item $r = -0.15\cdot 0.04 + 1.15\cdot 0.25 = 0.2815$
+		\item $r = -0.15\cdot 0.04 + 1.15\cdot -0.20 = -0.236$
+	\end{enumerate}	
+	
+\end{document}
