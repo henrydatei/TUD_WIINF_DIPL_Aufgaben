@@ -1,0 +1,151 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=python,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space},
+	morekeywords={as}
+}
+\lstset{literate=%
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}1
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Data Science: Predictive Analytics, Übung 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Business Understanding}
+	\begin{enumerate}[label=(\alph*)]
+		\item viele Fahrräder vermieten
+		\item Fahrräder müssen gekauft und repariert werden, und zwar möglichst dann, wenn sie in absehbarer Zeit gebraucht werden bzw. gerade nicht gebraucht werden.
+		\item Vorhersage der vermieteten Fahrräder
+		\item ?
+		\item Die Daten sind kompletter Schrott: nur 2 von 10 (sinnvoll numerischen) Spalten sind numerisch; unnötige Informationen wie die Spalte \textit{Seasons} (wenn ich das Datum kenne, weiß ich auch welche Jahreszeit gerade herrscht); doppelte Informationen in Spalte \textit{Hotness} und \textit{Temperature}; und was soll die Spalte \textit{Functioning Day}?
+	\end{enumerate}
+
+	\section*{Data Understanding}
+	\begin{lstlisting}
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import missingno as msno
+
+def fixCols(cols):
+	liste = []
+	for col in cols:
+		newName = col.split("(")[0].strip().replace(" ", "_")
+		liste.append(newName)
+	return liste
+
+# 7.
+data = pd.read_csv("dataset.csv", delimiter = ";", header = 0, index_col = 0)
+
+# 8.
+print(data.head(7))
+print(data.tail(7))
+
+# 9. 
+print(len(data.index))
+
+# 10. 
+print(data.columns)
+print(len(data.columns))
+
+# 11.
+data.columns = fixCols(data.columns)
+
+# 12.
+print(data.describe())
+
+# 13.
+data.info()
+
+# 14.
+print(data.isna().sum())
+msno.matrix(data)
+plt.show()
+
+# 15.
+print(data["Functioning_Day"].unique())
+print(data["Seasons"].unique())
+
+# 16.
+print(len(data["Solar_Radiation"].unique()))
+
+# 17.
+data.hist(column = "Rented_Bike_Count", bins = 20)
+plt.title("Rented Bike Count")
+plt.xlabel("# Bikes")
+plt.ylabel("Häufigkeit")
+plt.show()
+
+# 18.
+means = data.groupby("Hour").mean()
+plt.plot(means["Rented_Bike_Count"])
+plt.title("ausgeliehene Räder über den Tag")
+plt.xlabel("Uhrzeit")
+plt.ylabel("durchschnittlich ausgeliehene Räder")
+plt.show()
+
+# 19.
+print(data.corr())
+
+# 20.
+corr = data.corr()
+sns.heatmap(corr, xticklabels = corr.columns, yticklabels = corr.columns)
+plt.show()
+	\end{lstlisting}
+	
+\end{document}
