@@ -1,0 +1,120 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Applied Data Analysis, Übung 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Task 1}
+	\begin{lstlisting}
+install.packages("readxl")
+library(readxl)
+data = read_excel("data.xlsx", na = "NA")
+	\end{lstlisting}
+
+	\section*{Task 2}
+	\begin{lstlisting}
+str(data)
+summary(data)
+head(data, 1)["age"]
+tail(data, 1)["age"]
+dim(data)[1]
+	\end{lstlisting}
+	Wir stellen fest, dass die numerische Kodierung bei einigen Variablen nicht gut umgesetzt ist: Manchmal starten die Level bei 0, mal bei 1 und nicht immer sind alle Zahlen genutzt. Zudem ist in der Spalte \textit{Alter} nicht das Alter verzeichnet, sondern das Geburtsdatum.
+	
+	Die erste Person wurde 1967 geboren, die letzte 1996. Insgesamt gibt es 437 Beobachtungen in der Tabelle.
+	
+	\section*{Task 3}
+	\begin{lstlisting}
+data$gender = factor(data$gender)
+levels(data$gender) = c("male", "female", "diverse")
+data$employment = factor(data$employment)
+levels(data$employment) = c("student", "employed", "unemployed")
+data$education = factor(data$education)
+levels(data$education) = c("no degree", "secondary", "intermediate", "high school", "academic")
+data$play_frequency = factor(data$play_frequency)
+levels(data$play_frequency) = c("never", "every few months", "every few weeks", "1-2 days a week", "3-5 days a week", "daily")
+data$treatment = factor(data$treatment)
+levels(data$treatment) = c("control", "lootbox in task reward", "lootbox picture", "badge")
+data$age = sapply(data$age, function(year) {2016-year})
+data$rt6 = as.numeric(data$rt6)
+data$rt7 = as.numeric(data$rt7)
+data$rt8 = as.numeric(data$rt8)
+data$rt9 = as.numeric(data$rt9)
+data$rt10 = as.numeric(data$rt10)
+data$rt11 = as.numeric(data$rt11)
+data$rt12 = as.numeric(data$rt12)
+data$rt13 = as.numeric(data$rt13)
+data$rt14 = as.numeric(data$rt14)
+	\end{lstlisting}
+	Statt
+	\begin{lstlisting}
+data$rt6 = as.numeric(data$rt6)
+	\end{lstlisting}
+	könnte/sollte man
+	\begin{lstlisting}
+data$rt6 = sapply(data$rt6, as.numeric)
+	\end{lstlisting}
+	nutzen, aber das erzeugt benannte Listen in den Spalten, statt den Typ auf \texttt{num} zu ändern. Deswegen habe ich das angepasst.
+	
+	\section*{Task 4}
+	\begin{lstlisting}
+subsetControl = subset(data, treatment == "control")
+subsetLootPic = subset(data, treatment == "lootbox picture")
+summary(data$tasks_completed)
+summary(subsetControl$tasks_completed)
+summary(subsetLootPic$tasks_completed)
+	\end{lstlisting}
+	Wir sehen, dass der Mittelwert über alle Daten bei 10.06 liegt, in der Kontrollgruppe bei 7.788 und in der Lootbox-Picture-Gruppe bei 8.807.
+\end{document}
