@@ -1,0 +1,261 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\title{\textbf{Instrumente des Finanzmanagements, Übung 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+
+	\section*{Aufgabe 10.15: Die Messung des systematischen Risikos}
+	Allgemein liefert uns das CAPM
+	\begin{align}
+		r &= r_f + \beta(r_m-r_f) \notag \\
+		&= (1-\beta)r_f + \beta\cdot r_m \notag \\
+		\Delta r &= (1-\beta)\underbrace{\Delta r_f}_{=0} + \beta\cdot\Delta r_m \notag
+	\end{align}
+	Damit gilt
+	\begin{enumerate}[label=(\alph*)]
+		\item Starbucks: $\Delta r = 1.04\cdot 0.1 = 0.104$
+		\item Tiffany \& Co.: $\Delta r = 1.64\cdot 0.1 = 0.164$
+		\item Hershey: $\Delta r = 0.19\cdot 0.1 = 0.019$
+		\item Exxon Mobile: $\Delta r = 0.56\cdot 0.1 = 0.056$
+	\end{enumerate}
+	
+	\section*{Aufgabe 10.10: Diversifikation von Aktienportfolios}
+	Diversifizierbares Risiko muss von den Unternehmen nicht bezahlt werden, da ein Investor durch Diversifikation das Risiko eliminieren kann. Das Unternehmen muss nur das systematische Risiko des Marktes bezahlen.
+	
+	\section*{Aufgabe 11.9: Die Standardabweichung eines großen Portfolios}
+	\begin{enumerate}[label=(\alph*)]
+		\item offensichtlich 50\%
+		\item Für die Varianz eines Portfolios $P$ gilt $\Var(P)=X^T\cdot \Cov(r_i,r_j)\cdot X$, wobei $X$ ein Vektor mit den Portfoliogewichten ist. Auf der Hauptdiagonalen der Covarianzmatrix stehen die Varianzen der einzelnen Aktien, also $0.5^2=0.25$. Auf den Nebendiagonalen stehen die Covarianzen zwischen den Aktien, also $\Cor(r_i,r_j)\cdot \SD(r_i)\cdot \SD(r_j)=0.2\cdot 0.5\cdot 0.5 = 0.05$ Damit ist:
+		\begin{align}
+			\label{11.9}
+			\Var(P) &= \begin{pmatrix}
+				\frac{1}{n} \\ \vdots \\ \frac{1}{n}
+			\end{pmatrix}^T\cdot \begin{pmatrix}
+				0.25 & 0.05 & \dots & 0.05 \\
+				0.05 & \ddots & \ddots & \vdots \\
+				\vdots & \ddots & \ddots & 0.05 \\
+				0.05 & \dots & 0.05 & 0.25
+			\end{pmatrix} \cdot \begin{pmatrix}
+				\frac{1}{n} \\ \vdots \\ \frac{1}{n}
+			\end{pmatrix} \notag \\
+			&= \begin{pmatrix}
+				\frac{1}{n}\left(0.25+(n-1)\cdot 0.05\right) & \dots & \frac{1}{n}\left(0.25+(n-1)\cdot 0.05\right)
+			\end{pmatrix} \cdot \begin{pmatrix}
+				\frac{1}{n} \\ \vdots \\ \frac{1}{n}
+			\end{pmatrix} \notag \\
+			&= \frac{1}{n}\left(0.25 + (n-1)\cdot 0.05\right)
+		\end{align}
+		Einsetzen von $n=30$ liefert uns eine Varianz von 0.0567 und damit eine Standardabweichung von 0.2381.
+		\item Einsetzen in \eqref{11.9} liefert für $n=1000$ eine Varianz von 0.0502, damit eine Standardabweichung von 0.2241.
+	\end{enumerate}
+
+	\section*{Aufgabe 11.29: Tangentialportfolio und geforderte Renditen}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir berechnen zuerst das $\beta$, welches wir erhalten würden, wenn wir Hannah-Aktien beimischen:
+		\begin{align}
+			\beta = \frac{\SD(r_H)\cdot\Cor(r_H,r_P)}{\SD(r_P)} = \frac{0.6\cdot 0}{0.2} = 0 \notag
+		\end{align}
+		Die geforderte Rendite wäre damit
+		\begin{align}
+			r_{gef} = r_f + \beta(r_P - r_f) = 0.038 \notag
+		\end{align}
+		Da uns die Beimischung von Hannah-Aktien mehr Rendite als gefordert bringen würde, mischen wir Hannah-Aktien unserem Portfolio bei.
+		\item Rendite und Volatilität unseres aktuellen Portfolios:
+		\begin{align}
+			r_P &= 0.6\cdot 0.14 + 0.4\cdot 0.2 = 0.164 \notag \\
+			\SD(r_P) &= \sqrt{0.4^2\cdot 0.6^2 + 0.6^2\cdot 0.2^2} = 0.2683 \notag
+		\end{align}
+		Daraus ergibt sich ein neues $\beta$, für welches wir die Korrelation zwischen $r_H$ und $r_P$ bestimmen müssen. Dafür brauchen wir aber die Covarianz zwischen $r_H$ und $r_P$, die sich wie folgt berechnet:
+		\begin{align}
+			\label{bilinear}
+			\Cov(r_H, r_P) &= \Cov(r_H, 0.4\cdot r_H + 0.6\cdot r_N) \notag \\
+			&= 0.4\cdot \Cov(r_H,r_H) + 0.6\cdot \Cov(r_H,r_N) \\
+			&= 0.4\cdot 0.6^2 + 0.6\cdot 0 \notag \\
+			&= 0.144 \notag
+		\end{align}
+		In \eqref{bilinear} nutzen wir die Bilinearität\footnote{Eine Funktion $s$: $V\times W\to K$ heißt bilinear, wenn $s$ die folgenden 4 Eigenschaften erfüllt:
+		\begin{itemize}
+			\item $s(x+z,y) = s(x,y) + s(z,y)$
+			\item $s(x,y+z) = s(x,y) + s(x,z)$
+			\item $s(\lambda x,y) = \lambda s(x,y)$
+			\item $s(x,\lambda y) = \lambda s(x,y)$
+		\end{itemize}
+		Das Skalarprodukt erfüllt z.B. diese 4 Eigenschaften. Weitere Informationen unter \url{https://de.wikipedia.org/wiki/Bilinearform}} der Covarianz aus und ermitteln damit die Korrelation:
+		\begin{align}
+			\Cor(r_H,r_P) &= \frac{\Cov(r_H,r_P)}{\SD(r_H)\cdot \SD(r_P)} \notag \\
+			&= \frac{0.144}{0.6\cdot 0.2683} \notag\\
+			&= 0.8945 \notag
+		\end{align}
+		Damit ergibt sich das neue $\beta$ zu
+		\begin{align}
+			\beta &= \frac{0.6\cdot\Cor(r_H,r_P)}{\SD(r_P)} \notag \\
+			&= \frac{0.6\cdot 0.8945}{0.2683} \notag \\
+			&= 2 \notag
+		\end{align}
+		Damit ist die geforderte Rendite $0.038 + 2(0.164-0.038)=0.29$, also größer als die Rendite von Hannah. Damit ist der Anteil von Hannah-Aktien zu groß.
+		\item Die Rendite und die Standardabweichung des neuen Portfolios sind:
+		\begin{align}
+			r_P &= 0.15\cdot 0.2 + 0.85\cdot 0.14 = 0.149 \notag \\
+			\SD(r_P) &= \sqrt{0.15^2\cdot 0.6^2 + 0.85^2 \cdot 0.2^2} = 0.1924 \notag
+		\end{align}
+		Damit ergibt sich das neue $\beta$ zu
+		\begin{align}
+			\beta &= \frac{\SD(r_H)\cdot\left(0.15\cdot \Cov(r_H,r_H) + 0.85\cdot \Cov(r_H,r_P)\right)}{\SD(r_P)\cdot \SD(r_H)\cdot \SD(r_P)} \notag \\
+			&= 1.46 \notag
+		\end{align}
+		Die geforderte Rendite ist dann $0.038 + 1.46(0.149-0.038)=0.2$, also genau die Rendite von Hannah. Damit ist der Anteil von Hannah-Aktien richtig.
+	\end{enumerate}
+
+	\section*{Aufgabe 5K47: CAPM-Welt ohne Steuern}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir lösen die folgenden 2 Gleichungen:
+		\begin{align}
+			0.164 &= r_f + 1.4(r_m-r_f) \notag \\
+			0.128 &= r_f + 0.8(r_m-r_f) \notag
+		\end{align}
+		Das liefert uns $r_m=0.14$ und $r_f=0.08$.
+		\item Die Rendite und Volatilität des Portfolios ist
+		\begin{align}
+			r_P &= \frac{1}{3}\cdot 0.08 + \frac{1}{3}\cdot 0.164 + \frac{1}{3}\cdot 0.128 = 0.124 \notag \\
+			\SD(r_P) &= \sqrt{\left(\frac{1}{3}\right)^2\cdot 0.22^2 + \left(\frac{1}{3}\right)^2\cdot 0.2^2 + 2\cdot\frac{1}{3}\cdot\frac{1}{3}\cdot 0.6\cdot 0.2\cdot 0.22} = 0.1253 \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 1K413: Capital Asset Pricing Model}
+	\begin{enumerate}[label=(\alph*)]
+		\item Es gilt
+		\begin{align}
+			\SD(r_m) &= \frac{\Cor(r_{Neo},r_m)\cdot \SD(r_{Neo})}{\beta_{Neo}} = \frac{0.6\cdot 0.1}{0.6} = 0.1 \to h \notag \\
+			\Cor(r_m,r_m) &= 1 \to g \notag \\
+			\beta_m &= \frac{\Cor(r_m,r_m)\cdot \SD(r_m)}{\SD(r_m)} = \frac{1\cdot 0.1}{0.1} = 1 \to f \notag \\
+			\beta_{BVW} &=  \frac{\Cor(r_{BVW},r_m)\cdot \SD(r_{BVW})}{\SD(r_m)} = \frac{0.47\cdot 0.15}{0.1} = 0.705\to a \notag \\
+			\SD(r_{Bamberg}) &= \frac{\beta_{Bamberg}\cdot \SD(r_m)}{\Cor(r_{Bamberg},r_m)} = \frac{0.8\cdot 0.1}{1} = 0.08 \to b \notag \\
+			\Cor(r_{Buche}, r_m) &= \frac{\beta_{Buche}\cdot \SD(r_m)}{\SD(r_{Buche})} = \frac{1.65\cdot 0.1}{0.25} = 0.66\to c \notag \\
+			0.18 &= 0.02 + \beta_{Schmerz}(0.1-0.02) \Rightarrow \beta_{Schmerz} = 2\to d \notag \\
+			\Cor(r_{Schmerz},r_m) &= \frac{\beta_{Schmerz}\cdot \SD(r_m)}{\SD(r_{Schmerz})} = \frac{2\cdot 0.1}{0.4} = 0.5\to e \notag
+		\end{align}
+		\item $r_{Schmerz} = 0.02 + 2(0.1-0.02) = 0.18$ \\
+		$r_{Buche} = 0.02 + 1.65(0.1-0.02) = 0.152$ \\
+		$r_{Neo} = 0.02 + 0.6(0.1-0.02) = 0.068$
+		\item siehe Tabelle
+		\begin{center}
+			\begin{tabular}{c|c|c}
+				& \textbf{systematisches Risiko: $\beta_i\cdot \SD(r_m)$} & \textbf{unsystematisches Risiko:} $\sqrt{\SD(r_i) - \text{system. Risiko}}$ \\
+				\hline
+				Neo & $0.6\cdot 0.1=0.06$ & $\sqrt{0.1^2 - 0.06^2}=0.08$ \\
+				BVW & $0.705\cdot 0.1=0.0705$ & $\sqrt{0.15^2 - 0.0705^2}=0.1324$ \\
+				Neo & $0.8\cdot 0.1=0.08$ & $\sqrt{0.08^2 - 0.08^2}=0$
+			\end{tabular}
+		\end{center}
+		\item Die Anteile im Portfolio sind: $1+x$ DACHS und $-x$ Schulden, damit gilt für die Volatilität und Rendite:
+		\begin{align}
+			0.25 &= \sqrt{(1+x)^2\cdot 0.1 + (-x)^2\cdot 0} \notag \\
+			x &= \frac{3}{2} \notag \\
+			r_P &= \left(1+\frac{3}{2}\right)\cdot 0.1 - \frac{3}{2}\cdot 0.02 = 0.22 \notag
+		\end{align}
+		\item Die Risikoprämie $r_i-r_f$ ist die Überschussrendite, die ein Investment in ein risikoreiches Asset $i$ gegenüber einer risikofreien Anlege verlangt. Sie überzeugt risikoaverse Investoren, Risiko einzugehen. Der Preis des Risikos $\frac{r_i-r_f}{\SD(r_i)}$ ist die Risikoprämie für ein risikoreiches Asset $i$ je Einheit eingegangenes Risiko. Dieser Quotient (auch Shape-Ratio genannt) drückt somit den Trade-off zwischen Ertrag und Risiko dieser Anlage aus. Sie macht die unterschiedlichen Risikoprämien der unterschiedlich risikoreichen Anlagen vergleichbar. Investoren bemerken, dass sie durch Diversifikation je Einheit Risiko einen besseren Preis erhalten können: Den besten durch das Halten des Marktportfolios. Die hier erzielte Marktrisikoprämie $r_m-r_f$ weißt im Verhältnis zum eingegangenen Risiko - ausgedrückt durch den Marktpreis des Risikos $\frac{r_m-r_f}{\SD(r_m)}$ - die höchstmögliche Shape-Ratio auf. eine höhere kann ein Investor im Wettbewerb nicht durchsetzen.
+	\end{enumerate}
+
+	\section*{Aufgabe 5K122: CAPM}
+	\begin{enumerate}[label=(\alph*)]
+		\item Es gilt
+		\begin{align}
+			r_m &= \frac{1}{4}(-0.2 + 0 + 0.2 + 0.4) = 0.1 \notag \\
+			r_C &= \frac{1}{4}(-0.2 + 0.1 + 0 + 0.5) = 0.1 \notag \\
+			r_L &= \frac{1}{4}(-0.8 - 0.2 + 1 + 0.8) = 0.2 \notag \\
+			\Var(r_m) &= \sum_{r_{m,i}} \frac{1}{4}(r_{m,i} - 0.1)^2 = 0.05 \notag \\
+			\Cov(r_m,r_L) &= \sum_{r_{m,i},r_{L,i}} \frac{1}{4}(r_{m,i}-0.1)(r_{L,i}-0.2) = 0.15 \notag \\
+			\beta_L &= \frac{\Cov(r_m,r_L)}{\Var(r_m)} = 3 \notag
+		\end{align}
+		Dann liefert uns das CAPM: $0.05 + 3(0.1-0.05)=0.2$, also ist die L-Aktie nach CAPM fair bewertet.
+		\item Da auch die C-Aktie fair bewertet sein soll, gilt $0.1=0.05+\beta_C (0.1-0.05)$, also $\beta_C=1$. Dann gilt
+		\begin{align}
+			\beta_{C+L} &= \frac{1}{2}\cdot \beta_C + \frac{1}{2}\cdot\beta_L = 2 \notag \\
+			r_{C+L} &= 0.05 + 2(0.1-0.05) = 0.15 \notag \\
+			\E(P_{t+1,C+L}) &= \frac{(80+20)+(110+80)+(100+200)+(150+180)}{4} = 230 \notag \\
+			P_{t,C+L} &= \frac{230}{1+r_{C+L}} = \frac{230}{1.15} = 200 \notag
+		\end{align}
+		\item Man hätte die Aufgabe auch schneller rechnen können, weil der faire Preis für beide Aktien jeweils 100 ist, muss dann der faire Preis für eine C+L-Aktie, die aus einer C- und einer L-Aktie besteht, 200 sein.
+		\item Der erwartete Preis $\E(P_{t+1,C+L})$ ändert sich auf 240, damit ist
+		\begin{align}
+			P_{t,C+L} &= \frac{240}{1+r_{C+L}} = \frac{240}{1.15} = 208.70 \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 13.13: Effizienz des Marktportfolios}
+	\begin{enumerate}[label=(\alph*)]
+		\item Rendite nach CAPM: $0.05+1.5(0.11-0.05)=0.14$, reale Rendite aber 0.15 $\Rightarrow \alpha = 0.01$
+		\item Das Marktportfolio hat die selbe Rendite wie der Markt, also $\alpha=0$.
+		\item Für die Rendite der Herde gilt
+		\begin{align}
+			0.11 &= 0.45\cdot 0.11 + 0.05\cdot 0.15 + 0.5\cdot r_{Herde} \notag \\
+			r_{Herde} &= 0.106 \notag
+		\end{align}
+		\item Für das $\alpha$ der Herde gilt
+		\begin{align}
+			0 &= 0.45\cdot 0 + 0.05\cdot 0.01 + 0.5\cdot \alpha_{Herde} \notag \\
+			\alpha_{Herde} &= 0.001 \notag
+		\end{align}
+	\end{enumerate}
+	
+	\section*{Aufgabe 13.24: Mehrfaktoren-Risikomodelle}
+	Die Rendite eines Monats ist
+	\begin{align}
+		r_{Monat} &= r_f + \beta_{MKT}(r_m-r_f) + \beta_{SMB}\cdot r_{SMB} + \beta_{HML}\cdot r_{HML} + \beta_{PR1YR}\cdot r_{PR1YR} \notag \\
+		&= \frac{6\%}{12} + 0.243(0.59\% - \frac{6\%}{12}) + 0.125\cdot 0.23\% + 0.144\cdot 0.41\% - 0.185\cdot 0.23\% \notag \\
+		&= 0.5887\% \notag
+	\end{align}
+	Damit ist die Rendite eines Jahres bei $r_{Jahr}=0.5887\%\cdot 12 = 7.06\%$.
+\end{document}
