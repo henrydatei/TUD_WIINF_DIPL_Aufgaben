@@ -1,0 +1,159 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage{ulem}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{html} {language=html}
+\lstset{language=html,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\title{\textbf{Lösungen zum Digital Accessibility Kurs}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Introduction}
+	\begin{enumerate}[label=(\alph*)]
+		\item \textit{In the user stories, I noticed that all of them can manage their daily lives quite well on their own, but Carole seems to have the biggest problems. The world is becoming more and more digital and if websites and apps are not accessible with a screen reader, blind people in particular are excluded. I also imagine that it is quite difficult for blind people to operate complex programmes with many menus and settings, such as MS Office or specialised professional software.}
+		\item \url{https://www.youtube.com/watch?v=0gdW2kol5Fg}
+		\item Die richtigen Antworten sind:
+		\begin{itemize}
+			\item What is an appropriate text equivalent for this decorative image? \textcolor{green!90!black}{Answer 2: (empty)}
+			\item What is an appropriate image description for this decorative image? \textcolor{green!90!black}{Answer 1: (empty)}
+			\item What is an appropriate text equivalent for this text graphic? \textcolor{green!90!black}{Answer 1: Gardening}
+			\item What is an appropriate image description for this text graphic? \textcolor{green!90!black}{Answer 2: (empty)}
+			\item What is an appropriate text equivalent for this icon (not a link)? \textcolor{green!90!black}{Answer 2: gear-wheels}
+			\item What is an appropriate image description for this icon (not a link)? \textcolor{green!90!black}{Answer 1: Three gear-wheels in different sizes as a black-and-white illustration}
+			\item What is an appropriate text equivalent for this logo (not a link)? \textcolor{green!90!black}{Answer 1: ART EXHIBITION}
+			\item What is an appropriate image description for this logo (not a link)? \textcolor{green!90!black}{Answer 2: A green paint blob over a red paint blob. On top the following text as overlay: "ART EXHIBITION" in uppercase letters.}
+			\item What is an appropriate text equivalent for this logo as link to the homepage? \textcolor{green!90!black}{Answer 1: Go to homepage}
+			\item What is an appropriate image description for this logo as link to the homepage? \textcolor{green!90!black}{Answer 1: The logo shows the letters "MOOCA".  The "A" is superimposed on a mortarboard (graduation cap), with the inner part of the "A" shaping a keyhole.}
+			\item What is an appropriate text equivalent for this animated graphic (not only decorative)? \textcolor{green!90!black}{Answer 2: Animation: approaching the moon surface}
+			\item What is an appropriate image description for this animated graphic (not only decorative)? \textcolor{green!90!black}{The animation shows the moon surface from afar, then rapidly approaching. At the end, one can see craters on the surface.}
+			\item What is an appropriate text equivalent for this photo? \textcolor{green!90!black}{Answer 1: Group photo at the project meeting in Ermoupolis, Greece}
+			\item What is an appropriate image description for this photo? \textcolor{green!90!black}{Answer 2: Back row from left to right: Ioannis Darzentas, Dimitris Zissis, Sebastian Kelle, Mike Wald, Jens Vögler, Dominique Archambault, John Gilligan, Gerhard Weber, Chris Power. Front row from left to right: Gottfried Zimmermann, Peter Heumader, Jenny Darzentas, Weiqin Chen, Helen Petrie, Giannis Vouros.}
+			\item What is an appropriate text equivalent for this diagram? \textcolor{green!90!black}{Answer 1: Bar chart on "Later Use of the Course's Resources"}
+			\item What is an appropriate image description for this diagram? \textcolor{green!90!black}{Answer 1: (table with raw data)} \textbf{und} \textcolor{green!90!black}{Answer 2: The bar chart shows what the students indicated on their later use of the course’s resources.  Of the 5 participants, 1 indicated "(3) maybe", 3 indicated "(4)" and 1 indicated "(5) very likely".}
+			\item What is an appropriate text equivalent for this map? \textcolor{green!90!black}{Answer 1: Map of Cyprus with its six districts}
+			\item What is an appropriate image description for this map? \textcolor{green!90!black}{Answer 2: 
+			The map shows the Cyprus island in the Mediterranean Sea.  Cyprus has the following districts (from North to South): Famagusta (with district capital Famagusta), Kyrenia (with district capital Kyrenia), Nicosia  (with national capital Nicosia), Paphos (with district capital Paphos), Limassol (with district capital Limassol), Larnaca (with district capital Larnaca), Turkish Cypriot area's administrative divisions include Kyrenia, all but a small part of Famagusta, and parts of Nicosia and Larnaca.  A United Nations buffer zone separates the Turkish Cypriot-administered area from the area controlled by the Cyprus government (Greek Cypriot area). In addition, Cyprus has two U.K. administered areas, separated from the other parts of Cyprus by an international boundary: Akrotiri, Dhekelia}
+		\end{itemize}
+	\end{enumerate}
+
+	\section*{Enabling People to Work on Computers}
+	\begin{enumerate}[label=(\alph*)]
+		\item einfach die Aufgabe anklicken, man kann keine Lösung abgeben
+		\item einfach die Aufgabe anklicken, man kann keine Lösung abgeben
+		\item Die richtigen Antworten sind:
+		\begin{itemize}
+			\item Image Context: In this example, behind the logo lies a link to the  home page of the website. The image occurs on a MOOCAP TOURS Beijing Page about holidays to Beijing China. What is the appropriate alternative text for this image? \textcolor{green!90!black}{Answer 2: MOOCAP TOURS Home page}
+			\item Image Context: The image appears on a MOOCAP TOURS Beijing page which promotes tours to Beijing: This is a picture of  Tiananmen Square one of the iconic images of Beijing. What is the appropriate alternative text for this image? \textcolor{green!90!black}{Answer 2: Tiananmen Square - One of the many wonders of Beijing you will see on the tour}
+			\item Image Context: The image appears on a Fire Safety Information Site: This is a picture of  a sign on a  fire door which states that this is an automatic fire door and that people are to keep clear of it. This is necessary because in the case of fire the doors need to be shut automatically to stop the spread of fire. These signs which are blue with white text are used when door retainers  are installed. These door retainers keep the doors open until the fire alarm goes off. The area surrounding the door must be kept clear so that the fire door can shut properly in case of fire. What is the appropriate alternative text for this image? \textcolor{green!90!black}{Answer 2: A picture of wooden fire doors with a Fire Safety Standard blue sign with white text which states "Automatic Fire Door Keep Clear". The purpose is to make sure the door is not blocked by bags and other items when it attempts to automatically close in the event of fire.}
+			\item Image Context: The image appears on a Web page about Fire Doors: The pagegives some information about the role of fire doors and how they are rated. It also describes the materials used in firedoors and this image is usedto present an example of a fire door in a section about  styles and finishes of fire doors. What is the appropriate alternative text for this image? \textcolor{green!90!black}{Answer 3: Wooden Fire Door with a classy Beech-wood finish}
+			\item Image Context: The image appears on a webpage which describes what action to take in case of fire. The steps to follow in this situation are also listed in detail on the page. What is the appropriate alternative text for this image? \textcolor{green!90!black}{Answer 3: Red and Blue Sign indicating the steps to follow in case of fire}
+		\end{itemize}
+		\item einfach die Aufgabe anklicken, man kann keine Lösung abgeben
+	\end{enumerate}
+	
+	\section*{Mobile Accessibility}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die richtigen Lösungen sind:
+		\begin{itemize}
+			\item How can Carol, who is blind, activate a button on the touch screen of her screen-reader enabled mobile phone? \textcolor{green!90!black}{Carol puts her finger on the button, holds it and taps somewhere else on the screen with a second finger} \textbf{und} \textcolor{green!90!black}{Carol uses swipe gestures to select the button and performs a double tap somewhere on the screen}
+			\item What is your advice if Gilles, a deafblind persons sends you email and ask you to select a mobile phone for them? \textcolor{green!90!black}{iOS and Android support Braille displays. Check with a local dealer of Assistive  Technology.}
+			\item For which of the following everyday activities of Carol, Mary, Susan or Lars are accessible apps available? \textcolor{green!90!black}{Name the colour of socks} \textbf{und} \textcolor{green!90!black}{Listen to audio description in a cinema}
+			\item Which of the following statements that affect the calculation of suitable routes for pedestrian navigation are correct? \textcolor{green!90!black}{Navigation apps point out road names at crossings}
+			\item Is a tablet better for people with low vision than a smartphone with normal size? \textcolor{green!90!black}{None, the virtual keyboard will not scale up and hence text input is too hard}
+		\end{itemize}
+	\end{enumerate}
+
+	\section*{Web Accessibility}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die richtigen Antworten sind:
+		\begin{itemize}
+			\item Which institution developed the WCAG 2.0? \textcolor{green!90!black}{W3C/WAI}
+			\item According to the WCAG 2.0 Websites must be… \textcolor{green!90!black}{…operable} \textbf{und} \textcolor{green!90!black}{…perceivable}
+			\item How can the content of an image be made accessible for blind people? \textcolor{green!90!black}{Giving information about the content of the image using the alt-attribute of the image.}
+			\item How can you test keyboard accessibility of a webpage? \textcolor{green!90!black}{By using the keyboard's tab key.}
+		\end{itemize}
+		\item Die richtigen Antworten sind:
+		\begin{itemize}
+			\item If you want to test whether some text in a web page is understandable, which of the following two methods is more appropriate? \textcolor{green!90!black}{Manual testing}
+			\item If you want to test whether the colour contrast is adequate, which of the following two methods is more appropriate? \textcolor{green!90!black}{Automatic testing}
+			\item Conformance testing can identify all the accessibility barriers. \textcolor{green!90!black}{True}
+		\end{itemize}
+		\item Die richtigen Antworten sind:
+		\begin{itemize}
+			\item What accessible problems does CAPTCHA have? \textcolor{green!90!black}{It is not accessible by keyboard or screen readers.}
+			\item What tag(s) do you use to group a set of related elements in a web form? \textcolor{green!90!black}{\texttt{<fieldset>} and \texttt{<legend>}}
+			\item What is the error in this web form element?
+			\begin{lstlisting}[style=html]
+<label for="firstname">First name:</label>
+<input type="text" name="firstname" id="first_name">
+			\end{lstlisting}
+			\textcolor{green!90!black}{The value for the label \texttt{for} is not the same as the value for the control \texttt{id}.}
+			\item What is an in-line instruction? \textcolor{green!90!black}{It is the instruction for a form control that is placed within the label.}
+		\end{itemize}
+	\end{enumerate}
+
+	\section*{Enabling Everyone Everyday}
+	Die richtigen Antworten sind:
+	\begin{itemize}
+		\item You are writing to complain about an example of digital inaccessibility, where some individuals cannot buy tickets online.  How do you describe those you are representing? \textcolor{green!90!black}{People with health conditions or impairments}
+		\item \textit{Usability and Accessibility are closely related} (W3C WAI).  When might you need to separate these two terms? \textcolor{green!90!black}{When reviewing a website looking at discrimination and defining accessibility standards}
+		\item Captioning is the use of text on a screen to show what is being said and to highlight relevant sounds in a video, film, TV show or other multimedia. What are closed captions? \textcolor{green!90!black}{These are captions that are not seen unless they are turned on by the user.}
+		\item Accessing documentation can pose problems for those using assistive technologies, in particular if text needs to be out aloud in the right order, perhaps when listening to instructions whilst building a flat pack piece of furniture.  What is the best thing you can do to make sure this type of document reads in the right order? \textcolor{green!90!black}{Make sure heading styles are used.}
+		\item Smart mobile phones offer built in accessibility options e.g. magnification, screen reading and inverted colours.  What may be the benefits of using inverted colours? \textcolor{green!90!black}{Navigation can be easier in darker environments}
+		\item What might be a major issue for a blind person using a wayfinding app but not for other users? \textcolor{green!90!black}{The app fails to tell the user about overhanging objects}
+		\item What does it mean to have an accessible website? \textcolor{green!90!black}{It has been designed so that it has the potential to be accessed by everyone}
+		\item Websites are made up of many different components such as text, images, colour contrast and videos.  Can you automatically test to see if these elements can be accessed by assistive technologies? \textcolor{green!90!black}{20\% of the elements can be tested for accessibility using automatic checkers.}
+		\item You have approached a cash machine (ATM) and wish to take out some money.  Which would be the most important accessibility feature if you were elderly and had poor dexterity? \textcolor{green!90!black}{Clearly defined keys with spoken assistance}
+		\item What are the terms \textit{Design for All} and \textit{Universal Design} used to describe? \textcolor{green!90!black}{Where things have been made so that almost all people can use them.}
+	\end{itemize}
+	
+\end{document}
