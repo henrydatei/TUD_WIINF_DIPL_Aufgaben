@@ -1,0 +1,159 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\title{\textbf{Instrumente des Finanzmanagements, Übung 3}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+
+	\section*{Aufgabe 12.15: Merkmale des Projekts \& Einfluss der Fin.}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Renditen der einzelnen Bereiche sind (mittels CAPM berechnet):
+		\begin{align}
+			r_{Soft} &= 0.04 + 0.6\cdot 0.05 = 0.07 \notag \\
+			r_{Chemie} &= 0.04 + 1.2\cdot 0.05 = 0.1 \notag
+		\end{align}
+		Der Barwert einer unendlichen geometrisch wachsenden Rente ist $\frac{FCF}{r-g}$, also
+		\begin{align}
+			BW_{Soft} &= \frac{50\text{ Mio. \EUR}}{0.07-0.03} = 1.25\text{ Mrd. \EUR} \notag \\
+			BW_{Chemie} &= \frac{70\text{ Mio. \EUR}}{0.1-0.02} = 875\text{ Mio. \EUR} \notag
+		\end{align}
+		\item Das Eigenkapital-Beta von Westen ist
+		\begin{align}
+			\beta_E = \frac{1250\text{ Mio. \EUR}}{1250\text{ Mio. \EUR} + 875\text{ Mio. \EUR}} \cdot 0.6 + \frac{875\text{ Mio. \EUR}}{1250\text{ Mio. \EUR} + 875\text{ Mio. \EUR}}\cdot 1.2 = 0.8471 \notag
+		\end{align}
+		Damit ist die Eigenkapitalrendite
+		\begin{align}
+			r_E = 0.04 + 0.8471\cdot 0.05 = 0.0824 \notag
+		\end{align}
+	\end{enumerate}
+	
+	\section*{Aufgabe 5K47: CAPM-Welt ohne Steuern}
+	\begin{itemize}
+		\item[(c)] Die erwarteten Rückflüsse sind
+		\begin{itemize}
+			\item Periode 1: $\frac{1}{2}\cdot 40000\text{ \EUR} + \frac{1}{2}\cdot 60000\text{ \EUR} = 50000\text{ \EUR}$
+			\item Periode 2: $\frac{1}{2}\cdot 70000\text{ \EUR} + \frac{1}{2}\cdot 90000\text{ \EUR} = 80000\text{ \EUR}$
+		\end{itemize}
+		Für den Kapitalwert gilt dann
+		\begin{align}
+			-1490\text{ \EUR} &= -100000\text{ \EUR} + \frac{50000\text{ \EUR}}{1+r} + \frac{80000\text{ \EUR}}{(1+r)^2} \notag \\
+			r &= 0.19 \notag
+		\end{align}
+		Damit gilt für das Projekt-Beta:
+		\begin{align}
+			0.19 &= 0.07 + \beta\cdot (0.15-0.07) \notag \\
+			\beta &= 1.5 \notag
+		\end{align}
+	\end{itemize}
+
+	\section*{Aufgabe 19: Investitionsentscheidung unter Risiko}
+	Die Rendite beträgt
+	\begin{align}
+		r = 0.05 + 0.95\cdot 0.09 = 0.1355 \notag
+	\end{align}
+	Damit gilt für den Kapitalwert
+	\begin{align}
+		BW &= -1.2\text{ Mio. \EUR} + \frac{0.34\text{ Mio. \EUR}}{1.1355} + \frac{0.34\text{ Mio. \EUR}}{1.1355^2} + \frac{0.34\text{ Mio. \EUR}}{1.1355^3} + \frac{0.34\text{ Mio. \EUR}}{1.1355^4} + \frac{0.34\text{ Mio. \EUR}}{1.1355^5} \notag \\
+		&= -20016.52\text{ \EUR} \notag
+	\end{align}
+	Das Projekt sollte also nicht durchgeführt werden.
+
+	\section*{Aufgabe 12.10: Fremdkapitalkosten}
+	Das CAPM liefert uns eine Rendite von
+	\begin{align}
+		r = 0.03 + 0.31\cdot 0.05 = 0.0455 \notag
+	\end{align}
+	Damit muss für die Anleihe gelten:
+	\begin{align}
+		0.0455 &= 0.173 - p\cdot 0.6 \notag \\
+		p &= 0.2125 \notag
+	\end{align}
+
+	\section*{Aufgabe 12.18: Merkmale des Projekts \& Einfluss der Fin.}
+	\begin{enumerate}[label=(\alph*)]
+		\item $r_E = \frac{400\text{ Mio. \EUR}}{400\text{ Mio. \EUR} + 100\text{ Mio. \EUR}}\cdot 0.15 + \frac{100\text{ Mio. \EUR}}{400\text{ Mio. \EUR} + 100\text{ Mio. \EUR}}\cdot 0.08 = 0.136$
+		\item $r_D = 0.08\cdot (1-0.4) = 0.048$
+		\item $r_{WACC} = \frac{400\text{ Mio. \EUR}}{400\text{ Mio. \EUR} + 100\text{ Mio. \EUR}}\cdot 0.15 + \frac{100\text{ Mio. \EUR}}{400\text{ Mio. \EUR} + 100\text{ Mio. \EUR}}\cdot 0.048 = 0.1296$
+	\end{enumerate}
+
+	\section*{Aufgabe 121.14: Merkmale des Projekts \& Einfluss der Fin.}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Fremdkapital-Betas der Fluglinien sind
+		\begin{align}
+			\beta_{D,DAL} &= 0.17 \notag \\
+			\beta_{D,LUV} &= \frac{0.1+0.05}{2}=0.075 \notag \\
+			\beta_{D,JBLU} &= \frac{0.26+0.31}{2}=0.285 \notag \\
+			\beta_{D,CAL} &= 0.26 \notag
+		\end{align}
+		\item Die Asset-Betas der Fluglinien sind
+		\begin{align}
+			\beta_{DAL} &= \frac{4938.5}{17026.5}\cdot 2.04 + \frac{17026.5-4938.5}{17026.5}\cdot 0.17 = 0.7124 \notag \\
+			\beta_{LUV} &= \frac{4896.8}{6372.8}\cdot 0.966 + \frac{6372.8-4896.8}{6372.8}\cdot 0.075 = 0.7596 \notag \\
+			\beta_{JBLU} &= \frac{1245.5}{3833.5}\cdot 1.91 + \frac{3833.5-1245.5}{3833.5}\cdot 0.285 = 0.8130 \notag \\
+			\beta_{CAL} &= \frac{1124.0}{4414.0}\cdot 1.99 + \frac{4414.0-1124.0}{4414.0}\cdot 0.26 = 0.7005 \notag
+		\end{align}
+		\item Das Branchen-Beta ist dann
+		\begin{align}
+			\beta = \frac{0.7124 + 0.7596 + 0.8130 + 0.7005}{4} = 0.7464 \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 1K287: CAPM}
+	\begin{enumerate}[label=(\alph*)]
+		\item $\beta = \frac{\Cov(r_i,r_M)}{\sigma_M^2} \to \Cov(r_i,r_M) \uparrow \to \beta \uparrow$
+		\item Fixkosten $\uparrow\to$ Operating Leverage $\uparrow \to \beta\uparrow$
+		\item Fremdkapital $\uparrow\to$ Financial Leverage $\uparrow\to\beta \uparrow$
+	\end{enumerate}
+	
+\end{document}
