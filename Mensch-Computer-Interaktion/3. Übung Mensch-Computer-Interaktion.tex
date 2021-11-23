@@ -1,0 +1,89 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage{ulem}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\title{\textbf{Mensch-Computer-Interaktion, Übung 3}}
+\author{\textsc{Henry Haustein}, \textsc{Dennis Rössel}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 3.1: Zielgruppe definieren}
+	\begin{enumerate}[label=(\alph*)]
+		\item Unsere Zielgruppe ist nicht wirklich divers, sie besteht nur aus Studenten. Das Portal ist kein Studieninformationsportal, deswegen sind Schüler keine Zielgruppe.
+		\item Menschen mit körperlichen Behinderungen (mit geistigen Behinderungen lässt sich nicht wirklich studieren).
+		\item $\Rightarrow$ 2 Personas
+	\end{enumerate}
+
+	\section*{Aufgabe 3.2: Personas entwickeln}
+	1. Persona
+	 \begin{enumerate}[label=(\alph*)]
+	 	\item Probleme: Steuerrückerstattung vom Finanzamt braucht immer so lange; das Lernen für Klausuren dauert zu lange; bekommt Wutausbrüche wenn seine BWL-Marie (seine Freundin) mit dem Eis auf seine Wildledersitze kleckert
+	 	\item Bedürfnisse: sehr schnelles Finden von Informationen, wenn nötig per Premium-Abo
+	 	\item Ziele: möglichst schnell das Studium mit minimalem Aufwand abschließen, unbegrenzte Geldmittel können in seinen Erfolg investiert werden
+	 	\item demografische Angaben: männlich, 20 Jahre alt, wohnt in München in einer \textit{kleinen} 100 m$^2$-Wohnung, kennt sich nur mit Excel aus
+	 	\item Kontext: Zugang vom iPhone, iPad Pro oder MacBook Pro, komplizierter als die Bedienung von Google darf es nicht sein; auf der Suche nach Zusammenfassungen stößt er auf die Webseite
+	 	\item Ängste: dass der Bachelor länger als 6 Semester dauert (inklusive 3 Urlaubssemestern für den (Ski-) urlaub in Davos); ein zu langer Klickpfad wirkt abschreckend auf Justus
+	 	\item Persönlichkeits-Features: Justus (20), studiert BWL und verbringt viel Zeit mit dem Mercedes seines Vaters und Golf spielen
+	 \end{enumerate}
+ 	2. Persona
+ 	\begin{enumerate}[label=(\alph*)]
+ 		\item Probleme: keine Rücksichtnahme auf ihre Einschränkungen
+ 		\item Bedürfnisse: barrierefreie Dokumente/Räume/Gebäude
+ 		\item Ziele: so normal wie möglich leben zu können
+ 		\item demografische Angaben: weiblich, 20 Jahre
+ 		\item Kontext: Screenreader ließt die Seite vor, Brailletastatur; komplett barrierefreie Webseite; stößt auf unsere Webseite entweder durch Empfehlungen oder Google-Suche
+ 		\item Ängste: keine barrierefreien Dokumente/Räume/Gebäude, Angst keine Freunde zu finden
+ 		\item Persönlichkeits-Features: Anna (20) studiert Psychologie und ist geburtsblind.
+ 	\end{enumerate}
+	
+\end{document}
