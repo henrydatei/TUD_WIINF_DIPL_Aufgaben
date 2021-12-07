@@ -1,0 +1,168 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\title{\textbf{Instrumente des Finanzmanagements, Tutorium 3}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 9K30: Investitions- und Finanzierungstheorie}
+	Die Zinssätze in dieser Aufgabe werden immer nach der folgenden Formel berechnet:
+	\begin{align}
+		r = 5\% + \beta\cdot (13\% - 5\%) \notag
+	\end{align}
+	\begin{enumerate}[label=(\alph*)]
+		\item Das Fremdkapitalbeta ist
+		\begin{align}
+			\beta_{D,Sachsi} = 0.3125\cdot \underbrace{\frac{D}{D+E}}_{0.4} = 0.125 \notag
+		\end{align}
+		Damit $r_{D,Sachsi} = 6\%$. Aus dem Dividend-Growth-Modell wissen wir, dass
+		\begin{align}
+			P_0 &= \frac{Div}{r_E-g} \notag \\
+			r_E &= \underbrace{\frac{Div}{P_0}}_{\text{Div-rendite}} + g \notag \\
+			&= 5\% + 10\% \notag
+		\end{align}
+		Damit $r_{E,Sachsi}=15\%$ und $\beta_{E,Sachsi}=1.25$. Für das Unternehmensbeta gilt dann
+		\begin{align}
+			\beta_{Sachsi} &= 0.6\cdot\beta_{E,Sachsi} + 0.4\cdot\beta_{D,Sachsi} \notag \\
+			&= 0.8 \notag
+		\end{align}
+		und damit $r_{Sachsi}=11.4\%$.
+		\item Das Risiko des Wäsche-Departments ist genau so groß wie das Risiko von Sächsi, also $\beta_{Wasch} = \beta_{Sachsi} = 0.8$ und $r_{Wasch}=11.4\%$. Für das Fremdkapitalbeta gilt
+		\begin{align}
+			\beta_{D,Wasch} = 0.3125\cdot 0.6=0.1875\notag
+		\end{align}
+		und damit $r_{D,Wasch}=6.5\%$. Für das Eigenkapitalbeta gilt
+		\begin{align}
+			\beta_{Wasch} &= 0.4\cdot\beta_{E,Wasch} + 0.6\cdot\beta_{D,Wasch} \notag \\
+			\beta_{E,Wasch} &= \frac{\beta_{Wasch} - 0.6\cdot\beta_{D,Wasch}}{0.4} \notag \\
+			&= 1.7188 \notag
+		\end{align}
+		und damit $r_{E,Wasch}=18.75\%$.
+		\item Für das Fremdkapitalbeta gilt
+		\begin{align}
+			\beta_{D,Drink} = 0.3125\cdot 0.6=0.1875\notag
+		\end{align}
+		und damit $r_{D,Drink}=6.5\%$. Für das Eigenkapitalbeta gilt
+		\begin{align}
+			\beta_{E,Drink} &= \Cor(r_{Drink}, r_M)\cdot\frac{\SD(r_{Drink})}{\SD(r_M)} \notag \\
+			&= 0.6\cdot\frac{\sqrt{576}}{\sqrt{256}} \notag \\
+			&= 0.9 \notag
+		\end{align}
+		das ergibt $r_{E,Drink}=12.2\%$. Das Unternehmensbeta ist damit
+		\begin{align}
+			\beta_{Drink} &= 0.4\cdot\beta_{E,Drink} + 0.6\cdot\beta_{D,Drink} \notag \\
+			&= 0.4725\notag
+		\end{align}
+		und damit $r_{Drink}=8.78\%$.
+		\item Für das Fremdkapitalbeta gilt
+		\begin{align}
+			\beta_{D,Getr} = 0.3125\cdot 0.6=0.1875\notag
+		\end{align}
+		und damit $r_{D,Getr}=6.5\%$. Für das Eigenkapitalbeta gilt
+		\begin{align}
+			\beta_{E,Drink} &= 0.75\cdot\beta_{E,Getr} + 0.25\cdot\beta_{E,Wasch} \notag \\
+			\beta_{E,Getr} &= \frac{\beta_{E,Drink} - 0.25\cdot\beta_{E,Wasch}}{0.75} \notag \\
+			&= 0.6271 \notag
+		\end{align}
+		und damit $r_{E,Getr}=10.02\%$. Für das Unternehmensbeta gilt analog
+		\begin{align}
+			\beta_{Drink} &= 0.75\cdot\beta_{Getr} + 0.25\cdot\beta_{Wasch} \notag \\
+			\beta_{Getr} &= \frac{\beta_{Drink} - 0.25\cdot\beta_{Wasch}}{0.75} \notag \\
+			&= 0.3633 \notag
+		\end{align}
+		und damit $r_{Getr}=7.91\%$.
+		\item Der relevante Zinssatz für das Diskontieren ist der Unternehmenszinssatz bzw. der Zinssatz des Departments, sollte eine Investition nur ein Department betreffen. Aktionäre können ihr Eigenkapital nur in das gesamte Unternehmen stecken, sie interessiert also nur $r_{E,Drink}$.
+	\end{enumerate}
+
+	\section*{Aufgabe 12.9: Fremdkapitalkosten}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die höchste erwartete Rendite hat eine Anleihe dann, wenn sie nicht ausfällt, also 3.75\%.
+		\item Nein, da Staatsanleihen risikolos sind und damit nie eine größere Rendite als eine Anleihe haben können, weil man ja für das zusätzliche Risiko einer Anleihe mit einer höheren Rendite entschädigt wird.
+		\item $r=y-pL = 3.75\% - 0.01\cdot 40\% = 3.35\%$
+	\end{enumerate}
+
+	\section*{Aufgabe 12.16: Merkmale des Projektrisikos und der Einfluss der Finanzierung}
+	Das $\beta$ von HHI ist:
+	\begin{align}
+		\beta_{HHI} &= \frac{E}{E+D}\cdot\beta_{E,HHI} + \frac{D}{E+D}\cdot\beta_{D,HHI} \notag \\
+		&= \frac{32\text{ \EUR}\cdot 20\text{ Mio.}}{32\text{ \EUR}\cdot 20\text{ Mio.} + 64\text{ Mio. \EUR}}\cdot 1.33 + \frac{64\text{ Mio. \EUR}}{32\text{ \EUR}\cdot 20\text{ Mio.} + 64\text{ Mio. \EUR}}\cdot 0 \notag \\
+		&= 1.2091 \notag
+	\end{align}
+	Für das $\beta$ von HDG gilt
+	\begin{align}
+		\beta_{HDG} &= \frac{E}{E+D}\cdot\beta_{E,HDG} + \frac{D}{E+D}\cdot\beta_{D,HDG} \notag \\
+		0.75 &= \frac{850\text{ Mio. \EUR}}{850\text{ Mio. \EUR} + 200\text{ Mio. \EUR}}\cdot \beta_{E,HDG} + \frac{200\text{ Mio. \EUR}}{850\text{ Mio. \EUR} + 200\text{ Mio. \EUR}}\cdot 0 \notag \\
+		\beta_{E,HDG} &= 0.9268\notag
+	\end{align}
+	HHI ist 704 Mio. \EUR\, wert, es besteht aus 50\% der Aktien von HDG, also 425 Mio. \EUR\, und dem Gesamtwert des Hockeyteams, also $704\text{ Mio. \EUR} - 425\text{ Mio. \EUR} = 279\text{ Mio. \EUR}$. Weiterhin wissen wir über das $\beta$ von HHI noch:
+	\begin{align}
+		\beta_{HHI} &= \frac{425\text{ Mio. \EUR}}{704\text{ Mio. \EUR}}\cdot\beta_{E,HDG} + \frac{279\text{ Mio. \EUR}}{704\text{ Mio. \EUR}}\cdot\beta_{Hockey} \notag \\
+		\beta_{Hockey} &= 1.6391 \notag
+	\end{align}
+
+	\section*{Aufgabe 12.17: Merkmale des Projektrisikos und der Einfluss der Finanzierung}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der Zinssatz ist $r=4\% + 1.25\cdot 5\% = 10.25\%$. Damit ist der Barwert
+		\begin{align}
+			BW &= \frac{(30\text{ Mio. \EUR} - 0.8\cdot 30\text{ Mio. \EUR})\cdot (1-0.4)}{0.1025} \notag \\
+			&= 35.1220 \text{ Mio. \EUR} \notag
+		\end{align}
+		\item Mit dem alten Vertrag betragen die Kosten 24 Mio. \EUR, davon 6 Mio. \EUR\, Energie und 18 Mio. \EUR\, Rest. Mit dem neuen Vertrag sinken die Energiekosten auf $3\text{ Mio. \EUR} + 0.4\cdot 3\text{ Mio. \EUR} = 4.2\text{ Mio. \EUR}$, damit die Gesamtkosten auf 22.2 Mio. \EUR\, und der Gewinn steigt auf 7.8 Mio. \EUR. Der Barwert ist dann
+		\begin{align}
+			BW = \frac{7.8\text{ Mio. \EUR}\cdot (1-0.4)}{0.1025} = 45.6585\text{ Mio. \EUR}\notag
+		\end{align}
+		\item Keine Veränderung, da das Beta gleich bleibt.
+	\end{enumerate}
+	
+\end{document}
