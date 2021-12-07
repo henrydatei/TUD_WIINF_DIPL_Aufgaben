@@ -1,0 +1,138 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Applied Data Analysis, Übung 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Task 1}
+	\begin{lstlisting}
+install.packages("dplyr")
+library(dplyr)
+
+# Bekannt aus Uebung 1
+install.packages("readxl")
+library(readxl)
+data = read_excel("data.xlsx", na = "NA")
+data$gender = factor(data$gender)
+levels(data$gender) = c("male", "female", "diverse")
+data$employment = factor(data$employment)
+levels(data$employment) = c("student", "employed", "unemployed")
+data$education = factor(data$education)
+levels(data$education) = c("no degree", "secondary", "intermediate", "high school", "academic")
+data$play_frequency = factor(data$play_frequency)
+levels(data$play_frequency) = c("never", "every few months", "every few weeks", "1-2 days a week", "3-5 days a week", "daily")
+data$treatment = factor(data$treatment)
+levels(data$treatment) = c("control", "lootbox in task reward", "lootbox picture", "badge")
+data$age = sapply(data$age, function(year) {2016-year})
+data$rt6 = as.numeric(data$rt6)
+data$rt7 = as.numeric(data$rt7)
+data$rt8 = as.numeric(data$rt8)
+data$rt9 = as.numeric(data$rt9)
+data$rt10 = as.numeric(data$rt10)
+data$rt11 = as.numeric(data$rt11)
+data$rt12 = as.numeric(data$rt12)
+data$rt13 = as.numeric(data$rt13)
+data$rt14 = as.numeric(data$rt14)
+
+data = data %>% filter(age <= 80) %>% filter(age >= 18)
+data = data %>% filter(`total time` <= 2000000)
+data = data %>% mutate(old = age > 25)
+summary(data)
+
+data %>% group_by(treatment) %>% summarise(completeTasks_mean = mean(tasks_completed), completeTasks_median = median(tasks_completed), completeTasks_var = sd(tasks_completed))
+
+subsetControl = data %>% filter(treatment == "control")
+subsetLootPic = data %>% filter(treatment == "lootbox picture")
+subsetLootInTask = data %>% filter(treatment == "lootbox in task reward")
+subsetBadge = data %>% filter(treatment == "badge")
+subsetYoung = data %>% filter(old == FALSE)
+subsetOld = data %>% filter(old == TRUE)
+	\end{lstlisting}
+	121 Personen sind alt und 268 sind jung. 
+	
+	Am meiste Aufgaben wurden in der Gruppe mit der Lootbox im task reward erfüllt, und die Gruppe mit der Badge hatte die größte Standardabweichung.
+
+	\section*{Task 2}
+	\begin{lstlisting}
+install.packages("ggplot2")
+library(ggplot2)
+
+ggplot(data, aes(x = tasks_completed)) + geom_histogram(binwidth = 1)
+ggplot(data, aes(x = tasks_completed, fill = treatment)) + geom_histogram(binwidth = 1)
+ggplot(data, aes(x = tasks_completed)) + geom_histogram(binwidth = 1) + facet_wrap(~ treatment)
+
+ggplot(data, aes(x = treatment, y = tasks_completed)) + geom_boxplot()
+ggplot(data, aes(y = tasks_completed)) + geom_boxplot() + facet_wrap(~ treatment)
+
+ggplot(data, aes(x = `total time`)) + geom_density()
+ggplot(data, aes(x = `total time`, color = treatment)) + geom_density()
+ggplot(data, aes(x = `total time`)) + geom_density() + facet_wrap(~ treatment)
+	\end{lstlisting}
+	
+	\section*{Task 3}
+	\begin{lstlisting}
+t.test(data$`total time`, mu = 320000, alternative = "two.sided", conf.level = 0.95)
+t.test(subsetYoung$`total time`, mu = 320000, alternative = "two.sided", conf.level = 0.95)
+t.test(subsetOld$`total time`, mu = 320000, alternative = "two.sided", conf.level = 0.95)
+
+t.test(subsetYoung$tasks_completed, mu = mean(subsetOld$tasks_completed), alternative = "two.sided", conf.level = 0.95)
+
+pairwise.t.test(data$tasks_completed, data$treatment, p.adjust.method = "none", pool.sd = FALSE)
+	\end{lstlisting}
+	Bei allen Personen und den jungen Personen ist der p-value unter 5\%, das heißt wir können $H_0$ nicht ablehnen. Bei den alten Personen ist der p-value bei 50\%, wir lehnen $H_0$ ab.
+	
+	Bei allen andern Tests sind die p-values unter 5\%, auch da lehnen wir $H_0$ ab. Die Mittelwerte sind also verschieden voneinander.
+	
+\end{document}
