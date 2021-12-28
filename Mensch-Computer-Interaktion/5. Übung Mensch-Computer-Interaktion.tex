@@ -1,0 +1,159 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage{ulem}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\title{\textbf{Mensch-Computer-Interaktion, Übung 5}}
+\author{\textsc{Henry Haustein}, \textsc{Dennis Rössel}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 5.1: Task-Load-Index und System Usability Scale}
+	\begin{enumerate}[label=(\alph*)]
+		\item TXL, Task: Ein Dokument hochladen \\
+		Rating
+		\begin{center}
+			\begin{tabular}{l|c|c|c}
+				& \textbf{User 1} & \textbf{User 2} & \textbf{User 3} \\
+				\hline
+				Mental Demand & 20 & 15 & 25 \\
+				Physical Demand & 5 & 10 & 5 \\
+				Temporal Demand & 30 & 25 & 30 \\
+				Perfomance & 0 & 0 & 5 \\
+				Effort & 5 & 10 & 10 \\
+				Frustration & 0 & 0 & 0
+			\end{tabular}
+		\end{center}
+		Weights
+		\begin{center}
+			\begin{tabular}{l|c|c|c}
+				& \textbf{User 1} & \textbf{User 2} & \textbf{User 3} \\
+				\hline
+				Mental Demand & 1 & 2 & 0 \\
+				Physical Demand & 0 & 0 & 0 \\
+				Temporal Demand & 2 & 4 & 3 \\
+				Perfomance & 5 & 2 & 4 \\
+				Effort & 2 & 2 & 3 \\
+				Frustration & 5 & 5 & 5
+			\end{tabular}
+		\end{center}
+		Result
+		\begin{center}
+			\begin{tabular}{l|c|c|c}
+				& \textbf{User 1} & \textbf{User 2} & \textbf{User 3} \\
+				\hline
+				Mental Demand & 20 & 30 & 0 \\
+				Physical Demand & 0 & 0 & 0 \\
+				Temporal Demand & 60 & 100 & 90 \\
+				Perfomance & 0 & 0 & 20 \\
+				Effort & 10 & 20 & 30 \\
+				Frustration & 0 & 0 & 0 \\
+				\hline
+				$\Sigma$ & 90 & 150 & 140 \\
+				AVG & 6 & 10 & 9.33
+			\end{tabular}
+		\end{center}
+		\item SUS, Task: Ein Dokument hochladen
+		\begin{center}
+			\begin{tabular}{L{7cm}|c|c|c|c|c|c}
+				\textbf{Frage} & $X_{U1}$ & $X_{U2}$ & $X_{U3}$ & $Y_{U1}$ & $Y_{U2}$ & $Y_{U3}$ \\
+				\hline
+				 I think that I would like to use this system frequently. & 5 & 4 & 5 & 4 & 3 & 4 \\
+				 I found the system unnecessarily complex. & 1 & 1 & 1 & 4 & 4 & 4 \\
+				 I thought the system was easy to use. & 4 & 4 & 5 & 3 & 3 & 4 \\
+				 I think that I would need the support of a technical person to be able to use this system. & 1 & 1 & 1 & 4 & 4 & 4 \\
+				 I found the various functions in this system were well integrated. & 5 & 4 & 5 & 4 & 3 & 4 \\
+				 I thought there was too much inconsistency in this system. & 1 & 2 & 1 & 4 & 3 & 4 \\
+				 I would imagine that most people would learn to use this system very quickly. & 4 & 4 & 4 & 3 & 3 & 3 \\
+				 I found the system very cumbersome to use. & 1 & 1 & 1 & 4 & 4 & 4 \\
+				 I felt very confident using the system. & 4 & 5 & 5 & 3 & 4 & 4 \\
+				 I needed to learn a lot of things before I could get going with this system. & 1 & 2 & 1 & 4 & 3 & 4 \\
+				 \hline
+				 $\Sigma$ & & & & 37 & 34 & 39 \\
+				 \hline
+				 Score & & & & 92.5 & 85 & 97.5
+			\end{tabular}
+		\end{center}
+	\end{enumerate}
+
+	\section*{Aufgabe 5.2: }
+	Mit R ergibt sich
+	\begin{lstlisting}[style=R]
+mouse = read.csv2("Testdaten_Mouse.csv")
+touch = read.csv2("Testdaten_Touchpad.csv")
+cor(mouse$AVG,mouse$ID)
+cor(touch$AVG,touch$ID)
+summary(lm(AVG ~ ID, data = mouse))
+summary(lm(AVG ~ ID, data = touch))
+	\end{lstlisting}
+	Ergibt eine Korrelation von 0.8633773 bzw. 0.9289729 und
+	\begin{center}
+\begin{tabular}{l c c}
+\hline
+ & Maus & Touchpad \\
+\hline
+(Intercept) & $172.78^{***}$ & $132.20^{***}$ \\
+            & $(38.30)$      & $(35.90)$      \\
+ID          & $89.05^{***}$  & $122.41^{***}$ \\
+            & $(9.83)$       & $(9.22)$       \\
+\hline
+R$^2$       & $0.75$         & $0.86$         \\
+Adj. R$^2$  & $0.74$         & $0.86$         \\
+Num. obs.   & $30$           & $30$           \\
+\hline
+\multicolumn{3}{l}{\scriptsize{$^{***}p<0.001$; $^{**}p<0.01$; $^{*}p<0.05$}}
+\end{tabular}
+\end{center}
+	Fitt's Law passt besser auf die Touchpad-Daten.
+
+	
+\end{document}
