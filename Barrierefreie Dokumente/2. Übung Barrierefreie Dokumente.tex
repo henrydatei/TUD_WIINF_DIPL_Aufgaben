@@ -1,0 +1,127 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage{ulem}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{html} {language=html}
+\lstset{language=html,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+\lstset{literate=%
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}1
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+}
+
+\hypersetup{
+	pdfauthor   = {Henry Haustein, Dennis Rössel},
+	pdfkeywords = {Formular, Barrierefrei},
+	pdftitle    = {PDF-Formular},
+	pdflang={de-DE}
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\title{\textbf{Barrierefreie Dokumente, Übung 2}}
+\author{\textsc{Henry Haustein}, \textsc{Dennis Rössel}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 2.2: Barrierefreies PDF-Formular}
+	\begin{Form}[encoding=html]
+		\subsection*{Angaben zur Person}
+		\begin{tabbing}
+			xxxxxxxxxxxxx: \= \kill  % This is needed for the right tab width
+			Anrede:    \>
+			\ChoiceMenu[radio,name=sex]{\mbox{}}{Herr=m,Frau=f} \\
+			Name:           \> \TextField[name=name,width=3cm]
+			{\mbox{}} \\
+			Vorname:           \> \TextField[name=vor,width=3cm]
+			{\mbox{}} \\
+			
+			Geburtsdatum:           \>
+			\ChoiceMenu[combo,name=day,width=1cm,default=01]{\mbox{}}
+			{01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31}
+			\ChoiceMenu[combo,name=month,width=1cm,default=01]{\mbox{}}
+			{01,02,03,04,05,06,07,08,09,10,11,12}
+			 \TextField[name=year,width=3cm]{\mbox{}}
+		\end{tabbing}
+		\subsection*{Anschrift}
+		\begin{tabbing}
+			xxxxxxxxxxxxx: \= \kill  % This is needed for the right tab width
+			Straße:           \> \TextField[name=street,width=3cm]{\mbox{}} \\
+			Hausnummer:           \> \TextField[name=number,width=3cm]{\mbox{}} \\
+			Postleitzahl:           \>\TextField[name=plz,width=3cm]{\mbox{}} \\
+			Ort:           \>\TextField[name=ort,width=3cm]{\mbox{}}
+		\end{tabbing}
+		\subsection*{Kontaktdaten}
+		\begin{tabbing}
+			xxxxxxxxxxxxx: \= \kill  % This is needed for the right tab width
+			Telefonnummer:           \> \TextField[name=telefon,width=3cm]{\mbox{}} \\
+			Email:           \> \TextField[name=email,width=3cm]{\mbox{}}
+		\end{tabbing}
+		\subsection*{Bankdaten}
+		\begin{tabbing}
+			xxxxxxxxxxxxx: \= \kill  % This is needed for the right tab width
+			Kontoinhaber:           \> \TextField[name=street,width=3cm]{\mbox{}} \\
+			IBAN:           \> \TextField[name=number,width=3cm]{\mbox{}} \\
+			BIC:           \>\TextField[name=plz,width=3cm]{\mbox{}} \\
+			Kreditinstitut:           \>\TextField[name=ort,width=3cm]{\mbox{}}
+		\end{tabbing}
+		\subsection*{Vertragsoptionen}
+		\begin{tabbing}
+			xxxxxxxxxxxxx: \= \kill  % This is needed for the right tab width
+			Vertragsoptionen:           \> \ChoiceMenu[radio,name=vertrag]{\mbox{}}{Newsletter=n,Getränkeflatrate=g,Kursflatrate=k}
+		\end{tabbing}
+	\end{Form}
+	
+\end{document}
