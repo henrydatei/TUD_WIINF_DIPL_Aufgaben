@@ -1,0 +1,190 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\title{\textbf{Instrumente des Finanzmanagements, Übung 4}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+
+	\section*{Aufgabe 23: Investitionsentscheidung unter Risiko (WACC)}
+	\begin{enumerate}[label=(\alph*)]
+		\item $r_E=r_f+\beta(r_M-r_f) = 7\% + 1.29(13\% - 7\%) = 14.76\%$
+		\item Der Verschuldungsgrad liegt bei 1, also $\frac{D}{E}=1$, damit $D=E=1$ und es folgt
+		\begin{align}
+			r_{WACC} &= \frac{E}{E+D}r_E + \frac{D}{E+D}r_D\cdot (1-\tau) \notag \\
+			&= \frac{1}{2}\cdot 14.76\% + \frac{1}{2}\cdot 7\%\cdot (1-0.35) \notag \\
+			&= 9.645\%\notag
+		\end{align}
+	\end{enumerate}
+	
+	\section*{Aufgabe 24: Investitionsentscheidung unter Risiko (WACC)}
+	Der Verschuldungsgrad ist 0.75, damit $\frac{D}{E}=\frac{3}{4}$ und damit $D=3$ und $E=4$. WACC liefert:
+	\begin{align}
+		r_{WACC} &= \frac{E}{E+D}r_E + \frac{D}{E+D}r_D\cdot (1-\tau) \notag \\
+		&= \frac{4}{7}\cdot 15\% + \frac{3}{7}\cdot 9\%\cdot (1-0.35) \notag \\
+		&= 11.08\%\notag
+	\end{align}
+	Damit ist der Barwert
+	\begin{align}
+		BW &= -25\text{ Mio. \EUR} + \frac{7\text{ Mio. \EUR}}{1+r_{WACC}} + \frac{7\text{ Mio. \EUR}}{(1+r_{WACC})^2} + \frac{7\text{ Mio. \EUR}}{(1+r_{WACC})^3} + \frac{7\text{ Mio. \EUR}}{(1+r_{WACC})^4} + \frac{7\text{ Mio. \EUR}}{(1+r_{WACC})^5} \notag \\
+		&= 0.8193\text{ Mio. \EUR} \notag
+	\end{align}
+	Das Projekt sollte durchgeführt werden.
+
+	\section*{Aufgabe 18.8: Investitionsentscheidung unter Risiko}
+	\begin{enumerate}[label=(\alph*)]
+		\item Da beide Unternehmen der gleichen Branche angehören, gilt $\beta_{AMR}=\beta_{UAL}$. Für $\beta_{UAL}$ ergibt sich:
+		\begin{align}
+			\beta_{UAL} &= \frac{E}{E+D}\beta_{E,UAL} + \frac{D}{E+D}\beta_{D,UAL} \notag \\
+			&= \frac{1}{2}\cdot 1.5 + \frac{1}{2}\cdot 0.3 \notag \\
+			&= 0.9 \notag
+		\end{align}
+		CAPM liefert dann eine Rendite für AML:
+		\begin{align}
+			r_{AML} &= 5\% + 0.9(11\%-5\%) \notag \\
+			&= 10.4\% \notag
+		\end{align}
+		Die Eigenkapitalrendite von AML ist dann (da das Fremdkapital risikolos ist, gilt $r_D=r_f=5\%$):
+		\begin{align}
+			r_{E,AML} &= r_{AML} + \frac{D}{E}(r_{AML}-r_D) \notag \\
+			&= 10.4\% + \frac{3}{10}(10.4\%-5\%) \notag \\
+			&= 12.02\% \notag
+		\end{align}
+		\item WACC liefert:
+		\begin{align}
+			r_{WACC} &= \frac{10}{13} \cdot 12.02\% + \frac{3}{13}\cdot 5\%\cdot (1-0.4) \notag \\
+			&= 9.94\% \notag
+		\end{align}
+		und damit ist der Barwert der freien Cashflows
+		\begin{align}
+			BW &= \frac{15\text{ Mio. \EUR}}{9.94\% - 4\%} \notag \\
+			&= 252.53\text{ Mio. \EUR} \notag
+		\end{align}
+		Dieser Gesamtwert teilt wie folgt in Fremd- und Eigenkapital auf:
+		\begin{itemize}
+			\item Eigenkapital: $252.53\text{ Mio. \EUR}\cdot \frac{10}{13}=194.25\text{ Mio. \EUR}$
+			\item Fremdkapital: $252.53\text{ Mio. \EUR}\cdot \frac{3}{13}=58.28\text{ Mio. \EUR}$
+		\end{itemize}
+		Damit ist der Preis für eine Aktie $\frac{194.25\text{ Mio. \EUR}}{10\text{ Mio. Aktien}}=19.43\text{ \EUR}$.
+	\end{enumerate}
+
+	\section*{Aufgabe 22: Investitionsentscheidung unter Risiko}
+	Fremdkapital ist billiger und risikoärmer als Eigenkapital. CAPM betrachtet nur Eigenkapital, daher liegen die Kosten des Gesamtkapitals unter den Kosten, die CAPM prognostiziert.
+
+	\section*{Aufgabe 3K280: Investitionsentscheidung unter Risiko}
+	\begin{enumerate}[label=(\alph*)]
+		\item Für das EIgenkapitalbeta von Starship gilt
+		\begin{align}
+			\beta_{E,S} &= \Cor(r_i,r_M)\cdot\frac{\SD(r_i)}{\SD(r_M)} \notag \\
+			&= 0.75\cdot \frac{\sqrt{0.04}}{\sqrt{0.01}} \notag \\
+			&= 1.5 \notag
+		\end{align}
+		Damit sind dann die Eigenkapitalkosten $r_{E,S}=7\% + 1.5(15\%-7\%)=19\%$.
+		\item Für das Projektbeta von Starship gilt:
+		\begin{align}
+			\beta_{Proj,S} &= \beta_H = \frac{E}{E+D\cdot(1-\tau)}\cdot \beta_{E,H} + \frac{D\cdot (1-\tau)}{E+D\cdot (1-\tau)}\cdot\beta_{D,H} \notag \\
+			&= \frac{0.4}{0.4 + 0.6\cdot 0.7}\cdot 1.8 + \frac{0.6\cdot 0.7}{0.4 + 0.6\cdot 0.7}\cdot 0.1 \notag \\
+			&= 0.9293 \notag
+		\end{align}
+		Damit ergibt sich ein Projektzinssatz von $r_{Proj,S}=7\% + 0.9293(15\%-7\%)=14.43\%$. Das WACC liefert dann
+		\begin{align}
+			r_{WACC} &= r_{Proj,S} - \tau\cdot d\cdot r_{Proj,S} \notag \\
+			&= 14.43\% - 0.3\cdot 0.3\cdot 14.43\% \notag \\
+			&= 13.13\% \notag
+		\end{align}
+		Der Barwert des Projektes ist dann
+		\begin{align}
+			BW &= -8\text{ Mio. \EUR} + \frac{1\text{ Mio. \EUR}}{13.13\%} \notag \\
+			&= -0.3839\text{ Mio. \EUR} \notag
+		\end{align}
+		Das Projekt sollte also nicht durchgeführt werden.
+		\item Es muss gelten:
+		\begin{align}
+			BW &\ge 0 \notag \\
+			\frac{1}{r_{WACC}} &\ge 8 \notag \\
+			r_{WACC} &\le 12.5\% \notag \\
+			r_{Proj,S} - \tau\cdot d\cdot r_{Proj,S} &\le 12.5\% \notag \\
+			r_{Proj,S} &\le 13.74\% \notag \\
+			7\% + \beta(15\%-7\%) &\le 13.74\% \notag \\
+			\beta &\le 0.8425 \notag
+		\end{align}
+		\item Analog zu (b) können wir auch das Unternehmensbeta von Garfield ausrechnen:
+		\begin{align}
+			\beta_G &= \frac{E}{E+D\cdot(1-\tau)}\cdot \beta_{E,G} + \frac{D\cdot (1-\tau)}{E+D\cdot (1-\tau)}\cdot\beta_{D,G} \notag \\
+			&= \frac{0.6}{0.6 + 0.4\cdot 0.7}\cdot 1.2 + \frac{0.4\cdot 0.7}{0.6 + 0.4\cdot 0.7}\cdot 0 \notag \\
+			&= 0.8182 \notag
+		\end{align}
+		Damit gilt dann für die Betas der Katzen- und Hundefutters:
+		\begin{align}
+			\beta_H &= 0.2\cdot\beta_{Hund} + 0.8\cdot\beta_{Katze} = 0.9293 \notag \\
+			\beta_H &= 0.6\cdot\beta_{Hund} + 0.4\cdot\beta_{Katze} = 0.8182 \notag \\
+			\beta_{Hund} &= 0.7071 \notag \\
+			\beta_{Katze} &= 0.9849 \notag
+		\end{align}
+		Das ergibt sich dann wieder:
+		\begin{align}
+			r_{Proj,S} &= 7\% + 0.7071(15\%-7\%) = 12.65\% \notag \\
+			r_{WACC} &= 12.65\% - 0.3\cdot 0.3\cdot 12.65\% = 11.51\% \notag \\
+			BW &= -8\text{ Mio. \EUR} + \frac{1\text{ Mio. \EUR}}{11.51\%} = 0.6881\text{ Mio. \EUR} \notag
+		\end{align}
+		Das Projekt sollte also durchgeführt werden.
+		\item siehe dazu 3. Übung, Aufgabe 1K187:
+		\begin{itemize}
+			\item $\beta = \frac{\Cov(r_i,r_M)}{\sigma_M^2} \to \Cov(r_i,r_M) \uparrow \to \beta \uparrow$
+			\item Fixkosten $\uparrow\to$ Operating Leverage $\uparrow \to \beta\uparrow$
+			\item Fremdkapital $\uparrow\to$ Financial Leverage $\uparrow\to\beta \uparrow$ 
+		\end{itemize}
+		\item Ungenaue Informationen führen zu falschen Betas. Damit werden schlechte Projekte durchgeführt und gute Projekte nicht durchgeführt.
+	\end{enumerate}
+	
+\end{document}
