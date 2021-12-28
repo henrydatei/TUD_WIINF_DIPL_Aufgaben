@@ -1,0 +1,196 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\title{\textbf{Instrumente des Finanzmanagements, Tutorium 4}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 18.3: Investitionsplanung}
+	Der Leverage ist $\frac{D}{E}=2.6$, also z.B. $D=26$ und $E=10$. Damit ergibt sich der WACC
+	\begin{align}
+		r_{WACC} &= \frac{10}{10+26}\cdot 8.5\% + \frac{26}{10+26}\cdot 7\%\cdot (1-0.35) \notag \\
+		&= 5.65\% \notag
+	\end{align}
+	Damit ist der Barwert
+	\begin{align}
+		BW &= \frac{1.5\text{ Mio. \EUR}}{0.0565-0.025} \notag \\
+		&= 47.62\text{ Mio. \EUR}\notag
+	\end{align}
+
+	\section*{Aufgabe 18.4: Die Methode des gewichteten Durchschnitts der Kapitalkosten}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der WACC ist
+		\begin{align}
+			r_{WACC} &= \frac{10.8}{14.4}\cdot 10\% + \frac{14.4-10.8}{14.4}\cdot 6.1\%\cdot (1-0.35) \notag \\
+			&= 8.49\% \notag
+		\end{align}
+		\item Damit ist der Kapitalwert
+		\begin{align}
+			V_0 &= \frac{50\text{ Mio. \EUR}}{1.0849} + \frac{100\text{ Mio. \EUR}}{1.0849^2} + \frac{70\text{ Mio. \EUR}}{1.0849^3} \notag \\
+			&= 185.8671\text{ Mio. \EUR} \notag
+		\end{align}
+		\item Der Verschuldungsgrad ist $d=\frac{D}{V}=\frac{14.4-10.8}{14.4}=\frac{1}{4}$, damit ergibt sich folgende Tabelle:
+		\begin{center}
+			\begin{tabular}{l|c|c|c|c}
+				$t$ & 0 & 1 & 2 & 3 \\
+				\hline
+				$FCF_t$ & -100 & 50 & 100 & 70 \\
+				$V_t$ & 185.8671 & $\frac{100}{1.0849} + \frac{70}{1.0849^2}=151.6472$ & $\frac{70}{1.0849}=64.5221$ & 0 \\
+				$D_t=V_t\cdot d$ & 46.4668 & 37.9118 & 16.1305 & 0
+			\end{tabular}
+		\end{center}
+	\end{enumerate}
+
+	\section*{Aufgabe 18.11: Der APV bei anderen Verschuldungsstrategien}
+	\begin{enumerate}[label=(\alph*)]
+		\item Berechnung der FCF
+		\begin{center}
+			\begin{tabular}{l|r|r|r}
+				& \textbf{Jahr 0} & \textbf{Jahr 1-9} & \textbf{Jahr 10} \\
+				\hline
+				Einnahmen & 0.00 & 145.00 & 145.00 + 300.00 \\
+				- Ausgaben & -0.00 & -0.00 & -0.00 \\
+				- Abschreibungen & -0.00 & -60.00 & -60.00 \\
+				\hline
+				= EBIT & 0.00 & 85.00 & 385.00 \\
+				- Steuer ($\tau=35\%$) & -0.00 & -29.75 & -134.75 \\
+				- Investitionen & -600.00 & -0.00 & -0.00 \\
+				 + Abschreibungen & -0.00 & -60.00 & -60.00 \\
+				 $\Delta$ Nettoumlauf & -50.00 & 0.00 & 50.00 \\
+				 \hline
+				 = FCF & -650.00 & 115.25 & 360.25
+			\end{tabular}
+		\end{center}
+		Der Zins ist $r=5\% + 1.57\cdot (11\%-5\%)=14.42\%$, damit ist der Barwert
+		\begin{align}
+			BW &= -650 + \sum_{i=1}^{9}\frac{115.25}{1.1442^i} + \frac{360.25}{1.1442^{10}} \notag \\
+			&= 5.1331 \notag
+		\end{align}
+		\item Der Steuervorteil in jedem Jahr ist $TS=D\cdot \tau\cdot r_D=400\cdot 0.35\cdot 0.09=12.6$, damit ist der Barwert
+		\begin{align}
+			BW &= \sum_{i=1}^{10} \frac{12.6}{1.09^i} \notag \\
+			&= 115.5963 \notag
+		\end{align}
+		und damit ist der Wert des Projektes $V_0=5.1331 + 115.5963=120.7294$.
+	\end{enumerate}
+
+	\section*{Aufgabe 1K299: APV / FTE / WACC}
+	\begin{enumerate}[label=(\alph*)]
+		\item EK-Kosten verschuldet (vor Steuern): $r_E=6\% + 1.5\cdot (10\%-6\%)=12\%$ \\
+		EK-Kosten unverschuldet (nach Steuern):
+		\begin{align}
+			r_U &= \frac{E}{E+D(1-\tau)} \cdot r_E + \frac{D(1-\tau)}{E+D(1-\tau)} \cdot r_D \notag \\
+			&= \frac{1}{1+1\cdot 0.75}\cdot 12\% + \frac{1\cdot 0.75}{1+1\cdot 0.75}\cdot 6\% \notag \\
+			&= 9.43\% \notag
+		\end{align}
+		\item Der FCF ist
+		\begin{center}
+			\begin{tabular}{l|r}
+				Umsatz & 0.9 \\
+				- Kosten & -0.3 \\
+				- Abschreibungen & -0.01 \\
+				\hline
+				= EBIT & 0.59 \\
+				- Steuern ($\tau=0.25$) & -0.1475 \\
+				+ Abschreibungen & 0.01 \\
+				- Investitionen & -0.01 \\
+				\hline
+				= FCF & 0.4425
+			\end{tabular}
+		\end{center}
+		Weil $D=const.$ und mit 5 Mio. Anfangsinvestition mit $L=1$, ergibt sich für den Barwert der Steuervorteile: $BW(TS) = D\cdot \tau = 2.5\cdot 0.25 = 0.625$ und der Wert des Unternehmens ist
+		\begin{align}
+			V_0 &= \frac{0.4425}{0.0943} + 0.625 \notag \\
+			&= 5.3175 \notag
+		\end{align}
+		\item mehr Steuern $\to$ weniger FCF $\to$ höheres Insolvenzrisiko \\
+		häufige Anpassung von $D$, da $L=const.$ $\to$ höhere Transaktionskosten/Emissionskosten
+		\item Wir brauchen den FCFE
+			\begin{center}
+			\begin{tabular}{l|r}
+				Umsatz & 0.9 \\
+				- Kosten & -0.3 \\
+				- Abschreibungen & -0.01 \\
+				- Zinsen & $0.06\cdot 2.5$ \\
+				\hline
+				= EBIT & 0.44 \\
+				- Steuern ($\tau=0.25$) & -0.11 \\
+				+ Abschreibungen & 0.01 \\
+				- Investitionen & -0.01 \\
+				\hline
+				= FCF & 0.33
+			\end{tabular}
+		\end{center}
+		Damit gilt
+		\begin{align}
+			E &= \frac{FCFE}{r_E} = \frac{0.33}{0.12} = 2.75 \notag \\
+			V_0 &= \frac{E}{1-d} = \frac{2.75}{0.5} = 5.5 \notag
+		\end{align}
+		\item Der WACC ist
+		\begin{align}
+			r_{WACC} &= \frac{1}{2}\cdot 12\% + \frac{1}{2}\cdot 6\%\cdot (1-0.25) \notag \\
+			&= 8.25\% \notag
+		\end{align}
+		Und damit
+		\begin{align}
+			V_0 &= \frac{FCF}{r_{WACC}} \notag \\
+			&= \frac{0.4425}{0.0825} \notag \\
+			&= 5.3636 \notag
+		\end{align}
+		\item WACC bei $L=const.$ \\
+		APV bei $D=const.$ \\
+		FTE bei $TS\neq const.$
+	\end{enumerate}
+	
+\end{document}
