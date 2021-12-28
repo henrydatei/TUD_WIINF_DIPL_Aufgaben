@@ -1,0 +1,214 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\title{\textbf{Instrumente des Finanzmanagements, Übung 5}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+
+	\section*{Aufgabe 29: WACC/FTE}
+	\begin{enumerate}[label=(\alph*)]
+		\item Berechnung des FCF
+		\begin{center}
+			\begin{tabular}{l|r}
+				Umsatz & 19.740.000 \EUR \\
+				- var. Kosten & -11.844.000 \EUR \\
+				- Abschreibungen & -1.800.000 \EUR \\
+				\hline
+				= EBIT & 6.096.000 \EUR \\
+				- Steuern ($\tau=0.4$) & -2.438.400 \EUR \\
+				+ Abschreibungen & 1.800.000 \EUR \\
+				- Investitionen & -1.800.000 \EUR \\
+				\hline
+				= FCF & 3.657.600 \EUR
+			\end{tabular}
+		\end{center}
+		Damit ist der Wert des Geschäftsbereiches
+		\begin{align}
+			V_0^U = &= \frac{FCF}{r_U} \notag \\
+			&= \frac{3.657.600\text{ \EUR}}{0.16} \notag \\
+			&= 22.860.000 \text{ \EUR} \notag
+		\end{align}
+		\item Der WACC ist
+		\begin{align}
+			r_{WACC} &= r_U - d\cdot\tau\cdot r_D \notag \\
+			&= 16\% - 0.4\cdot 0.4\cdot 10\% \notag \\
+			&= 14.4 \% \notag
+		\end{align}
+		Damit ist der Wert des Geschäftsbereiches
+		\begin{align}
+			V_0 &= \frac{FCF}{r_{WACC}} \notag \\
+			&= \frac{3.657.600 \text{ \EUR}}{0.144} \notag \\
+			&= 25.400.000 \text{ \EUR} \notag
+		\end{align}
+		\item Wir wissen, dass
+		\begin{align}
+			r_{WACC} &= 0.6\cdot r_E + 0.4\cdot r_D \cdot (1-\tau) \notag \\
+			14.4\% &= 0.6\cdot r_E + 0.4\cdot 10\%\cdot (1-40\%) \notag \\
+			r_E &= 20\% \notag
+		\end{align}
+		\item Der FCFE ist
+		\begin{center}
+			\begin{tabular}{l|rl}
+				Umsatz & 19.740.000 \EUR & \\
+				- var. Kosten & -11.844.000 \EUR & \\
+				- Abschreibungen & -1.800.000 \EUR & \\
+				- Zinsen & -1.016.000 \EUR & $=d\cdot r_D\cdot V$ \\
+				\hline
+				= EBT & 5.080.000 \EUR & \\
+				- Steuern ($\tau=0.4$) & -2.032.000 \EUR & \\
+				+ Abschreibungen & 1.800.000 \EUR & \\
+				- Investitionen & -1.800.000 \EUR & \\
+				\hline
+				= FCFE & 3.048.000 \EUR &
+			\end{tabular}
+		\end{center}
+		Und damit ist der Wert des Eigenkapitals
+		\begin{align}
+			E &= \frac{FCFE}{r_E} \notag \\
+			&= \frac{3.048.000\text{ \EUR}}{0.2} \notag \\
+			&= 15.240.000\text{ \EUR} \notag
+		\end{align}
+		andererseits muss auch gelten: $E=V\cdot (1-d)= 25.400.000\text{ \EUR}\cdot (1-0.4) = 15.240.000\text{ \EUR}$ \checkmark
+	\end{enumerate}
+	
+	\section*{Aufgabe 18.15: Fortgeschrittene Themen der Investitionsplanung}
+	\begin{enumerate}[label=(\alph*)]
+		\item Berechnung von $V^L$:
+		\begin{center}
+			\begin{tabular}{l|l|l|l|l}
+				& \textbf{Jahr 0} & \textbf{Jahr 1} & \textbf{Jahr 2} & \textbf{Jahr 3} \\
+				\hline
+				$V^U$ & $\frac{40}{1.12} + \frac{20}{1.12^2} + \frac{25}{1.12^3}=69.453$ & $\frac{20}{1.12} + \frac{25}{1.12^2} = 37.787$ & $\frac{25}{1.12}=22.321$ & \\ 
+				\hline
+				Zinsen & & $50\cdot 8\% = 4$ & $30\cdot 8\%=2.4$ & $15\cdot 8\%=1.2$ \\
+				\hline
+				Tax Shield & & $4\cdot 40\% = 1.6$ & $2.4\cdot 40\%=0.96$ & $1.2\cdot 40\%=0.48$ \\
+				\hline
+				$T^S$ & $\frac{1.6}{1.08} + \frac{0.96}{1.08^2} + \frac{0.48}{1.08^3} = 2.686$ & $\frac{0.96}{1.08} + \frac{0.48}{1.08^2} = 1.3$ & $\frac{0.48}{1.08} = 0.444$ & \\
+				\hline
+				$V^L$ & 69.453 + 2.686 = 72.139 & 37.787 + 1.3 = 39.087 & 22.321 + 0.444 = 22.765 & 
+			\end{tabular}
+		\end{center}
+		\item Berechnung von $V^L$:
+		\begin{center}
+			\begin{tabular}{l|l|l|l|l}
+				& \textbf{Jahr 0} & \textbf{Jahr 1} & \textbf{Jahr 2} & \textbf{Jahr 3} \\
+				\hline
+				$d=\frac{D}{V^L}$ & $\frac{50}{72.139}=69.31\%$ & $\frac{30}{39.087}=76.75\%$ & $\frac{15}{22.765} = 65.89\%$ & \\
+				\hline
+				$\Phi=\frac{T^S}{D\cdot\tau}$ & $\frac{2.686}{50\cdot 40\%}=13.43\%$ & $\frac{1.3}{30\cdot 40\%}=10.83\%$ & $\frac{0.444}{15\cdot 40\%} = 7.33\%$ & \\
+				\hline
+				$r_{WACC}=r_U-d\tau(r_D+\Phi(r_U-r_D))$ & 9.63\% & 9.41\% & 9.81\% & \\
+				\hline
+				$V^L$ & $\frac{40+39.09}{1.0963}=72.14$ & $\frac{20+22.77}{1.0941}=39.09$ & $\frac{25}{1.0981}=22.77$ & 
+			\end{tabular}
+		\end{center}
+		\item 72.14
+		\item Berechnung von $r_E$:
+		\begin{center}
+			\begin{tabular}{l|l|l|l|l}
+				& \textbf{Jahr 0} & \textbf{Jahr 1} & \textbf{Jahr 2} & \textbf{Jahr 3} \\
+				\hline
+				$D^S=D-T^S$ & $50-2.686=47.314$ & $30-1.3=28.7$ & $15-0.444=14.556$ & \\
+				\hline
+				$E=V^L-D$ & $72.14-50=22.14$ & $39.09-30=9.09$ & $22.77-15=7.77$ & \\
+				\hline
+				$\frac{D^S}{E}$ & $\frac{47.314}{22.14}=2.137$ & $\frac{28.7}{9.09}=3.157$ & $\frac{14.556}{7.77}=1.88$ & \\
+				\hline
+				$r_E=r_U + \frac{D^S}{E}(r_U-r_D)$ & 20.55\% & 24.63\% & 19.51\% &
+			\end{tabular}
+		\end{center}
+		\item Berechnung von $E$:
+		\begin{center}
+			\begin{tabular}{l|l|l|l|l}
+				& \textbf{Jahr 0} & \textbf{Jahr 1} & \textbf{Jahr 2} & \textbf{Jahr 3} \\
+				\hline
+				FCF & -50 & 40 & 20 & 25 \\
+				\hline
+				- Zinsen (siehe (a)) & 0 & -4 & -2.4 & -1.2 \\
+				\hline
+				+ Tax Shield (siehe (a)) & 0 & 1.6 & 0.96 & 0.48 \\
+				\hline
+				+ Nettoverschuldung $\Delta D$ & 50 & -20 & -15 & -15 \\
+				\hline
+				= FCFE & 0 & 17.6 & 3.56 & 9.28 \\
+				\hline
+				$E$ & $\frac{17.6+9.09}{1.2055}=22.14$ & $\frac{3.56+7.77}{1.2463}=9.09$ & $\frac{9.28}{1.1951}=7.77$ & 
+			\end{tabular}
+		\end{center}
+	\end{enumerate}
+
+	\section*{Aufgabe 18.12: Andere Auswirkungen der Finanzierung}
+	\begin{enumerate}[label=(\alph*)]
+		\item Berechnung des optimalen Fremdkapitals
+		\begin{center}
+			\begin{tabular}{l|r|r|r|r|r|r}
+				\textbf{Fremdkapital} & \textbf{0} & \textbf{10} & \textbf{20} & \textbf{30} & \textbf{40} & \textbf{50} \\
+				\hline
+				Steuervorteil & 0 & $10\cdot 35\%=3.5$ & $20\cdot 35\%=7.0$ & $30\cdot 35\%=10.5$ & $40\cdot 35\%=14.0$ & $50\cdot 35\%=17.5$ \\
+				\hline
+				- BW(Notlage) & -0 & -0.3 & -1.8 & -4.3 & -7.5 & -11.3 \\
+				\hline
+				- Emissionskosten & -0 & $-10\cdot 5\%=-0.5$ & $-20\cdot 5\%=-1$ & $-30\cdot 5\%=-1.5$ & $-40\cdot 5\%=-2.0$ & $-50\cdot 5\%=-2.5$ \\
+				\hline
+				= Nettovorteil & 0 & 2.7 & 4.2 & \textbf{4.7} & 4.5 & 3.7
+			\end{tabular}
+		\end{center}
+		\item Der Preis ist
+		\begin{align}
+			P = \frac{\text{Marktwert} + \text{Nettovorteil}}{\#\text{Aktien}} = \frac{100\text{ Mio. \EUR}+4.7\text{ Mio. \EUR}}{4\text{ Mio.}}=26.18\text{ \EUR} \notag
+		\end{align}
+	\end{enumerate}
+	
+\end{document}
