@@ -1,0 +1,152 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=python,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space},
+	morekeywords={as}
+}
+\lstset{literate=%
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}1
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Data Science: Predictive Analytics, Übung 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+
+	\section*{Data Preparation}
+	\begin{lstlisting}[tabsize=2]
+import pandas as pd
+import matplotlib.pyplot as plt
+from datetime import datetime
+import time
+from sklearn.impute import KNNImputer
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+
+# von Übung 1
+def fixCols(cols):
+	liste = []
+	for col in cols:
+		newName = col.split("(")[0].strip().replace(" ", "_")
+		liste.append(newName)
+	return liste
+
+data = pd.read_csv("dataset.csv", delimiter = ";", header = 0, index_col = 0, decimal = ",")
+data.columns = fixCols(data.columns)
+# print(data.dtypes)
+
+# Übung 2
+
+# 1
+data["Date"] = pd.to_datetime(data["Date"])
+
+# 2
+data["weekday"] = data["Date"].dt.day_name()
+dataDays = pd.DataFrame(data.groupby("weekday").sum()["Rented_Bike_Count"])
+dataDays["daynumber"] = [time.strptime(x, "%A").tm_wday for x in list(dataDays.index.values)]
+dataDays.sort_values("daynumber").iloc[:,0].plot()
+plt.show()
+
+# 3
+def time2day(hour):
+	if 6 <= hour and hour <= 22:
+		return "day"
+	else:
+		return "night"
+
+data["dayNight"] = data["Hour"].apply(time2day)
+data.groupby("dayNight").sum()["Rented_Bike_Count"].plot.bar(x = "dayNight", y = "Rented_Bike_Count")
+plt.show()
+
+# 4
+# wozu soll bitte die Tautemperatur notwendig sein? Also weg damit
+data = data.drop(columns = ["Hotness", "Dew_point_temperature"])
+
+# 5 + 6
+data["Solar_Radiation"] = data["Solar_Radiation"].apply(lambda x: np.NaN if (x == "failure") else(float(x.replace(",", "."))))
+# print(data.isna().sum())
+imputer = KNNImputer(n_neighbors = 3, weights = "distance")
+data[["Temperature", "Humidity", "Wind_speed", "Visibility", "Rainfall", "Snowfall", "Solar_Radiation"]] = imputer.fit_transform(data[["Temperature", "Humidity", "Wind_speed", "Visibility", "Rainfall", "Snowfall", "Solar_Radiation"]])
+# print(data.isna().sum())
+
+# 7
+def fixTemp(temp):
+	if temp > 100:
+		return temp/10
+	else:
+		return temp
+
+data["Temperature"] = data["Temperature"].apply(fixTemp)
+
+# 8
+data["Functioning_Day"] = data["Functioning_Day"].astype(bool)
+data.loc[data["Seasons"] == "Herbst","Seasons"] = "Autumn"
+
+# 9
+encoder = LabelEncoder()
+data["Seasons"] = encoder.fit_transform(data["Seasons"])
+data["weekday"] = encoder.fit_transform(data["weekday"])
+data["dayNight"] = encoder.fit_transform(data["dayNight"])
+data["Holiday"] = encoder.fit_transform(data["Holiday"])
+X = data[["Hour", "Temperature", "Wind_speed", "Humidity", "Visibility", "Solar_Radiation", "Rainfall", "Snowfall", "Seasons", "weekday", "dayNight", "Holiday"]]
+y = data["Rented_Bike_Count"]
+x_train, x_test, y_train, y_test = train_test_split(X, y, test_size = 0.3)
+
+# print(data)
+	\end{lstlisting}
+	
+\end{document}
