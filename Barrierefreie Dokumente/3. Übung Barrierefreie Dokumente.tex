@@ -1,0 +1,88 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage{ulem}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{html} {language=html}
+\lstset{language=html,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+\lstset{literate=%
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}1
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+}
+
+\hypersetup{
+	pdfauthor   = {Henry Haustein, Dennis Rössel},
+	pdfkeywords = {Formular, Barrierefrei},
+	pdftitle    = {PDF-Formular},
+	pdflang={de-DE}
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\title{\textbf{Barrierefreie Dokumente, Übung 3}}
+\author{\textsc{Henry Haustein}, \textsc{Dennis Rössel}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 3.1: Barrier Walkthrough durchführen}
+	\begin{enumerate}[label=(\alph*)]
+		\item Person, die nicht richtig lesen kann (Legasthenie) und deswegen leichte Sprache benötigt. Schon viele Webseiten in leichter Sprache bedient.
+		\item Aufgabe: Reisepass beantragen
+		\item schwere Sprache, keine Umschaltmöglichkeit auf leichte Sprache
+		\item Durchführung: Ins Suchfeld klicken und "Reisepass" eingeben. Ersten Treffer anklicken. Menüpunkt "Reisepass beantragen" anklicken, es erscheint viel komplizierter Text, keine Umstellmöglichkeit
+		\item Fataler Fehler, weil es nicht möglich ist den Inhalt der Seite zu verstehen ohne externe Hilfe. Führt im Zweifelsfall zum Abbruch der Aufgabe. Beeinträchtigungslevel: hoch, Dauerhaftigkeit/Häufigkeit: gelegentlich $\to$ kritisches Problem
+	\end{enumerate}
+	
+\end{document}
