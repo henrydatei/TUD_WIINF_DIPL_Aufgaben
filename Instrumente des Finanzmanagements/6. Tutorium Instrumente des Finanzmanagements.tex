@@ -1,0 +1,132 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\title{\textbf{Instrumente des Finanzmanagements, Tutorium 6}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 19.2: Eigenkapitalfinanzierung in Privatunternehmen}
+	\begin{enumerate}[label=(\alph*)]
+		\item Es muss gelten:
+		\begin{align}
+			KW &= -i_0 + \sum_{i=1}^{10} \frac{FCF_i}{(1+r)^i} \overset{!}{=} 0 \notag \\
+			0 &= -80 + \frac{400}{(1+r)^{10}} \notag \\
+			r &= 17.46\% \notag
+		\end{align}
+		\item Es muss gelten:
+		\begin{align}
+			KW &= -i_0 + \sum_{i=1}^{10} \frac{FCF_i}{(1+r)^i} \overset{!}{=} 0 \notag \\
+			0 &= -100 + \frac{400 - 0.2(400-100)}{(1+r)^{10}} \notag \\
+			r &= 13.02\% \notag
+		\end{align}
+	\end{enumerate}
+	
+	\section*{Aufgabe 19.10: Seasoned Equity Offerings}
+	\begin{enumerate}[label=(\alph*)]
+		\item $5\text{ Mio. Aktien}\cdot 42.40\text{ \EUR/Aktie}\cdot 0.95 = 201.4\text{ Mio. \EUR}$
+		\item $3\text{ Mio. Aktien}\cdot 42.40\text{ \EUR/Aktie}\cdot 0.95 = 120.84\text{ Mio. \EUR}$
+	\end{enumerate}
+
+	\section*{Aufgabe 19.12: Seasoned Equity Offerings}
+	\begin{enumerate}[label=(\alph*)]
+		\item 10 Millionen Bezugsrechte entsprechen 2 Mio. neue Aktien für einen Preis von 40 \EUR\, $\Rightarrow$ 80 Mio. \EUR\, Einnahmen
+		\item Das Unternehmen ist nun $40\text{ \EUR/Aktie}\cdot 10\text{ Mio. Aktien} + 80\text{ Mio. \EUR} = 480\text{ Mio. \EUR}$ wert. Dieser Wert verteilt sich auf 12 Mio. Aktien, also kostet eine Aktie $\frac{480\text{ Mio. \EUR}}{12\text{ Mio. Aktien}} = 40\text{ \EUR/Aktie}$.
+		\item 10 Millionen Bezugsrechte entsprechen 10 Mio. neue Aktien für einen Preis von 8 \EUR\, $\Rightarrow$ 80 Mio. \EUR\, Einnahmen
+		\item Das Unternehmen ist nun $40\text{ \EUR/Aktie}\cdot 10\text{ Mio. Aktien} + 80\text{ Mio. \EUR} = 480\text{ Mio. \EUR}$ wert. Dieser Wert verteilt sich auf 20 Mio. Aktien, also kostet eine Aktie $\frac{480\text{ Mio. \EUR}}{20\text{ Mio. Aktien}} = 24\text{ \EUR/Aktie}$.
+		\item zweite Methode: Aktie wird \textit{rabattiert}, aber wegen dem Kursverlust ist es für den Investor eigentlich egal. Der Investor ist genau so reich wie vorher.
+	\end{enumerate}
+
+	\section*{Aufgabe 2K189: Projektbewertung}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir wissen $\frac{D}{E}=0.761$, damit $D=0.761$ und $E=1$. Also:
+		\begin{align}
+			r_U &= \frac{0.761}{1 + 0.761} \cdot 5\% + \frac{1}{1 + 0.761} \cdot 15\% = 10.68\% \notag \\
+			r_{WACC} &= \frac{0.761}{1 + 0.761} \cdot 5\% \cdot (1-0.4) + \frac{1}{1 + 0.761} \cdot 15\% = 9.81\% \notag
+		\end{align}
+		\item Tabelle:
+		\begin{center}
+			\begin{tabular}{l|r|r|r|r}
+				& \textbf{Jahr 0} & \textbf{Jahr 1} & \textbf{Jahr 2} & \textbf{Jahr 3} \\
+				\hline
+				Umsatz & 0,00 & 120,00 & 108,00 & 97,20 \\
+				 - var. Kosten & - 0.00 & - 30.00 & -27.00 & - 24.30 \\
+				 - fixe Kosten & - 0.00 & - 25.00 & - 25.00 & - 25.00 \\
+				 - Abschreibungen & - 0.00 & - 40.00 & - 40.00 & - 40.00 \\
+				 \hline
+				 = EBIT & 0.00 & 25.00 & 16.00 & 7.90 \\
+				 - Steuern ($\tau=40\%$) & - 0.00 & - 10.00 & - 6.40 & - 3.16 \\
+				 + Abschreibungen & 0.00 & 40.00 & 40.00 & 40.00 \\
+				 - Investitionen & - 120.00 & - 0.00 & - 0.00 & - 0.00 \\
+				 \hline
+				 = FCF & -120.00 & 55.00 & 49.60 & 44.74
+			\end{tabular}
+		\end{center}
+		\item Der Projektwert ist
+		\begin{align}
+			V_0 &= \frac{55}{1.0981} + \frac{49.6}{1.0981^2} + \frac{44.74}{1.0981^3} \notag \\
+			&= 125.0088 \notag
+		\end{align}
+		Dieser Wert ist größer als die Investitionen, damit ist diese Investition sinnvoll.
+		\item Es gilt:
+		\begin{align}
+			V_0 &= \sum_{i=1}^3 \frac{FCF_i}{(1+r_U)^i} + \sum_{i=0}^3 \frac{TS_i}{(1+r_U)^i} \notag \\
+			&= \sum_{i=1}^3 \frac{FCF_i}{(1+r_U)^i} + \sum_{i=1}^3 \frac{\overbrace{D_i\cdot r_D}^{\text{Zinsen}}\cdot\tau}{(1+r_U)^i} \notag \\
+			&= \frac{55}{1.1068} + \frac{49.6}{1.1068^2} + \frac{44.74}{1.1068^3} + 0 + \frac{2.7009\cdot 0.4}{1.1068} + \frac{1.7575\cdot 0.4}{1.1068^2} + \frac{0.8734\cdot 0.4}{1.1068^3} \notag \\
+			&= 124.9911 \notag
+		\end{align}
+		\item Weil $L$ konstant ist. Fremdkapital ist risikobehaftet, also muss ein adäquater Zinssatz gewählt werden.
+		\item Reverse Floater = Anleihe, deren Kupon negativ mit dem Zins korreliert
+	\end{enumerate}
+	
+\end{document}
