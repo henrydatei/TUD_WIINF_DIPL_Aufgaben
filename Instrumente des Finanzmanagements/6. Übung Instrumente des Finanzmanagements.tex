@@ -1,0 +1,132 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\title{\textbf{Instrumente des Finanzmanagements, Übung 6}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+
+	\section*{Aufgabe 19.3: Eigenkapitalfinanzierung in Privatunternehmen}
+	\begin{enumerate}[label=(\alph*)]
+		\item Die Anzahl der Aktien ist 5 Mio. + 1 Mio. + 0.5 Mio. = 6.5 Mio. Jede Aktie wird mit einem Preis von 4 \EUR\, bewertet, damit ist der Wert 26 Mio. \EUR.
+		\item Die Anzahl der Aktien ist 5 Mio. + 1 Mio. + 0.5 Mio. + 0.5 Mio. = 7 Mio. Jede Aktie wird mit einem Preis von 4 \EUR\, bewertet, damit ist der Wert 28 Mio. \EUR.
+		\item Ich halte 5 Mio. Aktien von 7 Mio. Aktien, also $\frac{5\text{ Mio.}}{7\text{ Mio.}} = 71.43\%$.
+	\end{enumerate}
+	
+	\section*{Aufgabe 19.6: Der Börsengang}
+	\begin{enumerate}[label=(\alph*)]
+		\item Das KGV ist der Kurs durch Gewinn pro Aktie, also gilt:
+		\begin{align}
+			20 &= \text{KGV} = \frac{\text{Kurs}}{\text{Gewinn pro Aktie}} \notag \\
+			\text{Kurs} &= 20\cdot\text{Gewinn pro Aktie} \notag \\
+			&= 20\cdot \frac{7.5\text{ Mio. \EUR}}{0.5\text{ Mio.} + 1\text{ Mio.} + 2\text{ Mio.} + 6.5\text{ Mio.}} \notag \\
+			&= 15\text{ \EUR} \notag
+		\end{align}
+		\item \item Ich halte 5 Mio. Aktien von 0.5 Mio. + 1 Mio. + 2 Mio. + 6.5 Mio. Aktien, also $\frac{0.5\text{ Mio.}}{10\text{ Mio.}} = 5\%$.
+	\end{enumerate}
+
+	\section*{Aufgabe 19.9: IPO-Paradoxa}
+	\begin{enumerate}[label=(\alph*)]
+		\item $5\text{ Mio.}\cdot 20\text{ \EUR}\cdot 0.93 = 93 \text{ Mio. \EUR}$
+		\item $(5\text{ Mio.} + 10\text{ Mio.})\cdot 50\text{ \EUR} = 750\text{ Mio. \EUR}$
+		\item Vor dem Börsengang war das Unternehmen $750\text{ Mio. \EUR} - 93\text{ Mio. \EUR} = 657\text{ Mio. \EUR}$ wert, mit 10 Mio. Aktien ergibt sich ein Preis von $\frac{657\text{ Mio. \EUR}}{10\text{ Mio.}} = 65.7\text{ \EUR}$.
+		\item Die Kosten sind $(65.70\text{ \EUR} - 50\text{ \EUR})\cdot 10\text{ Mio.} = 157\text{ Mio. \EUR}$.
+	\end{enumerate}
+
+	\section*{Aufgabe 1K219: Kapitalstrukturtheorie}
+	\begin{itemize}
+		\item[(f)] Es gibt 3 Phasen:
+		\begin{itemize}
+			\item Pre-Marketing-Phase: Konsortialbanken loten auf Basis eines analytisch ermittelten Preises das Interesse und die Preisvorstellungen potenzieller Großinvestoren aus. Darauf basierend wird in Absprache mit dem Emittenten vom Konsortialführer eine Preisspanne um den analytisch ermitteln Preis festgelegt.
+			\item Marketing-Phase: Das Unternehmen wird auf Roadshows an verschiedenen Finanzzentren vorgestellt. Parallel finden Gespräche des Managements mit ausgewählten institutionellen Anlegern statt.
+			\item Bookbuilding-Phase: Kauforder der Investoren (Festhalten von Preis, Anzahl, Zeitpunkt, Angaben zu Investoren (Nationalität, Branche, Anlagehorizont)) werden entgegengenommen. Der endgültige Emissionspreis und die regionale und qualitative Zuteilung des Emissionsvolumens (basierend auf einer ermittelten Preis-Mengen-Funktion) werden festgelegt.
+		\end{itemize}
+		\item[(g)] Underpricing: Zu tiefe Festsetzung des Emissionspreises (bewusst oder unbewusst) $\to$ führt zu hohen Emissionsraten. Gründe:
+		\begin{itemize}
+			\item Unternehmensbewertungsverfahren sind weder objektiv richtig noch wechselseitig eindeutig
+			\item Informationsasymmetrien zwischen Gruppen von Investoren, zwischen Emissionsbank und Emittent und zwischen Emittenten und Anlegern
+			\item Emissionsvolumen spll ausgeschöpft werden
+		\end{itemize}
+		\item[(h)] Greenshoe: Option einer Konsortialbank, im Rahmen einer Neuemission zusätzlich Papiere des von ihr betreuten Unternehmens zu Originalkonditionen auszugeben. Die zusätzlichen Aktien stellen die Alteigentümer aus ihrem eigenen Aktienbesitz zur Verfügung. Ziele:
+		\begin{itemize}
+			\item mengenmäßige Flexibilisierung des Bookbuildings
+			\item Stabilisierung der Kursentwicklung nach Börsennotierung
+		\end{itemize}
+	\end{itemize}
+
+	\section*{Aufgabe 20.4: Andere Arten von Anleihen}
+	Anstieg des VPI: $\frac{300}{250} = 1.2$, damit Anstieg Kapitalbetrag von 1000 auf 1200 und damit Kupon $1200\cdot 3\% = 36$ p.a. und somit 18 pro Halbjahr
+	
+	\section*{Aufgabe 20.5: Andere Arten von Anleihen}
+	Abfall des VPI: $\frac{300}{400} = 0.75$, damit Abfall Kapitalbetrag von 1000 auf 750 und damit Kupon $750\cdot 6\% = 45$ p.a. und somit 22.50 pro Halbjahr
+	
+	\section*{Aufgabe 20.8: Rückzahlungsbedingungen}
+	\begin{enumerate}[label=(\alph*)]
+		\item 6 Rückzahlungen (100 \EUR\, Nennwert $\Rightarrow$ 2.50 \EUR\, Kupon)
+		\begin{align}
+			99 &= \sum_{i=1}^{6} \frac{2.50\text{ \EUR}}{(1+r)^i} + \frac{100\text{ \EUR}}{(1+r)^6} \notag \\
+			r &= 2.68\% \text{ pro Halbjahr} \notag \\
+			r &= 5.36\% \text{ p.a.} \notag
+		\end{align}
+		\item 4 Rückzahlungen
+		\begin{align}
+			99 &= \sum_{i=1}^{4} \frac{2.50\text{ \EUR}}{(1+r)^i} + \frac{100\text{ \EUR}}{(1+r)^4} \notag \\
+			r &= 2.77\% \text{ pro Halbjahr} \notag \\
+			r &= 5.54\% \text{ p.a.} \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Aufgabe 20.9: Rückzahlungsbedingungen}
+	Der Wandelpreis ist $\frac{\text{Nennwert}}{\text{Wandlungsverhältnis}} = \frac{10000\text{ \EUR}}{450} = 22.22\text{ \EUR}$.
+	
+\end{document}
