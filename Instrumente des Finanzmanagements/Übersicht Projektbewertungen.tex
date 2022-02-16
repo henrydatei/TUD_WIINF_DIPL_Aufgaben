@@ -1,0 +1,128 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\title{\textbf{Übersicht Projektbewertungen}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+
+	\section*{WACC-Methode ($L = const.$)}
+	Die WACC-Methode funktioniert besonders dann gut, wenn sich $r_{WACC}$ nicht ändert und dafür muss das Verhältnis zwischen $D$ und $E$ gleich bleiben; also muss $L$ konstant sein.
+	\begin{align}
+		V_0 &= \sum_{i=1}^{n} \frac{FCF_i}{(1+r_{WACC})^i} \notag
+	\end{align}
+	wobei
+	\begin{align}
+		r_{WACC} &= \begin{cases}
+			r_U - d\cdot\tau\cdot r_D &\text{wenn $L = const.$} \\
+			r_U - d\cdot\tau\cdot r_U & \text{wenn $L \neq const.$}
+		\end{cases} \notag \\
+		\intertext{alternativ}
+		r_{WACC} &= \frac{E}{E+D}\cdot r_E + \frac{D}{E+D}\cdot r_D\cdot (1-\tau) \quad\text{wenn $L = const.$} \notag
+	\end{align}
+	Die Formel für die Berechnung der Free-Cash-Flows ist
+	\begin{center}
+		\begin{tabular}{cl}
+			& Umsatz \\
+			$-$ & Kosten \\
+			$-$ & Abschreibungen \\
+			\hline
+			$=$ & \textbf{EBIT} (\textit{Earnings before Interests and Taxes}) \\
+			$-$ & Steuern \\
+			$+$ & Abschreibungen \\
+			$-$ & Investitionen \\
+			\hline
+			$=$ & \textbf{FCF} (\textit{Free Cash Flow})
+		\end{tabular}
+	\end{center}
+
+	\section*{APV-Methode ($D=const.$)}
+	Diese Methode funktioniert gut, wenn sich das Tax Shield ($TS$) nicht ändert. Dafür muss aber $D$ konstant bleiben.
+	\begin{align}
+		V_0 &= \sum_{i=1}^{n} \frac{FCF_i}{(1+r_U)^i} + \sum_{i=1}^n \frac{TS}{1+r^\ast} \notag
+	\end{align}
+	wobei ($r_U = r_{WACC}$ vor Steuern)
+	\begin{align}
+		r_U &= \frac{E}{E+D}\cdot r_E + \frac{D}{E+D}\cdot r_D \notag \\
+		TS &= D \cdot r_D\cdot \tau \notag \\
+		r^\ast &= \begin{cases}
+			r_D & \text{wenn $D=const.$} \\
+			r_U & \text{wenn $L=const.$}
+		\end{cases} \notag
+	\end{align}
+
+	\section*{FTE-Methode ($TS\neq const.$, $L=const.$)}
+	Wird nun weiterhin angenommen, dass das Unternehmen eine so genannte marktwertorientierte Finanzierung betreibt (bei einer marktwertorientierten Finanzierung wird bereits heute die zukünftige Fremdkapitalquote in der gesamten Zukunft exakt vorgegeben, Abweichungen oder andere Unsicherheiten werden ausgeschlossen), dann bietet sich die Verwendung des FTE-Ansatzes (Flow to Equity) an. Die Verwendung des FTE-Ansatzes ist an die Voraussetzung einer marktwertorientierten Finanzierung gebunden – wird das Unternehmen anders als marktwertorientiert finanziert, dann wird der korrekte Unternehmenswert nicht mit dem FTE-Wert übereinstimmen.
+	\begin{align}
+		V_0 &= \frac{E}{1-d} \notag \\
+		E &= \sum_{i=1}^n \frac{FCFE_i}{(1+r_E)^i} \notag
+	\end{align}
+	Der Free-Cash-Flow-to-Equity ist:
+	\begin{center}
+		\begin{tabular}{cl}
+			& Umsatz \\
+			$-$ & Kosten \\
+			$-$ & Abschreibungen \\
+			$-$ & Zinsen an FK-Geber \\
+			\hline
+			$=$ & \textbf{EBT} (\textit{Earnings before Taxes}) \\
+			$-$ & Steuern \\
+			$+$ & Abschreibungen \\
+			$-$ & Investitionen \\
+			$+$ & Erträge aus Nettoverschuldung \\
+			\hline
+			$=$ & \textbf{FCFE} (\textit{Free Cash Flow to Equity})
+		\end{tabular}
+	\end{center}
+	Die Erträge aus Nettoverschuldung sind positiv, wenn das Unternehmen seine Nettoverschuldung erhöht und negativ, wenn das Unternehmen die Nettoverschuldung durch Tilgungen (oder durch Einbehalt von Barmitteln) reduziert.
+\end{document}
