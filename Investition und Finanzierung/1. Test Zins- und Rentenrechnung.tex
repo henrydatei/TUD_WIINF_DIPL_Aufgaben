@@ -1,0 +1,108 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+\DeclareMathOperator{\RBF}{RBF}
+
+\title{\textbf{Investition und Finanzierung, Test Zins- und Rentenrechnung}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Zinseszinseffekt}
+	Mit Zinseszinseffekt ist das Konto nach 8 Jahren auf
+	\begin{align}
+		K &= K_0 \cdot (1+i)^n \notag \\
+		&= 25000\text{ \EUR} \cdot (1+0.02)^8 \notag \\
+		&= 29291.48\text{ \EUR} \notag
+	\end{align}
+	angewachsen. Ohne Zinseszinseffekt bekommen wir jedes Jahr $2\%\cdot 25000\text{ \EUR} = 500\text{ \EUR}$ Zinsen, also nach 8 Jahren 4000 \EUR. Damit wäre das Konto bei 29000 \EUR. Der Zinseszinseffekt ist damit $29291.48\text{ \EUR} - 29000\text{ \EUR} = 291.48\text{ \EUR}$.
+
+	\section*{Wert einer Zahlungsreihe}
+	Da wir den Wert der Zahlungsreihe am Ende des Jahres 4 berechnen sollen, müssen wir die ersten 4 Jahre aufzinsen und die letzten beiden Jahre abzinsen, also
+	\begin{align}
+		KW &= 5000\text{ \EUR} \cdot 1.07^3 + 8000\text{ \EUR} \cdot 1.07^2 + 1000\text{ \EUR} \cdot 1.07 + 1000\text{ \EUR} + \frac{7000\text{ \EUR}}{1.07} + \frac{6000\text{ \EUR}}{1.07^2} \notag \\
+		&= 29137.10\text{ \EUR} \notag
+	\end{align}
+	
+	\section*{Effektiver Zinssatz}
+	Für den durchschnittlichen Zinssatz muss man das geometrische Mittel der Zinsen nehmen:
+	\begin{align}
+		p_{eff} &= \sqrt[6]{1.04\cdot 1.01\cdot 1.06\cdot 1.07\cdot 1.01\cdot 1.10} - 1 \notag \\
+		&= 0.0478 \notag \\
+		&= 4.78\% \notag
+	\end{align}
+	
+	\section*{Laufzeit einer Zahlungsreihe}
+	Wir brauchen hier den vorschüssigen Rentenbarwertfaktor, da gilt:
+	\begin{align}
+		R_{0,v} &= R\cdot \RBF_{vor} \notag
+	\end{align}
+	Wir wissen, dass $\RBF_{vor} = \RBF_{nach} \cdot q$ gilt und weiterhin
+	\begin{align}
+		\RBF_{nach} &= \frac{q^n-1}{q^{n+1}-q^n} \notag
+	\end{align}
+	Setzen wir das alles zusammen, müssen wir folgende Gleichung lösen:
+	\begin{align}
+		R_{0,v} &= R\cdot \frac{q^n-1}{q^{n+1}-q^n} \cdot q \notag \\
+		14000\text{ \EUR} &= 3000\text{ \EUR} \cdot \frac{1.03^n-1}{1.03^{n+1}-1.03^n} \cdot 1.03 \notag \\
+		n &= 4.9424 \notag
+	\end{align}
+
+	\section*{Anlage}
+	Der Betrag aus dem Jahr 2 wird 9 Jahre verzinst, der Betrag aus dem Jahr 3 wird 8 Jahre verzinst und der Betrag aus dem Jahr 8 wird 3 Jahre verzinst. Damit ergibt sich folgende Gleichung:
+	\begin{align}
+		30000\text{ \EUR} &= x\cdot 1.02^9 + x\cdot 1.02^8 + x\cdot 1.02^3 \notag \\
+		x &= 8751.56\notag
+	\end{align}
+	
+\end{document}
