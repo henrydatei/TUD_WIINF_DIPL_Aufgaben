@@ -1,0 +1,171 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+\DeclareMathOperator{\RBF}{RBF}
+
+\title{\textbf{Investition und Finanzierung, Test Statische und dynamische Investitionsrechenverfahren}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Kritische Menge}
+	Welche Kosten fallen auf der neuen Maschine an?
+	\begin{itemize}
+		\item Abschreibung: $\frac{I_0-L_n}{n} = \frac{24000\text{ \EUR} - 0\text{ \EUR}}{12} = 2000\text{ \EUR}$ pro Jahr
+		\item kalkulatorische Kosten: $\frac{I_0+L_n}{2} \cdot i = \frac{24000\text{ \EUR} + 0\text{ \EUR}}{2}\cdot 0.11 = 1320\text{ \EUR}$ pro Jahr
+		\item Materialkosten: 5 \EUR\, pro Teil
+		\item Lohnkosten: 0.6 \EUR\, pro Teil
+	\end{itemize}
+	Damit sich die neue Maschine lohnt, müssen die Stückkosten kleiner als 20 \EUR\, werden:
+	\begin{align}
+		5\text{ \EUR} + 0.6\text{ \EUR} + \frac{2000\text{ \EUR}}{x} + \frac{1320\text{ \EUR}}{x} &< 20\text{ \EUR} \notag \\
+		x &> 230.56 \notag 
+	\end{align}
+	
+	\section*{Amortisationszeit}
+	Folgende Kosten erzeugt die Maschine:
+	\begin{align}
+		\text{Abschreibung} &= \frac{450000\text{ \EUR} - 20000\text{ \EUR}}{5} = 86000\text{ \EUR} \notag \\
+		\text{kalk. Kosten} &= \frac{450000\text{ \EUR} + 20000\text{ \EUR}}{2} \cdot 0.09 = 21150 \text{ \EUR} \notag
+	\end{align}
+	\begin{center}
+		\begin{tabular}{l|r|r|r|r|r}
+			\textbf{Periode} & 1 & 2 & 3 & 4 & 5 \\
+			\hline
+			\textbf{Abschreibung} & 86000 & 86000 & 86000 & 86000 & 86000 \\
+			\hline
+			\textbf{kalk. Kosten} & 21150 & 21150 & 21150 & 21150 & 21150 \\
+			\hline
+			\textbf{Reparatur} & 5000 & 5000 & 5000 & 5000 & 5000 \\
+			\hline
+			\textbf{Strom + Bedienung} & 160000 & 144000 & 128000 & 112000 & 96000 \\
+			\hline\hline
+			\textbf{Kosten} & 272150 & 256150 & 240150 & 224150 & 208150
+		\end{tabular}
+	\end{center}
+	Der Erlös ist in jeder Periode gleich, damit ergibt sich folgender Gewinn:
+	\begin{center}
+		\begin{tabular}{l|r|r|r|r|r}
+			\textbf{Periode} & 1 & 2 & 3 & 4 & 5 \\
+			\hline
+			\textbf{Gewinn} & 127850 & 143850 & 159850 & 175850 & 191850 \\
+			\hline
+			\textbf{Gewinn kumuliert} & 127850 & 271700 & 431550 & 607400 & 799250
+		\end{tabular}
+	\end{center}
+	Es dauert also 3-4 Perioden, bis sich die Maschine amortisiert hat. Die lineare Interpolation zwischen den Perioden 3 und 4 ist:
+	\begin{align}
+		y(x) &= y_1 + \frac{y_2-y_1}{x_2-x_1} \cdot (x-x_1) \notag \\
+		&= 431550 + \frac{607400 - 431550}{4-3} \cdot (x-3) \notag
+	\end{align}
+	Wir suchen die Stelle, wo diese Funktion den Wert 450000 erreicht:
+	\begin{align}
+		450000 &= 431550 + \frac{607400 - 431550}{4-3} \cdot (x-3) \notag \\
+		x &= 3.1049 \notag
+	\end{align}
+	Leider ist das nicht das Ergebnis, was rauskommen soll, die richtige Lösung soll 2.02562538133 sein, aber ich komme da nicht drauf.
+	
+	\section*{Differenzinvestition}
+	Die Differenzinvestition ist
+	\begin{center}
+		\begin{tabular}{l|r|r|r|r|r|r|r}
+			Periode & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+			\hline
+			$P_1$ & -2200 & 900 & 2200 & 100 & 700 & 2000 & 3000 \\
+			\hline
+			$P_2$ & -3400 & 1100 & 1800 & 1100 & 1100 & 2700 & 3200 \\
+			\hline\hline
+			$P_1-P_2$ & 1200 & -200 & 400 & -1000 & -400 & -700 & -200
+		\end{tabular}
+	\end{center}
+	Der Kapitalwert $C_0$ dieser Investition beträgt -276.57 \EUR. Der Annuitätenfaktor ist
+	\begin{align}
+		a_n &= \frac{q^n\cdot (q-1)}{q^n-1} \notag \\
+		&= \frac{1.09^6\cdot 0.09}{1.09^6-1} \notag \\
+		&= 0.2229 \notag
+	\end{align}
+	Und damit ergibt sich eine Annuität von $A=C_0\cdot a_n = -61.65\text{ \EUR}$.
+
+	\section*{Tangentennäherungsverfahren}
+	Ich weiß nicht, was mit \textit{Endwertfunktion} gemeint ist, aber wahrscheinlich komme ich deswegen nicht auf das richtige Ergebnis. Herauskommen soll 29.85837391945.
+	
+	Die Funktion, deren Nullstelle zu suchen ist, ist
+	\begin{align}
+		f(i) &= -2400 + \frac{-600}{1+i} + \frac{1000}{(1+i)^2} + \frac{2700}{(1+i)^3} + \frac{1900}{(1+i)^4} \notag
+	\end{align}
+	$f(0.07)$ hat den Wert 1566.19, die Ableitung ist
+	\begin{align}
+		f'(i) &= \frac{100(6i^3 - 2i^2 - 103i - 171)}{(1+i)^5} \notag
+	\end{align}
+	und $f'(0.07) = -12706.68$. Damit ist der neue Wert für $i$
+	\begin{align}
+		i^\ast &= 0.07 - \frac{1566.19}{-12706.68} \notag \\
+		&= 1.1933 \notag
+	\end{align}
+	also 19.33 \%.
+	
+	\section*{Kapitalwert unter Berücksichtigung von Steuern}
+	Der Zinssatz nach Steuern ist
+	\begin{align}
+		i^S &= i\cdot (1-s^{ert}) \notag \\
+		&= 0.05 \cdot (1-0.34) \notag \\
+		&= 0.033 \notag
+	\end{align}
+	Die Abschreibung ist $\frac{230\text{ \EUR} - 30\text{ \EUR}}{4} = 50\text{ \EUR}$. Die Formel für den Kapitalwert mit Steuern ist
+	\begin{align}
+		C_0^S &= -I_0 + \sum_{t=1}^{n} \frac{P_t-s^{ert}(P_t-\text{Abschreibung})}{(1+i^S)^t} + \frac{L_n-s^{ert}(L_n-RBW_n)}{(1+i^S)^n} \notag \\
+		&= -230 + \frac{50-0.34(50-50)}{1+0.033} + \frac{60-0.34(60-50)}{(1+0.033)^2} + \frac{130-0.34(130-50)}{(1+0.033)^3} + \frac{10-0.34(10-50)}{(1+0.033)^4} + \frac{50-0.34(50-30)}{(1+0.033)^4} \notag \\
+		&= 23.37 \text{ \EUR} \notag
+	\end{align}
+	
+\end{document}
