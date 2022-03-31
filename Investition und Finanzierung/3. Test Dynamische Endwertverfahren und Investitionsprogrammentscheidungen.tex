@@ -1,0 +1,199 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+\DeclareMathOperator{\RBF}{RBF}
+
+\title{\textbf{Investition und Finanzierung, Test Dynamische Endwertverfahren und Investitionsprogrammentscheidungen}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Kontenausgleichsgebot}
+	Für das Projekt 1 gilt:
+	\begin{center}
+		\begin{tabular}{l|r|r|r|r|r|r}
+			Periode & 0 & 1 & 2 & 3 & 4 & 5 \\
+			\hline
+			Periodenergebnis & -6000 & 700 & 1300,00 & 2500,00 & 3200,00 & 1100,00 \\
+			\hline
+			alter Kontostand inkl. Zinsen & & -6840 & -6999,60 & -6497,54 & -4557,20 & -1547,21 \\
+			\hline
+			neuer Kontostand & -6000 & -6140 & -5699,60 & -3997,54 & -1357,20 & -447,21
+		\end{tabular}
+	\end{center}
+	Für das Projekt 2 gilt:
+	\begin{center}
+		\begin{tabular}{l|r|r|r|r|r|r}
+			Periode & 0 & 1 & 2 & 3 & 4 & 5 \\
+			\hline
+			Periodenergebnis & -15500 & 1900 & 5000,00 & 3200,00 & 2000,00 & 10600,00 \\
+			\hline
+			alter Kontostand inkl. Zinsen & & -17670 & -17977,80 & -14794,69 & -13217,95 & -12788,46 \\
+			\hline
+			neuer Kontostand & -15500 & -15770 & -12977,80 & -11594,69 & -11217,95 & -2188,46
+		\end{tabular}
+	\end{center}
+	Für die Zeile \textit{alter Kontostand inkl. Zinsen} nimmt man den Kontostand aus der Vorperiode und verzinst ihn (bei negativem Kontostand mit Sollzinsen, bei positivem Kontostand mit Habenzinsen). Dazu wird dann das Periodenergebnis addiert und man erhält den \textit{neuen Kontostand}.
+	
+	Die Differenz zwischen den beiden Endwerten ist $(-447,21) - (-2188,46) = 1741,26$.
+	
+	\section*{Dynamische Endwertverfahren}
+	Für das Kontenausgleichsgebot erhält man analog zur vorherigen Aufgabe folgenden Endwert:
+	\begin{center}
+		\begin{tabular}{l|r|r|r|r|r|r}
+			Periode & 0 & 1 & 2 & 3 & 4 & 5 \\
+			\hline
+			Periodenergebnis & -25000 & 2000 & 2000 & -88000,00 & -47000,00 & 15000,00 \\
+			\hline
+			alter Kontostand inkl. Zinsen & & -26500 & -25970 & -25408,20 & -120212,69 & -177245,45 \\
+			\hline
+			neuer Kontostand & -25000 & -24500 & -23970 & -113408,20 & -167212,69 & -162245,45
+		\end{tabular}
+	\end{center}
+	Beim Kontenausgleichsverbot werden 2 Konten geführt, eines mit Schulden, eines mit Guthaben.
+	
+	Schuldenkonto:
+	\begin{center}
+		\begin{tabular}{l|r|r|r|r|r|r}
+			Periode & 0 & 1 & 2 & 3 & 4 & 5 \\
+			\hline
+			Schulden & -25000 & 0 & 0 & -88000,00 & -47000,00 & 0 \\
+			\hline
+			alter Kontostand inkl. Zinsen & & -26500 & -28090 & -29775,40 & -124841,92 & -182152,44 \\
+			\hline
+			neuer Kontostand & -25000 & -26500 & -28090 & -117775,40 & -171841,92 & -182152,44
+		\end{tabular}
+	\end{center}
+	Guthabenkonto:
+	\begin{center}
+		\begin{tabular}{l|r|r|r|r|r|r}
+			Periode & 0 & 1 & 2 & 3 & 4 & 5 \\
+			\hline
+			Guthaben & 0 & 2000 & 2000 & 0,00 & 0,00 & 15000,00 \\
+			\hline
+			alter Kontostand inkl. Zinsen & & 0 & 2060 & 4181,80 & 4307,25 & 4436,47 \\
+			\hline
+			neuer Kontostand & 0 & 2000 & 4060 & 4181,80 & 4307,25 & 19436,47
+		\end{tabular}
+	\end{center}
+	Zusammengerechnet also $(-182152,44) + 19436,47 = -162715,97$.
+	
+	Die Differenz ist damit 470,51.
+	
+	\section*{Finanzplan}
+	Bestimmen wir zuerst den Endwert (die Investitionsausgabe wird vom EK + Kredit bezahlt):
+	\begin{center}
+		\begin{tabular}{l|r|r|r|r|r}
+			Periode & 0 & 1 & 2 & 3 & 4 \\
+			\hline
+			Einzahlung/EK & 30000 & 47000 & 43000 & 90000,00 & 50000,00 \\
+			\hline
+			Auszahlung & 40000 & 23000 & 28000 & 61000,00 & 37000,00 \\
+			\hline
+			Periodenergebnis & -10000 & 24000 & 15000 & 29000,00 & 13000,00 \\
+			\hline
+			neuer Kontostand inkl. Zinsen & -10000 & 12700 & 28589 & 59590,23 & 76761,55
+		\end{tabular}
+	\end{center}
+	Die Differenz zwischen EK und $C_n$ ist $R_n = 46761,55$ und damit ergibt sich eine maximale Auszahlung $r$ von
+	\begin{align}
+		R_n &= r \cdot \frac{q^n - 1}{q-1} \notag \\
+		r &= R \cdot \frac{q-1}{q^n-1} \notag \\
+		&= 46761,55 \cdot \frac{0,07}{1,07^4-1} \notag \\
+		&= 10532,01 \notag
+	\end{align}
+
+	\section*{Finanzplan 2}
+	Das ist analog zu Aufgabe 1, nur das sich hier Soll- und Habenzinsen ändern:
+	\begin{center}
+		\begin{tabular}{l|r|r|r|r|r}
+			Periode & 0 & 1 & 2 & 3 & 4 \\
+			\hline
+			Periodenergebnis & -50000 & -9000 & 4000 & 31000,00 & 70000,00 \\
+			\hline
+			neuer Kontostand inkl. Zinsen & -50000 & -64500 & -68240 & -44746,40 & 18989,10
+		\end{tabular}
+	\end{center}
+	
+	\section*{Dean-Modell}
+	Der Graph für das Dean-Modell ist
+	\begin{center}
+		\begin{tikzpicture}
+			\begin{axis}[
+				xmin=0, xmax=280, xlabel={TEuro},
+				ymin=0, ymax=25, ylabel={\%},
+				samples=400,
+				axis x line=middle,
+				axis y line=middle,
+				domain=0:280000,
+				]
+				\draw[blue] (axis cs: 0,24) -- (axis cs: 20,24) -- (axis cs: 20,19) -- (axis cs: 30,19) -- (axis cs: 30,16) -- (axis cs: 55,16) -- (axis cs: 55,13) -- (axis cs: 185,13) -- (axis cs: 185,4) -- (axis cs: 225,4);
+				\draw[red] (axis cs: 0,3) -- (axis cs: 20,3) -- (axis cs: 20,4) -- (axis cs: 20,6) -- (axis cs: 35,6) -- (axis cs: 35,9) -- (axis cs: 120,9) -- (axis cs: 120,15) -- (axis cs: 160,15) -- (axis cs: 160,19) -- (axis cs: 280,19);
+			\end{axis}
+		\end{tikzpicture} \\
+		\textcolor{blue}{Investitionen}, \textcolor{red}{Kredite}
+	\end{center}
+	Man sieht also, dass Investition 4 nur teilweise durchgeführt wird. Das Geld für die Investitionen stammt also aus folgenden Krediten:
+	\begin{itemize}
+		\item Investition 1: Kredit 1
+		\item Investition 2: Kredit 2
+		\item Investition 3: Kredit 2 + Kredit 3
+		\item Investition 4: Kredit 3
+	\end{itemize}
+	Damit ergibt sich ein Gewinn von:
+	\begin{align}
+		G &= \underbrace{20000\cdot (24\%-3\%)}_{\text{Invest 1}} + \underbrace{10000\cdot (19\%-6\%)}_{\text{Invest 2}} + \underbrace{5000\cdot (16\%-6\%) + 20000\cdot (16\%-9\%)}_{\text{Invest 3}} + \underbrace{65000\cdot (13\%-9\%)}_{\text{Invest 4}} \notag \\
+		&= 10000 \notag
+	\end{align}
+	
+\end{document}
