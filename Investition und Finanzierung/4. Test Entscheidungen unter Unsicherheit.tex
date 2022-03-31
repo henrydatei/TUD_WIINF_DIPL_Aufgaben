@@ -1,0 +1,154 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+\DeclareMathOperator{\RBF}{RBF}
+
+\title{\textbf{Investition und Finanzierung, Test Entscheidungen unter Unsicherheit}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Risiko}
+	Rechnet man die Kapitalwerte für alle Projekte und Szenarien durch ergibt sich folgende Übersicht:
+	\begin{center}
+		\begin{tabular}{l|r|r|r}
+			& Normal & Produktionskosten steigen & Verkaufserlöse steigen \\
+			& 60\% & 20\% & 20\% \\
+			\hline
+			$P_1$ & 628,11 & -1496,76 & 4003,83 \\
+			\hline
+			$P_2$ & 2248,63 & 74,04 & 6185,11 \\
+			\hline
+			$P_3$ & -2123,16 & -6484,26 & 3781,55
+		\end{tabular}
+	\end{center}
+	Die Erwartungswerte sind damit
+	\begin{align}
+		\E(BW(P_1)) &= 0.6\cdot 628,11 + 0,2\cdot -1496,76 + 0,2\cdot 4003,83 = 878,28 \notag \\
+		\E(BW(P_2)) &= 2601,01 \notag \\
+		\E(BW(P_3)) &= -1814,44 \notag
+	\end{align}
+	Die Standardabweichungen sind dann
+	\begin{align}
+		\SD(BW(P_1)) &= \sqrt{0,6(628,11-878,28)^2 + 0,2(-1496,76 - 878,28)^2 + 0,2(4003,83 - 878,28)^2} = 1766,22 \notag \\
+		\SD(BW(P_2)) &= 1980,09 \notag \\
+		\SD(BW(P_3)) &= 3268,28 \notag
+	\end{align}
+	Es sollte also das Projekt 1 mit einer Standardabweichung von 1766,22 durchgeführt werden.
+	
+	\section*{Nutzenfunktion}
+	Aus den Barwerten ergibt sich folgende Nutzentabelle:
+	\begin{center}
+		\begin{tabular}{l|r|r|r}
+			Umweltzustand & 1 (10\%) & 2 (30\%) & 3 (60\%) \\
+			\hline
+			Nutzen $P_1$ & 1150 & 2100 & 2976 \\
+			\hline
+			Nutzen $P_2$ & -2256 & -516 & 2716 \\
+			\hline
+			Nutzen $P_3$ & -2574 & 1150 & 1744
+		\end{tabular} \\
+		\textit{Hinweis wenn man das selber mit einer Tabellenkalkulation berechnen möchte: Leider hält sich keine Tabellenkalkulation (Google Spreadsheets, MS Excel, LibreOffice Calc, Apple Numbers) konsequent an Operatorprioritäten. So sollte folgende Formel zu -36 ausgewertet werden:
+		\begin{align}
+			-(0,004\cdot 1500)^2 = -(6)^2 = -36 \notag
+		\end{align}
+		Aber stattdessen wird folgendes berechnet:
+		\begin{align}
+			-(0,004\cdot 1500)^2 = -(6)^2 \overset{?}{=} ... = 36 \notag
+		\end{align}
+		Der Taschenrechner rechnet das Ergebnis übrigens richtig aus.}
+	\end{center}
+	Berechnet man die Erwartungswerte der Nutzen, so ergibt sich:
+	\begin{align}
+		\E(N(P_1)) &= 0,1\cdot 1150 + 0,3\cdot 2100 + 0,6\cdot 2976 = 2530,6 \notag \\
+		\E(N(P_2)) &= 1249,2 \notag \\
+		\E(N(P_3)) &= 1134 \notag
+	\end{align}
+	
+	\section*{Kalkulationszins}
+	Die Marktrendite ist
+	\begin{align}
+		r_M = 0,2\cdot 4\% + 0,1\cdot 8\% + 0,7\cdot 9\% = 7,9\% \notag
+	\end{align}
+	Damit ist der Zins unter Unsicherheit für das Unternehmen DEF
+	\begin{align}
+		r = 3\% + 1,6\cdot (7,9\% - 3\%) = 10,84\% \notag
+	\end{align}
+
+	\section*{Kritischer Wert}
+	Die Erlöse und Kosten in den einzelnen Perioden sind
+	\begin{center}
+		\begin{tabular}{l|r|r|r}
+			Periode & 1 & 2 & 3 \\
+			\hline
+			Stückerlöse & $20x$ & $37x$ & $30x$ \\
+			\hline
+			Stückkosten & $18x$ & $33x$ & $25x$ \\
+			\hline
+			fixe Erlöse & 5900 & 8700 & 7500 \\
+			\hline
+			fixe Kosten & 7600 & 13200 & 11200 \\
+			\hline
+			Periodenüberschuss & $-1700+2x$ & $-4500+4x$ & $-3700+5x$
+		\end{tabular}
+	\end{center}
+	Der Barwert ist dann
+	\begin{align}
+		BW &= -17000 + \frac{-1700+2x}{1,05} + \frac{-4500+4x}{1,05^2} + \frac{-3700+5x}{1,05^3} \overset{!}{\ge} 0 \notag \\
+		x &\ge 2629 \notag
+	\end{align}
+	
+	\section*{Outputänderung}
+	Analoge Rechnung wie oben ergibt für eine Produktionsmenge von 0 Stück einen Barwert von -20110,08, bei einer Produktionsmenge von 1 Stück ist der Barwert -20095,83, also eine Differenz von 14,24.
+	
+\end{document}
