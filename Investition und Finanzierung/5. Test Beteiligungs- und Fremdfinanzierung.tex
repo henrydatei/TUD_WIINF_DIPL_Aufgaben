@@ -1,0 +1,190 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+\DeclareMathOperator{\RBF}{RBF}
+
+\title{\textbf{Investition und Finanzierung, Test Beteiligungs- und Fremdfinanzierung}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Kapitalerhöhung gegen Einlagen}
+	Aus dem Marktwert des Eigenkapitals und dem aktuellen Kurs können wir die Anzahl der alten Aktien berechnen:
+	\begin{align}
+		\text{\# alte Aktien} = \frac{EK}{\text{Kurs}} = \frac{30.000.000}{300} = 100.000 \notag
+	\end{align}
+	Aus der Änderung des Grundkapitals und dem Emissionskurs können wir die Anzahl der neuen Aktien berechnen:
+	\begin{align}
+		\text{\# neue Aktien} = \frac{\Delta\text{Grundkapital}}{\text{Emissionskurs}} = \frac{7.500.000}{240} = 50.000 \notag
+	\end{align}
+	Damit ergibt sich ein Mischkurs von
+	\begin{align}
+		\text{Kurs} = \frac{100.000\cdot 300 + 50.000\cdot 240}{100.000 + 50.000} = 280\notag
+	\end{align}
+	Der Wert des Eigenkapitals ist damit $280\cdot (100.000 + 50.000) = 42.000.000$, er steigt also um 12.000.000, was auch die Änderung der Bilanzsumme ist.
+	
+	\section*{Dividendennachteil}
+	Der Dividendennachteil ist (die neuen Aktien sind ein dreiviertel des Jahres dividendenberechtigt)
+	\begin{align}
+		N = 39\cdot (1-0.75) = 9,75 \notag
+	\end{align}
+	Aus dem Nennwert und dem gezeichneten Kapital kann man die Anzahl der alten Aktien bestimmen:
+	\begin{align}
+		\text{\# alte Aktien} = \frac{\text{gezeichnetes Kapital}}{\text{Nennwert}} = \frac{2.000.000}{10} = 200.000 \notag
+	\end{align}
+	Aus der Änderung des Grundkapitals und dem Nennwert können wir die Anzahl der neuen Aktien berechnen:
+	\begin{align}
+		\text{\# neue Aktien} = \frac{\Delta\text{Grundkapital}}{\text{Nennwert}} = \frac{400.000}{10} = 40.000 \notag
+	\end{align}
+	Das ergibt ein Bezugsverhältnis von $b=\frac{200.000}{40.000} = 5$ und damit ergibt sich der Wert eines Bezugsrechtes:
+	\begin{align}
+		B &= \frac{K_a-(K_n+N)}{b+1} \notag \\
+		&= \frac{780-(660+9,75)}{6} \notag \\
+		&= 18,38 \notag
+	\end{align}
+	
+	\section*{Annuitätenkredit}
+	Die Annuität ist
+	\begin{align}
+		A &= \frac{q^n\cdot i}{q^n-1}\cdot S_0 \notag \\
+		&= \frac{1,1^{27}\cdot 0,1}{1,1^{27}-1}\cdot 30.000 \notag \\
+		&= 3.247,73 \notag
+	\end{align}
+	Damit ergibt sich folgender Tilgungsplan
+	\begin{center}
+		\begin{tabular}{l|r|r|r|r|r}
+			Periode & Schuld am Anfang & Zinsen & Tilgung & Annuität & Schuld am Ende \\
+			\hline 1 & $30.000,00 $ & $3.000,00 $ & $247,73 $ & $3.247,73 $ & $29.752,27 $ \\
+			\hline 2 & $29.752,27 $ & $2.975,23 $ & $272,50 $ & $3.247,73 $ & $29.479,77 $ \\
+			\hline 3 & $29.479,77 $ & $2.947,98 $ & $299,75 $ & $3.247,73 $ & $29.180,02 $ \\
+			\hline 4 & $29.180,02 $ & $2.918,00 $ & $329,73 $ & $3.247,73 $ & $28.850,29 $ \\
+			\hline 5 & $28.850,29 $ & $2.885,03 $ & $362,70 $ & $3.247,73 $ & $28.487,59 $ \\
+			\hline 6 & $28.487,59 $ & $2.848,76 $ & $398,97 $ & $3.247,73 $ & $28.088,62 $ \\
+			\hline 7 & $28.088,62 $ & $2.808,86 $ & $438,87 $ & $3.247,73 $ & $27.649,75 $ \\
+			\hline 8 & $27.649,75 $ & $2.764,98 $ & $482,75 $ & $3.247,73 $ & $27.167,00 $ \\
+			\hline 9 & $27.167,00 $ & $2.716,70 $ & $531,03 $ & $3.247,73 $ & $26.635,97 $ \\
+			\hline 10 & $26.635,97 $ & $2.663,60 $ & $584,13 $ & $3.247,73 $ & $26.051,83 $ \\
+			\hline 11 & $26.051,83 $ & $2.605,18 $ & $642,55 $ & $3.247,73 $ & $25.409,29 $ \\
+			\hline 12 & $25.409,29 $ & $2.540,93 $ & $706,80 $ & $3.247,73 $ & $24.702,49 $ \\
+			\hline 13 & $24.702,49 $ & $2.470,25 $ & $777,48 $ & $3.247,73 $ & $23.925,01 $ \\
+			\hline 14 & $23.925,01 $ & $2.392,50 $ & $855,23 $ & $3.247,73 $ & $23.069,78 $ \\
+			\hline 15 & $23.069,78 $ & $2.306,98 $ & $940,75 $ & $3.247,73 $ & $22.129,03 $ \\
+			\hline 16 & $22.129,03 $ & $2.212,90 $ & $1.034,83 $ & $3.247,73 $ & $21.094,20 $ \\
+			\hline 17 & $21.094,20 $ & $2.109,42 $ & $1.138,31 $ & $3.247,73 $ & $19.955,89 $ \\
+			\hline 18 & $19.955,89 $ & $1.995,59 $ & $1.252,14 $ & $3.247,73 $ & $18.703,75 $ \\
+			\hline 19 & $18.703,75 $ & $1.870,38 $ & $1.377,35 $ & $3.247,73 $ & $17.326,40 $ \\
+			\hline 20 & $17.326,40 $ & $1.732,64 $ & $1.515,09 $ & $3.247,73 $ & $15.811,31 $ \\
+			\hline 21 & $15.811,31 $ & $1.581,13 $ & $1.666,60 $ & $3.247,73 $ & $14.144,71 $ \\
+			\hline 22 & $14.144,71 $ & $1.414,47 $ & $1.833,26 $ & $3.247,73 $ & $12.311,45 $ \\
+			\hline 23 & $12.311,45 $ & $1.231,14 $ & $2.016,58 $ & $3.247,73 $ & $10.294,86 $ \\
+			\hline 24 & $10.294,86 $ & $1.029,49 $ & $2.218,24 $ & $3.247,73 $ & $8.076,62 $ \\
+			\hline 25 & $8.076,62 $ & $807,66 $ & $2.440,07 $ & $3.247,73 $ & $5.636,55 $ \\
+			\hline 26 & $5.636,55 $ & $563,66 $ & $2.684,07 $ & $3.247,73 $ & $2.952,48 $ \\
+			\hline 27 & $2.952,48 $ & $295,25 $ & $2.952,48 $ & $3.247,73 $ & $0,00 $
+		\end{tabular}
+	\end{center}
+	Die gesuchte Summe ist dann
+	\begin{align}
+		S &= T_{24} + Z_{10} + ZB_8 \notag \\
+		&= 2.218,24 + 2.663,60 + 3.247,73 \notag \\
+		&= 8.129,57 \notag
+	\end{align}
+
+	\section*{Kreditsumme}
+	Berechnung des Kapitalwertes dieses Kredites:
+	\begin{center}
+		\begin{tabular}{l|r|r|r|r|r|r|r|r}
+			Periode & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+			\hline
+			$S_0$ & 80.000 & & & & & & & \\
+			\hline
+			Disagio & -3.200 & & & & & & & \\
+			\hline
+			einmalige Kosten & -3.200 & & & & & & & \\
+			\hline
+			laufende Kosten & & -560 & -560 & -560 & -560 & -560 & -560 & -560 \\
+			\hline
+			Tilgung & & 0 & 0 & 0 & -20.000 & -20.000 & -20.000 & -20.000 \\
+			\hline
+			Zinsen & & -4.800 & -4.800 & -4.800 & -4.800 & -3.600 & -2.400 & -1.200 \\
+			\hline
+			Periodenüberschuss & 73.600 & -5.360 & -5.360 & -5.360 & -25.360 & -24.160 & -22.960 & -21.760
+		\end{tabular}
+	\end{center}
+	Formeln für den Kapitalwert:
+	\begin{align}
+		C_0(q) &= 73.600 - \frac{5.360}{q} - \frac{5.360}{q^2} - \frac{5.360}{q^3} - \frac{25.360}{q^4} - \frac{24.160}{q^5} - \frac{22.960}{q^6} - \frac{21.760}{q^7} \notag \\
+		C_0(1,09) &= 770,49 \notag \\
+		C'_0(q) &= \frac{5.360}{q^2} + \frac{2\cdot 5.360}{q^3} + \frac{3\cdot 5.360}{q^4} + \frac{4\cdot 25.360}{q^5} + \frac{5\cdot 24.160}{q^6} + \frac{6\cdot 22.960}{q^7} + \frac{7\cdot 21.760}{q^8} \notag \\
+		C'_0(1,09) &= 313.942,53 \notag
+	\end{align}
+	Iteration des Newtonverfahrens:
+	\begin{align}
+		q^\ast &= 1,09 - \frac{770,49}{313.942,53} \notag \\
+		&= 1,0875 \notag \\
+		i^\ast &= 8,75\% \notag
+	\end{align}
+	
+	\section*{Anleihen}
+	Barwert der Anleihe 1:
+	\begin{align}
+		BW &= -103,6 + \sum_{i=1}^{11} \frac{6,25}{1,02^i} + \frac{100}{1,02^{11}} \notag \\
+		&= 37,99 \notag
+	\end{align}
+	Barwert der Anleihe 2:
+	\begin{align}
+		BW &= -105,6 + \sum_{i=1}^{14} \frac{7,5}{1,02^i} + \frac{100}{1,02^{14}} \notag \\
+		&= 60,98 \notag
+	\end{align}
+	
+\end{document}
