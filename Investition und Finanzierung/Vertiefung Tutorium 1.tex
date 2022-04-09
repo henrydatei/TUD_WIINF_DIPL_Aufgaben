@@ -1,0 +1,188 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+\DeclareMathOperator{\RBF}{RBF}
+
+\title{\textbf{Investition und Finanzierung, Vertiefung Tutorium 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Kapitalanlange - Einfache Verzinsung}
+	Wir müssen folgende Gleichung lösen:
+	\begin{align}
+		2\cdot K_0 &= K_0\cdot (1+i\cdot n) \notag \\
+		2\cdot K_0 &= K_0\cdot (1 + 0.1\cdot n) \notag \\
+		2 &= 1+0.1\cdot n \notag \\
+		1 &= 0.1 \cdot n \notag \\
+		n &= 10 \notag
+	\end{align}
+
+	\section*{Kapitalanlange - Zinseszinsrechnung}
+	Wir müssen folgende Gleichung lösen:
+	\begin{align}
+		2\cdot K_0 &= K_0\cdot (1+i)^n \notag \\
+		2\cdot K_0 &= K_0\cdot (1 + 0.05)^n \notag \\
+		2 &= (1+0.05)^n \notag \\
+		\log(2) &= n\cdot \log(1+0.05) \notag \\
+		n &= \frac{\log(2)}{\log(1+0.05)} \notag \\
+		n &\approx 14.21 \notag 
+	\end{align}
+
+	\section*{Rentenzahlung - Vorschüsse Ratenzahlung}
+	Der Betrag ist
+	\begin{align}
+		K &= \underbrace{200\cdot \left(1+\frac{12}{12}\cdot 5\%\right)}_{\text{Januar}} + \underbrace{200\cdot \left(1+\frac{11}{12}\cdot 5\%\right)}_{\text{Februar}} + \dots + \underbrace{200\cdot \left(1+\frac{1}{12}\cdot 5\%\right)}_{\text{Dezember}} \notag \\
+		&= \sum_{m=1}^{12} 200\cdot\left(1+\frac{12-m+1}{12}\cdot 5\%\right) \notag \\
+		&= 2465 \notag
+	\end{align}
+
+	\section*{Rentenzahlung - Nachschüssige Ratenzahlung}
+	Berechnen wir zuerst den Betrag bei nachschüssiger Rentenzahlung
+	\begin{align}
+		K &= \underbrace{200\cdot \left(1+\frac{11}{12}\cdot 5\%\right)}_{\text{Januar}} + \underbrace{200\cdot \left(1+\frac{10}{12}\cdot 5\%\right)}_{\text{Februar}} + \dots + \underbrace{200\cdot \left(1+\frac{0}{12}\cdot 5\%\right)}_{\text{Dezember}} \notag \\
+		&= \sum_{m=1}^{12} 200\cdot\left(1+\frac{12-m}{12}\cdot 5\%\right) \notag \\
+		&= 2455 \notag
+	\end{align}
+	Damit ist der Unterschied 10.
+	
+	\section*{Gemischte Verzinsung - Gemischte Verzinsung bei jährlicher Zinszahlung}
+	Wir werden 3 Abschnitte betrachten:
+	\begin{itemize}
+		\item 10.6.2016 - 30.12.2016: 200 Tage
+		\item 1.1.2017 - 30.12.2019: 3 Jahre
+		\item 1.1.2020 - 20.12.2020: 350 Tage
+	\end{itemize}
+	Damit befinden sich auf dem Konto:
+	\begin{align}
+		K &= 10000\cdot \left(1+\frac{200}{360}\cdot 5\%\right) \cdot (1+0.05)^3 \cdot \left(1+\frac{350}{360}\cdot 5\%\right) \notag \\
+		&= 12476.18 \notag
+	\end{align}
+	
+	\section*{Barwert und Endwert - Endwert}
+	Die Endwertberechnung nach dem 6. Jahr ist:
+	\begin{align}
+		EW_6 &= 100\cdot 1.1^5 + 400 \cdot 1.1^3 + 200\cdot 1.1^2 \notag \\
+		&= 935.45 \notag
+	\end{align}
+	Für den Endwert nach dem 3. Jahr dürfen wir die Einzahlung im 4. Jahr nicht mehr betrachten:
+	\begin{align}
+		EW_3 &= 100\cdot1.1^2 + 400 \notag \\
+		&= 521 \notag
+	\end{align}
+
+	\section*{Barwert und Endwert - Barwert}
+	Der Barwert zu Beginn des Jahres 1 ist
+	\begin{align}
+		BW_1 &= \frac{200}{1.05} + \frac{600}{1.05^2} + \frac{50}{1.05^3} + \frac{450}{1.05^4} + \frac{500}{1.05^5} \notag \\
+		&= 1539.86 \notag
+	\end{align}
+	Für den Barwert zu Beginn des dritten Jahres müssen wir die ersten Zahlungen aufzinsen und die letzten Zahlungen abzinsen, also
+	\begin{align}
+		BW_3 &= 200\cdot 1.05 + 600 + \frac{50}{1.05} + \frac{450}{1.05^2} + \frac{500}{1.05^3} \notag \\
+		&= 1697.70 \notag
+	\end{align}
+
+	\section*{Umschuldung - Unternehmen A}
+	Schauen wir uns an, wie sich die Verbindlichkeiten über die 6 Jahre entwickeln. Die zu zahlende Rate wird mit $R$ bezeichnet.
+	\begin{center}
+		\begin{tabular}{l|r|r|r|r}
+			\textbf{Jahr} & \textbf{Anfang des Jahres} & \textbf{Zinsen} & \textbf{Ratenzahlung} & \textbf{Ende des Jahres} \\
+			\hline
+			1 & -10000 & -500 & & -10500 \\
+			2 & -10500 & -525 & & -11025 \\
+			3 & -11025 & 551.25 & $R$ & $K_3$ \\
+			4 & $K_3$ & $Z_4$ & $R$ & $K_4$ \\
+			5 & $K_4$ & $Z_5$ & & $K_5$ \\
+			6 & $K_5$ & $Z_6$ & $R$ & 0
+		\end{tabular}
+	\end{center}
+	Eine Möglichkeit wäre die Tabelle in Excel umzusetzen und mittels Excel-Solver lösen zu lassen, aber wir versuchen die Vorgänge in den 6 Jahren in eine Gleichung zu schreiben:
+	\begin{itemize}
+		\item Wir starten mit 10000 Schulden, die 3 mal verzinst werden bevor die erste Ratenzahlung kommt.
+		\item Dieser Betrag wird noch mal verzinst und es wird noch eine Rate bezahlt.
+		\item Jetzt folgen noch 2 Verzinsungen bevor die letzte Rate gezahlt wird.
+		\item Am Ende ist das Konto bei 0.
+	\end{itemize}
+	\begin{align}
+		0 &= (((-10000 \cdot 1.05^3) + R) \cdot 1.05 + R) \cdot 1.05^2 + R \notag \\
+		R &\approx 4110.57 \notag
+	\end{align}
+
+	\section*{Umschuldung - Unternehmen B}
+	Analog zur vorherigen Aufgabe
+	\begin{center}
+		\begin{tabular}{l|r|r|r|r}
+			\textbf{Jahr} & \textbf{Anfang des Jahres} & \textbf{Zinsen} & \textbf{Ratenzahlung} & \textbf{Ende des Jahres} \\
+			\hline
+			1 & -50000 & -4000 & & -54000 \\
+			2 & -54000 & -4320 & $R$ & $K_2$ \\
+			3 & $K_2$ & $Z_3$ & & $K_3$ \\
+			4 & $K_3$ & $Z_4$ & & $K_4$ \\
+			5 & $K_4$ & $Z_5$ & $R$ & $K_5$ \\
+			6 & $K_5$ & $Z_6$ & $R$ & 0
+		\end{tabular}
+	\end{center}
+	Wieder versuchen wir das in eine Gleichung zu schreiben:
+	\begin{itemize}
+		\item Wir starten mit 50000 Schulden, die 2 mal verzinst werden bevor die erste Ratenzahlung kommt.
+		\item Dieser Betrag wird noch 3 mal verzinst und es wird noch eine Rate bezahlt.
+		\item Jetzt folgt noch 1 Verzinsung bevor die letzte Rate gezahlt wird.
+		\item Am Ende ist das Konto bei 0.
+	\end{itemize}
+	\begin{align}
+		0 &= (((-50000 \cdot 1.08^2) + R) \cdot 1.08^3 + R) \cdot 1.08 + R \notag \\
+		R &\approx 23061.76 \notag
+	\end{align}
+	
+\end{document}
