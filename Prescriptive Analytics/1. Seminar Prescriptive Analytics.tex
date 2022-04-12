@@ -1,0 +1,161 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=python,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	morekeywords={split, as, dot, read\_csv, loc, between, groupby, sort\_values},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	tabsize=2,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space},
+	literate=%
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}1
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Prescriptive Analytics, Seminar 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: Podcast-Sendezeit}
+	\begin{enumerate}[label=(\alph*)]
+		\item Lösung mittels f-String (\url{https://zetcode.com/python/fstring/}):
+		\begin{lstlisting}
+sendezeit = 70
+result = 2 * (70 - 3*3)
+print(f'Bei einer Podcastlänge von {sendezeit} Minuten ergeben sich {result/60:.2f} Stunden Sendezeit pro Woche')
+		\end{lstlisting}
+		\item mittel \texttt{.format()}
+		\begin{lstlisting}
+print("Bei einer Podcastlänge von {} Minuten ergeben sich {} Stunden Sendezeit pro Woche".format(sendezeit, round(result/60,2)))
+		\end{lstlisting}
+		
+	\end{enumerate}
+
+	\section*{Aufgabe 2: Chaos in der Mailingliste}
+	\begin{enumerate}[label=(\alph*)]
+		\item mittels List Comprehension (\url{https://www.w3schools.com/python/python_lists_comprehension.asp})
+		\begin{lstlisting}
+mail = "service@klara_Klarna.com"
+[name.split(".")[0] for name in mail.split("@")[1].split("_")]
+		\end{lstlisting}
+		\item mittels \texttt{zip()}
+		\begin{lstlisting}
+namen = ["Klara", "Sebastian", "Britta", "Klaus"]
+mails = ["service@klara_Klarna.com", "Sebastian_Duesentrieb@gmail.com", "bwiebritta@yahoo.com", "Klaus@peter.de"]
+result = {}
+for name, mail in zip(namen, mails):
+	result[name] = mail
+result
+		\end{lstlisting}
+	\end{enumerate}
+	
+	\section*{Aufgabe 3: Anpassung der Werbeeinnahmen}
+	\begin{enumerate}[label=(\alph*)]
+		\item mittels Definition einer Funktion
+		\begin{lstlisting}
+input_price = 333
+def preisanpassung(oldPrice):
+	if oldPrice <= 400:
+		return oldPrice * 1.1
+	if 400 < oldPrice and oldPrice <= 600:
+		return oldPrice * 1.2
+	if 600 < oldPrice:
+		return oldPrice * 1.25
+
+preisanpassung(333)
+		\end{lstlisting}
+		\item wieder mittels List Comprehension
+		\begin{lstlisting}
+oldPrices = [350, 300, 600, 800]
+[preisanpassung(oldPrice) for oldPrice in oldPrices]
+		\end{lstlisting}
+		\item mittels \texttt{numpy.dot()} welches unabhängig von der Länge der Inputvektoren ist. Die Musterlösung des Lehrstuhls wird falsch, wenn es nicht mehr 4, sondern 5 verschiedene Werbepakete gibt
+		\begin{lstlisting}
+import numpy as np
+
+sales = [3, 5, 7, 4]
+oldPrice = [350, 300, 600, 800]
+newPrice = [385, 330, 720, 1000]
+
+def umsatz(newprices, oldprices, sales):
+	diff = [new - old for new, old in zip(newprices, oldprices)]
+	return np.dot(diff, sales)
+
+umsatz(newPrice, oldPrice, sales)
+		\end{lstlisting}
+		\item mittels \texttt{lambda}-Funktion
+		\begin{lstlisting}
+umsatz = lambda preis, vkz: sum([preis[i]*vkz[i] for i in range(len(sales))])
+
+umsatz(sales, newPrice) - umsatz(sales, oldPrice)
+		\end{lstlisting}
+	\end{enumerate}
+	
+	\section*{Aufgabe 4: Expansionswahnsinn}
+	\begin{enumerate}[label=(\alph*)]
+		\item mittels Pandas
+		\begin{lstlisting}
+import pandas as pd
+births = pd.read_csv("births.csv")
+births["age"] = 2022 - births["Year"]
+zielguppe = births.loc[births["age"].between(25, 35)]
+zielguppe["Count"].sum()
+		\end{lstlisting}
+		\item mit Pandas geht das besser als mit einem Dictionary
+		\begin{lstlisting}
+zielguppe.groupby(["age"]).sum().sort_values("Count", ascending = False)
+		\end{lstlisting}
+	\end{enumerate}
+
+\end{document}
