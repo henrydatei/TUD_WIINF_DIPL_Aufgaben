@@ -1,0 +1,234 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\lstdefinelanguage{JavaScript}{
+	keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break, for, of, document},
+	keywordstyle=\color{lila}\bfseries,
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	ndkeywordstyle=\color{lila}\bfseries,
+	identifierstyle=\color{blue},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{lightgray}\ttfamily,
+	stringstyle=\color{mygreen}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{xml} {language=xml, morekeywords={encoding, newspaper, article, title, id, published, author, xs:schema, xmlns:xs, xs:element, name, xs:sequence, xs:element, type, xs:complexType}}
+\lstdefinestyle{json}{}
+\lstdefinestyle{javascript}{language=javascript}
+\lstdefinestyle{html}{language=html, morekeywords={main}}
+\lstset{language=XML,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	tabsize=2,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space},
+	literate=%
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}1
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Internet and Web Applications, Übung 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: XML/XML Schema}
+	\begin{enumerate}[label=(\alph*)]
+		\item XML-Dokument
+		\begin{lstlisting}[style=xml]
+<?xml version="1.0" encoding="UTF-8"?>
+
+<newspaper>
+	<article id="5">
+		<title>First man on the moon</title>
+		<published>1969-07-21</published>
+		<author>Ted Markson</author>
+	</article>
+	<article id="6">
+		<title>Curiosity lands on Mars</title>
+		<published>2012-08-06</published>
+		<author>Jim Northwalk</author>
+	</article>
+</newspaper>
+		\end{lstlisting}
+		\item XML Schema
+		\begin{lstlisting}[style=xml]
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" >
+	<xs:element name="article">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="title" type="xs:string"/>
+				<xs:element name="published" type="xs:date"/>
+				<xs:element name="author" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="newspaper">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="article" type="article"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
+		\end{lstlisting}
+	\end{enumerate}
+
+	\section*{Aufgabe 2: YAML/JSON}
+	\begin{lstlisting}[style=json]
+[
+	{
+		"id": 5,
+		"title": "First man on the moon",
+		"published": 1969-07-21,
+		"author": "Ted Markson"
+	},{
+		"id": 6,
+		"title": "Curiosity lands on Mars",
+		"published": 2012-08-06,
+		"author": "Jim Northwalk"
+	}
+]
+	\end{lstlisting}
+	
+	\section*{Aufgabe 3: DOM/SAX}
+	\begin{enumerate}[label=(\alph*)]
+		\item DOM ist flexibler, aber dafür muss die gesamte Struktur des Dokuments in den Speicher geladen werden. SAX braucht das nicht, ist aber auch dafür nicht so schnell.
+		\item Eine Alternative ist XPath. Hier wird auch das Dokument als Baum betrachtet, aber es erlaubt mehr Operationen (z.B. 5. Kind-Element, Durchschnitt aller Kinder, ...). \\
+		Das Java API for XML Processing oder JAXP ist eine der Java-XML-APIs. Es handelt sich um ein leichtgewichtiges standardisiertes API zum validieren, parsen, generieren und generieren von XML-Dokumenten. Die jeweilige Implementierung des APIs ist austauschbar.
+	\end{enumerate}
+	
+	\section*{Aufgabe 4: Javascript}
+	\begin{enumerate}[label=(\alph*)]
+		\item Javascript ist Code, der nicht auf dem Server, sondern auf dem Client ausgeführt wird. Damit kann man die Webseite dynamisch verändern ohne diese neuladen zu müssen, aber zu viel Javascript kann auch den ganzen Rechner blockieren (Werbung...) oder ist ein Einfallstor für Schadware, wenn die Sandbox nicht richtig funktioniert.
+		\item HTML-Seite
+		\begin{lstlisting}[style=html]
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src="javascript.js"></script>
+		<title>Button Dokument</title>
+	</head>
+	<body>
+		<main>
+			<button onclick="showDate()" id="button">klick mich!</button>
+		</main>
+	</body>
+</html>
+		\end{lstlisting}
+		Javascript
+		\begin{lstlisting}[style=javascript]
+function showDate() {
+	var today = new Date()
+	var date = today.getFullYear() + " - " + (today.getMonth() + 1) + " - " + today.getDate()
+	document.getElementById("button").innerHTML = date
+}
+		\end{lstlisting}
+		\item HTML-Seite mit Javascript
+		\begin{lstlisting}[style=html]
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Liks</title>
+	</head>
+	<body>
+		<main>
+			<a href="xyz.de">xyz</a><br />
+			<a href="abc.de">abc</a>
+		</main>
+	</body>
+	<script src="javascript.js"></script>
+</html>
+		\end{lstlisting}
+		Javascript
+		\begin{lstlisting}[style=javascript]
+elems = document.getElementsByTagName("a")
+for (elem of elems) {
+	elem.insertAdjacentText("afterend", elem.innerHTML)
+}
+		\end{lstlisting}
+		\item HTML-Seite mit Javascript
+		\begin{lstlisting}[style=html]
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Liks</title>
+	</head>
+	<body>
+		<main>
+			<a type="text/html">xyz</a><br />
+			<a type="application/json">abc</a>
+		</main>
+	</body>
+	<script src="javascript.js"></script>
+</html>
+		\end{lstlisting}
+		Javascript
+		\begin{lstlisting}[style=javascript]
+elems = document.getElementsByTagName("a")
+for (elem of elems) {
+	elem.insertAdjacentText("afterend", elem.type)
+}
+		\end{lstlisting}
+	\end{enumerate}
+
+\end{document}
