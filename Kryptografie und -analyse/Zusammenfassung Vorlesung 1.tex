@@ -1,0 +1,124 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Kryptografie und -analyse, Zusammenfassung Vorlesung 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Für welche Schutzziele ist Kryptographie der geeignete Schutzmechanismus?}
+	Mit Kryptographie erreichbare Schutzziele
+	\begin{itemize}
+		\item Vertraulichkeit: Informationen werden nur Berechtigten bekannt.
+		\item Integrität: Informationen können nicht unerkannt modifiziert werden.
+		\item Zurechenbarkeit (spezielles Integritätsziel): Es kann gegenüber Dritten nachgewiesen werden, wer die Information erzeugt hat.
+	\end{itemize}
+	Der Schutz der Verfügbarkeit erfordert andere Maßnahmen, z.B. Redundanz oder Kontrolle der Ressourcen\-nutzung.
+
+	\section*{Was genau kann erreicht werden (verhindern/entdecken)?}
+	Nicht erkennbar, aber verhinderbar
+	\begin{itemize}
+		\item Unbefugter Informationsgewinn $\to$ Verlust der Vertraulichkeit
+	\end{itemize}
+	Nicht verhinderbar, aber erkennbar
+	\begin{itemize}
+		\item Unbefugte Modifikation der Information $\to$ Verlust der Integrität
+		\item Beeinträchtigung der Funktionalität $\to$ Verlust der Verfügbarkeit
+	\end{itemize}
+	
+	\section*{Was besagt das Prinzip von Kerkhoffs, warum ist es sinnvoll, was folgt daraus?}
+	Kerckhoffs-Prinzip: \textit{Die Sicherheit eines Verfahrens darf nicht von der Geheimhaltung des Verfahrens abhängen, sondern nur von der Geheimhaltung des Schlüssels.}
+	\begin{itemize}
+		\item Keine \textit{Security by Obscurity}
+		\item Annahme: Angreifer kennt das Verfahren und die öffentlichen Parameter
+		\item Sicherheit des Verfahrens begrenzt durch Sicherheit der Schlüsselgenerierung und Sicherheit des Schlüs\-selaustauschs
+	\end{itemize}
+	Kryptographie beruht grundsätzlich darauf, dass die Entschlüsselung durch Geheimhaltung von Daten verhindert wird. Der Unterschied besteht darin, ob ein Schlüssel oder auch der verwendete Algorithmus geheim gehalten wird – denn sobald der Algorithmus für viele Dinge verwendet wird, ist er nicht mehr geheim, sondern weit verbreitet. Security by obscurity wäre dann der Versuch, Dinge geheim zu halten, die weite Verbreitung finden. Ein starker Algorithmus, beispielsweise der Advanced Encryption Standard oder das RSA-Kryptosystem, erfordert aus der Sicht der reinen Kryptographie-Sicherheit keine Geheimhaltung des Verfahrens, sondern nur des verwendeten Schlüssels. Die Kryptographie-Sicherheit beschäftigt sich mit der Sicherheit eines Verfahrens. Gleichwohl werden immer wieder Verschlüsselungsalgorithmen geheim gehalten. Schließlich können durch deren Kenntnis die eventuellen Schwachstellen entdeckt werden, so dass sich erst später herausstellt, dass die Verschlüsselung nicht effektiv war. Ein Beispiel ist RC4, welcher sieben Jahre lang geheim gehalten wurde, bis 1994 der Quellcode anonym veröffentlicht wurde – inzwischen gilt RC4 als massiv unsicher. Auf diese Weise führt security by obscurity zu einem Verlust von Sicherheit, da bei diesem Prinzip die vermeintlichen Sicherheitsmethoden nicht auf ihre Wirksamkeit überprüft und die unwirksamen Methoden nicht frühzeitig als solche verworfen werden können.\footnote{\url{https://de.wikipedia.org/wiki/Security_through_obscurity}}
+	
+	\section*{Welche Typen kryptographischer Systeme gibt es?}
+	Einteilung nach Zweck:
+	\begin{itemize}
+		\item Konzelationssysteme: Systeme zum Schutz der Vertraulichkeit der Daten
+		\item Authentikationssysteme: Systeme zum Schutz der Integrität der Daten
+	\end{itemize}
+	Einteilung nach Schlüsselverteilung
+	\begin{itemize}
+		\item Symmetrische Verfahren: Sender und Empfänger arbeiten mit dem gleichen Schlüssel; ein Schlüssel pro Kommunikationsbeziehung
+		\item Asymmetrische Verfahren: jeweils ein Schlüsselpaar pro Teilnehmer: öffentlicher und privater Schlüssel
+	\end{itemize}
+	
+	\section*{Wie arbeiten sie prinzipiell?}
+	Symmetrisches Konzelationssystem: Verschlüsselung und Entschlüsselung mit dem selben Schlüssel, nur die verschlüsselte Nachricht wird übertragen
+	
+	Symmetrisches Authentikationssystem: Übertragung von Nachricht und verschlüsselter MAC (= Prüfsumme der Nachricht)
+	
+	Asymmetrisches Konzelationssystem: mit dem öffentlichen Schlüssel kann eine Nachricht verschlüsselt werden, aber nur mit dem privaten Schlüssel kann die Nachricht wieder entschlüsselt werden
+	
+	Asymmetrisches Authentikationssystem (digitales Signatursystem): Übertragung der Nachricht und der Signatur (Nachricht mit privatem Schlüssel verschlüsselt)
+
+	\section*{Was ist beim Schlüsselaustausch zu beachten?}
+	Symmetrische Systeme: gemeinsamer Schlüssel muss über unsicheres Medium übertragen werden oder bei persönlichem Kontakt ausgetauscht werden
+	
+	Asymmetrisches Systeme: kein Schlüsselaustausch nötig, nur eine Verbreitung der öffentlichen Schlüssel. Aber dem Verteiler der Schlüssel muss vertraut werden, dass dieser auch den richtigen öffentlichen Schlüssel herausgibt $\to$ viele unabhängige Schlüsselverteiler
+	
+	\section*{Warum kann nur mit einem digitalen Signatursystem das Schutzziel Zurechenbarkeit erfüllt werden?}
+	Weil nur derjenige eine richtige Signatur erstellen kann, der in Besitz des privaten Schlüssels ist.
+	
+	\section*{Was ist das Ziel hybrider Kryptosysteme?}
+	Asymmetrische Verschlüsselung ist langsam, aber es gibt nicht das Problem des Schlüsselaustausches. Symmetrische Verschlüsselung ist schnell, aber Problem ist der Schlüsselaustausch. Hybride Verschlüsselung kombiniert die Vorteile beider Verfahren.
+	
+	\section*{Wie funktioniert hybride Verschlüsselung?}
+	Schlüsselaustausch mittels asymmetrischer Verschlüsselung, dann wird auf symmetrische Verschlüsselung umgestellt
+
+\end{document}
