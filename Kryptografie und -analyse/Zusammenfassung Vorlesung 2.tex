@@ -1,0 +1,104 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Kryptografie und -analyse, Zusammenfassung Vorlesung 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Welche Angriffserfolge werden unterschieden?}
+	Unterscheidung nach Ziel und Erfolg des Angriffs
+	\begin{itemize}
+		\item Finden des geheimen Schlüssels (vollständiges Brechen, total break)
+		\item Finden eines zum Schlüssel äquivalenten Verfahrens (universelles Brechen, universal break)
+		\item Brechen nur für manche Nachrichten (nachrichtenbezogenes Brechen):
+		\begin{itemize}
+			\item für eine selbstgewählte Nachricht (selective break)
+			\item für irgendeine Nachricht (existential break)
+		\end{itemize}
+	\end{itemize}
+
+	\section*{Welche passiven und aktiven Angriffe werden bei kryptographischen Systemen unterschieden?}
+	Passiver Angreifer nutzt Wissen über System (Algorithmen, Protokolle), Öffentliche Schlüssel/Parameter und Beobachtung (unsicherer Kanal)
+	\begin{itemize}
+		\item Reiner Schlüsseltext-Angriff (ciphertext-only attack)
+		\item Klartext-Schlüsseltext-Angriff (known-plaintext attack)
+	\end{itemize}
+
+	Aktiver Angreifer: bringt Inhaber der geheimen bzw. privaten Schlüssel dazu, die entsprechenden Operationen für selbst gewählte Daten auszuführen
+	\begin{itemize}
+		\item Gewählter Klartext-Schlüsseltext-Angriff (chosen-plaintext attack CPA; \textit{Verschlüsselungsorakel})
+		\item Gewählter Schlüsseltext-Klartext-Angriff (chosen-ciphertext attack; \textit{Entschlüsselungsorakel})
+	\end{itemize}
+	
+	\section*{Was bedeutet informationstheoretische (perfekte) Sicherheit?}
+	Auch einem unbeschränkten Angreifer gelingt es nicht, das System zu brechen.
+	
+	\section*{Welche Bedingungen muss ein informationstheoretisch sicheres System erfüllen?}
+	Ein System heißt informationstheoretisch sicher, wenn für alle Nachrichten und Schlüsseltexte gilt, dass die a posteriori Wahrscheinlichkeiten $p(m\mid c)$ der möglichen Nachrichten nach Beobachtung eines gesendeten Geheimtextes gleich der a priori Wahrscheinlichkeiten $p(m)$ dieser Nachrichten sind:
+	\begin{align}
+		\forall m\in M, \forall c\in C:\quad p(m\mid c)=p(m) \notag
+	\end{align}
+	
+	\section*{Warum werden in der Praxis kryptographische Systeme eingesetzt, die keine informationstheoretische Sicherheit bieten?}
+	Perfekte Sicherheit kann nur symmetrische Verschlüsselung bieten, diese bietet aber keine Zurechenbarkeit.
+
+	\section*{Was bedeutet semantische Sicherheit?}
+	Ein System heißt semantisch sicher, wenn alles, was bei Kenntnis des zugehörigen Schlüsseltextes effizient über den Klartext berechnet werden kann, auch effizient ohne Kenntnis des Schlüsseltextes berechnet werden kann. \\
+	$\Rightarrow$ Angreifer beschränkt, Beobachtung hilft nicht bei der Berechnung des Schlüssels
+	
+	\section*{Was bedeutet Non-Malleability?}
+	Ein System bietet Sicherheit gegen adaptive aktive Angriffe (Non- Malleability), wenn es für einen polynomiell beschränkten Angreifer nicht einfacher ist, bei Kenntnis eines Schlüsseltextes einen weiteren Schlüsseltext zu generieren, so dass die zugehörigen Klartexte in Relation zueinander stehen, als ohne Kenntnis dieses Schlüsseltextes.
+
+\end{document}
