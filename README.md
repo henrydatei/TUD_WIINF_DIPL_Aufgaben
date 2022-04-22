@@ -1,4 +1,4 @@
-# TUD_WIINF_DIPL_Aufgaben
+# TU Dresden Diplom Wirtschaftsinformatik Lösungen für Übungen
 In diesem Repo sind meine Lösungen und Zusammenfassungen zu einigen Modulen aus dem Diplom-Studiengang Wirtschaftsinformatik an der TU Dresden.
 
 ![Code size](https://img.shields.io/github/languages/code-size/henrydatei/TUD_WIINF_DIPL_Aufgaben.svg)
