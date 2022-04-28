@@ -1,0 +1,239 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=python,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	morekeywords={split, as, dot, read\_csv, loc, between, groupby, sort\_values},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	tabsize=2,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space},
+	literate=%
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}1
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Prescriptive Analytics, Seminar 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: Podcast-Management}
+	\begin{enumerate}[label=(\alph*)]
+		\item Klasse \texttt{Podcast} gleich mit privaten Attributen:
+		\begin{lstlisting}
+class Podcast():
+	# nicht nötig, aber finde ich besser lesbar, insb. bei größeren Klassen
+	__episode = None
+	__length = None
+	__moderator = None
+	__adverts = None
+	__title = None
+
+	def __init__(self, e, t, l, m):
+		self.__episode =int(e)
+		self.__length = int(l)
+		self.__moderator = str(m)
+		self.__title = str(t)
+		self.__adverts = 0
+
+	def display(self):
+		print("Podcast Folge Nr.: {} mit ModeratorIn: {}".format(self.__episode, self.__moderator))
+		print("Thema der Podcastfolge: {}".format(self.__title))
+		print("Länge der Podcastfolge: {}".format(self.__length))
+		print("Aktuell verkaufte Werbeblöcke: {}".format(self.__adverts))
+
+	def setAdverts(self, werbebloecke):
+		self.__length = self.__length + 3*werbebloecke
+		self.__adverts = self.__adverts + werbebloecke
+
+	def getAdverts(self):
+		print(self.__adverts)
+
+	def cut(self, minuten):
+		if self.__length - minuten <= 30:
+			print("Keine Kürzung möglich")
+		else:
+			self.__length = self.__length - minuten
+
+newpodcast = Podcast(23, "Traveling Salesman Problems", 70, "O. Peratio")
+newpodcast.display()
+		\end{lstlisting}
+		\item siehe (a)
+		\item Klasse \texttt{SpecialPodcast}
+		\begin{lstlisting}
+class SpecialPodcast(Podcast):
+	__specialGuest = None
+
+	def __init__(self, e, t, l, m, s):
+		# Alternative 1
+		self.__episode = int(e)
+		self.__length = int(l)
+		self.__moderator = str(m)
+		self.__title = str(t)
+		self.__adverts = 0
+		# Alternative 2 (funktioniert nicht, weil Attribute von Podcast privat sind)
+		# Podcast(e, t, l, m)
+		self.__specialGuest = s
+
+	def changeGuest(self, newGuest):
+		self.__specialGuest = newGuest
+
+	def display(self):
+		print("Podcast Folge Nr.: {} mit ModeratorIn: {}".format(self.__episode, self.__moderator))
+		print("Thema der Podcastfolge: {}".format(self.__title))
+		print("Länge der Podcastfolge: {}".format(self.__length))
+		print("Aktuell verkaufte Werbeblöcke: {}".format(self.__adverts))
+		print("SpecialGuest der Podcastfolge ist: {}".format(self.__specialGuest))
+
+sp = SpecialPodcast(1, "Vehicle Routing Problem", 65, "M. Ipler", "Dr. Best")
+sp.changeGuest("Dr. Secondbest")
+sp.display()
+		\end{lstlisting}
+	\end{enumerate}
+
+	\section*{Aufgabe 2: Einführung des Planungsproblems}
+	\begin{enumerate}[label=(\alph*)]
+		\item mittels \texttt{with} (\url{https://preshing.com/20110920/the-python-with-statement-by-example/})
+		\begin{lstlisting}
+import json
+
+with open('InputFlowshopSIST.json') as json_file:
+	data = json.load(json_file)
+	print(data)
+		\end{lstlisting}
+		Das \texttt{with}-Statement wird gerne bei der Arbeit mit Dateien genommen, da man nach dem Öffnen einer Datei diese auch wieder schließen müsste. Aber das wird häufig vergessen und \texttt{with} macht das automatisch im Hintergrund. Man hätte also auch schreiben können:
+		\begin{lstlisting}
+import json
+			
+json_file =  open('InputFlowshopSIST.json')
+data = json.load(json_file)
+print(data)
+json_file.close()
+		\end{lstlisting}
+		\item Ich habe mich hier für die Klassen \texttt{Job}, \texttt{Maschine} und \texttt{Flowshop} entschieden:
+		\begin{lstlisting}
+class Job:
+	id = None
+	setupTimes = None
+	processingTimes = None
+	dueDate = None
+	tardCosts = None
+
+	def __init__(self, id, setup, processing, due, costs):
+		self.id = int(id)
+		self.setupTimes = setup
+		self.processingTimes = processing
+		self.dueDate = due
+		self.tardCosts = costs
+
+	def __str__(self):
+		return f"Job({self.id = }, {self.setupTimes = }, {self.processingTimes = }, {self.dueDate = }, {self.tardCosts = })"
+
+class Maschine:
+	id = None
+
+	def __init__(self, id):
+		self.id = id
+
+	def __str__(self):
+		return f"Maschine({self.id = })"
+
+class Flowshop:
+	name = None
+	nMaschines = None
+	nJobs = None
+	jobList = []
+
+	def __init__(self, name, anzahlMaschinen, anzahlJobsProAuftrag, jobs):
+		self.name = name
+		self.nMaschines = int(anzahlMaschinen)
+		self.nJobs = int(anzahlJobsProAuftrag)
+		self.jobList = jobs
+
+	def __str__(self):
+		return f"Flowshop({self.name = }, {self.nMaschines = }, {self.nJobs = }, {self.jobList = })"
+		\end{lstlisting}
+		\item Warum ich jetzt hier eine Klasse erstellen soll, weiß ich nicht, eine Funktion hätte es auch getan
+		\begin{lstlisting}
+class InputData:
+	flowshop = None
+	filename = None
+
+	def __init__(self, filename):
+		self.filename = filename
+		with open(filename) as file:
+			data = json.load(file)
+			liste = []
+			for job in data["Jobs"]:
+				j = Job(job["Id"], job["SetupTimes"], job["ProcessingTimes"], job["DueDate"], job["TardCosts"])
+				liste.append(j)
+			self.flowshop = Flowshop(data["Name"], data["nMachines"], data["nJobs"], liste)
+
+input = InputData("InputFlowshopSIST.json")
+		\end{lstlisting}
+		\item Diese Klasse ist noch unnötiger...
+		\begin{lstlisting}
+class OutputJob:
+	job = None
+
+	def __init__(self, job):
+		self.job = job
+
+	def display(self):
+		print(self.job)
+
+OutputJob(input.flowshop.jobList[0]).display()
+		\end{lstlisting}
+	\end{enumerate}
+
+\end{document}
