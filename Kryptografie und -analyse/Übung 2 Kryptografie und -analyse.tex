@@ -1,0 +1,126 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Kryptografie und -analyse, Übung 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: Analyse historischer Verfahren}
+	Zuordnung zu den Histogrammen:
+	\begin{itemize}
+		\item Histogramm 1: PM-Substitution (Buchstabenverteilung ist relativ gleichverteilt)
+		\item Histogramm 2: Transposition (Buchstabenverteilung ist genau so wie im Deutschen)
+		\item Histogramm 3: MM-Substitution (J = e, S = n), Verschiebechiffre mit Verschiebung 5
+		\item Histogramm 4: MM-Substitution (W = e, O = n)
+	\end{itemize}
+
+	\section*{Aufgabe 2: Permutation}
+	Die Matrix ist
+	\begin{align}
+		\begin{pmatrix}
+			A & F & F & I & N & E \\
+			C & H & I & F & F & R \\
+			E & N & S & I & N & D \\
+			E & B & E & N & F & A \\
+			L & L & S & M & M & S \\
+			U & B & S & T & I & T \\
+			U & T & I & O & N & E \\
+			N & X & Y & Z & X & Z
+		\end{pmatrix} \notag
+	\end{align}
+	\textit{Affine Chiffren sind ebenfalls MM-Substitutionen}.
+	
+	\section*{Aufgabe 3: Verschiebechiffre}
+	Durchprobieren aller Schlüssel führt zu einer Verschiebung von 7: \textit{Einfache Substitutionen erhalten die Zeichenhaeufigkeiten}.
+	
+	\section*{Aufgabe 4: MM-Substitution}
+	Nahezu jedes Tool im Internet (z.B. dieses hier \url{https://www.guballa.de/substitution-solver}) kann das automatisch brechen
+	\begin{center}
+		\begin{tabular}{l|cccccccccccccccccccccccccc}
+			Klartext & a&b&c&d&e&f&g&h&i&j&k&l&m&n&o&p&q&r&s&t&u&v&w&x&y&z\\
+			\hline
+			Ciphertext & q&g&t&k&x&j&u&c&w&n&s&r&y&v&h&e&i&z&b&f&o&d&l&a&p&m
+		\end{tabular}
+	\end{center}
+	liefert \textit{Auch laengere Texte koennen durchaus von den charakteristischen Eigenschaften der verwendeten Sprache abweichen, allerdings ist es im Allgemeinen nicht moeglich jede charakteristische Eigenschaft einer Sprache zu vermeiden und sich dennoch in dieser Sprache auszudruecken}.
+	
+	\section*{Aufgabe 5: Vernam-Chiffre}
+	\begin{enumerate}[label=(\alph*)]
+		\item Der Schlüsseltext lautet
+		\begin{center}
+			\begin{tabular}{c|cccccccccccc}
+				 Klartext & 0 & 1 & 0 & 0 & 1 & 1 & 1 & 0 & 1 & 0 & 1 & 0 \\
+				 Schlüssel $\oplus$ & 1 & 0 & 1 & 0 & 1 & 1 & 0 & 0 & 1 & 1 & 0 & 0 \\
+				 \hline
+				 Schlüsseltext & 1 & 1 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 1 & 0
+			\end{tabular}
+		\end{center}
+		\item Ja kann er. Er muss einfach das letzte Bit des Schlüsseltextes verändern.
+		\item Nein. Der Angreifer kann den Schlüssel berechnen, aber dieser wird ja nicht noch mal verwendet.
+		\item Schlüsseltext
+		\begin{center}
+			\begin{tabular}{c|ccccccccccccccc}
+				Klartext & G & E & H & E & I & M & E & S & T & R & E & F & F & E & N \\
+				Schlüssel & N & W & Y & P & R & C & I & K & S & E & N & F & O & L & Q \\
+				\hline
+				Schlüsseltext & T & A & F & T & Z & O & M & C & L & V & R & K & T & P & D \\
+				Schlüssel 2 & G & A & D & M & I & G & K & V & S & V & E & K & I & E & Z \\
+				\hline
+				Klartext 2 & N & A & C & H & R & I & C & H & T & A & N & A & L & L & E
+			\end{tabular}
+		\end{center}
+	\end{enumerate}
+
+\end{document}
