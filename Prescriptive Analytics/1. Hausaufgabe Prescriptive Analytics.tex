@@ -1,0 +1,220 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=python,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	morekeywords={split, as, dot, read\_csv, loc, between, groupby, sort\_values},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	tabsize=2,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space},
+	literate=%
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}1
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Prescriptive Analytics, Hausaufgabe 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: Listen \& Sortierungen}
+	\begin{enumerate}[label=(\alph*)]
+		\item mittels List Comprehension
+		\begin{lstlisting}
+### Ergänzen Sie hier Ihren Code, um die gewünschte Ausgabe zu erzielen. ###
+thisList2 = [element[::-1] for element in thisList]
+
+### Führen Sie anschließend nachfolgenden Programmcode aus, um Ihre Lösung zu überprüfen ###
+print(thisList2)
+		\end{lstlisting}
+		\item noch mehr List Comprehension
+		\begin{lstlisting}
+### Ergänzen Sie hier Ihren Code, um die gewünschte Ausgabe zu erzielen. ###
+thisList3 = [element for element in thisList if type(element) == str]
+
+### Führen Sie anschließend nachfolgenden Programmcode aus, um Ihre Lösung zu überprüfen ###
+print(thisList3)
+		\end{lstlisting}
+		\item mittels \texttt{lambda}-Funktion
+		\begin{lstlisting}
+import random
+evaluations = [('Otto', 3.779, 1.238, 0.49), ('Level', 3.961, 5.725, 0.233), ('Leseesel', 3.935, 1.482, 2.41), ('Kajak', 1.989, 2.66, 0.656), ('Mueller', 2.024, 1.427, 3.013), ('Retter', 3.297, 2.36, 3.179), ('Rotor', 1.733, 4.218, 4.972), ('Effe', 3.311, 3.197, 3.991), ('Meier', 5.956, 2.554, 4.622)]
+
+### Bitte ergänzen Sie hier Ihren Code ###
+sortiert = sorted(evaluations, key = lambda x: x[1] + x[2] + x[3], reverse = True)
+print(sortiert[0])
+		\end{lstlisting}
+		\item für sowas gibt auch Pakete... aber die sollen wir nicht nutzen
+		\begin{lstlisting}
+thisList3Corrupted = ['Otto', ['Level', 'Leseesel', 'Kajak'], ['Mueller'], 'Retter', 'Rotor', ['Effe', 'Meier']]
+
+### Bitte ergänzen Sie hier Ihren Code ###
+def flatten(x):
+	liste = []
+	for element in x:
+		if type(element) is list:
+			liste.extend(flatten(element))
+		else:
+			liste.append(element)
+	return liste
+
+### Führen Sie anschließend nachfolgenden Programmcode aus, um Ihre Lösung zu überprüfen ###
+thisList3Repaired = flatten(thisList3Corrupted)
+print(thisList3Repaired)
+		\end{lstlisting}
+	\end{enumerate}
+
+	\section*{Aufgabe 2: Einfache Funktionen}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir benutzen wieder den Index-Operator \texttt{[::-1]}. Eigentlich schreibt man den ersten Buchstaben einer Funktion klein (lowerCamelCase) und den ersten Buchstaben einer Klasse groß (UpperCamelCase).
+		\begin{lstlisting}
+thisList = ['Otto', 'Level', 'Leseesel', [1, 2, 3], 'Kajak', 'Mueller', 'Retter', 'Rotor', [5, 6, 7], 'Effe', 'Meier']
+
+### Bitte ergänzen Sie hier Ihren Programmcode ###
+def CheckForPalindroms(x):
+	liste = []
+	for idx, value in enumerate(x):
+		if type(value) is str:
+			if value.lower() == value[::-1].lower():
+				liste.append(idx)
+	return liste
+
+### Führen Sie anschließend nachfolgenden Programmcode aus, um Ihre Lösung zu überprüfen ###
+CheckForPalindroms(thisList)
+		\end{lstlisting}
+		\item Dass der folgende Quelltext beim Ausführen einen Fehler gibt, ist beabsichtigt und soll auch so sein:
+		\begin{lstlisting}
+### Bitte ergänzen Sie hier Ihren Programmcode ###
+def splitNumber(x):
+	try:
+		ganzeZahl = int(x)
+		rest = x - ganzeZahl
+		return ganzeZahl, rest
+	except:
+		print("Bitte nur Zahlen eingeben")
+		raise TypeError("Input has wrong type!")
+
+### Führen Sie anschließend nachfolgenden Programmcode aus, um Ihre Lösung zu überprüfen ###
+print(splitNumber(3.56))
+print(splitNumber("Hallo"))
+		\end{lstlisting}
+	\end{enumerate}
+
+	\section*{Aufgabe 3: Klassendefinition \& weitere Funktionen}
+	\begin{enumerate}[label=(\alph*)]
+		\item Klasse \texttt{Rechteck}
+		\begin{lstlisting}
+### Bitte ergänzen Sie hier Ihren Programmcode ###
+import json
+
+class Rechteck:
+	id = None
+	width = None
+	height = None
+	area = None
+
+	def __init__(self, id, w, h):
+		self.id = id
+		self.width = w
+		self.height = h
+		self.area = self.DetermineArea()
+
+	def DetermineArea(self):
+		return self.height * self.width
+
+	def __str__(self):
+		return f"Rechteck {self.id} mit Breite {self.width}, Höhe {self.height}, Fläche {self.area}"
+
+	def Load(filename):
+		liste = []
+		with open(filename) as file:
+			data = json.load(file)
+			for id in data.keys():
+				r = Rechteck(id, data[id]["width"], data[id]["height"])
+				liste.append(r)
+		return liste
+
+### Führen Sie anschließend nachfolgenden Programmcode aus, um Ihre Lösung zu überprüfen ###
+
+rectangulars = Load('Rectangulars.json')
+for rec in rectangulars:
+	print(rec)
+
+		\end{lstlisting}
+		\item Cäsar-Chiffre
+		\begin{lstlisting}
+verschluesselteNachricht = "Ylmny Buomuozauvy aymwbuzzn! Scjjcy :)"
+schluessel = 20
+
+### Bitte ergänzen Sie hier Ihren Programmcode ###
+def verschieben(x, anzahl):
+	if (x.isupper()):
+		return chr((ord(x) + anzahl - 65) % 26 + 65)
+	else:
+		return chr((ord(x) + anzahl - 97) % 26 + 97)
+
+def Decrypt(x, anzahl):
+	result = ""
+	for letter in x:
+		if letter not in [" ", ":", ")", "!"]:
+			result += verschieben(letter, -anzahl)
+		else:
+			result += letter
+	return result
+
+### Führen Sie anschließend nachfolgenden Programmcode aus, um Ihre Lösung zu überprüfen ###
+Decrypt(verschluesselteNachricht, schluessel)
+		\end{lstlisting}
+	\end{enumerate}
+
+\end{document}
