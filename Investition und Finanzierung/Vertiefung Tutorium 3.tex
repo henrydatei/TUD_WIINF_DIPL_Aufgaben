@@ -1,0 +1,163 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+\DeclareMathOperator{\RBF}{RBF}
+
+\title{\textbf{Investition und Finanzierung, Vertiefung Tutorium 3}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Bruttomethode}
+	Die Betriebskosten sind Personalkosten, Reparaturkosten, Energiekosten und sonstige Kosten, damit
+	\begin{align}
+		BK_{alt} &= 8000 + 3500 + 2250 + 800 = 14550 \notag \\
+		BK_{neu} &= 6000 + 2000 + 2000 + 700 = 10700 \notag
+	\end{align}
+	In der Formelsammlung findet man die Formel zum Bruttoprinzip:
+	\begin{align}
+		\underbrace{BK_{alt}  + L^{alt}_{n_{t-1}} - L^{alt}_{n_t} + L^{alt}_{n_{t-1}}\cdot i}_{\text{Vergleichskosten alte Maschine}} \gtreqless \underbrace{BK_{neu} + \frac{I_0^{neu}}{n_{neu}} + \frac{I_0^{neu}}{2}\cdot i}_{\text{Vergleichskosten neue Maschine}} \notag
+	\end{align}
+	Damit sind die Vergleichskosten der alten Maschine $14550 + 10000 - 5000 + 10000\cdot 0.08 = 20350$. Die Vergleichskosten der neuen Maschine sind $10700 + \frac{45000}{8} + \frac{45000}{2}\cdot 0.08 = 18125$. \\
+	$\Rightarrow$ neue Maschine ist besser
+
+	\section*{Nettomethode}
+	Die Betriebskosten sind identisch, nur der Vergleich ändert sich:
+	\begin{align}
+		\underbrace{BK_{alt}}_{\text{Vergleichskosten alte Maschine}} \gtreqless \underbrace{BK_{neu} + \frac{I_0^{neu} - L_n^{alt}}{n_{neu}} + \frac{I_0^{neu} - L_n^{alt}}{2}\cdot i}_{\text{Vergleichskosten neue Maschine}} \notag
+	\end{align}
+	Damit sind die Vergleichskosten für die alte Maschine 14550 und für die neue Maschine $10700 + \frac{45000-10000}{8} + \frac{45000-10000}{2}\cdot 0.08 = 16475$. \\
+	$\Rightarrow$ alte Maschine ist besser
+
+	\section*{Kostenfunktion}
+	Die Kostenfunktion für Maschine A ist
+	\begin{align}
+		K_A(800000) &= 350000 + 50000 + (0.2 + 0.1 + 0.15)\cdot 800000 + \frac{1200000 - 100000}{7} + \frac{1200000+100000}{2}\cdot 0.08 \notag \\
+		&= 969142.86 \notag
+	\end{align}
+	Die Kostenfunktion für Maschine B ist
+	\begin{align}
+		K_B(800000) &= 400000 + 75000 + (0.2 + 0.07 + 0.1)\cdot 800000 + \frac{1600000 - 300000}{8} + \frac{1600000+300000}{2}\cdot 0.08 \notag \\
+		&= 1009500 \notag
+	\end{align}
+	$\Rightarrow$ Maschine A hat die geringeren Kosten.
+	
+	\section*{Gewinnfunktion}
+	Gewinn auf den Maschinen:
+	\begin{align}
+		G_A(800000) &= 1.5\cdot 800000 - 969142.86 = 230857.14 \notag \\
+		G_B(800000) &= 1.5\cdot 800000 - 1009500 = 190500 \notag
+	\end{align}
+	$\Rightarrow$ Maschine A hat den größeren Gewinn.
+	
+	\section*{Kritische Ausbringungsmenge}
+	fixe Kosten:
+	\begin{align}
+		K_{fix,A} &= 350000 + 50000 + \frac{1200000 - 100000}{7} + \frac{1200000+100000}{2}\cdot 0.08 = 609142.86 \notag \\
+		K_{fix,B} &= 400000 + 75000 + \frac{1600000 - 300000}{8} + \frac{1600000+300000}{2}\cdot 0.08 = 713500 \notag
+	\end{align}
+	variable Stückkosten:
+	\begin{align}
+		k_{var,A} &= 0.2 + 0.1 + 0.15 = 0.45 \notag \\
+		k_{var,B} &= 0.2 + 0.07 + 0.1 = 0.37 \notag
+	\end{align}
+	Damit ist die kritische Ausbringungsmenge
+	\begin{align}
+		x_{krit} &= \frac{K_{fix,A} - K_{fix,B}}{k_{var,B} - k_{var,A}} \notag \\
+		&= \frac{609142.86 - 713500}{0.37 - 0.45} \notag \\
+		&= 1304464.25 \notag \\
+		&= 1304465 \notag
+	\end{align}
+	
+	\section*{Gewinn}
+	Automat A:
+	\begin{align}
+		E &= 12\cdot 15000 = 180000 \notag \\
+		K &= 10000 + (2 + 4.5)\cdot 15000 + \frac{150000 + 20000}{5} + \frac{150000 + 20000}{2}\cdot 0.06 = 146600 \notag \\
+		G &= 180000 - 146600 = 33400 \notag
+	\end{align}
+	Automat B:
+	\begin{align}
+		E &= 10\cdot 20000 = 200000 \notag \\
+		K &= 12000 + (3 + 2.2)\cdot 20000 + \frac{210000 + 25000 - 25000}{5} + \frac{210000 + 25000 + 25000}{2}\cdot 0.06 = 165800 \notag \\
+		G &= 200000 - 165800 = 34200 \notag
+	\end{align}
+	
+	\section*{Bruttorentabilität}
+	Automat A
+	\begin{align}
+		R_{B,A} = \frac{G + Z}{\text{durchschnittlich gebundenes Kapital}} = \frac{33400 + \frac{170000}{2}\cdot 0.06}{\frac{170000}{2}} = 45.29\% \notag
+	\end{align}
+	Automat B
+	\begin{align}
+		R_{B,B} = \frac{34200 + \frac{235000 + 25000}{2}\cdot 0.06}{\frac{235000 + 25000}{2}} = 32.31\% \notag
+	\end{align}
+	
+	\section*{Nettorentabilität}
+	Es gilt $R_N + i = R_B$. Damit
+	\begin{align}
+		R_{N,A} &= 45.29\% - 6\% = 39.29\% \notag \\
+		R_{N,B} &= 32.31\% - 6\% = 26.31\% \notag
+	\end{align}
+	
+	\section*{Amortisationsdauer}
+	Automat A
+	\begin{align}
+		AZ_A = \frac{\text{Kapitaleinsatz}}{G + \text{Abschreibung}} = \frac{170000}{33400 + \frac{170000}{5}} = 2.52 \notag
+	\end{align}
+	Automat B
+	\begin{align}
+		AZ_B = \frac{235000}{34200 + \frac{235000-25000}{5}} = 3.08 \notag
+	\end{align}
+	
+\end{document}
