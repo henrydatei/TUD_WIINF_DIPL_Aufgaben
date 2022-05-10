@@ -1,0 +1,231 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\lstdefinelanguage{JavaScript}{
+	keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break, for, of, document},
+	keywordstyle=\color{lila}\bfseries,
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	ndkeywordstyle=\color{lila}\bfseries,
+	identifierstyle=\color{blue},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{lightgray}\ttfamily,
+	stringstyle=\color{mygreen}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{xml} {language=xml, morekeywords={encoding, newspaper, article, title, id, published, author, xs:schema, xmlns:xs, xs:element, name, xs:sequence, xs:element, type, xs:complexType}}
+\lstdefinestyle{json}{}
+\lstdefinestyle{javascript}{language=javascript}
+\lstdefinestyle{html}{language=html, morekeywords={main}}
+\lstset{language=XML,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	tabsize=2,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space},
+	literate=%
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}1
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Internet and Web Applications, Übung 3}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: Interaction models}
+	Es gab die folgenden 3 Modelle:
+	\begin{itemize}
+		\item Synchronous model (\textit{Click, wait, and refresh user interaction paradigm}): synchronous (user activities are blocked), high degree of dependence between HTTP Request and HTTP Response
+		\item Non blocking model (AJAX): asynchronous (user activities are not blocked), high degree of dependence between HTTP Request and HTTP Response
+		\item Asynchronous model (Comet via long- polling, WebSockets): asynchronous, minimum degree of dependence between HTTP Request and HTTP Response
+	\end{itemize}
+	
+	\section*{Aufgabe 2: JSON}
+	\begin{enumerate}[label=(\alph*)]
+		\item Vorteile: viel weniger Overhead, JavaScript-Support; Nachteil: Daten sind nicht deklarativ
+		\item JSON-Schema:
+		\begin{lstlisting}[style=json]
+{
+	"definitions": {},
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://example.com/newspaper.schema.json",
+	"title": "Root",
+	"type": "object",
+	"required": [
+	"articles"
+	],
+	"properties": {
+		"articles": {
+			"$id": "#root/articles",
+			"title": "Articles",
+			"type": "object",
+			"required": [
+				"article"
+			],
+			"properties": {
+				"article": {
+					"$id": "#root/articles/article",
+					"title": "Article",
+					"type": "array",
+					"default": [],
+					"items": {
+						"$id": "#root/articles/article/items",
+						"title": "Items",
+						"type": "object",
+						"required": [
+							"title",
+							"author",
+							"published",
+							"_id"
+						],
+						"properties": {
+							"title": {
+								"$id": "#root/articles/article/items/title",
+								"title": "Title",
+								"type": "string",
+								"default": "",
+								"examples": [
+									"First man on moon"
+								],
+								"pattern": "^.*$"
+							},
+							"author": {
+								"$id": "#root/articles/article/items/author",
+								"title": "Author",
+								"type": "string",
+								"default": "",
+								"examples": [
+									"Ted Markson"
+								],
+								"pattern": "^.*$"
+							},
+							"published": {
+								"$id": "#root/articles/article/items/published",
+								"title": "Published",
+								"type": "object",
+								"required": [
+									"day",
+									"month",
+									"year"
+								],
+								"properties": {
+									"day": {
+										"$id": "#root/articles/article/items/published/day",
+										"title": "Day",
+										"type": "integer",
+										"examples": [
+											21
+										],
+										"default": 0
+									},
+									"month": {
+										"$id": "#root/articles/article/items/published/month",
+										"title": "Month",
+										"type": "integer",
+										"examples": [
+											7
+										],
+										"default": 0
+									},
+									"year": {
+										"$id": "#root/articles/article/items/published/year",
+										"title": "Year",
+										"type": "integer",
+										"examples": [
+											1969
+										],
+										"default": 0
+									}
+								}
+							},
+							"_id": {
+								"$id": "#root/articles/article/items/_id",
+								"title": "_id",
+								"type": "string",
+								"default": "",
+								"examples": [
+									"5"
+								],
+								"pattern": "^.*$"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+		\end{lstlisting}
+	\end{enumerate}
+	
+	\section*{Aufgabe 3: Web Sockets}
+	HTML-Seite
+	\begin{lstlisting}[style=html]
+<!doctype html>
+	<head>
+		<script type="text/javascript">
+			function WS() {
+				var ws = new WebSocket("ws://echo.websocket.events")
+				ws.onopen = function() {ws.send("Hallo")}
+				ws.onmessage = function(evt) {alert(evt.data)}
+			}
+		</script>
+	</head>
+	<body>
+		<a href="javascript:WS()">Run example</a>
+	</body>
+</html>
+	\end{lstlisting}
+
+\end{document}
