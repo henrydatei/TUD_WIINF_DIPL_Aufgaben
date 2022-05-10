@@ -1,0 +1,104 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Kryptografie und -analyse, Übung 3}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: Time-Memory-Tradeoff}
+	\begin{enumerate}[label=(\alph*)]
+		\item Wir generieren $2^{25}$ Schlüssel, für die wir $2^{25}$ Iterationen berechnen, also haben wir $2^{25}\cdot 2^{25} = 2^{50}$ Schlüssel berechnet. Die Wahrscheinlichkeit ist dann $\frac{2^{50}}{2^{64}} = 2^{-14}$.
+		\item Speicheraufwand: $\text{\# Startschlüssel} \cdot \text{Länge(Startschlüssel + Schlüsseltexte)} = 2^{\frac{56}{3}}\cdot 2\cdot 56\text{ Bit} = 4.66\cdot 10^{7}\text{ Bit} = 5.83\text{ MB}$ \\
+		Verschlüsselungsoperationen: $2^{\frac{56}{3}}\cdot 2^{\frac{2\cdot 56}{3}} = 2^{56}$ \\
+		Der Angreifer findet seinen Schlüssel $c_{it}$ (Aufwand für die Suche: $2^{\frac{56}{3}}$). Damit muss er ausgehend vom Startschlüssel für diese Reihe, $k_{i1}$, die ganze Reihe neu durchrechnen $\to$ $2^{\frac{2\cdot 56}{3}} - 1$.
+	\end{enumerate}
+
+	\section*{Aufgabe 2: Feistel-Chiffre}
+	Aufteilung des Klartextes in 2 Blöcke: $B_1 = 10100110$ und $B_2 = 11001000$, Ver- und Entschlüsselung von Block 1:
+	\begin{itemize}
+		\item Verschlüsselung:
+		\begin{itemize}
+			\item Runde 1, linke Hälfte $L_1 = 0110$, rechte Hälfte $R_1 = S(0110 \oplus 1101) \oplus 1010 = S(1011) \oplus 1010 = 0100 \oplus 1010 = 1110$
+			\item Runde 2, linke Hälfte $L_2 = 1110$, rechte Hälfte $R_2 = S(1110 \oplus 0001) \oplus 0110 = S(1111) \oplus 0110 = 1011 \oplus 0110 = 1101$
+			\item[$\Rightarrow$] Schlüsseltext: 1110$\vert$1101
+		\end{itemize}
+		\item Entschlüsselung:
+		\begin{itemize}
+			\item Runde 1, linke Hälfte $L_1 = S(1110 \oplus 0001) \oplus 1101 = S(1111) \oplus 1101 = 1011 \oplus 1101 = 0110$, rechte Hälfte $R_1 = 1110$, 
+			\item Runde 2, linke Hälfte $L_2 = S(0110 \oplus 1101) \oplus 1110 = S(1011) \oplus 1110 = 0100 \oplus 1110 = 1010$, rechte Hälfte $R_2 = 0110$
+			\item[$\Rightarrow$] Klartext: 1010$\vert$0110
+		\end{itemize}
+	\end{itemize}
+	
+	\section*{Aufgabe 3: Designkriterien}
+	Die Abhängigkeitsmatrix ist
+	\begin{center}
+		\begin{tabular}{c|cccc}
+			 & $y_3$ & $y_2$ & $y_1$ & $y_0$ \\
+			 \hline
+			 $x_3$ & 0 & 0 & 0 & 1 \\
+			 $x_2$ & 0 & 0 & 1 & 0 \\
+			 $x_1$ & 1 & 0 & 0 & 0 \\
+			 $x_0$ & 0 & 1 & 0 & 0 \\
+		\end{tabular}
+	\end{center}
+	Die Kriterien sind
+	\begin{itemize}
+		\item Vollständigkeit: $\forall a_{ij} >0$ $\Rightarrow$ $f$ ist nicht vollständig, Grad der Vollständigkeit $\frac{4}{16} = \frac{1}{4}$
+		\item Avalance-Effekt: $\frac{1}{mn}\sum a_{ij} \approx 0.5$ $\Rightarrow$ $f$ besitzt nicht den Avalance-Effekt
+		\item Linearität: $\forall a_{ij}\in \{0,1\}$ $\Rightarrow$ $f$ ist linear
+	\end{itemize}
+
+\end{document}
