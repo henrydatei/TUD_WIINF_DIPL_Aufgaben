@@ -1,0 +1,294 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=python,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	morekeywords={split, as, dot, read\_csv, loc, between, groupby, sort\_values},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	tabsize=2,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space},
+	literate=%
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}1
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Prescriptive Analytics, Seminar 3}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	\begin{lstlisting}
+# files from first session
+from InputData import InputData
+from OutputData import OutputJob
+# Additionally
+import numpy
+
+	\end{lstlisting}
+	\section*{Aufgabe 1: Codierung und Bewertung einer Lösung}
+	\begin{enumerate}[label=(\alph*)]
+		\item Klasse \texttt{Solution}
+		\begin{lstlisting}
+class Solution:
+	OutputJobs = {}
+	Makespan = None
+	TotalTardiness = None
+	TotalWeightedTardiness = None
+	Permutation = None
+
+	def __init__(self, inputJobs, reihenfolge):
+		self.Makespan = -1
+		self.TotalTardiness = -1
+		self.TotalWeightedTardiness = -1
+		self.Permutation = reihenfolge
+
+		for idx, value in enumerate(inputJobs):
+			self.OutputJobs[idx] = OutputJob(value)
+
+	def __str__(self):
+		return f"Solution({self.OutputJobs = }, {self.Makespan = }, {self.TotalTardiness = }, {self.TotalWeightedTardiness = }, {self.Permutation = })"
+
+#### Führen Sie im Anschluss folgenden Code aus ####
+data = InputData("InputFlowshopSIST.json")
+Permutation = [x-1 for x in [6,5,7,4,8,3,9,2,10,1,11]]
+DevilSolution = Solution(data.InputJobs, Permutation) 
+print(DevilSolution)
+		\end{lstlisting}
+		\item Klasse \texttt{EvaluationLogic}. Diese Klasse ist ziemlich sinnlos, sie enthält keine Attribute, sondern nur Funktionen
+		\begin{lstlisting}
+class EvaluationLogic:    
+	def DefineStartEnd(self, currentSolution):    
+		#####
+		# schedule first job: starts when finished at previous stage
+		firstJob = currentSolution.OutputJobs[currentSolution.Permutation[0]]
+		firstJob.EndTimes = numpy.cumsum([firstJob.ProcessingTime(x) for x in range(len(firstJob.EndTimes))])
+		firstJob.StartTimes[1:] = firstJob.EndTimes[:-1]
+		#####
+		# schedule further jobs: starts when finished at previous stage and the predecessor is no longer on the considered machine
+		for j in range(1,len(currentSolution.Permutation)):
+			currentJob = currentSolution.OutputJobs[currentSolution.Permutation[j]]
+			previousJob = currentSolution.OutputJobs[currentSolution.Permutation[j-1]]
+			# first machine
+			currentJob.StartTimes[0] = previousJob.EndTimes[0]
+			currentJob.EndTimes[0] = currentJob.StartTimes[0] + currentJob.ProcessingTime(0)
+			# other machines
+			for i in range(1,len(currentJob.StartTimes)):
+				currentJob.StartTimes[i] = max(previousJob.EndTimes[i], currentJob.EndTimes[i-1])
+				currentJob.EndTimes[i] = currentJob.StartTimes[i] + currentJob.ProcessingTime(i)
+		#####
+		# Save Makespan and return Solution
+		currentSolution.Makespan = currentSolution.OutputJobs[currentSolution.Permutation[-1]].EndTimes[-1]
+
+EvaluationLogic().DefineStartEnd(DevilSolution)
+print(DevilSolution.Makespan)
+		\end{lstlisting}
+		\item Die Dokumentation des \texttt{csv}-Moduls gibt es hier: \url{https://docs.python.org/3/library/csv.html}
+		\begin{lstlisting}
+import csv
+
+def WriteSolToCsv(self):
+	with open("output.csv", "w") as file:
+		writer = csv.writer(file)
+		writer.writerow(["Machine", "Job", "Start_Setup", "End_Setup", "Start", "End"])
+		for maschine in range(5):
+			for jobID in self.Permutation:
+				currentJob = self.OutputJobs[jobID]
+				writer.writerow([maschine + 1, jobID, currentJob.StartSetups[maschine], currentJob.EndSetups[maschine], currentJob.StartTimes[maschine], currentJob.EndTimes[maschine]])
+
+setattr(Solution, "WriteSolToCsv", WriteSolToCsv)
+
+DevilSolution.WriteSolToCsv()
+		\end{lstlisting}
+		\item Super simpel, wenn man weiß, was man machen muss. Ein bisschen Dokumentation hätte dem externen Quellcode schon gut getan
+		\begin{lstlisting}
+from Gantt import *
+
+GanttChartFromCsv("output.csv", "gantt.html")
+		\end{lstlisting}
+	\end{enumerate}
+
+	\section*{Aufgabe 2: Dispatching Rules zur Erstellung von Lösungen}
+	\begin{enumerate}[label=(\alph*)]
+		\item Es gibt viele Funktionen die eine zufällige Permutation erzeugen. Ich habe mich hier für \texttt{numpy.random.shuffle()} entschieden.
+		\begin{lstlisting}
+def ROS(anzahlFolgen, inputData):
+	bestSolution = None
+	reihenfolge = numpy.arange(11)
+	for i in range(anzahlFolgen):
+		numpy.random.shuffle(reihenfolge)
+		sol = Solution(inputData.InputJobs, reihenfolge)
+		EvaluationLogic().DefineStartEnd(sol)
+		if bestSolution == None or bestSolution.Makespan > sol.Makespan:
+			bestSolution = sol
+
+	print("Reihenfolge " + str(bestSolution.Permutation) + " ergibt Makespan " + str(bestSolution.Makespan))
+	return sol
+
+ROS(50, data)
+		\end{lstlisting}
+		\item Wir kombinieren \texttt{ROS} mit \texttt{Itertools} um alle Permutationen durchlaufen zu lassen:
+		\begin{lstlisting}
+from itertools import permutations
+
+def checkAllPermutations(inputData):
+	bestSolution = None
+	allPermutations = permutations(range(11))
+	print("Rechenzeit: " + str(len(allPermutations) * 0.0011259999999992942 / 60) + " Minuten")
+	for reihenfolge in allPermutations:
+		sol = Solution(inputData.InputJobs, reihenfolge)
+		EvaluationLogic().DefineStartEnd(sol)
+		if bestSolution == None or bestSolution.Makespan > sol.Makespan:
+			bestSolution = sol
+
+	print("Reihenfolge " + str(bestSolution.Permutation) + " ergibt Makespan " + str(bestSolution.Makespan))
+	return sol
+		\end{lstlisting}
+		Um die Rechenzeit halbwegs exakt abgeben zu können, müssen wir ermitteln, wie lange es für eine Permutation dauert. Dafür gibt es \texttt{time}:
+		\begin{lstlisting}
+import time
+
+start = time.process_time()
+reihenfolge = range(11)
+sol = Solution(data.InputJobs, reihenfolge)
+EvaluationLogic().DefineStartEnd(sol)
+print(time.process_time() - start)
+		\end{lstlisting}
+		\item First-come-first-serve ist ziemlich einfach. Die Reihenfolge ist einfach 1, 2, 3, ...
+		\begin{lstlisting}
+def FCFS(inputData):
+	reihenfolge = range(11)
+	sol = Solution(inputData.InputJobs, reihenfolge)
+	EvaluationLogic().DefineStartEnd(sol)
+
+	return sol
+
+FCFSSol = FCFS(data)
+print(FCFSSol)
+		\end{lstlisting}
+		Für Shortest-Processing-Time müssen wir erst alle ProcessingTimes für jeden Job aufaddieren und danach sortieren:
+		\begin{lstlisting}
+def SPT(inputData):
+	procTimes = {}
+	for job in inputData.InputJobs:
+		procTimes[job.JobId] = sum(value[1] for value in job.Operations)
+	reihenfolge = {k-1: v for k, v in sorted(procTimes.items(), key=lambda item: item[1])}
+	print(reihenfolge)
+	sol = Solution(inputData.InputJobs, list(reihenfolge.keys()))
+	EvaluationLogic().DefineStartEnd(sol)
+
+	return sol
+
+SPTSol = SPT(data)
+print(SPTSol)
+		\end{lstlisting}
+		Longest-Processing-Time ist fast das selbe, nur, dass wir hier anders herum sortieren:
+		\begin{lstlisting}
+def LPT(inputData):
+	procTimes = {}
+	for job in inputData.InputJobs:
+		procTimes[job.JobId] = sum(value[1] for value in job.Operations)
+	reihenfolge = {k-1: v for k, v in sorted(procTimes.items(), key=lambda item: item[1], reverse = True)}
+	print(reihenfolge)
+	sol = Solution(inputData.InputJobs, list(reihenfolge.keys()))
+	EvaluationLogic().DefineStartEnd(sol)
+
+	return sol
+
+LPTSol = LPT(data)
+print(LPTSol)
+		\end{lstlisting}
+		\item NEH-Heuristik war schon gegeben
+		\item Wieder so eine völlig sinnlose Klasse mit nur einer Funktion
+		\begin{lstlisting}
+class ConstructiveHeuristic:
+	inputData = None
+
+	def __init__(self, inputData):
+		self.inputData = inputData
+
+	def useRule(self, name):
+		if name  == "ros":
+			return ROS(10, self.inputData)
+		if name == "fcfs":
+			return FCFS(self.inputData)
+		if name == "spt":
+			return SPT(self.inputData)
+		if name == "lpt":
+			return LPT(self.inputData)
+		if name == "neh":
+			return NEH(self.inputData)
+		\end{lstlisting}
+	\end{enumerate}
+
+	\section*{Aufgabe 3: Liefertreue}
+	\begin{enumerate}[label=(\alph*)]
+		\item schon gegeben
+		\item DueDates sammeln und nach diesen sortieren
+		\begin{lstlisting}
+def EDD(inputData):
+	dueTimes = {}
+	for job in inputData.InputJobs:
+		dueTimes[job.JobId] = job.DueDate
+	reihenfolge = {k-1: v for k, v in sorted(dueTimes.items(), key=lambda item: item[1])}
+	print(reihenfolge)
+	sol = Solution(inputData.InputJobs, list(reihenfolge.keys()))
+	EvaluationLogic().DefineStartEnd(sol)
+	EvaluationLogic().CalculateTardiness(sol)
+
+	return sol
+
+SPTSol = SPT(data)
+print(SPTSol)
+		\end{lstlisting}
+	\end{enumerate}
+
+\end{document}
