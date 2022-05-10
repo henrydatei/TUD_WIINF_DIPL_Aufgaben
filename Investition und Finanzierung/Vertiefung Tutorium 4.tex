@@ -1,0 +1,144 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{java} {language=java}
+\lstset{language=java,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+\DeclareMathOperator{\RBF}{RBF}
+
+\title{\textbf{Investition und Finanzierung, Vertiefung Tutorium 4}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Zinsänderung}
+	Wenn der Zins sinkt, so werden Erträge aus der Zukunft weniger abgezinst und damit sind sie heute mehr wert $\Rightarrow$ der Barwert steigt $\Rightarrow$ das Projekt wird vorteilhafter
+
+	\section*{Lineare Interpolation}
+	Die Formel für die lineare Interpolation ist
+	\begin{align}
+		f(x) = y_1 + (x - x_1)\cdot\frac{y_2-y_1}{x_2-x_1} \notag
+	\end{align}
+	Setzen wir auf die $x$-Achse den Kapitalwert und auf die $y$-Achse den Zinssatz, so erhalten wir folgendes Diagramm (lineare Interpolation schon mit eingezeichnet):
+	\begin{center}
+		\begin{tikzpicture}
+			\begin{axis}[
+				xmin=-6, xmax=48, xlabel={$C_0$},
+				ymin=0, ymax=10, ylabel={$i$ in \%},
+				samples=400,
+				axis x line=middle,
+				axis y line=middle,
+				domain=-6:48,
+				]
+				\addplot[blue, mark=x,only marks] coordinates {
+					(-5.65,7)
+					(47.1,5)
+				};
+				\addplot[blue, mark=none] {-0.0379147*x + 6.78578};
+				
+			\end{axis}
+		\end{tikzpicture}
+	\end{center}
+	Wir interessieren uns genau für den Punkt, wo $C_0=0$, also
+	\begin{align}
+		i = f(0) &= y_1 + (x - x_1)\cdot\frac{y_2-y_1}{x_2-x_1} \notag \\
+		&= 7\% + (0-(-5.65))\cdot\frac{5\% - 7\%}{47.1 - (-5.65)} \notag \\
+		&= 6.79\% \notag
+	\end{align}
+
+	\section*{Newton-Verfahren}
+	Wir brauchen dazu den Kapitalwert in Abhängigkeit von $q$:
+	\begin{align}
+		C_0(q) &= -1000 + \frac{700}{q} + \frac{500}{q^2} \notag \\
+		C_0'(q) &= -\frac{700}{q^2} - \frac{1000}{q^3} \notag
+	\end{align}
+	Damit gilt
+	\begin{align}
+		q_1 &= q_0 - \frac{C_0(q_0)}{C'(q_0)} \notag \\
+		&= 1.12 - \frac{23.597}{-1269.82} \notag \\
+		&= 1.1386 \notag
+	\end{align}
+	$\Rightarrow i_1 = 13.86\%$
+	
+	\section*{Kapitalwert}
+	Für die verschiedenen Nutzungsdauern ergeben sich folgende Kapitalwerte:
+	\begin{itemize}
+		\item 0 Jahre: $C_0 = -300 + \frac{300}{1.15^0} = 0$ 
+		\item 1 Jahr: $C_0 = -300 + \frac{120}{1.15} + \frac{240}{1.15} = 13.043$
+		\item 2 Jahre: $C_0 = -300 + \frac{120}{1.15} + \frac{115}{1.15^2} + \frac{180}{1.15^2} = 27.41$
+		\item 3 Jahre: $C_0 = -300 + \frac{120}{1.15} + \frac{115}{1.15^2} + \frac{95}{1.15^3} + \frac{120}{1.15^3} = 32.67$
+		\item 4 Jahre: $C_0 = -300 + \frac{120}{1.15} + \frac{115}{1.15^2} + \frac{95}{1.15^3} + \frac{75}{1.15^4} + \frac{70}{1.15^4} = 36.67$
+		\item 5 Jahre: $C_0 = -300 + \frac{120}{1.15} + \frac{115}{1.15^2} + \frac{95}{1.15^3} + \frac{75}{1.15^4} + \frac{40}{1.15^5} + \frac{0}{1.15^5} = 16.53$
+	\end{itemize}
+	$\Rightarrow$ optimale Haltedauer 4 Jahre, Kapitalwert 36.67
+	
+	\section*{Annuität}
+	Die Annuitätenformel ist
+	\begin{align}
+		A = C_0\cdot\frac{q^n\cdot i}{q^n-1} \notag
+	\end{align}
+	Damit ergeben sich für die verschiedenen Haltedauern die folgenden Annuitäten:
+	\begin{itemize}
+		\item 1 Jahr: $A = 13.043 \cdot \frac{1.15^1\cdot 0.15}{1.15^1 - 1} = 14.999$
+		\item 2 Jahre: $A = 27.41 \cdot \frac{1.15^2\cdot 0.15}{1.15^2 - 1} = 16.86$
+		\item 3 Jahre: $A = 32.67 \cdot \frac{1.15^3\cdot 0.15}{1.15^3 - 1} = 14.309$
+		\item 4 Jahre: $A = 36.67 \cdot \frac{1.15^4\cdot 0.15}{1.15^4 - 1} = 12.84$
+		\item 5 Jahre: $A = 16.53 \cdot \frac{1.15^5\cdot 0.15}{1.15^5 - 1} = 4.93$
+	\end{itemize}
+	
+	\section*{Ertragssteuern}
+	Die Abschreibung beträgt $\frac{15000 - 3000}{4} = 3000$, der Zinssatz $i^S = 0.05\cdot (1-0.38) = 0.031$. Damit ergibt sich:
+	\begin{align}
+		C_0^S &= -15 + \frac{4000 + 0.38\cdot (4000 - 3000)}{1.031^1} + \frac{2500 + 0.38\cdot (2500 - 3000)}{1.031^2} + \frac{5500 + 0.38\cdot (5500 - 3000)}{1.031^3} \notag \\
+		&+ \frac{4000 + 0.38\cdot (4000 - 3000)}{1.031^4} + \frac{3000}{1.031^5} \notag \\
+		&= 1052.60 \notag
+	\end{align}
+	
+\end{document}
