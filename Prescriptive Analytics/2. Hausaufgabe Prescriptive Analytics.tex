@@ -1,0 +1,214 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=python,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	morekeywords={split, as, dot, read\_csv, loc, between, groupby, sort\_values},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	tabsize=2,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space},
+	literate=%
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}1
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Prescriptive Analytics, Hausaufgabe 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: First Things First}
+	\begin{enumerate}[label=(\alph*)]
+		\item den Code kann man mehr oder weniger aus dem Seminar abschreiben und ein bisschen anpassen
+		\begin{lstlisting}
+# Schreiben Sie hier Ihren Programmcode
+from InputData import *
+from OutputData import *
+from EvaluationLogic import *
+
+data = InputData("VFR10_10_10_SIST.json")
+reihenfolge = [7, 6, 8, 10, 2, 9, 1, 4, 3, 5]
+recommendedSolution = Solution(data.InputJobs, [x-1 for x in reihenfolge])
+EvaluationLogic().DefineStartEnd(recommendedSolution)
+print(recommendedSolution)
+		\end{lstlisting}
+		\item auch hier nichts kompliziertes
+		\begin{lstlisting}
+# Schreiben Sie hier Ihren Programmcode
+simpleSolution = Solution(data.InputJobs, range(10))
+EvaluationLogic().DefineStartEnd(simpleSolution)
+print(f"The objective delta is {recommendedSolution.Makespan - simpleSolution.Makespan}.")
+		\end{lstlisting}
+		\item Wir gehen durch alle Jobs durch und schauen ob die Endzeit auf der letzten Maschine größer als der DueDate ist. Wenn ja, ist dieser Job verspätet.
+		\begin{lstlisting}
+# Schreiben Sie hier Ihren Programmcode
+def CalculateTardyJobs(sol):
+	tardyJobs = 0
+	for job in sol.OutputJobs.values():
+		end = job.EndTimes[-1]
+		dueDate = job.DueDate
+		if end > dueDate:
+			tardyJobs += 1
+	return tardyJobs
+
+print(f"Tardy Jobs of simplesolution: {CalculateTardyJobs(simpleSolution)}.")
+print(f"Tardy Jobs of recommendedSolution: {CalculateTardyJobs(recommendedSolution)}.")
+		\end{lstlisting}
+	\end{enumerate}
+
+	\section*{Aufgabe 2: Zulässigkeitsprüfung}
+	\begin{lstlisting}
+# Schreiben Sie hier Ihren Programmcode
+def ValidateSolution(sol):
+	errors = []
+
+	# wrong number of IDs
+	if len(sol.Permutation) != 10:
+		errors.append("Detected wrong number of IDs in solution representation")
+
+	# duplicate IDs
+	if len(sol.Permutation) != len(set(sol.Permutation)):
+		errors.append("Detected duplicate IDs in solution representation")
+
+	# Überschneidung von Start- und Endzeit
+	ueberschneidung = False
+	for job in sol.OutputJobs.values():
+		for start, ende in zip(job.StartTimes, job.EndTimes):
+			if ende < start:
+				ueberschneidung = True
+				break
+	if ueberschneidung:
+		errors.append("Start- und Endzeiten überschneiden sich")
+
+	# Output
+	print("Reported Corruptions:")
+	if len(errors) == 0:
+		print("\t - No corruptions detected")
+	else:
+		for error in errors:
+			print("\t - " + error)
+
+# Führen Sie im Anschluss den folgenden Code aus
+ValidateSolution(simpleSolution)
+ValidateSolution(Solution(data.InputJobs, [0, 3, 2, 3, 1, 4, 5, 8]))
+ValidateSolution(Solution(data.InputJobs, [0, 3, 2, 1, 4, 5, 8, 7, 10, 9, 11, 12]))
+	\end{lstlisting}
+	Wir untersuchen hier die folgenden 3 Fehler, und sammeln alle Fehler in einer Liste, die wir am Ende ausgeben:
+	\begin{itemize}
+		\item Wenn die Permutation nicht 10 Zahlen enthält, so gibt es einen Fehler. Die 10 ist hier fest, weil ich weiß, dass es 10 Jobs gibt, aber wenn man eine andere json-Datei einließt, so kann es eventuell mehr Jobs geben. Dann müsste man die 10 hier anpassen (oder einfach besseren Code schreiben, der automatisch die korrekte Anzahl ermittelt unabhängig von der json-Datei).
+		\item Eine sehr elegante Methode um auf Dopplungen in Listen zu prüfen, ist die Liste in ein set (= Menge) umzuwandeln. Ein set kann nämlich nur jeden Eintrag einmal enthalten und wirft deswegen Dopplungen direkt raus. Bei einem Vergleich der Länge des sets und der originalen Liste kann man herausfinden ob und wie viele Dopplungen es gab.
+		\item Um zu untersuchen, ob sich die Start- und Endzeiten eines Jobs überschneiden, gehen wir einfach durch alle Jobs durch und schauen, ob die Startzeit nach der Endzeit auf jeder Maschine ist. Sollte das der Fall sein, können wir die Suche abbrechen und ausgeben, dass es Überschneidungen gibt.
+	\end{itemize}
+	Zuletzt geben wir noch die Fehler alle aus. Das \texttt{\textbackslash t} stellt einen Tab dar, somit ist der Output etwas eingerückt.
+
+	\section*{Aufgabe 3: Die CDS Heuristik von Campell, Dudek \& Smith}
+	\begin{lstlisting}
+import pandas as pd
+
+def CampellDudekSmith2(inputJobs):
+	# Matrix aufbauen
+	processingTimes = []
+	for job in inputJobs:
+		processingTimes.append([operation[1] for operation in job.Operations]) # Extrahieren der ProcessingTimes für jeden Job
+	df = pd.DataFrame(processingTimes)
+
+	# Variablen setzen
+	solutions = []
+	m = len(inputJobs[0].Operations) # Anzahl Maschinen
+	n = len(inputJobs) # Anzahl Jobs
+	p = m - 1
+	for k in range(1, p + 1):
+		processingTimesM1 = df.iloc[:,0:k].sum(axis = 1) # Zeilenweise Summe der ersten k Spalten
+		processingTimesM2 = df.iloc[:,n-k:n].sum(axis = 1) # Zeileweise Summe der letzten k Spalten
+		TwoMaschineProblem = pd.DataFrame([processingTimesM1, processingTimesM2]).transpose() # Zusammenfügen der beiden Spalten in ein DataFrame, Transponieren nötig, damit DataFrame zwei Spalten statt 2 Zeilen enthält
+		sol = Solution(inputJobs, solve2MaschineNJobsProblem(TwoMaschineProblem))
+		EvaluationLogic().DefineStartEnd(sol)
+		solutions.append(sol)
+
+	# finde beste Lösung
+	bestSol = None
+	for solution in solutions:
+		if bestSol == None or bestSol.Makespan > solution.Makespan:
+		bestSol = solution
+
+	return bestSol
+
+def solve2MaschineNJobsProblem(df):
+	vorderePlaetze = []
+	hinterePlaetze = []
+	for n in range(len(df)):
+		min1 = df[0].min() # Minimum der ersten Spalte
+		min2 = df[1].min() # Minimum der zweiten Spalte
+		if min1 < min2:
+			# Ist das Minimum in der ersten Spalte zu finden, dann wird der Job vorne eingefügt
+			vorderePlaetze.append(df[0].idxmin())
+			df.drop(df[0].idxmin(), inplace = True) # Löschen des Jobs
+		else:
+			# Ist das Minimum in der zweiten Spalte zu finden, dann wird der Job hinten eingefügt
+			hinterePlaetze.append(df[1].idxmin())
+			df.drop(df[1].idxmin(), inplace = True) # Löschen des Jobs
+
+return vorderePlaetze + hinterePlaetze[::-1]
+
+print(CampellDudekSmith2(data.InputJobs))
+
+# solve2MaschineNJobsProblem(pd.DataFrame([[186,160],[152,272],[41,153],[61,175],[227,172],[67,219],[81,197],[175,219]])) # zum Testen aus dem Paper
+
+	\end{lstlisting}
+	Wir arbeiten das Flowchart aus dem Paper ab. Zuerst erstellen wir die Matrix der ProcessingTimes und speichern sie in der Variable \texttt{df}. Die Verwendung von Pandas bringt einige Vorteile, wie einfaches Auswählen von Spalten und Summation.
+	
+	Im Paper kann man $p$ Reihenfolgen berechnen lassen und wählt dann davon die beste aus. Man kann $p\le m-1$ wählen, wir wählen $p=m-1$. Wir lassen dann $k$ von 1 bis $p$ laufen (\texttt{range(1,p+1)} liefert [1, 2, ..., $p$]) und für jedes $k$ bauen wir ein 2-Maschinen-Problem. Die Lösung dieses Problems speichern wir dann in der \texttt{solutions}-Liste ab. Das $k$-te 2-Maschinen-Problem sieht so aus, dass wir die Summe der ersten $k$ Spalten als M1 und die Summe der letzten $k$ Spalten als M2 definieren. Haben wir alle $k$ Lösungen, so können wir die beste Lösung anhand der Makespan suchen und zurückgeben.
+	
+	Um das 2-Maschinen-Problem zu lösen ($\nearrow$ Produktion und Logistik) erwarten wir ein Dataframe mit 2 Spalten (für die 2 Maschinen) und $n$ Zeilen (für die Aufträge, die auf beiden Maschinen laufen müssen). Wir vergleichen die kleinsten Prozesszeiten der ersten und zweiten Maschine. Ist das Minimum auf der ersten Maschine, so wird der Auftrag vorne eingefügt; liegt das Minimum auf der zweiten Maschine, so wird der Auftrag hinten eingefügt. Anschließend wird der Auftrag gelöscht. Das Zusammensetzen der vorderen Plätze und der hinteren Plätze liefert dann die optimale Reihenfolge.
+
+\end{document}
