@@ -1,0 +1,216 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=python,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	morekeywords={split, as, dot, read\_csv, loc, between, groupby, sort\_values},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	tabsize=2,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space},
+	literate=%
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}1
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Prescriptive Analytics, Hausaufgabe 4}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: Zeitmessung}
+	\begin{lstlisting}
+from Solver import *
+import timeit
+
+data = InputData("VFR20_10_1_SIST.json") 
+solver = Solver(data, 1008)
+
+localSearch = IterativeImprovement(data, 'BestImprovement', ['Insertion'])
+iteratedGreedy = IteratedGreedy(
+	inputData = data, 
+	numberJobsToRemove = 2, 
+	baseTemperature = 0.8, 
+	maxIterations = 10,
+	localSearchAlgorithm = localSearch)
+
+start = timeit.default_timer()
+solver.RunLocalSearch(
+	constructiveSolutionMethod='NEH',
+	algorithm=iteratedGreedy)
+ende = timeit.default_timer()
+print(f"Runtime: {ende - start} seconds")
+	\end{lstlisting}
+	
+	\section*{Aufgabe 2: Stoppkriterium}
+	Code im Jupyter-Notebook:
+	\begin{lstlisting}
+from Solver import *
+
+data = InputData("VFR20_10_1_SIST.json") 
+solver = Solver(data, 1008)
+
+localSearch = IterativeImprovement(data, 'BestImprovement', ['Insertion'])
+iteratedGreedy = IteratedGreedy(
+	inputData = data, 
+	numberJobsToRemove = 2, 
+	baseTemperature = 0.8, 
+	maxIterations = 10,
+	maxIterationsWithoutImprovement = 2,
+	localSearchAlgorithm = localSearch)
+
+solver.RunLocalSearch(
+	constructiveSolutionMethod='NEH',
+	algorithm=iteratedGreedy)
+	\end{lstlisting}
+	Aktualisierter Code in \texttt{ImprovementAlgorithm.py} (\texttt{\_\_init\_\_}-Methode)
+	\begin{lstlisting}
+def __init__(self, inputData, numberJobsToRemove, baseTemperature, maxIterations, maxIterationsWithoutImprovement = 1000000, localSearchAlgorithm = None):
+	super().__init__(inputData)
+
+	self.NumberJobsToRemove = numberJobsToRemove
+	self.BaseTemperature = baseTemperature
+	self.MaxIterations = maxIterations
+	self.MaxIterationsWithoutImprovement = maxIterationsWithoutImprovement
+
+	if localSearchAlgorithm is not None:
+		self.LocalSearchAlgorithm = localSearchAlgorithm
+	else:
+		self.LocalSearchAlgorithm = IterativeImprovement(self.InputData, neighborhoodTypes=[]) # IterativeImprovement without a neighborhood does not modify the solution
+	\end{lstlisting}
+	\texttt{Run}-Methode (veränderte Zeilen: 6, 7, 15 und 24)
+	\begin{lstlisting}
+def Run(self, currentSolution):
+	currentSolution = self.LocalSearchAlgorithm.Run(currentSolution)
+
+	currentBest = self.SolutionPool.GetLowestMakespanSolution().Makespan
+	iteration = 0
+	withoutImprovement = 0
+	while iteration < self.MaxIterations and withoutImprovement < self.MaxIterationsWithoutImprovement:
+		removedJobs, partialPermutation = self.Destruction(currentSolution)
+		newSolution = self.Construction(removedJobs, partialPermutation)
+
+		newSolution = self.LocalSearchAlgorithm.Run(newSolution)
+
+		if newSolution.Makespan < currentSolution.Makespan:
+			currentSolution = newSolution
+			withoutImprovement = 0
+
+			if newSolution.Makespan < currentBest:
+				print(f'New best solution in iteration {iteration}: {currentSolution}')
+				self.SolutionPool.AddSolution(currentSolution)
+				currentBest = newSolution.Makespan
+
+		elif self.AcceptWorseSolution(currentSolution.Makespan, newSolution.Makespan):
+			currentSolution = newSolution
+			withoutImprovement += 1
+
+		iteration += 1
+
+	return self.SolutionPool.GetLowestMakespanSolution()
+	\end{lstlisting}
+
+	\section*{Aufgabe 3: Rechenstudie}
+	Sammeln der Daten
+	\begin{lstlisting}
+from Solver import *
+import timeit
+
+data = InputData("VFR20_10_1_SIST.json") 
+
+rows = []
+for neighboorhood in ["None", "Insertion", "TaillardInsertion"]:
+	for numberJobsToRemove in [2, 3, 4]:
+		for baseTemperature in [0.5, 1]:
+			for maxIterations in [1, 10]:
+				for iteration in range(3):
+					seed = numberJobsToRemove * maxIterations * iteration
+					solver = Solver(data, seed)
+					if neighboorhood == "None":
+						localSearch = None
+					else:
+						localSearch = IterativeImprovement(data, 'BestImprovement', [neighboorhood])
+					iteratedGreedy = IteratedGreedy(
+						inputData = data, 
+						numberJobsToRemove = numberJobsToRemove, 
+						baseTemperature = baseTemperature, 
+						maxIterations = maxIterations,
+						maxIterationsWithoutImprovement = 100,
+						localSearchAlgorithm = localSearch)
+
+					start = timeit.default_timer()
+					solver.RunLocalSearch(
+						constructiveSolutionMethod='NEH',
+						algorithm=iteratedGreedy)
+					ende = timeit.default_timer()
+
+					# build dict
+					row = {}
+					row["Iteration"] = iteration
+					row["LocalSearch"] = neighboorhood
+					row["NumberOfJobsToRemove"] = numberJobsToRemove
+					row["BaseTemperature"] = baseTemperature
+					row["MaxIterations"] = maxIterations
+					row["Seed"] = seed
+					row["Makespan"] = solver.SolutionPool.GetLowestMakespanSolution().Makespan
+					row["Runtime"] = ende - start
+					rows.append(row)
+	\end{lstlisting}
+	Verarbeitung mittels Pandas
+	\begin{lstlisting}
+import pandas as pd
+df = pd.DataFrame(rows)
+df
+df.groupby(["LocalSearch", "NumberOfJobsToRemove", "BaseTemperature", "MaxIterations"]).mean()
+	\end{lstlisting}
+
+\end{document}
