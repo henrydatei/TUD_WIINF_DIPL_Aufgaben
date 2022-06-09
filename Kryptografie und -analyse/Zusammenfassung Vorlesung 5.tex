@@ -1,0 +1,103 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Kryptografie und -analyse, Zusammenfassung Vorlesung 5}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Wie funktioniert der Algorithmus DES prinzipiell?}
+	Feistel-Chiffre mit 16 Runden, Einteilung der Nachricht in Blöcke der Länge 64 Bit, Schlüssel der Länge 64 Bit, aber nur 56 Bit frei wählbar, 16 Teilschlüssel werden erzeugt. Permutation vor der ersten und nach der letzten Runde
+
+	\section*{Was ist die größte Schwäche des DES?}
+	kurzer Schlüssel, nur 56 Bit sind frei wählbar.
+	
+	\section*{Wie soll durch die Mehrfachverschlüsselung (3-DES) eine Steigerung der Sicherheit erreicht werden?}
+	Es müssen mehr Schlüsselbits berechnet werden
+	
+	\section*{Warum genügt es nicht, zweimal zu verschlüsseln?}
+	Sicherheitsgewinn ist nur 1 Bit wegen Meet-in-the-middle-Angriff
+	
+	\section*{Was ist das Prinzip der differentiellen Kryptoanalyse?}
+	gewählter Klartext-Schlüsseltext-Angriff, Prinzip
+	\begin{itemize}
+		\item Verwendung von beliebigen Klartextpaaren mit bestimmten Differenzen
+		\item Analyse der Auswirkungen der Klartext-Differenzen auf die Differenzen der resultierenden Schlüsseltextpaare
+		\item Ermittlung wahrscheinlicher Schlüssel
+	\end{itemize}
+	
+	\section*{Wie funktioniert die differentielle Kryptoanalyse einer einzelnen Runde des DES?}
+	Differenz nach Expansion bestimmen, aus Output der S-Boxen wahrscheinlichsten Input bestimmen, Input der S-Box $\oplus$ Output nach Expansion = Schlüssel
+	
+	\section*{Wie werden dabei mögliche Belegungen der Inputvektoren der S-Boxen ermittelt?}
+	Die Output-Differenz aus den S-Boxen ist beobachtbar. Die Input-Differenz vor den S-Boxen $x_S\oplus x_S^\ast$ ist auch berechenbar, weil $(x_E \oplus k) \oplus (x_E^\ast \oplus k) = x_E \oplus x_E^\ast$ mit $x_E$ nach der Expansion. In einer Differenzentabelle kann man dann für die berechnete Input-Differenz und der zugehörigen Output-Differenz alle Kombinationen von $x_S$ und $x_S^\ast$ ablesen, die genau die Output-Differenz erzeugen.
+	
+	\section*{Wie werden im Anschluss mögliche Schlüsselbits bestimmt?}
+	Da wir $x_E$, $x_E^\ast$ und mögliche $x_S$, $x_S^\ast$ nun kennen und folgender Zusammenhang gilt: $x_E \oplus k = x_S$, können wir mögliche Schlüssel berechnen: $k = x_E \oplus x_S$. Wenn man dies für mehrere Nachrichten macht, findet sich irgendwann nur ein Schlüssel, der bei allen Nachrichten als möglicher Schlüssel funktioniert.
+	
+	\section*{Was sind $n$-Runden-Charakteristiken?}
+	Bisher ließen sich alle Möglichkeiten absolut berechnen, aber bei mehr als 5 Runden ist dies nicht mehr möglich. Man muss dann mit Wahrscheinlichkeiten arbeiten und die Differenzen über mehrere Runden verfolgen. Man nennt das Charakteristik.
+	
+	Die Menge der Eingangs- und Ausgangsdifferenzen über $n$ Runden bezüglich irgendeines Klartextpaares, sowie der Klartext- und der Geheimtextdifferenz nennt man $n$-Runden-Charakteristik $\Omega$.
+	
+	\section*{Wie bestimmt man die Wahrscheinlichkeit einer $n$-Runden-Charakteristik?}
+	Jeder Charakteristik $\Omega$ kann man eine Wahrscheinlichkeit $p^\Omega$ zuordnen, dass ein zufälliges Klartextpaar mit der gegebenen Differenz $\Omega_P$ genau die in der Charakteristik angenommenen Differenzen in den einzelnen Runden aufweist. Die Wahrscheinlichkeit einer $n$-Runden-Charakteristik $p^\Omega$ ist dabei das Produkt der Wahrscheinlichkeiten aller 1-Runden-Charakteristiken $p_i^\Omega$ aus denen sich die $n$-Runden-Charakteristik $\Omega$ zusammensetzt:
+	\begin{align}
+		p^\Omega = \prod_{i=1}^{n} p_i^\Omega \notag
+	\end{align}
+	Die Wahrscheinlichkeit einer 1-Runden-Charakteristik ist $p_D$, also die Wahrscheinlichkeit, dass die Eingangsdifferenz dieser Charakteristik die Ausgangsdifferenz dieser Charakteristik verursacht.
+	
+	Ein Sonderfall sind sogenannte iterative Charakteristiken, mit $\Omega_1 = \Omega_2$, welche immer wieder an sich selbst angehängt werden können. Die vertauschten Hälften der Klartextdifferenz sind also gleich der Geheimtextdifferenz derselben Charakteristik. Diese lassen sich also leicht zu beliebig großen $n$-Runden-Charakteristiken zusammenhängen. Während bei nicht-iterativen Charakteristiken die Wahrscheinlichkeit mit größerem $n$, bedingt durch den Avalanche-Effekt, immer schneller abnimmt, bleiben die Wahrscheinlichkeiten der Teilcharakteristiken aus denen iterative Charakteristiken zusammengesetzt sind gleich. Iterative Charakteristiken werden deshalb bei einem Angriff bevorzugt eingesetzt.
+	
+\end{document}
