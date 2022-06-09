@@ -1,0 +1,114 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Kryptografie und -analyse, Zusammenfassung Vorlesung 4}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Wie funktioniert die Vernam-Chiffre (one-time pad)?}
+	Zeichenweise Addition von Klartext + Schlüssel modulo Alphabetgröße
+
+	\section*{Welche Bedingungen sind zu erfüllen, damit die perfekte Sicherheit erreicht wird?}
+	folgende Bedingungen sind dafür notwendig:
+	\begin{itemize}
+		\item Schlüssel müssen echt zufällig sein
+		\item Schlüssellänge = Nachrichtenlänge
+		\item Einmalige Verwendung des Schlüssels
+	\end{itemize}
+	
+	\section*{Welche allgemeinen Angriffe auf Blockchiffren gibt es und wie ist das jeweilige Vorgehen?}
+	Angriffe:
+	\begin{itemize}
+		\item vollständige Schlüsselsuche: einfach alle möglichen Schlüssel ausprobieren
+		\item Zugriff auf eine vorab berechnete Tabelle: Angreifer berechnet für eine Nachricht $m$ alle verschlüsselten Texte $c$ für jeden Schlüssel $k$. Dann lässt er sich vom Angegriffenen sein $m$ verschlüsseln und schaut in seiner Tabelle nach und findet so den Schlüssel, den der Angegriffene benutzt hat
+		\item Time-memory-tradeoff: Angreifer wählt zufällig und unabhängig voneinander $n$ verschiedene Startschlüssel $k_i$ und Klartextblock $m$, Verschlüsselt $m$ mit allen Startschlüsseln, Schlüsseltexte $c_{i,1} = enc(k_{i,1},m)$ dienen (nach geringfügiger Anpassung durch Transformation $T$) als neue Schlüssel $k_{i,2}$ für weitere Verschlüsselung, Pro Startschlüssel $t$ Iterationen, Gespeichert wird pro \textit{Kette} der Startschlüssel $k_{i,1}$ und der letzte Schlüsseltextblock $c_{i,t}$
+		\item Kodebuchanalyse: Klartext-Schlüsseltext-Paare werden in einer Tabelle (\textit{Kodebuch}) abgespeichert, Versuch, Teile des beobachteten Schlüsseltextes mit Hilfe des Kodebuches zu rekonstruieren
+	\end{itemize}
+	
+	\section*{Wovon hängt der Aufwand dieser Angriffe jeweils ab?}
+	von der Größe des Schlüsselraums
+	
+	\section*{Was sind die charakteristischen Merkmale der Feistel-Chiffre? Was ist unter Selbstinversität zu verstehen? Wie funktionieren Verschlüsselung und Entschlüsselung?}
+	charakteristische Merkmale:
+	\begin{itemize}
+		\item Zerlegung des Nachrichtenblocks in linke und rechte Hälfte
+		\item Rundenfunktion $f$ ist identisch bei Ver- und Entschlüsselung
+		\item Pro Runde wird jeweils nur ein Teilblock modifiziert $\to$ ermöglicht effiziente Implementierung
+	\end{itemize}
+
+	Selbstinversität: Ver- und Entschlüsselung geschieht mit den gleichen Funktionen, nur Reihenfolge der Rundenschlüssel wird umgekehrt
+	
+	\section*{Was versteht man unter Vollständigkeit, dem Avalanche-Effekt und Nichtlinearität?}
+	Vollständigkeit: Eine Funktion $f: \{0,1\}^n \to \{0,1\}^m$ heißt vollständig, wenn jedes Bit des Outputs von jedem Bit des Inputs abhängt.
+	
+	Avalanche-Effekt: Eine Funktion $f: \{0,1\}^n \to \{0,1\}^m$ besitzt dann den Avalanche-Effekt, wenn die Änderung eines Input-Bits im Mittel die Hälfte aller Output-Bits ändert. Wird durch Änderung eines Input-Bits jedes Output-Bit mit einer Wahrscheinlichkeit von 50\% verändert, erfüllt $f$ das strikte Avalanche-Kriterium.
+	
+	Linearität: Eine Funktion $f: \{0,1\}^n \to \{0,1\}^m$ ist dann linear, wenn jedes Output-Bit $y_i$ linear von den Input-Bits $x_i$ abhängt:
+	\begin{align}
+		y_i = a_{j1}x_1 + a_{j2}x_2 + \dots + a_{jn}x_n + b \notag
+	\end{align}
+	
+	\section*{Wie können diese Kriterien beurteilt werden?}
+	mit Hilfe der Abhängigkeitsmatrix: Die Abhängigkeitsmatrix einer Funktion $f: \{0,1\}^n \to \{0,1\}^m$ ist eine $(n \times m)$-Matrix, deren Einträge $a_{i,j}$ die Wahrscheinlichkeit angeben, dass bei einer Änderung des $i$-ten Eingabebits das $j$-te Ausgabebit komplementiert wird.
+	
+	Überprüfung der Eigenschaften:
+	\begin{itemize}
+		\item Vollständigkeit: $\forall a_{ij} > 0$
+		\item Avalanche-Effekt: $\frac{1}{nm}\sum_i \sum_j a_{ij} \approx 0.5$
+		\item strikes Avalanche-Kriterium: $\forall a_{ij} > 0.5$
+		\item Linearität: $\forall a_{ij} \in \{0,1\}$
+	\end{itemize}
+	
+\end{document}
