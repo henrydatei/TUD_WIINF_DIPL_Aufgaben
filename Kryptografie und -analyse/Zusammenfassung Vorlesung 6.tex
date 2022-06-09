@@ -1,0 +1,120 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Kryptografie und -analyse, Zusammenfassung Vorlesung 6}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Was ist eine iterative Charakteristik?}
+	Ein Sonderfall sind sogenannte iterative Charakteristiken, mit $\Omega_1 = \Omega_2$, welche immer wieder an sich selbst angehängt werden können. Die vertauschten Hälften der Klartextdifferenz sind also gleich der Geheimtextdifferenz derselben Charakteristik. Diese lassen sich also leicht zu beliebig großen $n$-Runden-Charakteristiken zusammenhängen. Während bei nicht-iterativen Charakteristiken die Wahrscheinlichkeit mit größerem $n$, bedingt durch den Avalanche-Effekt, immer schneller abnimmt, bleiben die Wahrscheinlichkeiten der Teilcharakteristiken aus denen iterative Charakteristiken zusammengesetzt sind gleich. Iterative Charakteristiken werden deshalb bei einem Angriff bevorzugt eingesetzt.
+
+	\section*{Wie wirkt sich die Anzahl aktiver S-Boxen auf die differentielle Kryptoanalyse aus?}
+	Es wird aufwendiger, je mehr S-Boxen aktiv sind.
+	
+	\section*{Was ist das Ziel der linearen Kryptoanalyse?}
+	Klartext-Schlüsseltext-Angriff
+	\begin{itemize}
+		\item Ziel: Approximation der Chiffrierfunktion durch eine lineare Abbildung
+		\item Suche nach Approximationsgleichungen mit möglichst hoher Güte
+		\item Untersuchung genügend vieler Klartext-Schlüsseltext-Paare liefert Schlüsselbits
+	\end{itemize}
+	Lineare Abhängigkeit einzelner Ausgabebits einer S-Box $Si_{O}[i]$? gesucht: Funktionen $\phi: \mathbb{F}_2^6 \to \mathbb{F}_2$ mit
+	\begin{align}
+		Si_O[i] = \phi(Si) = \bigoplus_{k=1}^{6} l_k\cdot Si_I[k] \notag
+	\end{align}
+	
+	\section*{Wie werden lineare Approximationen für die Substitutionsboxen ermittelt?}
+	Systematische Suche
+	
+	\section*{Wie kann mit Hilfe einer solchen Approximationsgleichung eine Runde analysiert werden?}
+	Mit Auswahlvektor $u=(010000)$ und $v=(1111)$ (Güte $\frac{12}{64}$ $\Rightarrow$ affine Approximation, Güte $\frac{52}{64}$) ergibt sich für S5:
+	\begin{align}
+		u^T\cdot S5_I &= v^T\cdot S5_O \oplus 1 \notag \\
+		u^T\cdot (m\oplus k) &= v^T\cdot c \oplus 1 \notag \\
+		(010000)^T\cdot m \oplus (010000)^T \cdot k &= (1111)^T \cdot c \oplus 1 \notag \\
+		m^{[2]} \oplus k^{[2]} &= c^{[1,2,3,4]} \oplus 1 \notag
+	\end{align}
+	Umstellen nach $k^{[2]}$:
+	\begin{align}
+		k^{[2]} = m^{[2]} \oplus c^{[1,2,3,4]} \oplus 1 \notag
+	\end{align}
+	Analyse von genügend Klartext-Schlüsseltext-Paaren liefert $k^{[2]}$.
+	
+	\section*{Wie ist das allgemeine Vorgehen bei der linearen Kryptoanalyse (einfacher Algorithmus)?}
+	Vorbereitung:
+	\begin{itemize}
+		\item Auswahlvektoren $u$, $v$, $w$ bestimmen mit:
+		\begin{align}
+			w^k &= u^T\cdot m \oplus v^T\cdot c \quad\text{oder} \notag \\
+			w^k &= u^T\cdot m \oplus v^T\cdot c \oplus 1 \notag
+		\end{align}
+		\item Güte der Approximation $p_A > 0.5$
+	\end{itemize}
+	1. Schritt
+	\begin{itemize}
+		\item Untersuchung von $N$ Klartext-Schlüsseltext-Paaren
+		\item $Z$: Anzahl von Paaren, für die die rechte Seite der entsprechenden Gleichung 0 ist
+	\end{itemize}
+	2. Schritt: $Z > \frac{N}{2}: w^T\cdot k = 0$ oder $Z < \frac{N}{2}: w^T\cdot k = 1$
+	
+	\section*{Wie erfolgt die Analyse des DES mit 3 Runden?}
+	Zwei verschiedene Approximationsgleichungen für erste und dritte Runde
+	\begin{itemize}
+		\item 1. Runde: $k_1^{[26]} = x_1^{[17]} \oplus y_1^{[3,8,14,25]} \oplus 1$
+		\item 3. Runde: $k_3^{[26]} = x_3^{[17]} \oplus y_3^{[3,8,14,25]} \oplus 1$
+	\end{itemize}
+	Ersetzen von $y_1 = L_m \oplus x_2$ und $y_3 = L_c \oplus x_2$ $\Rightarrow$ Addieren der Gleichungen entfernt $x_2$ (für Näheres siehe Übung)
+	
+\end{document}
