@@ -1,0 +1,350 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage[onehalfspacing]{setspace}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space},
+	morekeywords={biplot, prcomp}
+}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Tutorielle Tätigkeit im Modul \textit{Statistik}}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Beschreibung der Tätigkeit}
+	Meine grundsätzliche Aufgabe ist das Halten von 2 Tutorien à 90 Minuten pro Woche. In den Tutorien werden jede Woche neue Übungsaufgaben besprochen; wie ich die Inhalte aufbereite, bleibt mir überlassen. Ich habe mich dafür entschieden meine Tutorien so zu halten, dass ich zuerst kurz die theoretischen Grundlagen aus der Vorlesung vorstelle und einige hilfreiche Formeln und Abbildungen an die Tafel schreibe. Dann lese ich die Aufgaben vor bzw. fasse kurz zusammen, was zu tun und wie man die Aufgabe in etwa lösen könnte, ohne hier einen vollständigen Lösungsweg zu erklären. Es geht mir bloß darum, einen möglichen Ansatz vorzustellen. Danach lasse ich den Studenten ein paar Minuten Zeit und beginne dann, zu jedem Studenten zu gehen und direkt nachzufragen, ob sie Probleme mit der Aufgabe oder andere Fragen haben. Das hat den Hintergrund, dass viele Studenten sich nicht trauen öffentlich im Tutorium ihre Fragen zu stellen, obwohl viele andere auch die selbe Frage haben. Aber wenn ich die Studenten dann direkt anspreche, kommen auch die Fragen. Je nach Länge der Aufgabe und nach restlicher Zeit im Tutorium schaffe ich es mindestens ein- oder zweimal bei jedem Studenten zu sein; natürlich gehe ich auch zwischen meinen Runden zu Studenten, wenn diese direkt eine Frage haben. Wenn die meisten Studenten fertig sind oder die Zeit weit fortschreitet, stelle ich die Lösung, die ich vor dem Tutorium zu Hause erarbeitet habe, vor. Meistens kann ich die Vorstellung der Lösung recht kurz halten, da alle relevanten Fragen schon in den direkten Gesprächen mit den Studenten geklärt wurden.
+	
+	Weiterhin betreue ich das Forum, in dem Studenten Fragen stellen können. Die meisten Fragen der Studenten kann ich selber beantworten, nur bei einigen organisatorischen Fragen, frage ich dann Martin Waltz, der dann eine Antwort im Forum verfasst.
+	
+	Zudem habe ich während der Corona-Pandemie mich um die Erstellung der Online-Klausuren gekümmert. Aus den vorhandenen Aufgaben habe ich Varianten dieser Aufgaben erstellt, mit veränderten Zahlen oder leichten Veränderungen der Aufgabenstellung. Dabei mussten dann natürlich auch die Lösungen angepasst werden. Ich habe mir für diese Aufgabe ein Python-Programm geschrieben, was diese Anpassungen vollautomatisch machen kann und mehrere dieser Aufgaben zu einem Test zusammenbauen kann. Dieser Test kann dann zu OPAL Exam hochgeladen werden und als Klausur genutzt werden. Nach Corona wurden wieder Papierklausuren benötigt und ich habe mein Programm so angepasst, dass es nun auch Papierklausuren mit zufälligen Änderungen an den Aufgabenstellungen und zufälligen Zahlen erzeugen kann.
+	
+	Während die Klausuren geschrieben werden, bin ich auch Teil der Aufsicht; das Umfasst das Austeilen und Einsammeln der Klausuren, das Vorbereiten des Raumes vor der Klausur und das Kontrollieren, dass keine Betrugsversuche stattfinden. Nachdem die Klausur geschrieben wurde, habe ich auch eine Aufgabe zugeteilt bekommen, die ich korrigiert habe.
+
+	\section*{Syllabus des Kurses}
+	Die Inhalte von Statistik 1 sind:
+	\begin{itemize}
+		\item Einführung in die deskriptive Statistik
+		\item Empirische Verteilungen
+		\item Streu- und Lagemaße
+		\item Korrelation
+		\item Kombinatorik
+		\item Wahrscheinlichkeit von Ereignissen
+		\item Bedingte Wahrscheinlichkeit, Satz von der totalen Wahrscheinlichkeit, Satz von Bayes
+		\item Einführung in die diskreten und stetigen Verteilungen
+		\item Eigenschaften von Erwartungswert und Varianz
+		\item Diskrete Verteilungen (Binomial, Hypergeometrisch, Poisson, Geometrisch)
+		\item Stetige Verteilungen (Gleich, Exponential, Normal, u.a.)
+	\end{itemize}
+	Die Inhalte von Statistik 2 sind:
+	\begin{itemize}
+		\item Diskrete und stetige Verteilungen
+		\item Quantile
+		\item Ungleichung von Tschebyscheff, Grenzwertsätze
+		\item Parameterschätzung: ML- und KQ-Methoden, Eigenschaften
+		\item Konfidenzintervalle
+		\item Signifikanztests
+		\item Zweistichprobentests
+		\item Unabhängigkeitstests
+		\item Anpassungstests
+		\item Lineare Regression
+	\end{itemize}
+	
+	\section*{Auswahl an Übungsaufgaben}
+	
+	Aus Gründen der Übersichtlichkeit habe ich hier nur die erste Aufgabe eines jeden Übungsblattes angehängt.
+	
+	\subsection*{Aufgabe 1.1}
+	Eine Gruppe Studentinnen der TU Dresden untersucht im Rahmen ihrer Seminararbeit das touristische Potenzial der sächsischen Landeshauptstadt. Die Befragung der Dresdner Touristen soll dabei Informationen zu folgenden Punkten liefern:
+	
+	\begin{tabular}{p{7cm} p {7cm}}
+		\begin{itemize}
+			\item[A)] Wohnort des Befragten
+			\item[B)] Verkehrsmittel der Anreise
+			\item[C)] Aufenthaltsdauer
+			\item[D)] Zahl der Mitreisenden
+			\item[E)] Sternezahl der Unterkunft
+		\end{itemize}
+		&
+		\begin{itemize}
+			\item[F)] Nutzung des ÖPNV während des Aufenthalts (z.B. ja)
+			\item[G)] Alter des Befragten
+			\item[H)] Nettoeinkommen
+			\item[I)] Tag der Ankunft
+		\end{itemize}
+	\end{tabular}
+	
+	Charakterisieren Sie die einzelnen Merkmale durch folgende Eigenschaften:
+	\begin{itemize}
+		\item nominal - ordinal - metrisch
+		\item quantitativ - qualitativ
+		\item diskret - stetig
+	\end{itemize}
+
+	\subsection*{Aufgabe 2.1}
+	Auf den Verkaufsportalen $A$, $B$, und $C$ wurden jeweils von verschiedenen Anbietern die Preise eines bestimmten Tablet Stiftes ermittelt. Auf Portal $A$ ergab sich aufgrund von 11 Einzelwerten ein Durchschnittspreis von \EUR {15.28}. Auf Portal $B$ betrug der Durchschnittspreis basierend auf 6 Einzelwerten \EUR {16.44} und auf $C$ wurde nach einer Auswahl von 13 Anbietern ein durchschnittlicher Preis von \EUR {14.86} ermittelt. Wie hoch ist der Durchschnittspreis des Tablet Stiftes unter Berücksichtigung sämtlicher Preisinformationen aus den Portalen $A$, $B$ und $C$?
+	
+	\subsection*{Aufgabe 3.1}
+	Ein Bausparkassenleiter möchte die Produktivität seiner Mitarbeiter in einem Monat anhand ihrer Vertragsabschlüsse ($n=60$) überprüfen. Zu diesem Zweck lässt er sich alle Bausparverträge des Monats unter Angabe des Mitarbeiternamens ($A$, $B$, $C$, $D$ oder $E$) und der jeweiligen Abschlusshöhe (in Tausend \EUR{}) auflisten:
+	
+	In der folgenden Tabelle werden die Daten in einem sogenannten Stamm-Blätter-Diagramm dargestellt:
+	\begin{center}
+		\begin{tabular}[t]{c|c|c|c|c}
+			\hline
+			A & B & C & D & E \\
+			\hline
+			&&&& \\
+			\begin{tabular}{r|l}
+				1 & 3\,5\,5\,6\,7\,7\,8\,9 \\
+				2 & 1\,1\,3\,4\,5\,7 \\
+				3 & 2\,3\,3\,5\,7 \\
+				4 & 1\,3\,5 \\
+				5 & 0\,2 \\
+				6 &  \\
+			\end{tabular}
+			&
+			\begin{tabular}{r|l}
+				1 & 5\,5\,6\,6\,9 \\
+				2 & 1\,5\,7 \\
+				3 & 0\,3\,7\,7\,8 \\
+				4 & 0\,2 \\
+				5 &  \\
+				6 &  \\
+			\end{tabular}
+			&
+			\begin{tabular}{r|l}
+				1 & 6\,7\,9\,9 \\
+				2 & 1\,5\,8 \\
+				3 & 0\,9 \\
+				4 & 0 \\
+				5 &  \\
+				6 &  \\
+			\end{tabular}
+			&
+			\begin{tabular}{r|l}
+				1 &  \\
+				2 &  \\
+				3 &  \\
+				4 & 0\,5\,5 \\
+				5 & 7 \\
+				6 & 0\,0\,5 \\
+			\end{tabular}
+			&
+			\begin{tabular}{r|l}
+				1 & 3\,5 \\
+				2 & 3\,9 \\
+				3 &  \\
+				4 &  \\
+				5 &  \\
+				6 &  \\
+			\end{tabular}\\
+			&&&& \\
+			24 & 15 & 10 & 7 & 4\\
+			\hline
+		\end{tabular}
+	\end{center}
+
+	\subsection*{Aufgabe 4.1}
+	Bestimmen Sie für die Daten
+	\begin{center}
+		\begin{tabular}{|*{10}{r}|}
+			\hline
+			15 & 70 & -3 & 13 & -60 & 50 & 8  & 6  & -3 & -16\\
+			\hline
+		\end{tabular}
+	\end{center}
+	die Streuungs- und Lagemaße:
+	\begin{enumerate}[label = (\alph*)]
+		\item Mittelwert;
+		\item Oberes und unteres Quartil, Median;
+		\item Spannweite;
+		\item Quartilabstand;
+		\item Median der absoluten Abweichungen vom Median (MAD);
+		\item Empirische Varianz, empirische Standardabweichung, Stichprobenvarianz, Stichprobenstandardabweichung;
+		\item Stichprobenschiefe;
+		\item Zeichnen Sie den zugehörigen BOX-Plot.
+	\end{enumerate}
+
+	\subsection*{Aufgabe 5.1}
+	Johannes fährt jeden Tag mit dem Fahrrad zur Uni. Eine Woche lang schreibt er seine Fahrtzeiten für Hin- und Rückweg in Minuten auf.
+	\begin{center}
+		\begin{tabular}{l|ccccc}
+			\hline
+			$i$ & 1 & 2 & 3 & 4 & 5\\
+			\hline
+			Hinweg $x$ & 28 & 29 & 25 & 30 & 28 \\
+			Rückweg $y$ & 30 & 31 & 28 & 29 & 22\\
+			\hline
+		\end{tabular}
+	\end{center}
+	\begin{enumerate}[label=(\alph*)]
+		\item Berechnen Sie Mittelwert und Varianz des Hinweges $x$.
+		\item Berechnen Sie Mittelwert und Varianz des Rückweges $y$.
+		\item Johannes möchte sich ein Rennrad kaufen. Er vermutet, dass seine Fahrtzeit auf dem Hinweg um den Faktor $0.95$ kürzer wird und auf dem Rückweg sogar um $0.9$. Allerdings wird er täglich 2 Minuten länger brauchen, um das Fahrrad abzuschließen. Berechnen Sie Mittelwert und Varianz der gesamten Fahrzeit $z=0.95\cdot x+0.9\cdot y +2$. Nehmen Sie dabei an, dass kein Zusammenhang zwischen $x$ und $y$ besteht.
+		\item Berechnen Sie Mittelwert und Varianz von $x_{zentriert}=x-\bar{x}$.
+		\item Berechnen Sie Mittelwert und Varianz von $x_{standardisiert}=\frac{x-\bar{x}}{\tilde{s}_x}$.
+		\item Berechnen Sie die Kovarianz zwischen $x$ und $y$.
+		\item Berechnen Sie die Varianz von $z$ unter Berücksichtigung des Zusammenhangs zwischen $x$ und $y$.
+	\end{enumerate}
+
+	\subsection*{Aufgabe 6.1}
+	Um die Frage zu beantworten, ob es einen Zusammenhang zwischen der Haarfarbe eines Menschen und seiner Augenfarbe gibt, wurden für 200 Studenten, darunter 42 Blonde, die folgenden Daten erhoben:
+	\begin{center}
+		\begin{tabular}{c|cccc}
+			\hline
+			\raisebox{-1.3ex}[0em][0em] {\textbf {Augenfarbe}}
+			& \multicolumn{4}{|c} {\textbf{ Haarfarbe}} \\
+			\cline{2-5}
+			& blond & braun & rot & schwarz \\
+			\hline
+			blau  &   & 28 &  6 &  7 \\
+			braun & 5 & 58 & 14 & 29 \\
+			grün  & 6 &  9 &    &  2 \\
+			\hline
+		\end{tabular}
+	\end{center}
+	\begin{enumerate}[label = (\alph*)]
+		\item Füllen Sie die fehlenden Stellen in der Tabelle aus und erstellen Sie die Kontingenztafel der relativen Häufigkeiten sowie die relativen Randhäufigkeiten!
+		\item Überprüfen Sie, ob es Abhängigkeiten zwischen Haar- und Augenfarbe gibt. Besteht eine starke Abhängigkeit?
+		\item Man untersucht die Augenfarbe der \textbf{blonden} Studenten. Bestimmen Sie die bedingten relativen Häufigkeiten für die Augenfarbe einer Person unter der Bedingung, dass die Person blond ist.
+	\end{enumerate}
+
+	\subsection*{Aufgabe 7.1}
+	\begin{enumerate}[label = (\alph*)]
+		\item Wie viele Möglichkeiten gibt es, die Buchstaben des englischen Wortes TEA anzuordnen, wobei jeder einzelne nur einmal vorkommen darf?
+		\item Wie viele Möglichkeiten gibt es, die Buchstaben des deutschen Wortes TEE anzuordnen, wobei jeder einzelne nur einmal vorkommen darf?
+		\item Wie viele Möglichkeiten gibt es, die Buchstaben des Wortes STATISTIK anzuordnen, wobei jeder einzelne nur einmal vorkommen darf?
+	\end{enumerate}
+
+	\subsection*{Aufgabe 8.1}
+	Geben Sie für die folgenden Ereignisoperationen die Ergebnisse an.
+	
+	$\Omega$ - Grundgesamtheit, $A, B \subset \Omega$, und $B \subset A$:
+	
+	$A \cup A$,\quad $A \cap A$, \quad$A \cup \emptyset$, \quad $A \cap
+	\emptyset$, \quad$\emptyset \cap \Omega$, \quad$A \cup \Omega$,\quad
+	$A \cap \Omega$,\quad$A \cup \bar A$,\quad $A \cap \bar A$\
+	
+	$A \cup B$,\quad $A \cap B$ \quad
+	$A \cup \bar B$,\quad $A \cap \bar B$ \quad
+	$\bar A \cap B$ \quad $\bar A \cup \bar B$ \quad $\bar A \cap \bar B$
+	
+	\subsection*{Aufgabe 9.1}
+	Karl liebt den Alkohol. Die Wahrscheinlichkeit, dass er nach Büroschluss trinkt, ist 0.8. Karl ist vergesslich. Die Wahrscheinlichkeit, dass er seinen Schirm stehen lässt, ist 0.7. Wenn er getrunken hat, ist die Wahrscheinlichkeit sogar 0.8. Karl kommt ohne Schirm nach Hause.
+	
+	Wie groß ist die Wahrscheinlichkeit dafür, dass er dieses Mal nicht getrunken hat?
+	
+	\subsection*{Aufgabe 10.1}
+	Gegeben ist folgende Verteilungsfunktion:
+	\begin{equation*}
+		F(x) = \left\{ \begin{array}{l@{\quad\text{für}\;}l}
+			0   & x < 1;\\
+			0.2 & 1 \le x < 3;\\
+			0.5 & 3 \le x < 7;\\
+			1   & 7 \le x.
+		\end{array}\right.
+	\end{equation*}
+	
+	\begin{enumerate}[label = (\alph*)]
+		\item Wie lautet die zugehörige Wahrscheinlichkeitsfunktion? Bitte graphisch darstellen.
+		\item Bestimmen Sie die Wahrscheinlichkeiten  $\mathbb{P}(1 \le X < 3)$, $\mathbb{P}(0 \le X < 3)$, $\mathbb{P}(1 \le X < 4)$ und  $\mathbb{P}(1 < X < 7)$!
+		\item Berechnen Sie den Erwartungswert und die Varianz!
+	\end{enumerate}
+
+	\subsection*{Aufgabe 11.1}
+	Gegeben ist folgende Dichtefunktion einer Zufallsvariablen $Y$?
+	\begin{equation*}
+		f(y) = \left\{\begin{array}{l@{\quad}l}
+			\frac{1}{12}\,y & \mbox{für $1 \le y \le 5$}; \\
+			0 & \mbox{sonst}.
+		\end{array} \right.
+	\end{equation*}
+	\begin{enumerate}[label = (\alph*)]
+		\item Bestimmen Sie die Verteilungsfunktion dieser Zufallsvariablen!
+		\item Bestimmen Sie die Wahrscheinlichkeit des Ereignisses $(2<Y<3)$!
+	\end{enumerate}
+
+	\subsection*{Aufgabe 12.1}
+	Aus langjähriger Erfahrung ist der Abteilung für Familie und Soziales einer Stadtverwaltung bekannt, wie sich die gemeinsame Verteilung der Anzahl der Kinder pro Familie $X_1$ und der Anzahl der PKW pro Familie $X_2$ zusammensetzt. Die gemeinsame Wahrscheinlichkeitsfunktion von $X_1$ und $X_2$ ist gegeben durch:
+	
+	\begin{center}
+		\begin{tabular}{c|ccc}
+			\hline
+			& \multicolumn{3}{c}{Anzahl der PKW, $X_2$} \\
+			\cline{2-4}
+			Anzahl der Kinder, $X_1$ & 1 & 2 & 3 \\
+			\hline
+			0 & 0.08 & 0.28 & 0.01 \\
+			1 & 0.10 & 0.14 & 0.06 \\
+			2 & 0.07 & 0.05 & 0.06 \\
+			3 & 0.06 & 0.03 & 0.01 \\
+			4 & 0.04 & 0.01 & 0\\
+			\hline
+		\end{tabular}
+	\end{center}
+	
+	Bestimmen Sie
+	\begin{enumerate}[label = (\alph*)]
+		\item die Randwahrscheinlichkeiten von $X_1$ und $X_2$;
+		\item die Randverteilungsfunktion von $X_1$;
+		\item den Erwartungswert für die Anzahl der Kinder bzw. PKW pro Familie;
+		\item die Wahrscheinlichkeit, dass es pro Familie genau zwei PKW und höchstens zwei Kinder gibt;
+		\item die (bedingte) Wahrscheinlichkeitsfunktion der Anzahl der PKW für die Familien ohne Kinder;
+		\item die (bedingte) erwartete Anzahl der PKW pro Familie ohne Kinder.
+		\item die Kovarianz und die Korrelation zwischen $X_1$ und $X_2$.
+	\end{enumerate}
+
+	\subsection*{Aufgabe 13.1}
+	Nur 3\,\% der kontrollierten Fahrgäste der Dresdner Straßenbahnen besitzen keinen gültigen Fahrschein. Die Ergebnisse der Kontrolle seien unabhängig, d.h. es wird vereinfacht angenommen, dass nur Einzelpersonen kontrolliert werden.
+	\begin{enumerate}[label = (\alph*)]
+		\item Mit welcher Wahrscheinlichkeit wird bei der Kontrolle von 10 Personen wenigstens ein "Schwarzfahrer" erwischt?
+		\item Wie groß ist die Wahrscheinlichkeit, dass der Kontrolleur erst bei der zehnten Kontrolle den ersten "Schwarzfahrer" aufspürt?
+	\end{enumerate}
+	
+\end{document}

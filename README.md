@@ -48,3 +48,7 @@ In diesem Repo sind meine Lösungen und Zusammenfassungen zu einigen Modulen aus
 
 ### Ergänzungsbereich
 - Applied Multivariate Statistics
+
+
+## weitere Dokumente
+- Statistik 2: Protokoll für tutorielle Tätigkeit
