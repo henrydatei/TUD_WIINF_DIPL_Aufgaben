@@ -1,0 +1,449 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage{nameref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Zusammenfassung Spanisch A1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section{Grundvokabeln}
+	
+	\subsection{Los números}
+	
+	\begin{center}
+		\begin{tabular}{llllll}
+			uno & once & veintiuno & treinta y uno & & ciento uno  \\
+			dos & doce & veintidós & treinta y dos & & doscientos \\
+			tres & trece & veintitrés & treinta y tres & & trecientos \\
+			cuatro & catorce & veinticuatro & treinta y cuadro & & cuatrocientos\\
+			cinco & quince & veinticinco & treinta y cinco & cincuenta & quinientos \\
+			seis & dieciséis & veintiséis & treinta y seis & sesenta & seiscientos \\
+			siete & diecisiete & veintisiete & treinta y siete & setenta & setecientos \\
+			ocho & dieciocho & veintiocho & treinta y ocho & ochenta & ochocientos \\
+			nueve & diecinueve & veintinueve & treinta y nueve & noventa & novecientos \\
+			diez & veinte & treinta & cuarenta & cien & mil
+		\end{tabular}
+	\end{center}
+	
+	\subsection{Los colores}
+	Colores:
+	\begin{itemize}
+		\item blanco, blanca
+		\item \textcolor{gray}{gris}
+		\item \textcolor{yellow}{amarillo, amarilla}
+		\item \textcolor{pink}{rosado, rosada}
+		\item \textcolor{red}{rojo, rojo}
+		\item \textcolor{green}{verde}
+		\item \textcolor{blue}{azul}
+		\item \textcolor{brown}{marrón, moreno}
+		\item \textcolor{orange}{naranja}
+		\item \textcolor{violet}{violeta}
+		\item negro, negra
+	\end{itemize}
+	
+	\subsection{La familia}
+	
+	\begin{center}
+		\begin{tabular}{ll|ll}
+			\textbf{Español} & \textbf{Alemán} & \textbf{Español} & \textbf{Alemán} \\
+			\hline
+			abuelo/abuela & Opa/Oma & hermano & Bruder \\
+			padre/madre & Vater/Mutter & sobrino & Nichte \\
+			tío/tía & Onkel/Tante & hijo & Sohn \\
+			esposo & Ehemann & nieto & Enkel \\
+			pareja & Partner & yerno & Schwiegersohn
+		\end{tabular}
+	\end{center}
+
+	\subsection{Las horas}
+	\begin{itemize}
+		\item 12:00 $\to$ doce en punto
+		\item 1:15 $\to$ una y cuarto
+		\item 3:30 $\to$ tres y media
+		\item 9:45 $\to$ diez menos cuarto
+	\end{itemize}
+
+	\subsection{Palabras de la pregunta}
+	\begin{itemize}
+		\item ¿Que? (Was?)
+		\item ¿Quien? (Wer?)
+		\item ¿Dónde? (Wo?)
+		\item ¿Cómo? (Wie?)
+		\item ¿Cuánto? (Wie viel?)
+		\item ¿Cuál? (Welcher?, Welche?, Welches?)
+	\end{itemize}
+
+	\subsection{Los conectores}
+	\begin{itemize}
+		\item o (oder)
+		\item y (und)
+		\item sin embargo (obwohl)
+		\item porque (weil)
+		\item pero (aber)
+		\item aunque (obwohl)
+		\item por eso (deshalb)
+		\item también (auch)
+	\end{itemize}
+	
+	\section{Grammatik}
+	
+	\subsection{Pronombres personales}
+	
+	\begin{center}
+		\begin{tabular}{l|l|l}
+			& \textbf{singular} & \textbf{plural} \\
+			\hline
+			\textbf{primera persona} & yo & nosotros/-as \\
+			\hline
+			\textbf{segunda persona} & tú & vosotros/-as \\
+			\hline
+			\textbf{tercera persona} & él, ella, usted & ellos, ellas, ustedes
+		\end{tabular}
+	\end{center}
+	
+	\subsection{Pronombres demostrativos}
+	
+	\begin{center}
+		\begin{tabular}{l|lll}
+			& \textbf{masculino} & \textbf{femenino} & \textbf{grupo mixto} \\
+			\hline
+			\textbf{singular} & este & esta & \\
+			\hline
+			\textbf{plural} & estos & estas & estos
+		\end{tabular}
+	\end{center}
+	
+	\subsection{Artículos definidos/indefinidos}
+	
+	\begin{center}
+		\begin{tabular}{l|ll|ll}
+			& \multicolumn{2}{c|}{\textbf{definido}} & \multicolumn{2}{c}{\textbf{indefinido}} \\
+			& \textbf{singular} & \textbf{plural} &  \textbf{singular} & \textbf{plural} \\
+			\hline
+			\textbf{masculino} & el & los & un & unos \\
+			\hline
+			\textbf{femenino} & la & las & una & unas
+		\end{tabular}
+	\end{center}
+
+	\subsection{Pronombres del objeto directo}
+	
+	Me gusta tomar \underline{el café}. $\xrightarrow{\text{el} \to \text{to}}$ Yo \underline{lo} tomo con leche.
+	
+	Yo como \underline{carne} dos veces a la semana. $\xrightarrow{\text{ella} \to \text{la}}$ Yo \underline{la} como asada.
+	
+	\subsection{Verbo \textit{ser} (sein)}
+	
+	\begin{center}
+		\begin{tabular}{l|l|l}
+			& \textbf{singular} & \textbf{plural} \\
+			\hline
+			\textbf{primera persona} & yo soy & nosotros/-as sois \\
+			\hline
+			\textbf{segunda persona} & tú eres & vosotros/-as somos \\
+			\hline
+			\textbf{tercera persona} & él/ella/usted es &ellos/ellas/ustedes son
+		\end{tabular}
+	\end{center}
+	
+	\subsection{Verbo \textit{llamarse} (heißen) $\to$ \nameref{reflexivverben}}
+	
+	\begin{center}
+		\begin{tabular}{l|l|l}
+			& \textbf{singular} & \textbf{plural} \\
+			\hline
+			\textbf{primera persona} & yo me llamo & nosotros/-as nos llamamos \\
+			\hline
+			\textbf{segunda persona} & tú te llamas & vosotros/-as os llamáis \\
+			\hline
+			\textbf{tercera persona} & él/ella/usted se llama & ellos/ellas/ustedes se llaman
+		\end{tabular}
+	\end{center}
+	
+	\subsection{Verbo \textit{tener} (haben)}
+	
+	\begin{center}
+		\begin{tabular}{l|l|l}
+			& \textbf{singular} & \textbf{plural} \\
+			\hline
+			\textbf{primera persona} & yo tengo & nosotros/-as tenemos \\
+			\hline
+			\textbf{segunda persona} & tú tienes & vosotros/-as tenéis \\
+			\hline
+			\textbf{tercera persona} & él/ella/usted tiene &ellos/ellas/ustedes tienen
+		\end{tabular}
+	\end{center}
+	
+	\subsection{Conjugación de verbos}
+	
+	\begin{center}
+		\begin{tabular}{l|lll}
+			& \textbf{primera conjugación} (-ar) & \textbf{segunda conjugación} (-er) & \textbf{tercera conjugación} (-ir) \\
+			\hline
+			yo & canto & como & vivo \\
+			tú & cantas & comes & vives \\
+			él/ella/usted & canta & come & vive \\
+			nosotros & cantamos & comemos & vivimos \\
+			vosotros & cantáis & coméis & vivís \\
+			ellos/ellas/ustedes & cantan & comen & viven
+		\end{tabular}
+	\end{center}
+	
+	\subsection{Adjetivos}
+	Terminaciones adjetivas
+	\begin{itemize}
+		\item -e: neutro
+		\item -a: femenino
+		\item -o: masculino
+		\item sin final: -ista o -[consonante]
+	\end{itemize}
+	
+	\subsection{Los adjetivos posesivos}
+	
+	\begin{center}
+		\begin{tabular}{l|l|l}
+			& \textbf{singular} & \textbf{plural} \\
+			\hline
+			\textbf{primera persona} & mi & mis \\
+			\hline
+			\textbf{segunda persona} & tu & tus \\
+			\hline
+			\textbf{tercera persona} & su & sus \\
+			\hline
+			\textbf{primera persona} & nuestro & nuestros \\
+			\hline
+			\textbf{segunda persona} & vuestro & vuestros \\
+			\hline
+			\textbf{tercera persona} & su & sus
+		\end{tabular}
+	\end{center}
+
+	\subsection{ser/estar/hay}
+	
+	\begin{center}
+		\begin{tabular}{L{4.5cm}|L{4.5cm}|L{4.5cm}}
+			\textbf{ser} & \textbf{estar} & \textbf{hay} \\
+			\hline
+			Nacionalidades, origen, presentación de una persona, definición o descripción más detallada de una persona o un lugar, ocupación, características de las personas y las cosas, fechas, horas y precios, posesiones y afiliaciones & Indicar el lugar, la condición o el estado personal del ser, describir los estados temporales, no permanentes, las acciones que se están llevando a cabo actualmente $\to$ \nameref{gerundium} & hay + articulo indefinido, hay + substantivo sin articulo, hay + números, hay + cantidad no especificada
+		\end{tabular}
+	\end{center}
+
+	\subsection{Oraciones comparativos}
+	\begin{itemize}
+		\item de superioridad: Mi libro es \underline{más nuevo que} el tuyo.
+		\item de inferioridad: Mi casa es \underline{menos grande que} de la María.
+		\item igualdad:
+		\begin{itemize}
+			\item Mi libro es \underline{tan nuevo como} el tuyo.
+			\item Yo \underline{leo tanto como} tú.
+			\item Hay \underline{tantas cases como} en mi barrio.
+		\end{itemize}
+	\end{itemize}
+
+	\subsection{Verbo \textit{ir} (gehen)}
+	
+	\begin{center}
+		\begin{tabular}{l|l|l}
+			& \textbf{singular} & \textbf{plural} \\
+			\hline
+			\textbf{primera persona} & yo voy & nosotros/-as vamos \\
+			\hline
+			\textbf{segunda persona} & tú vas & vosotros/-as vais \\
+			\hline
+			\textbf{tercera persona} & él/ella/usted va &ellos/ellas/ustedes van
+		\end{tabular}
+	\end{center}
+
+	\subsection{El verbo \textit{ir} + preposiciones}
+	
+	\begin{center}
+		\begin{tabular}{L{5cm}|L{5cm}}
+			\textbf{a} & \textbf{en} \\
+			\hline
+			a pie & en autobús \\
+			a caballo (reiten) & en moto \\
+			& en coche (Auto) \\
+			& en bici \\
+			& en barco (Schiff) \\
+			& en avíen (Flugzeug) \\
+			& en tren (Zug)
+		\end{tabular}
+	\end{center}
+
+	\subsection{Verbo \textit{poder} (können/dürfen)}
+	
+	\begin{center}
+		\begin{tabular}{l|l|l}
+			& \textbf{singular} & \textbf{plural} \\
+			\hline
+			\textbf{primera persona} & yo puedo & nosotros/-as podemos \\
+			\hline
+			\textbf{segunda persona} & tú puedes & vosotros/-as podéis \\
+			\hline
+			\textbf{tercera persona} & él/ella/usted puede &ellos/ellas/ustedes pueden
+		\end{tabular}
+	\end{center}
+
+	\subsection{Verbo \textit{querer} (wollen)}
+	
+	\begin{center}
+		\begin{tabular}{l|l|l}
+			& \textbf{singular} & \textbf{plural} \\
+			\hline
+			\textbf{primera persona} & yo quiero & nosotros/-as queremos \\
+			\hline
+			\textbf{segunda persona} & tú quieres & vosotros/-as queréis \\
+			\hline
+			\textbf{tercera persona} & él/ella/usted quiere &ellos/ellas/ustedes quieren
+		\end{tabular}
+	\end{center}
+
+	\subsection{Verbo \textit{saber} (wissen)}
+	
+	\begin{center}
+		\begin{tabular}{l|l|l}
+			& \textbf{singular} & \textbf{plural} \\
+			\hline
+			\textbf{primera persona} & yo sé & nosotros/-as sabemos \\
+			\hline
+			\textbf{segunda persona} & tú sabes & vosotros/-as sabéis \\
+			\hline
+			\textbf{tercera persona} & él/ella/usted sabe &ellos/ellas/ustedes saben
+		\end{tabular}
+	\end{center}
+
+	\subsection{Verbos modales}
+	Verbos modales + infinitivo
+	\begin{itemize}
+		\item deber (müssen/sollen): Yo debo estudiar.
+		\item poder (können/dürfen): Tú puedes ir a un museo.
+		\item querer (wollen): Nosotras queremos viajar.
+		\item saber (wissen): Él sabe hablar portugués.
+		\item soler (etwas, was man immer macht): Ellas suelen despertar temprano.
+	\end{itemize}
+
+	\subsection{Verbos reflexivos}\label{reflexivverben}
+	
+	Utilizando el ejemplo de \textit{ducharse}:
+	\begin{center}
+		\begin{tabular}{l|l|l}
+			& \textbf{singular} & \textbf{plural} \\
+			\hline
+			\textbf{primera persona} & yo me ducho & nosotros/-as nos duchamos \\
+			\hline
+			\textbf{segunda persona} & tú te duchas & vosotros/-as os ducháis \\
+			\hline
+			\textbf{tercera persona} & él/ella/usted se ducha &ellos/ellas/ustedes se duchan
+		\end{tabular}
+	\end{center}
+
+	\subsection{Verbo \textit{haber} (haben)}
+	
+	\begin{center}
+		\begin{tabular}{l|l|l}
+			& \textbf{singular} & \textbf{plural} \\
+			\hline
+			\textbf{primera persona} & yo he & nosotros/-as hemos \\
+			\hline
+			\textbf{segunda persona} & tú has & vosotros/-as habéis \\
+			\hline
+			\textbf{tercera persona} & él/ella/usted ha &ellos/ellas/ustedes han
+		\end{tabular}
+	\end{center}
+
+	\subsection{Pretérito perfecto compuesto}
+	
+	haber + participio
+	\begin{itemize}
+		\item -ar: -ado
+		\item -er: -ido
+		\item -ir: -ido
+	\end{itemize}
+
+	irregulares:
+	\begin{itemize}
+		\item hacer $\to$ hecho
+		\item decir $\to$ dicho
+		\item escribir $\to$ escrito
+		\item ir $\to$ ido
+		\item ser $\to$ sido
+	\end{itemize}
+
+	con verbos reflexivos: Nosotros \underline{nos} hemos \underline{duchado}.
+	
+	\subsection{El gerundio}\label{gerundium}
+	
+	estar + gerundio
+	\begin{itemize}
+		\item -ar: -ando
+		\item -er: -iendo
+		\item -ir: iendo
+	\end{itemize}
+
+	irregulares:
+	\begin{itemize}
+		\item decir $\to$ diciendo
+		\item pedir $\to$ pidiendo
+		\item dormir $\to$ durmiendo
+		\item ir $\to$ yendo
+		\item leer $\to$ leyendo
+		\item oír $\to$ oyendo
+	\end{itemize}
+
+	\subsection{El futuro próximo}
+	
+	ir + a + infinitivo
+
+\end{document}
