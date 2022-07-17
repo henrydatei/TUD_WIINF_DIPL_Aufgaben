@@ -1,0 +1,348 @@
+\documentclass[10pt,landscape,a4paper]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape,top=1cm,bottom=1cm,right=1cm,left=1cm,noheadfoot,bindingoffset=0pt,marginparwidth=0pt,marginparsep=0pt]{geometry}
+\usepackage{amsmath,amsfonts,amssymb,mathtools}
+\usepackage{graphicx}
+\usepackage{fontenc}
+%\usepackage{lua-visual-debug}
+\usepackage{enumitem}
+\usepackage{xfrac}
+\usepackage[utf8]{inputenc}
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {5pt}{1pt}%x
+                                {\normalfont\small\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {5pt}%
+                                {1pt}%
+                                {\normalfont\small\underline}}
+\makeatother
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+\setlist{
+	noitemsep,
+	topsep=-\parskip,
+	leftmargin=2em
+}
+\setcounter{secnumdepth}{0}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Eigenvector}{Eigenvector}
+
+
+% -----------------------------------------------------------------------
+
+\begin{document}
+
+\raggedright
+\footnotesize
+\begin{multicols*}{4}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+\setlength{\columnseprule}{0.1pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{1pt}
+
+\begin{center}
+	\normalsize{\textbf{Refreshment Matrix Algebra}} \\
+\end{center}
+\underline{Spectral decomposition} ($A$ symmetric $p\times p$):
+\begin{align}
+	A &= \Gamma\cdot\Lambda\cdot\Gamma^\top \notag \\
+	\Gamma &= (\gamma_1,...,\gamma_p) \quad\text{Eigenvectors} \notag \\
+	\Lambda &= \diag(\lambda_1,...,\lambda_p) \quad\text{Eigenvalues} \notag
+\end{align}
+\underline{Singular value decomposition} ($A$ $n\times p$, $\rk(A) = r$)
+\begin{align}
+	A &= \Gamma\cdot\Lambda\cdot\Delta^\top \notag \\
+	\Lambda &= \diag(\sqrt{\lambda_1},...,\sqrt{\lambda_r}) \notag \\
+	\Gamma &= \Eigenvector(AA^\top) \notag \\
+	\Delta &= \Eigenvector(A^\top A) \notag
+\end{align}
+
+\begin{center}
+	\normalsize{\textbf{Decomposition of Data Matrices}} \\
+\end{center}
+\underline{$n$ observations in variables space $\mathbb{R}^p$}
+\begin{itemize}
+	\item projection of $x$ on vector with direction $u$: $p_x = \Vert p_x\Vert \cdot u$
+	\item $\Vert p_x\Vert = \langle x,u\rangle$ (dot product between $x$ and $u$)
+	\item $\min\limits_{\Vert u\Vert = 1} \sum \Vert x_i - p{x_i}\Vert^2 = \max\limits_{\Vert u\Vert = 1} \sum \Vert p_{x_i}\Vert^2 = \max\limits_{\Vert u\Vert = 1} u^\top X^\top X u$
+	\item[$\Rightarrow$] $u = \Eigenvector(X^\top X)$
+\end{itemize}
+\underline{$p$ variables in observation space $\mathbb{R}^n$:} $X\to X^\top$
+\begin{itemize}
+	\item $\max\limits_{\Vert v\Vert = 1} v^\top XX^\top v$
+	\item[$\Rightarrow$] $v = \Eigenvector(XX^\top)$
+\end{itemize}
+\underline{Relations between subspaces:}
+\begin{align}
+	 u &= \lambda^{-\sfrac{1}{2}}\cdot X^\top\cdot v \notag \\
+	 v &= \lambda^{-\sfrac{1}{2}}\cdot X\cdot u \notag
+\end{align}
+\underline{Representation:}
+\begin{align}
+	z_i &= Xu_i \quad\text{observations} \notag \\
+	w_i &= \sqrt{\lambda_i}u_i \quad\text{parameters} \notag
+\end{align}
+
+\begin{center}
+	\normalsize{\textbf{Principal Component Analysis}} \\
+\end{center}
+\underline{Theory:}
+\begin{itemize}
+	\item $\max\limits_{\Vert \delta\Vert = 1} \Var(\delta^\top X) \Rightarrow \delta = \Eigenvector(\Var(X)) = \Eigenvector(X^\top X)$
+	\item $Y = \Gamma^\top (X-\mu)$ principal components ($\Var(Y_i) = \lambda_i$)
+	\item $\Cov(X,Y) = \Gamma\cdot \Lambda$
+	\item $\Cor(X_i,Y_i) = \gamma_{ij}\sqrt{\frac{\lambda_j}{\SD(X_iX_i)}}$
+\end{itemize}
+\underline{Practise:}
+\begin{itemize}
+	\item scale should be roughly the same
+	\item plot $\Cor(X_1,Y_1)$ vs $\Cor(X_2,Y_2)$ shows which of the original variables are most correlated with the PCs, namely those which are near the periphery of the circle of radius 1.
+\end{itemize}
+\underline{Asymptotic properties:}
+\begin{itemize}
+	\item 95\% CI for explained variance $\psi$:
+	\begin{align}
+		\widehat{\psi}&\pm 1.96\sqrt{\frac{\widehat{\omega^2}}{n-1}} \notag \\
+		\widehat{\omega^2} &= \frac{2\tr(S^2)}{\tr(S)^2}\left(\widehat{\psi}^2 - 2\widehat{\beta}\widehat{\psi} + \widehat{\beta}\right) \notag \\
+		\widehat{\beta} &= \frac{l_1^2}{l_1^2 + \dots + l_p^2} \notag
+	\end{align}
+	\item $\sqrt{n-1}(l-\lambda) \xrightarrow{\mathcal{L}}\mathcal{N}_p(0,2\Lambda^2)$
+	\item $\sqrt{\frac{n-1}{2}}(\log(l_j)-\log(\lambda_j)) \xrightarrow{\mathcal{L}}\mathcal{N}(0,1)$
+	\item $\sqrt{n-1}\left(\widehat{\psi_q} - \psi_q\right)\xrightarrow{\mathcal{L}}\mathcal{N}(0,\omega^2)$
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Factor Analysis}} \\
+\end{center}
+\underline{Factor analysis model:}
+\begin{itemize}
+	\item $X = \mu + QF + U$
+	\item $\Var(X) = QQ^\top + \Var(U) = \Gamma\Lambda\Gamma^\top$
+	\item $\Var(X_i) = \sum_{l=1}^{k} q_{il}^2 + \psi_{ii} = \text{communality } h_j^2 + \text{specic variance}$
+	\item $Q = \Gamma\Lambda^{\sfrac{1}{2}}$ (principal component method, assuming $\Var(U) = 0$)
+	\item other methods: maximum likelihood method, method of principal factors
+\end{itemize}
+\underline{Factor model for correlation matrix:}
+\begin{itemize}
+	\item Choice of $k$:
+	\begin{align}
+		d &= \frac{1}{2}(p-k)^2 - \frac{1}{2}(p+k) \notag
+	\end{align}
+	\item $d<0$: $\infty$ exact solutions, $d=0$: 1 exact solution, $d>0$: approximation
+	\item example: $p=2$, $k=1$ $\Rightarrow d=-1$
+	\begin{align}
+		R = \begin{pmatrix}
+			1 & \\ \rho & 1
+		\end{pmatrix} = \begin{pmatrix}
+			q_1^2 + \psi_1 & \\ q_1q_2 & q_2^2 + \psi_2
+		\end{pmatrix} \notag
+	\end{align}
+	4 parameters and 3 equations
+\end{itemize}
+\underline{Rotation:} $X = \mu + (QG)(G^\top F) + U$
+\begin{itemize}
+	\item orthogonal: $\perp$ between factors
+	\item oblique: no $\perp$ between factors
+	\item[$\Rightarrow$] i.e. varimax: $\sum_{j=1}^k \Var(q_j^2)\to\max$ (each factor has small or large loadings on variable)
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Correspondence Analysis}} \\
+\end{center}
+\begin{itemize}
+	\item expectation of an element $\E(x_{ij}) = E_{ij} = \frac{x_{i\cdot} \cdot x_{\cdot j}}{x_{\cdot\cdot}}$
+	\item $\chi^2$-Test:
+	\begin{align}
+		t &= \sum_i\sum_j \frac{(x_{ij} - E_{ij})^2}{E_{ij}} \sim \chi^2_{(l-1)(k-1)} \notag
+	\end{align}
+	\item find $r_k$ (row factor) and $s_k$ (column factor)
+	\begin{align}
+		C = (c_{ij}) &= \left(\frac{x_{ij} - E_{ij}}{\sqrt{E_{ij}}}\right) = \Gamma\Lambda\Delta^\top \notag \\
+		c_{ij} &= \sum_k \sqrt{\lambda_k}\cdot \gamma_{ik}\cdot\delta_{jk} \notag \\
+		&\approx \sum_k \sqrt{\lambda_1}\cdot \gamma_{ik}\cdot\delta_{jk} \notag
+	\end{align}
+	(one $\lambda$ explains much $\chi^2$). Then
+	\begin{align}
+		r_k &= A^{-\sfrac{1}{2}}\cdot C\cdot \delta_k \notag \\
+		s_k &= B^{-\sfrac{1}{2}}\cdot C\cdot \gamma_k \notag
+	\end{align}
+	$A = \diag(\text{row sums})$, $B = \diag(\text{column sums})$
+	\item plot $r_1$ vs $r_2$ and $s_1$ vs $s_2$
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Canonical Correlation Analysis}} \\
+\end{center}
+\begin{itemize}
+	\item $\Cor(aX,bY) \to\max$ under constrains $a^\top\Sigma_{XX}a = b^\top\Sigma_{YY}b = 1$
+	\item Define
+	\begin{align}
+		K = \Sigma_{XX}^{-\sfrac{1}{2}}\cdot\Sigma_{XY}\cdot\Sigma_{YY}^{-\sfrac{1}{2}} = \Gamma\Lambda\Delta^\top \notag
+	\end{align}
+	\item Set
+	\begin{align}
+		a_r &= \Sigma_{XX}^{-\sfrac{1}{2}}\gamma_r \notag \\
+		b_r &= \Sigma_{YY}^{-\sfrac{1}{2}}\delta_r \notag
+	\end{align}
+	then $\Cor(a_rX,b_rY) = \sqrt{\lambda_r}$
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Multidimensional Scaling}} \\
+\end{center}
+\underline{metric MDS:} euclidian matrix $D$
+\begin{itemize}
+	\item $D$ euclidian $\Leftrightarrow B = HAH$ is positive semidefinite ($\Leftrightarrow$ all eigenvalues $\ge 0$)
+	\item $A = (a_{ij}) = -\frac{1}{2} d_{ij}^2$
+	\item[$\Rightarrow$] $B = \Gamma\Lambda\Gamma^\top \Rightarrow$ coordinates $\Gamma\Lambda^{\sfrac{1}{2}}$
+	\item similarity $C$ $\to$ distance $D$: $d_{ij} = \sqrt{c_{ii} - 2c_{ij} + c_{jj}}$
+\end{itemize}
+\underline{nonmetric MDS:} ranks instead of distances, Shepard-Kruskal-Algorithm
+\begin{itemize}
+	\item metric MDS $\to$ coordinates $\to$ distances $\delta_{ij}$
+	\item $d_{ij} = \rk(\delta_{ij})$
+	\item compare $D$ and $d_{ij}$ $\to$ monotone? $\to$ mean of non-monotone points
+	\item calc $STRESS1 = \sqrt{\frac{\sum_{i<j} (d_{ij} - \hat{d}_{ij})^2}{\sum_{i<j} d_{ij}^2}}$ (small is good)
+	\begin{align}
+		x_{il}^{new} = x_{il} + \frac{\alpha}{n-1}\sum_{j=1,j\neq i} \left(1-\frac{\hat{d}_{ij}}{d_{ij}}\right)(x_{jl} - x_{il}) \notag
+	\end{align}
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Discriminant Analysis}} \\
+\end{center}
+\begin{itemize}
+	\item ML Discriminant Rule: $R_1 = \{x \mid L_1(x) > L_{\neq 1}(x)\}$
+	\item ECM Rule: $R_1 = \left\lbrace x\mid \frac{f_1(x)}{f_2(x)} \ge \frac{c(1\mid 2)}{c(2\mid 1)}\cdot\frac{\pi_2}{\pi_1}\right\rbrace$
+	\item LDA: Group $i\sim \mathcal{N}_p(\mu_i,\Sigma)$ (squared Mahalanobis distance): $x\in R_1\Leftrightarrow w^\top (x-\mu) > 0$, $w=\Sigma^{-1}(\mu_1-\mu_2)$
+	\item QDA: Group $i\sim\mathcal{N}_p(\mu_i,\Sigma_i)$, $x\in R_1 \Leftrightarrow -\frac{1}{2}x^\top(\Sigma_1^{-1}-\Sigma_2^{-1})x + (\mu_1\Sigma_1^{-1} - \mu_2\Sigma_2^{-1})x - k \ge \log\left(\frac{c(1\mid 2)}{c(2\mid 1)}\cdot\frac{\pi_2}{\pi_1}\right)$ where $k = \frac{1}{2}\log\left(\frac{\det(\Sigma_1)}{\det(\Sigma_2)}\right) + \frac{1}{2}(\mu_1^\top\Sigma_1^{-1}\mu_1 - \mu_2^\top\Sigma_2^{-1}\mu_2)$
+	\item Bayes Rule: $\max \pi_i\cdot f_i(x)$ (all Bayes rules are admissible, no rule exists where $p_{ii}' > p_{ii}$)
+	\item apparent error rate (APER) = $\frac{\#\text{misclassified}}{\#\text{all}}$ $\to$ too optimistic
+	\item actual error rate (AER) with CV = $\frac{\#\text{misclassified}}{\#\text{all}}$
+	\item Fisher: $\max\limits_{w} \frac{w^\top Bw}{w^\top Ww} = \frac{w^\top\sum n_j(\bar{y}_j - \bar{y})^2w}{\sum (w^\top X_i)H_i(X_iw)}$, $w = \Eigenvector(W^{-1}B)$, $x\in R_j \Leftrightarrow j=\arg\min\limits_{i} \vert w^\top (x-\bar{x_i})\vert$
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Regression}} \\
+\end{center}
+\begin{align}
+	\hat{\beta}_{OLS} &= (X^\top X)^{-1}X^\top y \notag \\
+	\E(\hat{\beta}) &= \beta \notag \\
+	\Var(\hat{\beta}) &= \sigma^2(X^\top X)^{-1} \notag \\
+	\E((y-x^\top \hat{\beta})^2) &= \sigma^2 + (x^\top\beta - \E(x^\top\beta))^2 + x^\top\Var(\hat{\beta})x \notag
+\end{align}
+if $\log(y_i) = z_i = \beta_0 + \beta_1x_1 + \dots$ then forecast $y$ by $\exp(z)$ is wrong (biased), better $y=\exp(z + \frac{1}{2}\Var(z))$
+
+\underline{RESET-test} tests for non-linearity
+
+\underline{Detect multicollinearity:}
+\begin{itemize}
+	\item $\det(\Cor(X,X)) \approx 0$ $\Rightarrow$ MC
+	\item condition number $\sqrt{\frac{\lambda_1}{\lambda_p}} \ge 30$ $\Rightarrow$ MC
+	\item variance inflation factor $VIF_j = \frac{1}{1-R_j} \ge 5$ $\Rightarrow$ $x_j$ contributes to MC
+	\item[$\Rightarrow$] more orthogonal data, remove variables, PCR, Ridge Regression
+\end{itemize}
+\underline{Model building:}
+\begin{itemize}
+	\item general to simple, otherwise estimators are biased and have lower variance
+	\item Goodness-of-fit-measures:
+	\begin{align}
+		R^2_{adj} &= 1-(1-R^2)\frac{n-1}{n-p-1}\to\max \notag \\
+		AIC &= \log(\hat{\sigma}^2) + \frac{2p}{n}\to\min \notag \\
+		BIC &= \log(\hat{\sigma}^2) + \frac{p}{n}\log(n)\to\min \notag
+	\end{align}
+\end{itemize}
+\underline{comparing non-nested models:}
+\begin{itemize}
+	\item $y = Z\gamma + X_2\beta_2 + \varepsilon$, $\beta_2 = 0$?
+	\item $R^2$, AIC, BIC
+	\item $J$-Test: $y = Z\gamma + \delta\cdot\text{prediction from } y = X\beta$, $\delta = 0$?
+\end{itemize}
+\underline{leverage:} $h_{ii} = \frac{\partial \hat{y}_i}{\partial y_i}$, $\diag(h_{11},...,h_{nn}) = X(X^\top X)^{-1}X^\top$
+
+\underline{non-parametric regression:} use kernel density estimation
+
+\underline{PCR:}
+\begin{itemize}
+	\item find first $k$ eigenvectors $G_k$
+	\item $Z_k = X\cdot G_k$
+	\item $y = Z_k\cdot \alpha_k$ $\Rightarrow \hat{\alpha}_k = (Z_k^\top Z_k)^{-1}Z_k^\top y$
+	\item $\hat{\beta}_k = G_k\cdot\hat{\alpha}_k$
+	\item number of parameters: use MSE
+\end{itemize}
+\underline{Ridge-Regression:}
+\begin{itemize}
+	\item $\Vert y-X\beta\Vert_2^2 + \lambda\Vert\beta\Vert_2\to\min$
+	\item[$\Rightarrow$] $\hat{\beta}_{RR} = (X^\top X + \lambda I)^{-1}X^\top y$
+	\item $\Var(\hat{\beta}_{OLS}) = \sigma^2\cdot DL^{-2}D^\top$
+	\item $\Var(\hat{\beta}_{RR}) = \sigma^2\cdot DL_{\lambda}^{-2}D^\top$ where $L^{-1}_{\lambda} = \diag\left(\frac{\sqrt{l_i}}{l_i + \lambda}\right)$
+\end{itemize}
+\underline{Ridge-Regression via ML approach:}
+\begin{align}
+	p(\theta\mid X) = \frac{p(X\mid \theta) \cdot p(\theta)}{p(X)} \to\max\quad\text{MAP} \notag
+\end{align}
+(LS maximizes likelihood)
+\begin{align}
+	\hat{\beta}_{MAP} = (X^\top X + \sigma^2\lambda I)^{-1}X^\top y \notag
+\end{align}
+\underline{LASSO-Regression:}
+\begin{itemize}
+	\item $\Vert y-X\beta\Vert_2^2 + \lambda\Vert\beta\Vert_1\to\min$
+	\item no closed-form solution
+	\item shrinks parameters to zero
+	\item adaptive LASSO: $\Vert y-X\beta\Vert_2^2 + \lambda\sum w_i\vert\beta_i\vert\to\min$
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Logistic Regression}} \\
+\end{center}
+\begin{align}
+	\mathbb{P}(Y = 1\mid X) &= \frac{1}{1+\exp(-X\beta)} \quad\text{logit} \notag \\
+	&= \Phi(X\beta) \quad\text{probit} \notag
+\end{align}
+\underline{Interpretation:}
+\begin{itemize}
+	\item $\beta_j>0$:$X\beta$ raises by $\beta_j$ $\to$ $\mathbb{P}$ raises by $\exp(\beta_j)$
+	\item $\beta_j<0$:$X\beta$ falls by $\beta_j$ $\to$ $\mathbb{P}$ falls by $\exp(\beta_j)$
+\end{itemize}
+\underline{Goodness of Model:} $R^2$ can't be used
+\begin{itemize}
+	\item pseudo $R^2$: $L_0$ log likelihood where $b_1=b_2=...=0$, $L_v$ log likelihood for full model
+	\begin{itemize}
+		\item Deviance: $D=-2L_v$
+		\item Mc-Faddens-$R^2$: $1-\frac{L_v}{L_0}$
+	\end{itemize}
+	\item accuracy: $\frac{TP + TN}{P+N}$ (same as APER)
+	\item ROC: sensitivity = $\frac{TP}{P}$, specificity = $\frac{TN}{N}$
+	\begin{itemize}
+		\item ROC-curve: sensitivity values as a function of 1 - specificity
+		\item AUC: area under curce $\to\max$
+		\item ROC-curve diagonal $\Rightarrow$ random guessing
+	\end{itemize}
+\end{itemize}
+
+\end{multicols*}
+\end{document}

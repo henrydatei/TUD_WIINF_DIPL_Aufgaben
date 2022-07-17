@@ -47,8 +47,9 @@ In diesem Repo sind meine Lösungen und Zusammenfassungen zu einigen Modulen aus
 - Steuertheorie: Hausaufgaben
 
 ### Ergänzungsbereich
-- Applied Multivariate Statistics
+- Applied Multivariate Statistics: Übungen (unvollständig), Cheat Sheet für mündliche Prüfung
 
 
 ## weitere Dokumente
 - Statistik 2: Protokoll für tutorielle Tätigkeit
+- Spanisch A1: Zusammenfassung
