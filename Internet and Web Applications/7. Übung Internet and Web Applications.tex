@@ -1,0 +1,114 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\lstdefinelanguage{JavaScript}{
+	keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break, for, of, document},
+	keywordstyle=\color{lila}\bfseries,
+	ndkeywords={class, export, boolean, throw, implements, import, this},
+	ndkeywordstyle=\color{lila}\bfseries,
+	identifierstyle=\color{blue},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{lightgray}\ttfamily,
+	stringstyle=\color{mygreen}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{xml} {language=xml, morekeywords={encoding, newspaper, article, title, id, published, author, xs:schema, xmlns:xs, xs:element, name, xs:sequence, xs:element, type, xs:complexType}}
+\lstdefinestyle{json}{}
+\lstdefinestyle{javascript}{language=javascript}
+\lstdefinestyle{html}{language=html, morekeywords={main}}
+\lstset{language=XML,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	tabsize=2,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space},
+	literate=%
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}1
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Internet and Web Applications, Übung 7}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1: VoIP and NAT}
+	\begin{enumerate}[label=(\alph*)]
+		\item Session Traversal Utilities for NAT (STUN, englisch für Werkzeuge zum Durchkreuzen von NATs) ist ein einfaches Netzwerkprotokoll, um das Vorhandensein und die Art von Firewalls und NAT-Routern zu erkennen und direkte Verbindungen zwischen Geräten, welche sich hinter einer NAT-Firewall befinden, aufzubauen. Damit ist es Geräten, welche hinter bestimmten Typen von NAT-Firewalls betrieben werden, möglich direkte bidirektionale Verbindungen zwischen den Endknoten aufzubauen. Beispiele für die Anwendung von STUN sind SIP-Telefone und Computer-Programme in Heimnetzwerken.
+		\item STUN dient dazu, die Informationen wie die öffentliche IP-Adresse und Port-Nummer für den direkten Kontaktaufbau zwischen zwei Endgeräten, den "Clients", welche sich normalweise nicht direkt erreichen können, zu ermitteln um dann in Folge und unabhängig von STUN, den Clients mit diesen Informationen die direkte Kontaktaufnahme zu ermöglichen. STUN wird unter anderem bei der IP-Telefonie (v. a. im Zusammenhang mit SIP) und bei Online-Spielen von Spielekonsolen eingesetzt. \\
+		STUN wurde in RFC 3489 definiert und stand damals noch für englisch Simple traversal of UDP through NATs. Aufgrund der gemachten Erfahrungen und neuen Definitionen aus anderen RFCs wurde STUN dann überarbeitet und in englisch Session Traversal Utilities for NAT umbenannt (RFC 5389). Dabei wurde STUN als Framework neu definiert, und alle Funktionen bis auf die Basisfunktionalität verschwanden; dafür wurde allerdings definiert, wie Erweiterungen möglich sind. \\
+		Ein in der Funktion ähnliches Protokoll stellt TURN dar, die Abkürzung steht für englisch Traversal Using Relays around NAT, welches im Gegensatz zu STUN sich eines externen, im öffentlichen Internet befindlichen Relay-Server bedient, um so eine Verbindung zwischen Clients mit einem direkten Kommunikationskanal aufzubauen. Dies erlaubt auch Kommunikationen wo die direkte Verbindung von Endgeräten untereinander durch bestimmte, restriktive NAT-Firewalls blockiert werden. Der Nachteil ist, dass der normalerweise verschlüsselte Datentransfer über den TURN-Server laufen muss und diese Anbindung bei vielen Verbindungen einen Flaschenhals darstellt.
+	\end{enumerate}
+	\url{https://de.wikipedia.org/wiki/Session_Traversal_Utilities_for_NAT}
+	
+	\section*{Aufgabe 2: Offer/Answer Model}
+	The use of SDP with SIP is given in the SDP offer answer RFC 3264. The default message body type in SIP is application/sdp.
+	\begin{itemize}
+		\item The calling party lists the media capabilities that they are willing to receive in SDP, usually in either an INVITE or in an ACK.
+		\item The called party lists their media capabilities in the 200 OK response to the INVITE.
+	\end{itemize}
+	A typical SIP use of SDP includes the following fields: version, origin, subject, time, connection, and one or more media and attribute.
+	\begin{itemize}
+		\item The subject and time fields are not used by SIP but are included for compatibility.
+		\item In the SDP standard, the subject field is a required field and must contain at least one character, suggested to be \texttt{s=-} if there is no subject.
+		\item The time field is usually set to \texttt{t = 00}. SIP uses the connection, media, and attribute fields to set up sessions between UAs.
+		\item The origin field has limited use with SIP.
+		\item The session-id is usually kept constant throughout a SIP session.
+		\item The version is incremented each time the SDP is changed. If the SDP being sent is unchanged from that sent previously, the version is kept the same.
+		\item As the type of media session and codec to be used are part of the connection negotiation, SIP can use SDP to specify multiple alternative media types and to selectively accept or decline those media types.
+	\end{itemize}
+	The offer/answer specification, RFC 3264, recommends that an attribute containing \texttt{a = rtpmap}: be used for each media field. A media stream is declined by setting the port number to zero for the corresponding media field in the SDP response.
+	
+	\url{https://www.tutorialspoint.com/session_initiation_protocol/session_initiation_protocol_the_offer_answer_model.htm}
+\end{document}
