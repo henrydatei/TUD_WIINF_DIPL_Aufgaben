@@ -92,7 +92,7 @@ with Kernel $K(u) = I(\vert u\vert \le 0.5)$ (uniform Kernel), $h$...Degree of s
 \end{itemize}
 \underline{Growing a regression tree:}
 \begin{align}
-	\hat{y} &= \sum_{i=1}^M c_mI(x\in R_m) \notag \\
+	\hat{y} &= \sum_{m=1}^M c_mI(x\in R_m) \notag \\
 	\Rightarrow \hat{c}(R_m) &= \frac{1}{n(R_m)}\sum_{i=1}^n I(y_i\mid x_i\in R_m) \notag
 \end{align}
 \underline{Stopping parameters:}
@@ -178,9 +178,140 @@ with Kernel $K(u) = I(\vert u\vert \le 0.5)$ (uniform Kernel), $h$...Degree of s
 	\item dual problem: MMC with $x\to \phi(x)$ s.t. $0\le\alpha_i\le\lambda$, $\sum\alpha_iy_i = 0$
 	\item[$\Rightarrow$] if $K$ exists such that $K(x_i,x_j)=\langle \phi(x_i),\phi(x_j)\rangle$ we can use SVM without knowing $\phi$ (kernel trick)
 	\item $K(x_i,x_j)$ pos. def. $\Leftrightarrow$ $\sum\sum \lambda_i\lambda_j K(x_i,x_j) > 0$
-	\item[$\to$] linear kernel ($\langle x_i,x_j\rangle$), polynomial kernel ($(\langle x_i,x_j\rangle + 1)^p$), radial kernel ($\exp(-\Vert x_i-x_j\Vert/2\sigma^2)$), sigmoid kernel ($\tanh(k\langle x_i,x_j\rangle - \delta)$)
-	\item SVM with $K$ classes: 1-vs-1: $\binom{K}{2}$ pairs, $\binom{K}{2}$ classifiers $\Rightarrow$ majority vote; 1-vs-all: compare one of $K$ classes to rest, assign $x^\ast$ to $b_k + w_{1k}x_1^\ast + ...\to\max$
+	\begin{itemize}
+		\item linear kernel ($\langle x_i,x_j\rangle$)
+		\item polynomial kernel ($(\langle x_i,x_j\rangle + 1)^p$)
+		\item radial kernel ($\exp(-\Vert x_i-x_j\Vert/2\sigma^2)$)
+		\item sigmoid kernel ($\tanh(k\langle x_i,x_j\rangle - \delta)$)
+	\end{itemize}
+	\item SVM with $K$ classes: 
+	\begin{itemize}
+		\item 1-vs-1: $\binom{K}{2}$ pairs, $\binom{K}{2}$ classifiers $\Rightarrow$ majority vote
+		\item 1-vs-all: compare one of $K$ classes to rest, assign $x^\ast$ to $b_k + w_{1k}x_1^\ast + ...\to\max$
+	\end{itemize}
 \end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{K-Means}} \\
+\end{center}
+\underline{K-Means:}
+\begin{itemize}
+	\item objective function: $\hat{\mu},\hat{c} = \arg\min L = \sum_k\sum_{i:c_i=k} \Vert x_i-\mu_k\Vert^2$
+	\item non convex objective function (no global optimum findable, no derivatives, no gradient descent)
+	\item update classes, update centers until nothing changes (start with random centers) $\to$ run multiple times
+\end{itemize}
+\underline{K-Means in compression:} similar colors $\to$ same color (cluster)
+
+\underline{choose $K$:} advanced knowledge, increasing $K$ leads to more relative reduction of $L$ when $K$ is to small than $K$ is to big
+
+\underline{Extensions:}
+\begin{itemize}
+	\item K-mediods: use $L_1$ norm instead of $L_2$ norm $\to$ more robust to outliers
+	\item weighted K-means: $L=\sum_i\sum_k \phi_i(k)\frac{\Vert x_i-\mu_k\Vert^2}{\beta}$ where $\phi_i(k)>0$ and $\sum_k \phi_i(k)=1$, $\beta>0$
+	\begin{align}
+		\phi_i(k) &= \frac{\exp\left(-\frac{1}{\beta}\Vert x_i-\mu_k\Vert^2\right)}{\sum_k \exp\left(-\frac{1}{\beta}\Vert x_i-\mu_k\Vert^2\right)} \notag \\
+		\mu_k &= \frac{\sum_i x_i\phi_i(k)}{\sum_i \phi(k)} \notag
+	\end{align}
+\end{itemize}
+\underline{Generalized mixture model building:} EM-Algorithm
+\begin{itemize}
+	\item each cluster contains points from normal distribution with $\mu_i$, $\Sigma_i$ (different sizes of clusters possible)
+	\item E-Step: update $\phi_i(k)$ (to which of the $K$ normal distributions a point belongs)
+	\item M-Step: update parameters of each normal distribution
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Cluster Analysis}} \\
+\end{center}
+\underline{Proximity for non-metric data, distances for metric data}
+\begin{itemize}
+	\item binary data: $\frac{a_1+\delta a_4}{a_1 + \delta a_4 + \lambda(a_2+a_3)}$ $\to$ matching coefficient $\lambda = \delta = 1$
+	\item mixed scales:
+	\begin{itemize}
+		\item nominal/ordinal: $d_{ij}^{(k)} = I(x_{ik} \neq x_{jk})$
+		\item metric: $d_{ij}^{(k)} = \frac{\vert x_{ik} - x_{jk}\vert}{\max x_{mk} - \min x_{mk}}$
+		\item $\delta_{ij}^{k} = 0$ if missing, else 1
+		\item[$\Rightarrow$] Gower coefficient: $d_{ij} = \frac{\sum w_k\delta_{ij}^{(k)}d_{ij}^{(k)}}{\sum w_k\delta_{ij}^{(k)}}$
+	\end{itemize}
+	\item $L_p$ norm
+	\item French railway metric: over Paris
+	\item Karlsruhe metric: along arcs
+	\item Mahalanobis distance: $d_{ij}^2 = (x_i-x_j)^\top A (x_i-x_j)$
+	\item Contingency tables: $d^2(r_1,r_2) = \sum\left(\frac{x_{\cdot\cdot}}{x_{\cdot j}}\right)\left(\frac{x_{r_1j}}{x_{r_1\cdot}} - \frac{x_{r_2j}}{x_{r_2\cdot}}\right)^2$
+	\item $Q$-Correlation distance: correlation between $x_i$ and $x_j$ in $k$-th variable
+\end{itemize}
+\underline{Distance between clusters:}
+\begin{itemize}
+	\item single linkage: nearest points $\to$ large groups
+	\item complete linkage: farthest points
+	\item average linkage: mean of all combinations
+	\item centroid: $d(R, \text{center of gravity}(P+Q))$
+	\item Ward: join groups that not increase heterogeneity to much ($I(R) = \frac{1}{n_R}\sum d^2(x_i,\bar{x}_R)$)
+\end{itemize}
+\underline{hierarchical:} joins/splits groups, \underline{partitioning:} exchange elements in given clustering
+
+\begin{center}
+	\normalsize{\textbf{Missing data}} \\
+\end{center}
+\underline{Types of missing data:}
+\begin{itemize}
+	\item missing completely at random
+	\item missing at random: depends on observed data
+	\item missing not at random: depends on observed predictors or on missing value itself
+	\item[$\Rightarrow$] not testable!
+\end{itemize}
+\underline{What to do?}
+\begin{itemize}
+	\item deletion: assumes MCAR
+	\item pairwise deletion: assumes MCAR ("merges" rows to get full data)
+	\item unconditional location (cold deck): use value from "closest" observation $\to$ mean of $Y$ is wrong, variance of $Y$ is wrong
+	\item unconditional mean: mean of all other observations $\to$ mean of $Y$ is good, variance of $Y$ is wrong
+	\item unconditional distribution (hot deck): use randomly selected observation $\to$ mean/variance of $Y$ is good, $\Cor(X,Y)$ is wrong
+	\item conditional mean (linear regression) $\to$ conditional mean of $Y$ is good, $\Cor(X,Y)$ is good, conditional variance of $Y$ is wrong
+	\item conditional distribution (linear regression + $\varepsilon$) $\to$ conditional mean/variance of $Y$ is good, $\Cor(X,Y)$ is good
+	\item random Forests: good if MAR
+	\item time series: last observation carried forward, next observation carried backward
+	\item time series: interpolation linear, seasonal interpolation
+	\item[$\Rightarrow$] multiple imputations: impute, estimate parameter, ...
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Markov Chains}} \\
+\end{center}
+\begin{itemize}
+	\item $M_{ij}$...probability of going from state $i$ to state $j$ $\Rightarrow$ row sums = 1
+	\item estimate $M$: $\hat{M}_{ij} = \frac{\#\text{transitions } i\to j}{\#\text{transitions } i\to\ast}$
+	\item $w_{t+1} = w_tM$, stationary $w_\infty = w_\infty M$ $\xrightarrow[\text{Eigenvalue}]{\lambda = 1} w_\infty = \frac{\gamma}{\Vert\gamma\Vert_1}$
+	\item Markov Chains as ranking: A beats B, then B $\to$ A high and A $\to$ B low
+	\item Markov Chains as classification: $\hat{M}_{ij} = \exp\left(-\frac{\Vert x_i-x_j\Vert^2}{b}\right)$ $\to$ normalize, if $x_i$ has label: $M_{ii} = 1$, rest of row 0 $\Rightarrow$ absorbing state
+	\begin{align}
+		M = \begin{pmatrix}
+			A & B \\ 0 & I
+		\end{pmatrix} \Rightarrow w_\infty &= w_0M^\infty \notag \\
+		&= w_0\begin{pmatrix}
+			0 & (I-A)^{-1}B \\ 0 & I
+		\end{pmatrix} \notag
+	\end{align}
+	\item hidden Markov Model: hidden sequence of states, observation is drawn from distribution associated with state $\to$ EM-algorithm
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Neural Networks}} \\
+\end{center}
+\underline{Activation functions:}
+\begin{align}
+	f(I_j) &= \begin{cases}
+		1 & I_j\ge\theta_j \\
+		0 & \text{else}
+	\end{cases} \notag \\
+	f(I_j) &= \frac{1}{1+\exp(-\beta(I_j-\theta_j))} \quad\text{(sigmoid)} \notag \\
+	f(I_j) &= \max(0,I_j) \quad\text{(relu)} \notag \\
+	f(I_j) &= \log(1+\exp(I_j)) \quad\text{(solftplus)} \notag \\
+	S(y_j) &= \frac{\exp(y_i)}{\sum\exp(y_i)} \quad\text{(softmax)} \notag
+\end{align}
+\underline{Back-propagation:} update weights with gradient decent
+
+\underline{Reinforcement learning:} find best policy to max rewards $\to$ Q-learning: $Q(s,a) = r + \gamma\max_a Q(s',a)$
 
 \end{multicols*}
 \end{document}
