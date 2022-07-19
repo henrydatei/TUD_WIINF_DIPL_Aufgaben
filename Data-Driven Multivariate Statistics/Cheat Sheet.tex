@@ -1,0 +1,186 @@
+\documentclass[10pt,landscape,a4paper]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape,top=1cm,bottom=1cm,right=1cm,left=1cm,noheadfoot,bindingoffset=0pt,marginparwidth=0pt,marginparsep=0pt]{geometry}
+\usepackage{amsmath,amsfonts,amssymb,mathtools}
+\usepackage{graphicx}
+\usepackage{fontenc}
+%\usepackage{lua-visual-debug}
+\usepackage{enumitem}
+\usepackage{xfrac}
+\usepackage[utf8]{inputenc}
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {5pt}{1pt}%x
+                                {\normalfont\small\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {5pt}%
+                                {1pt}%
+                                {\normalfont\small\underline}}
+\makeatother
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+\setlist{
+	noitemsep,
+	topsep=-\parskip,
+	leftmargin=2em
+}
+\setcounter{secnumdepth}{0}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Eigenvector}{Eigenvector}
+
+
+% -----------------------------------------------------------------------
+
+\begin{document}
+
+\raggedright
+\footnotesize
+\begin{multicols*}{4}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+\setlength{\columnseprule}{0.1pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{1pt}
+
+\begin{center}
+	\normalsize{\textbf{Graphical Representation of Numerical Data}} \\
+\end{center}
+\underline{Kernel density estimator:}
+\begin{align}
+	\hat{f}_h(x) &= \frac{1}{2nh}\sum_{i=1}^{n}I(\vert x-x_i\vert\le h) \quad\text{(Histogram)} \notag \\
+	\Rightarrow\hat{f}_h(x) &= \frac{1}{nh}\sum_{i=1}^n K\left(\frac{x-x_i}{h}\right) \notag
+\end{align}
+with Kernel $K(u) = I(\vert u\vert \le 0.5)$ (uniform Kernel), $h$...Degree of smoothness
+
+\begin{center}
+	\normalsize{\textbf{Decision Trees}} \\
+\end{center}
+\underline{Impurity functions $u(R)$:} $p_k(R) = \frac{1}{n}\sum I(y_i=k)$ (purity)
+\begin{itemize}
+	\item classification error: $1-\max_k p_k(R)$
+	\item Gini index: $1-\sum_k p_k(R)^2$
+	\item entropy: $-\sum_k p_k(R)\cdot\log(p_k(R))$
+	\item[$\Rightarrow$] are all maximized when $p_k$ is uniform on the $K$ classes in $R$; all are minimized when $p_k = 1$ for some $k$ ($R$ has one class)
+\end{itemize}
+\underline{Growing a classification tree:} $R\to R^+$ and $R^-$
+\begin{itemize}
+	\item calculate $u(R)$, $u(R^+)$, $u(R^-)$
+	\item Gini improvement: $u(R) - (p(R^-)\cdot u(R^-) + p(R^+)\cdot u(R^+)) \to\max$
+	\item[$\Rightarrow$] reduces uncertainty
+\end{itemize}
+\underline{Growing a regression tree:}
+\begin{align}
+	\hat{y} &= \sum_{i=1}^M c_mI(x\in R_m) \notag \\
+	\Rightarrow \hat{c}(R_m) &= \frac{1}{n(R_m)}\sum_{i=1}^n I(y_i\mid x_i\in R_m) \notag
+\end{align}
+\underline{Stopping parameters:}
+\begin{itemize}
+	\item \#splits, \#observations per region, $\Delta$ objective function
+	\item tree prunning: $R_\alpha(T) = \frac{1}{\sum (y_i-\bar{y})^2}\sum_{m=1}^{\vert T\vert}\sum_{i:x_i\in R_m} (y_i-f(x_i))^2 + \alpha\vert T\vert\to\min$
+	\item $\alpha$...complexity parameter (CP)
+\end{itemize}
+\underline{Optimal subtree with CV:}
+\begin{itemize}
+	\item trees $T_0$ (0 splits), ..., $T_m$ ($m$ splits) $\Rightarrow$ $\infty,\alpha_1,...,\alpha_{min}$
+	\item $\beta_i = \sqrt{\alpha_i \cdot\alpha_{i+1}}$ (average)
+	\item subsets $G_1,...,G_B$
+	\item trees with $\beta_1,...,\beta_m$ for each subset (leave one out $\to$ forecast)
+	\item[$\Rightarrow$] smallest $\beta$ over all $G_i$'s
+\end{itemize}
+\underline{Bagging:} bootstrapping from training data, tree $T_i$
+\begin{itemize}
+	\item prediction: $\frac{1}{n}\sum_{i=1}^n \text{pred}(T_i,x)$
+	\item when correlation in bootstrap samples $\to$ effect decreases
+\end{itemize}
+\underline{Random Forests:} bootstrapping + subset of explanatory variables
+\begin{itemize}
+	\item importance of variable: how much increase of MSE or classification error when variable is permuted in left-out-sample
+\end{itemize}
+\underline{Boosting:} AdaBoost: 
+\begin{itemize}
+	\item bootstrapping from training data with distribution $w_t$ ($w_0 = \frac{1}{n}$)
+	\item train classifier $f_t$
+	\item $\varepsilon_t = \sum w_t\cdot I(y_t\neq f_t(x_i))$, $\alpha_t = \frac{1}{2}\log\left(\frac{1-\varepsilon_t}{\varepsilon_t}\right)$
+	\item scale $w_{t+1}(i) = w_t(i)\cdot\exp(-\alpha_ty_if(x_i))$ and normalize
+	\item training error $\frac{1}{n}\sum I(y_i\neq f_{boost}(x_i)) \le \exp\left(-2\sum \left(\frac{1}{2}-\varepsilon_t\right)^2\right)$
+	\item[$\Rightarrow$] $f_{boost} = \sgn\left(\sum \alpha_tf_t\right)$
+\end{itemize}
+\underline{CHAID:} not binary, split so that ANOVA has smallest $p$-value
+
+\begin{center}
+	\normalsize{\textbf{Nearest Neighbors Classifiers}} \\
+\end{center}
+\underline{NN classifier:} label $x$ with label of closest point (default euclidean distance)
+
+\underline{$k$-NN classifier:} majority vote of $k$ closest points
+
+\begin{center}
+	\normalsize{\textbf{Linear classifier and Perceptron}} \\
+\end{center}
+\underline{Hyperplane $H$:} $p-1$ dimensional subspace $H=\{x\mid \langle x,w\rangle = 0\}$
+\begin{itemize}
+	\item affine Hyperplane $H = \{x\mid \langle x,w\rangle + w_0 = 0\}$
+	\item[$\Rightarrow$] linear classifier: $\sgn(\langle x,w\rangle + w_0)$
+\end{itemize}
+\underline{Perceptron:}
+\begin{itemize}
+	\item $L=-\sum (y_i\cdot\langle x_i,w\rangle)I(y_i\neq\sgn(\langle x,w\rangle))\to\min$
+	\item $\frac{\partial L}{\partial w}$ direction in which $L$ is increasing $\Rightarrow$ $w'=w-\eta\frac{\partial L}{\partial w}$ (gradient descent, Perceptron uses a stochastic version): find one $(x_iy_i)$ where $y_i\neq\sgn(\langle x_i,w\rangle)$ and then $w_{t+1}=w_t + \eta y_ix_i$
+	\item problems: data separable $\to$ one $H$ will be found (not necessary the best), data not separable $\to$ algorithm won't stop
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Maximum Margin Classifiers and SVM}} \\
+\end{center}
+\underline{Maximum margin classifier:}
+\begin{itemize}
+	\item margin: distance $H \leftrightarrow$ closest point $\to\max$
+	\item convex hull: every point can be reached by linear combination of convex-hull-points
+	\item How to find $H$?
+	\item[$\to$] $\langle x_i,w\rangle + w_0\ge 1$ ($y_i=1$), $\langle x_i,w\rangle + w_0\le -1$ ($y_i=-1$) $\Rightarrow$ $y_i(\langle x_i,w\rangle + w_0)-1\ge 0$
+	\item[$\to$] $d_+ = d_- = \frac{1}{\Vert w\Vert} \Rightarrow d_++d_-=\frac{2}{\Vert w\Vert}\to\max$
+	\item[$\to$] primal problem: $L=\frac{1}{2}\Vert w\Vert^2\to\min$ s.t. $y_i(\langle x_i,w\rangle + w_0)\ge 1$ (with Lagrange coefficients $\alpha$)
+	\item[$\to$] dual problem $L=\sum\alpha_i-\frac{1}{2}\sum_i\sum_j\alpha_i\alpha_jy_iy_j\langle x_i,x_j\rangle\to\max$ s.t. $\sum\alpha_iy_i = 0$ (find closest points in convex hull)
+	\item[$\to$] solve dual problem for $\alpha$, $w=\sum\alpha_iy_ix_i$, pick $i$ for $\alpha_i>0$ and solve $y_i(\langle x_i,w\rangle + w_0)\ge 1$ for $w_0$
+	\item[$\to$] problems: robustness, if not linear separable $\to$ not working
+\end{itemize}
+\underline{Support Vector Classifier:}
+\begin{itemize}
+	\item slack variables $\xi_i$ represent violation from strict separation, $y_i(\langle x_i,w\rangle + w_0)\ge 1-\xi_i$
+	\item $L=\frac{1}{2}\Vert w\Vert^2 + \lambda\sum \xi_i$ s.t. $y_i(...)\ge 1-\xi_i$
+	\item problems: non separability
+\end{itemize}
+\underline{Support Vector Machine:} maps data in higher dimensions with $\phi(x)$
+\begin{itemize}
+	\item primal problem: SVC with $x\to \phi(x)$
+	\item dual problem: MMC with $x\to \phi(x)$ s.t. $0\le\alpha_i\le\lambda$, $\sum\alpha_iy_i = 0$
+	\item[$\Rightarrow$] if $K$ exists such that $K(x_i,x_j)=\langle \phi(x_i),\phi(x_j)\rangle$ we can use SVM without knowing $\phi$ (kernel trick)
+	\item $K(x_i,x_j)$ pos. def. $\Leftrightarrow$ $\sum\sum \lambda_i\lambda_j K(x_i,x_j) > 0$
+	\item[$\to$] linear kernel ($\langle x_i,x_j\rangle$), polynomial kernel ($(\langle x_i,x_j\rangle + 1)^p$), radial kernel ($\exp(-\Vert x_i-x_j\Vert/2\sigma^2)$), sigmoid kernel ($\tanh(k\langle x_i,x_j\rangle - \delta)$)
+	\item SVM with $K$ classes: 1-vs-1: $\binom{K}{2}$ pairs, $\binom{K}{2}$ classifiers $\Rightarrow$ majority vote; 1-vs-all: compare one of $K$ classes to rest, assign $x^\ast$ to $b_k + w_{1k}x_1^\ast + ...\to\max$
+\end{itemize}
+
+\end{multicols*}
+\end{document}

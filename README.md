@@ -48,7 +48,7 @@ In diesem Repo sind meine Lösungen und Zusammenfassungen zu einigen Modulen aus
 
 ### Ergänzungsbereich
 - Applied Multivariate Statistics: Übungen (unvollständig), Cheat Sheet für mündliche Prüfung
-
+- Data-Driven Multivariate Statistics: Cheat Sheet für mündliche Prüfung
 
 ## weitere Dokumente
 - Statistik 2: Protokoll für tutorielle Tätigkeit
