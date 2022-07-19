@@ -8,10 +8,12 @@ In diesem Repo sind meine Lösungen und Zusammenfassungen zu einigen Modulen aus
 ## Grundstudium
 
 ### 1. Semester
+- Mathe 1 Lineare Algebra: Spickzettel
 
 ### 2. Semester
 - Einführung in die (theoretische) Informatik: Übungen
 - Statistik 1: Zwischentests
+- Mathe 2 Analysis: Spickzettel
 
 ### 3. Semester
 - Einführung in die Logistik: Übungen

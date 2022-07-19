@@ -1,0 +1,300 @@
+\documentclass[10pt,landscape,a4paper]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape,top=1cm,bottom=1cm,right=1cm,left=1cm,noheadfoot,bindingoffset=0pt,marginparwidth=0pt,marginparsep=0pt]{geometry}
+\usepackage{amsmath,amsfonts,amssymb,mathtools}
+\usepackage{graphicx}
+\usepackage{fontenc}
+%\usepackage{lua-visual-debug}
+\usepackage{enumitem}
+\usepackage[utf8]{inputenc}
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {5pt}{1pt}%x
+                                {\normalfont\small\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {5pt}%
+                                {1pt}%
+                                {\normalfont\small\underline}}
+\makeatother
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+\setlist{
+	noitemsep,
+	topsep=-\parskip,
+	leftmargin=2em
+}
+\setcounter{secnumdepth}{0}
+
+
+% -----------------------------------------------------------------------
+
+\begin{document}
+
+\raggedright
+\footnotesize
+\begin{multicols*}{4}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+\setlength{\columnseprule}{0.1pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{1pt}
+
+\begin{center}
+	\normalsize{\textbf{Komplexe Zahlen}}
+\end{center}
+\textbf{Darstellung}
+\begin{itemize}
+	\item Algebraische Form: $z=x+yi$
+	\item Trigonometrische Form: $z=r\cdot (\cos(\varphi) + i\sin(\varphi))$
+	\item Exponentialform: $z=r\cdot e^{i\varphi}$
+	\item[$\Rightarrow$] $\varphi$ heißt \textit{Argument} oder \textit{Phase}
+	\item[$\Rightarrow$] $r$ heißt \textit{Betrag} oder \textit{Modul}
+\end{itemize}
+\textbf{Umwandlung}
+\begin{align}
+	r &= \vert z\vert=\sqrt{x^2+y^2} \notag \\
+	\varphi &= \arctan\left(\frac{y}{x}\right) + \begin{cases}
+		0 &z \text{ im 1. od. 4. Quad.} \\
+		-\pi &z \text{ im 2. Quad.} \\
+		\pi &z \text{ im 3. Quad.}
+	\end{cases} \notag \\
+	x &= r\cdot \cos(\varphi) \notag \\
+	y &= r\cdot \sin(\varphi) \notag
+\end{align}
+\textbf{Rechenregeln}
+\begin{itemize}
+	\item $(a+bi)+(c+di) = (a+c) + (b+d)i$
+	\item $(a+bi)-(c+di) = (a+c) - (b+d)i$
+	\item $(a+bi)\cdot (c+di) = (ac-bd) + (ad+bc)i$
+	\item $\overline{(a+bi)} = a-bi$
+	\item $\vert a+bi\vert = \sqrt{a^2+b^2}$
+	\item $\frac{a+bi}{c+di}=\frac{(a+bi)\cdot\overline{(c+di)}}{\vert c+di\vert^2}$
+	\item Komplexe Lösungen quadratischer Gleichungen:
+	\begin{align}
+		0 &= x^2 + px + q \notag \\
+		x_{1/2} &= -\frac{p}{2} \pm i\cdot\sqrt{q-\frac{p^2}{4}} \notag
+	\end{align}
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Folgen}}
+\end{center}
+\textbf{Eigenschaften}
+\begin{itemize}
+	\item geometrische Folge: $\frac{a_{n+1}}{a_n}=q$, nächstes Folgenglied ist immer um bestimmten Faktor $q$ größer
+	\item arithmetische Folge: $a_{n+1}-a_n=d$, nächstes Folgenglied ist immer um bestimmten Wert $d$ größer.
+\end{itemize}
+\textbf{Konvergenz}
+\begin{itemize}
+	\item Grenzwert: $\lim_{n\to\infty} a_n = x$
+	\item Nullfolge: $x=0$
+	\item Folge beschränkt und monoton fallend/steigend $\Rightarrow$ konvergent
+\end{itemize}
+\begin{align}
+	\lim_{n\to\infty}\left(1+\frac{a}{b\cdot k}\right)^k = e^{\frac{a}{b}} \notag
+\end{align}
+
+\begin{center}
+	\normalsize{\textbf{Reihen}}
+\end{center}
+\textbf{Begriffe}
+\begin{itemize}
+	\item Reihe: $s=\sum_{k=0}^{\infty} a_k$
+	\item $n$-te Partialsumme: $s_n=\sum_{k=0}^{n} a_k$
+	\item Grenzwert: $\lim_{n\to\infty} s_n$
+\end{itemize}
+\begin{align}
+	\sum_{k=0}^\infty a_0\cdot q^k = \frac{a_0}{1-q} \notag
+\end{align}
+\textbf{Konvergenzkriterien}
+\begin{itemize}
+	\item Trivialkriterium: $\sum_{k=0}^{\infty} a_k$ ist konvergent, wenn $a_k$ eine Nullfolge ist
+	\item Leibnitz-Kriterium (für alternierende Folgen): $\sum_{k=0}^{\infty} (-1)^k\cdot a_k$ ist konvergent, wenn $a_k$ eine monoton fallende Nullfolge ist
+	\item Majorantenkriterium: $\sum_{k=0}^{\infty} a_k$ ist konvergent, wenn $\sum_{k=0}^{\infty} b_k$ konvergent ist und $0\le a_k\le b_k$ gilt. $b_k=\frac{1}{k^2}$ funktioniert meistens gut als Majorante.
+	\item Minorantenkriterium: $\sum_{k=0}^{\infty} a_k$ ist divergent, wenn $\sum_{k=0}^{\infty} b_k$ divergent ist und $0\le b_k\le a_k$ gilt. $b_k=\frac{1}{k}$ funktioniert meistens gut als Minorante.
+	\item Quotientenkriterium: $\sum_{k=0}^{\infty} a_k$ ist konvergent, wenn
+	\begin{align}
+		\lim_{k\to\infty}\left\vert\frac{a_{k+1}}{a_k}\right\vert<1 \notag
+	\end{align}
+	\item Wurzelkriterium: $\sum_{k=0}^{\infty} a_k$ ist konvergent, wenn
+	\begin{align}
+		\lim_{k\to\infty}\sqrt[k]{\vert a_k\vert} <1 \notag
+	\end{align}
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Funktionen einer Variablen}}
+\end{center}
+\textbf{Umkehrfunktion berechnen:} Gleichung $y=f(x)$ nach $x$ umstellen und anschließend $x$ und $y$ vertauschen
+
+\textbf{Gebrochen rationale Funktionen $y=\frac{P_m(x)}{Q_n(x)}$}
+\begin{itemize}
+	\item Nullstelle: $P_m(x_0)=0$ und $Q_n(x_0)\neq 0$
+	\item Polstelle: $P_m(x_0)\neq 0$ und $Q_n(x_0)=0$
+	\item Lücke: $P_m(x_0)=0$ und $Q_n(x_0)=0$
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Differentialrechnung für Funktionen einer Variablen}}
+\end{center}
+Funktion $f$ ist in $x_0$ differenzierbar, wenn $\lim_{h\to 0} \frac{f(x_0+h)-f(x_0)}{h}$ existiert.
+
+\textbf{Differentiationsregeln}
+\begin{itemize}
+	\item $(cf)'(x)=c\cdot f'(x)$
+	\item $(f\pm g)'(x) = f'(x) \pm g'(x)$
+	\item $(f\cdot g)'(x) = f'(x)g(x) + f(x)g'(x)$
+	\item $\left(\frac{f}{g}\right)'(x)=\frac{f'(x)g(x) - f(x)g'(x)}{(g(x))^2}$
+	\item $(f\circ g)'(x) = f'(g(x)) \cdot g'(x)$
+	\item $(f^{-1})'(x)=\frac{1}{f'(f^{-1}(x))}$
+	\item Logarithmische Differentiation: $f'(x)=f(x)\cdot (\ln(x))'$
+\end{itemize}
+
+\begin{center}
+	\begin{tabular}{c|c}
+		$f(x)$ & $f'(x)$ \\
+		\hline
+		$x^n$ & $nx^{n-1}$ \\
+		$a^x$ & $a^x\cdot\ln (x)$ \\
+		$e^x$ & $e^x$ \\
+		$\log_a(x)$ & $\frac{1}{x\cdot\ln(a)}$ \\
+		$\sin(x)$ & $\cos(x)$ \\
+		$\cos(x)$ & $-\sin(x)$ \\
+		$\tan(x)$ & $\frac{1}{cos^2(x)}$ \\
+		$\cot(x)$ & $-\frac{1}{\sin^2(x)}$
+	\end{tabular}
+\end{center}
+
+\textbf{Kurvendiskussion:} Nullstellen, Polstellen, Minima, Maxima, Monotonie, Wendepunkte, Konkavität, Konvexität, Verhalten im Unendlichen
+\begin{itemize}
+	\item $f'(x) >0$: monoton steigend
+	\item $f''(x) >0$: konvex
+	\item $f'(x_E)=0$ und $f''(x_E)\neq 0$: Extremstelle
+	\item $f''(x_W)=0$ und $f'''(x_W)\neq 0$: Wendepunkt
+\end{itemize}
+
+\textbf{Änderungsrate und Elastizität}
+\begin{itemize}
+	\item Änderungsrate: $\varrho_f(x)=\frac{f'(x)}{f(x)}$
+	\item Elastizität: $\varepsilon_f(x)=x\cdot\frac{f'(x)}{f(x)}=x\cdot\varrho_f(x)$
+	\item $\varepsilon_{cf}(x)=\varepsilon_f(x)$
+	\item $\varepsilon_{f+g}(x)=\frac{f(x)\varepsilon_f(x) + g(x)\varepsilon_g(x)}{f(x)+g(x)}$
+	\item $\varepsilon_{fg}(x)=\varepsilon_f(x) + \varepsilon_g(x)$
+	\item $\varepsilon_{\frac{f}{g}}(x)=\varepsilon_f(x)-\varepsilon_g(x)$
+	\item $\varepsilon_{f\circ g}(x)=\varepsilon_f(g(x))\cdot \varepsilon_g(x)$
+	\item Amoroso-Robinson-Gleichung
+	\begin{align}
+		f'(x) = \varepsilon_f(x) \cdot\frac{f(x)}{x} = \frac{f(x)}{x}\left(1+\varepsilon_{\frac{f(x)}{x}}(x)\right) \notag
+	\end{align}
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Integralrechnung}}
+\end{center}
+$F(x)$ ist Stammfunktion von $f(x)$, wenn $F'(x)=f(x)$ gilt.
+
+\textbf{Rechenregeln}
+\begin{itemize}
+	\item $\int \alpha f(x) + \beta g(x) \mathrm{d}x = \alpha\int f(x)\mathrm{d}x + \beta\int g(x)\mathrm{d}x$
+	\item Partielle Integration: $f(x)\cdot g(x)=\int f'(x)g(x)\mathrm{d}x + \int f(x)g'(x)\mathrm{d}x$
+	\item Substitution: $\int f(ax+b)\mathrm{d}x = \frac{1}{a}F(ax+b)+C$
+	\item $\int_a^b f(x)\mathrm{d}x = F(b)-F(a)$
+	\item $\int_a^b f(x)\mathrm{d}x = -\int_b^a f(x) \mathrm{d}x$
+	\item $\int_a^a f(x)\mathrm{d}x = 0$
+	\item $\int_a^c f(x)\mathrm{d}x = \int_a^b f(x)\mathrm{d}x + \int_b^c f(x)\mathrm{d}x$
+\end{itemize}
+
+\begin{center}
+	\begin{tabular}{c|c}
+		$f(x)$ & $\int f(x)\mathrm{d}x$ \\
+		\hline
+		$x^n$ & $\frac{x^{n+1}}{n+1}+C$ \\
+		$\frac{1}{x}$ & $\ln(\vert x\vert) + C$ \\
+		$\frac{1}{x^m}$ & $-\frac{1}{(m-1)x^{m-1}}+C$ \\
+		$x^\alpha$ & $\frac{x^{\alpha+1}}{\alpha+1}+C$ \\
+		$a^x$ & $\frac{a^x}{\ln(a)}+C$ \\
+		$e^{\alpha x+\beta}$ & $\frac{e^{\alpha x+\beta}}{\alpha}+C$ \\
+		$\ln(x)$ & $x\cdot\ln(x)-x+C$ \\
+		$\sin(x)$ & $-\cos(x)+C$ \\
+		$\cos(x)$ & $\sin(x)+C$
+	\end{tabular}
+\end{center}
+
+\begin{center}
+	\normalsize{\textbf{Differentialrechnung bezüglich mehrerer Variablen}}
+\end{center}
+
+\textbf{Höhenlinie} der Höhe $C$: $f:D_f\to\mathbb{R}^2$ $\Rightarrow$ $f(x_1,x_2)=C$
+
+\textbf{Homogenität}: $f(\lambda x_1,...,\lambda x_n) = \lambda^\alpha f(x_1,...,x_n)$
+\begin{itemize}
+	\item $\alpha=1$: linear-homogen
+	\item $\alpha>1$: superlinear-homogen
+	\item $\alpha<1$: sublinear-homogen
+\end{itemize}
+
+\textbf{Partielle Änderungsrate und Elastizität}
+\begin{itemize}
+	\item Partielle Änderungsrate: $\varrho_f^{(x_k)}=\frac{f_{x_k}(x)}{f(x)}$
+	\item Partielle Elastizität: $\varepsilon_f^{(x_k)}=x_k\cdot\varrho_f^{(x_k)}$
+	\item Elastizitätsmatrix
+	\begin{align}
+		\varepsilon(x)=\begin{pmatrix}
+		\varepsilon_{f_1}^{(x_1)}(x) & \dots & \varepsilon_{f_1}^{(x_n)}(x) \\
+		\vdots & & \vdots \\
+		\varepsilon_{f_l}^{(x_1)}(x) & \dots & \varepsilon_{f_l}^{(x_n)}(x)
+		\end{pmatrix} \notag
+	\end{align}
+\end{itemize}
+
+\textbf{Extremwertaufgaben} - Bedingungen
+\begin{itemize}
+	\item $f_{x_1}=0$ und $f_{x_2}=0$
+	\item $\text{det}\begin{pmatrix}
+		f_{x_1,x_1} & f_{x_1,x_2} \\ f_{x_2,x_1} & f_{x_2,x_2}
+	\end{pmatrix}>0$
+	\item $f_{x_1,x_1}<0$ (Maximalstelle) oder $f_{x_1,x_1}>0$ (Minimalstelle)
+\end{itemize}
+
+\textbf{Regression} - Methode der kleinsten Quadrate $\Rightarrow$ $f(x)=\hat{a}x+\hat{b}$
+\begin{align}
+	\hat{a} &= \frac{n \sum_{i=1}^{n} x_{i} y_{i}-\sum_{i=1}^{n} x_{i} \sum_{i=1}^{n} y_{i}}{n \sum_{i=1}^{n} x_{i}^{2}-\left(\sum_{i=1}^{n} x_{i}\right)^{2}} \notag \\
+	\hat{b} &= \frac{\sum_{i=1}^{n} x_{i}^{2} \sum_{i=1}^{n} y_{i}-\sum_{i=1}^{n} x_{i} y_{i} \sum_{i=1}^{n} x_{i}}{n \sum_{i=1}^{n} x_{i}^{2}-\left(\sum_{i=1}^{n} x_{i}\right)^{2}} \notag
+\end{align}
+
+\textbf{Extremwertaufgaben mit Nebenbedingungen} - Variablensubstitution $\Rightarrow$ einfach ineinander einsetzen und Ableitung 0 setzen
+
+\textbf{Extremwertaufgaben mit Nebenbedingungen} - Lagrange-Faktoren
+\begin{itemize}
+	\item Funktion $f(x_1,...,x_n)$ und Nebenbedingungen $g_i(x_1,...,x_n)=0$
+	\item[$\Rightarrow$] Aufstellen der Lagrange-Funktion
+	\begin{align}
+		L(x_1,...,x_n,\lambda_1,...,\lambda_m) = f(...) + \sum_{i=1}^m (\lambda_i\cdot g_i(...)) \notag
+	\end{align}
+	\item[$\Rightarrow$] Partielle Ableitung von $L$ nach jeder Variable und Nullsetzen
+	\item[$\Rightarrow$] Gleichungssystem lösen
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Lineare Differentialgleichungen erster Ordnung}}
+\end{center}
+Differentialgleichung $f'(x) + a(x)\cdot f(x)=b(x)$ hat allgemeine Lösung
+\begin{align}
+	f^\ast(x) = e^{-A(x)}\cdot\int b(x)e^{A(x)}\mathrm{d}x \notag
+\end{align}
+
+\end{multicols*}
+\end{document}
