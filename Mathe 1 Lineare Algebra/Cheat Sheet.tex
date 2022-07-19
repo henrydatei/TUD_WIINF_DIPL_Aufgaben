@@ -1,0 +1,300 @@
+\documentclass[10pt,landscape,a4paper]{article}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape,top=1cm,bottom=1cm,right=1cm,left=1cm,noheadfoot,bindingoffset=0pt,marginparwidth=0pt,marginparsep=0pt]{geometry}
+\usepackage{amsmath,amsfonts,amssymb,mathtools}
+\usepackage{graphicx}
+\usepackage{fontenc}
+%\usepackage{lua-visual-debug}
+\usepackage{enumitem}
+\usepackage[utf8]{inputenc}
+
+% Turn off header and footer
+\pagestyle{empty}
+
+% Redefine section commands to use less space
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {5pt}{1pt}%x
+                                {\normalfont\small\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {5pt}%
+                                {1pt}%
+                                {\normalfont\small\underline}}
+\makeatother
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+\setlist{
+	noitemsep,
+	topsep=-\parskip,
+	leftmargin=2em
+}
+\setcounter{secnumdepth}{0}
+
+
+% -----------------------------------------------------------------------
+
+\begin{document}
+
+\raggedright
+\footnotesize
+\begin{multicols*}{4}
+
+
+% multicol parameters
+% These lengths are set only within the two main columns
+\setlength{\columnseprule}{0.1pt}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{1pt}
+
+\begin{center}
+	\normalsize{\textbf{Abi-Stoff}} \\
+\end{center}
+Potenzgesetze
+\begin{itemize}
+	\item $a^0=1$
+	\item $a^m\cdot a^n = a^{m+n}$
+	\item $(a^m)^n = a^{mn}$
+	\item $a^n\cdot b^n = (ab)^n$
+	\item $a^{-n} = \frac{1}{a^n}$
+	\item $\frac{a^n}{a^m} = a^{n-m}$
+	\item $a^{\frac{1}{n}} = \sqrt[n]{a}$
+	\item $a^{\frac{m}{n}} = \sqrt[n]{a^m}$
+\end{itemize}
+Logarithmengesetze
+\begin{itemize}
+	\item $x=\log_a(y)\Leftrightarrow y=a^x$
+	\item $\log(1)=0$
+	\item $\log(x) + \log(y) = \log(xy)$
+	\item $-\log(x) = \log\left(\frac{1}{x}\right)$
+	\item $\log(x) - \log(y) = \log\left(\frac{x}{y}\right)$
+	\item $n\log(x) = \log(x^n)$
+	\item $\frac{\log(x)}{\log(x)} = \log_a(x)$
+\end{itemize}
+
+\begin{center}
+     \normalsize{\textbf{Mengenlehre} - Grundsätzliches} \\
+\end{center}
+\begin{itemize}
+	\item Teilmenge $A\subseteq B$
+	\item leere Menge $\emptyset = \{\}$
+	\item Potenzmenge $\mathcal{P}(M) = 2^M$: Menge aller Teilmengen von $M$, Potenzmenge enthält genau $2^{\vert M\vert}$ Elemente
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Mengenlehre} - Mengenalgebra} \\
+	\scriptsize Grundmenge ist immer $M$
+\end{center}
+\begin{itemize}
+	\item Komplement: $A^C = \{x\in M\mid x\notin A\}$
+	\item Durchschnitt: $A\cap B = \{x\in M\mid x\in A \text{ und } x\in B\}$
+	\item Vereinigung: $A\cup B = \{x\in M\mid x\in A \text{ oder } x\in B\}$
+	\item Differenz: $A\setminus B = A \cap B^C$
+	\item symmetrische Differenz: $A\triangle B = (A\setminus B) \cup (B\setminus A)$
+	\item kartesisches Produkt: $X\times Y = \{(x,y)\mid x\in X, y\in Y\}$
+\end{itemize}
+
+Rechenregeln
+\begin{itemize}
+	\item Kommutativ-Gesetz
+	\begin{itemize}
+		\item $A\cap B = B\cap A$
+		\item $A\cup B = B\cup A$
+		\item $A\triangle B = B\triangle A$
+	\end{itemize}
+	\item Assoziativ-Gesetz
+	\begin{itemize}
+		\item $A \cap (B \cap C) = (A \cap B) \cap C$
+		\item $A \cup (B \cup C) = (A \cup B) \cup C$
+		\item $A \triangle (B \triangle C) = (A \triangle B) \triangle C$
+	\end{itemize}
+	\item Distributiv-Gesetz
+	\begin{itemize}
+		\item $A \cap (B \cup C) = (A\cap B) \cup (A \cap C)$
+		\item $A \cup (B \cap C) = (A\cup B) \cap (A \cup C)$
+	\end{itemize}
+	\item Gesetze von \textsc{De Morgan}
+	\begin{itemize}
+		\item $(A \cap B)^C = A^C \cup B^C$
+		\item $(A \cup B)^C = A^C \cap B^C$
+	\end{itemize}
+\end{itemize}
+Lösen von Betragsungleichungen
+\begin{itemize}
+	\item Die Zahl $\vert x+7\vert$ ist immer positiv, aber $x+7$ kann sowohl negativ als auch positiv sein $\to$ Fallunterscheidung
+	\begin{itemize}
+		\item Lösen der Gleichung mit $x+7$ anstatt $\vert x+7\vert$ $\to$ Lösungsmenge $\mathcal{L}_1$
+		\item Lösen der Gleichung mit $-(x+7)$ anstatt $\vert x+7\vert$ $\to$ Lösungsmenge $\mathcal{L}_2$
+	\end{itemize}
+	\item Lösungsmenge $\mathcal{L} = (\mathcal{L}_1\cap \{x\mid x\ge -7\}) \cup (\mathcal{L}_2\cap \{x\mid x < -7\})$
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Mengenlehre} - Funktionen} \\
+\end{center}
+\begin{itemize}
+	\item Bild von $X$ unter $f$: $f(X)=\{y\in Y\mid \exists x\in X: y=f(x)\}$
+	\item Graph von $f$: $\text{graph}(f)=\{(x,y)\in X\times Y\mid y=f(x)\}$
+	\item injektive Funktion: $x_1\neq x_2\Rightarrow f(x_1)\neq f(x_2)$
+	\item surjektive Funktion: Für jedes $y\in Y$ gibt es ein $x\in X$ mit $f(x)=y$
+	\item bijektive Funktion: injektiv und surjektiv
+	\item Verknüpfung: $(g\circ f)(x) = f(g(x))$
+	\item Umkehrfunktion: die an der Winkelhalbierenden gespiegelte Funktion $f$. Erhalt durch Umstellen der Funktion nach $x$ und anschließendes Vertauschen von $x$ und $y$.
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Zahlenbereiche}} \\
+\end{center}
+\begin{itemize}
+	\item natürliche Zahlen $\mathbb{N} = \{1,2,3,...\}$
+	\item ganze Zahlen $\mathbb{Z} = \{...,-3,-2,-1,0,1,2,3,...\}$
+	\item gebrochene Zahlen $\mathbb{Q} = \{\frac{m}{n}\mid n,m\in\mathbb{Z}\}$
+	\item reelle Zahlen $\mathbb{R}$
+	\item komplexe Zahlen $\mathbb{C} = \mathbb{R}^2 = \{a+bi\mid a,b\in\mathbb{R}\}$
+\end{itemize}
+
+Eigenschaften des Betrages (\textit{Abstand einer Zahl zu 0})
+\begin{itemize}
+	\item $\vert -a\vert = \vert a\vert$
+	\item $-\vert a\vert\le a\le \vert a\vert$
+	\item $\vert a\cdot b\vert = \vert a\vert\cdot\vert b\vert$
+	\item $\sqrt{a^2} = \vert a\vert$
+	\item $\vert a+b\vert \le \vert a\vert + \vert b\vert$
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{vollständige Induktion}} \\
+\end{center}
+\begin{enumerate}[label=\arabic*.]
+	\item Zeige die Behauptung für $n=1$
+	\item Wie sieht die Behauptung für $n+1$ aus? Versuche davon die Behauptung für $n$ herauszuarbeiten, setze die Behauptung ein und fasse zusammen, bis es so ähnlich wie die originale Behauptung nur mit $n+1$ statt $n$ aussieht
+\end{enumerate}
+
+\begin{center}
+	\normalsize{\textbf{Kombinatorik}} \\
+\end{center}
+\begin{itemize}
+	\item Fakultät $n! = 1\cdot 2\cdot 3\cdot ... \cdot n$
+	\item Binomialkoeffizient $\binom{n}{k} = \frac{n!}{k!(n-k)!}$
+	\item Binomischer Lehrsatz: $(a+b)^n = \sum_{k=0}^{n}\binom{n}{k}a^{n-k}b^k$
+\end{itemize}
+
+\textbf{Permutation:} Anordnung der Elemente $\{1,2,...,n\}$, Anzahl der Anordnungen: $n!$\\
+\textbf{Kombination:} Auswahl von $k$ Elementen aus $n$ Elementen ohne Berücksichtigung der Anordnung, Anzahl der Möglichkeiten $\binom{n}{k}$\\
+\textbf{Variation:} Auswahl von $k$ Elementen aus $n$ Elementen mit Berücksichtigung der Anordnung, Anzahl der Möglichkeiten $\binom{n}{k}\cdot k!$
+
+\begin{center}
+	\normalsize{\textbf{Matrizen und Vektoren} - Grundsätzliches} \\
+\end{center}
+\begin{itemize}
+	\item $m\times n$-Matrix: rechteckiges Schema mit $m$ Zeilen und $n$ Spalten
+	\item[$\Rightarrow$] \textsc{Leontief}-Modell: schwierig zu erklären, Übung selber rechnen
+	\item Transponierte Matrix $A$: $A^T =$ Matrix, in der Zeilen mit Spalten getauscht wurden
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Matrizen und Vektoren} - Rechnen mit Matrizen} \\
+\end{center}
+\begin{itemize}
+	\item Elementweise Addition und Subtraktion
+	\item Multiplikation einer Matrix mit einer Zahl (Skalar): jedes Element der Matrix mit dieser Zahl multiplizieren
+	\item Multiplikation von 2 Matrizen: \textit{Zeile $\cdot$ Spalte}
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Matrizen und Vektoren} - Rechnen mit Vektoren} \\
+\end{center}
+\begin{itemize}
+	\item Addition und Subtraktion von Vektoren: elementweise
+	\item Betrag eines Vektors $a$: $\vert a\vert = \sqrt{a_1^2 + \dots + a_n^2}$
+	\item Skalarprodukt zweier Vektoren: $a^Tb = a_1b_1 + \dots + a_nb_n$
+	\item Winkel zwischen 2 Vektoren: $\cos(\alpha) = \frac{a^Tb}{\vert a\vert\cdot\vert b\vert}$
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Matrizen und Vektoren} - Determinanten} \\
+\end{center}
+\begin{itemize}
+	\item Determinante einer $2\times 2$-Matrix: $\det(A)=ad-bc$
+	\item Determinante einer $3\times 3$-Matrix: $\det(A)=a_{11}a_{22}a_{33} + a_{12}a_{23}a_{31} + a_{13}a_{21}a_{32} - a_{13}a_{22}a_{31} - a_{11}a_{23}a_{32} - a_{12}a_{21}a_{33}$ (Regel von \textsc{Sarrus})
+	\item Determinante einer $n\times n$-Matrix: $\det(A) = \sum_{i=1}^{n} (-1)^{i+k} a_{ik}\triangle_{ik}$ (\textsc{Laplace}'scher Entwicklungssatz, Entwicklung nach der $k$-ten Zeile oder Spalte)
+	\item Die zu $A$ inverse Matrix $A^{-1}$ existiert nur, wenn $\det(A)\neq 0$ gilt.
+	\item Eigenschaften der Determinante
+	\begin{itemize}
+		\item $\det(A) = \det(A^T)$
+		\item $\det(AB) = \det(A)\cdot\det(B)$
+		\item $\det(\lambda A) = \lambda^n\det(A)$
+		\item $\det(A^{-1}) = \det(A)^{-1}$
+	\end{itemize}
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Matrizen und Vektoren} - Invertieren einer Matrix} \\
+\end{center}
+\begin{itemize}
+	\item allgemeine invertierte $2\times 2$-Matrix:
+	\begin{align}
+		\begin{pmatrix}
+			a & b \\ c & d
+		\end{pmatrix}^{-1} = \frac{1}{\det(A)}\begin{pmatrix}
+			d & -b \\ -c & a
+		\end{pmatrix}\notag
+	\end{align}
+	\item allgemeine invertierte $3\times 3$-Matrix:
+	\begin{align}
+		\frac{1}{\det(A)}\begin{pmatrix}
+			ei-fh & ch-bi & bf-ce \\ fg-di & ai-cg & cd-af \\ dh-eg & bg-ah & ae-bd
+		\end{pmatrix}\notag
+	\end{align}
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Matrizen und Vektoren} - Lösung linearer Gleichungssysteme} \\
+	\scriptsize $Ax=b$
+\end{center}
+\begin{itemize}
+	\item Lösung über Inverse: $x=A^{-1}b$
+	\item Lösung über Cramer'sche Regel: $x_i = \frac{\det(\text{$i$-te Spalte von $A$ durch $b$ ersetzt})}{\det(A)}$
+	\item Lösung über Austauschverfahren
+	\begin{itemize}
+		\setlength{\itemindent}{0.2cm}
+		\item[(R1)] neuer Pivotplatz $=\frac{1}{p}$
+		\item[(R2)] neue Pivotzeile $= \frac{\text{alte Pivotzeile}}{-p}$
+		\item[(R3)] neue Pivotspalte $= \frac{\text{alte Pivotspalte}}{p}$
+		\item[(R4)] $\alpha_{ik} = \alpha_{ik} + \alpha_{i\tau}\alpha_{\sigma k}$ für $i\neq\sigma$, $k\neq\tau$ oder $k=0$ (Rechteckregel)
+	\end{itemize}
+\end{itemize}
+
+\begin{center}
+	\normalsize{\textbf{Lineare Optimierung}} \\
+\end{center}
+\begin{itemize}
+	\item Überführung eines LOP in ein NLO mit folgenden Regeln
+	\begin{itemize}
+		\item Zielfunktion $z\to\min$. Ist $z\to\max$ gegeben, einfach mit $-1$ multiplizieren
+		\item Ungleichungen mittels Schlupfvariablen in Gleichungen überführen
+	\end{itemize}
+\end{itemize}
+
+Simplexverfahren
+\begin{itemize}
+	\item Simplextableau ist entscheidbar, wenn
+	\begin{itemize}
+		\item $d_1,...,d_q\ge 0$ $\to$ es gibt eine optimale Lösung, die abgelesen werden kann
+		\item Es gibt mindestens eine Spalte $\tau$ mit $d_\tau<0$ und $b_{1\tau},...,b_{p\tau}\ge 0$ $\to$ es gibt keine optimale Lösung
+	\end{itemize}
+	\item normales Austauschverfahren, nur gibt es Bedingungen für die Wahl des Pivot-Elements
+	\begin{itemize}
+		\setlength{\itemindent}{0.5cm}
+		\item[(SR1)] Wahl der Pivotspalte $\tau$: Spalte mit der Eigenschaft $d_\tau<0$
+		\item[(SR2)] Wahl der Pivotzeile $\sigma$: $\sigma=\text{argmin}_{i\in J(\tau)}\left\lbrace\frac{b_i}{\vert b_{i\tau}\vert}\right\rbrace$ wobei $J(\tau) = \{i\mid i\in\{1,...,p\}\text{ und } b_{i\tau}<0\}$
+	\end{itemize}
+\end{itemize}
+
+\end{multicols*}
+\end{document}
