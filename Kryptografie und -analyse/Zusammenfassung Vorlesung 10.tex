@@ -1,0 +1,116 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Kryptografie und -analyse, Zusammenfassung Vorlesung 10}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Wie funktioniert ElGamal als Signatursystem?}
+	Schlüsselgenerierung identisch
+	
+	A führt folgende Schritte aus:
+	\begin{itemize}
+		\item wählt Zufallszahl $r\in\mathbb{Z}_p^\ast$
+		\item berechnet $r^{-1}$ mit $rr^{-1} \equiv 1 \mod (p-1)$
+		\item berechnet $s=(s_1,s_2)$ mit
+		\begin{align}
+			s_1 &= g^r\mod p \notag \\
+			s_2 &= r^{-1}(h(m) - k_ss_1) \mod (p-1) \notag
+		\end{align}
+	\end{itemize}
+
+	Test der Signatur:
+	\begin{itemize}
+		\item testet ob $1\le s_1\le p-1$
+		\item berechnet $v_1 = k_t^{s_1}s_1^{s_2} \mod p$
+		\item berechnet $h(m)$ und $v_2 = g^{h(m)}\mod p$
+		\item akzeptiert Signatur, wenn $v_1 \equiv v_2$
+	\end{itemize}
+	
+	\section*{Was ist bei der sicheren Verwendung von ElGamal als Signatursystem zu beachten? Warum darf die Zufallszahl nur einmal verwendet werden? Warum wird eine Hashfunktion auf die Nachricht angewendet?}
+	selbiges wie bei ElGamal als Konzelationssystem
+	
+	Verwendung einer Hash-Funktion
+	
+	\section*{Wie werden die Parameter bei RSA gewählt?}
+	Wahl von $p$ und $q$ als große Primzahlen, die nicht dicht beieinander liegen, aber auch nicht zu weit auseinander
+	
+	\section*{Wie wird ver- und entschlüsselt bzw. signiert und getestet?}
+	Verschlüsselung: $c = m^{k_e} \mod n$ \\
+	Entschlüsselung: $m = c^{k_d} \mod n$
+	
+	Signieren: $s = m^{k_s}\mod n$ \\
+	Testen: $m = s^{k_t} \mod n$?
+	
+	\section*{Nachweis der Entschlüsselung?}
+	Zu zeigen, dass
+	\begin{align}
+		m &= \left(m^{k_e}\right)^{k_d} \mod n \notag \\
+		m &= m^{k_e\cdot k_d} \mod n \notag
+	\end{align}
+	Wir wissen $k_e\cdot k_d \equiv 1 \mod \Phi(n)$, also $k_e\cdot k_d = l(p-1)(q-1) + 1$. Damit
+	\begin{align}
+		m^{k_e\cdot k_d} &= m^{l(p-1)(q-1) + 1} \mod n \notag \\
+		&= \left(m^{p-1}\right)^{l(q-1)} \cdot m \mod n \notag
+	\end{align}
+	Da $p$ eine Primzahl ist, gilt nach dem kleinen Satz von Fermat ($a^{p-1}\equiv 1 \mod p$) und weil $p\mid n$:
+	\begin{align}
+		1^{l(q-1)}\cdot m = m \mod p \notag
+	\end{align}
+	
+	\section*{Was ist bei der Parameterwahl von RSA zu beachten?}
+	Wahl von $p$ und $q$ als große Primzahlen, die nicht dicht beieinander liegen, aber auch nicht zu weit auseinander
+	
+\end{document}
