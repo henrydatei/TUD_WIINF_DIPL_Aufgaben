@@ -1,0 +1,146 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Kryptografie und -analyse, Zusammenfassung Vorlesung 11}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Welche passiven/aktiven Angriffe sind bei der unsicheren Variante von RSA möglich?}
+	passive Angriffe: RSA arbeitet deterministisch, man kann also verschlüsseln und vergleichen
+	
+	aktive Angriffe: RSA ist ein Homomorphismus bezüglich Multiplikation: Angreifer beobachtet Signaturen $s_1$, $s_2$ für Nachrichten $m_1$, $m_2$. Dann ist $s_3 = s_1\cdot s_2$ eine Signatur für $m_3 = m_1\cdot m_2$
+	
+	\section*{Wie sind diese Angriffe zu verhindern?}
+	Zufallszahl $r$ hinzufügen: $c = (r,m, h(r, m))^{k_e}$
+	
+	\section*{Was ist ein quadratischer Rest?}
+	Quadratische Reste modulo $p$:
+	\begin{align}
+		\mathcal{QR}_p = \{x\in \mathbb{Z}_p^\ast \mid \exists y\in \mathbb{Z}_p^\ast: y^2 \equiv x\mod p\} \notag
+	\end{align}
+	
+	\section*{Wie kann ermittelt werden, ob eine Zahl quadratischer Rest mod $p$ bzw. mod $n$ ist?}
+	Euler-Kriterium:
+	\begin{align}
+		z\in\mathcal{QR} \quad\Leftrightarrow\quad z^{\frac{p-1}{2}} \equiv 1\mod p\notag
+	\end{align}
+	
+	\section*{Wie können Wurzeln mod $p$ ($p \equiv 3 \mod 4$) bzw. mod $n$ bestimmt werden?}
+	Es gilt:
+	\begin{align}
+		y &= \pm z^{\frac{p+1}{4}} \mod p\notag
+	\end{align}
+	
+	\section*{Wie funktioniert das Rabin-System?}
+	Schlüsselgenerierung: Jeder Teilnehmer
+	\begin{itemize}
+		\item wählt zufällig und unabhängig 2 verschiedene Primzahlen $p$ und $q$ mit $p\equiv q\equiv 3\mod 4$
+		\item berechnet $n = p\cdot q$
+		\item[$\Rightarrow$] öffentlicher Schlüssel: $n$
+		\item[$\Rightarrow$] privater Schlüssel: $(p,q)$
+	\end{itemize}
+
+	Verschlüsselung:
+	\begin{align}
+		c = m^2\mod n \notag
+	\end{align}
+	
+	Entschlüsselung:
+	\begin{itemize}
+		\item Empfänger bestimmt 4 Quadratwurzeln aus $c$
+		\item unklar, welche Wurzel die Nachricht ist
+	\end{itemize}
+	
+	\section*{Wie kann seine Sicherheit gezeigt werden?}
+	Der große Vorteil des Rabin-Kryptosystems ist, dass man es nur dann brechen kann, wenn man das beschriebene Faktorisierungsproblem effizient lösen kann.
+	
+	Anders als etwa bei RSA lässt sich zeigen, dass das Rabin-Kryptosystem genauso schwer zu brechen ist wie das Faktorisierungsproblem, auf dem es beruht. Es ist somit sicherer. Wer also das Rabin-Verfahren brechen kann, der kann auch das Faktorisierungsproblem lösen und umgekehrt. Es gilt daher als sicheres Verfahren, solange das Faktorisierungsproblem ungelöst ist. Vorausgesetzt ist dabei wie bereits beschrieben aber, dass die Klartexte keine bestimmte Struktur aufweisen.
+	
+	Da man auch außerhalb der Kryptologie bemüht ist Faktorisierungsprobleme zu lösen, würde sich eine Lösung rasch in der Fachwelt verbreiten. Doch das ist bislang nicht geschehen. Man kann also davon ausgehen, dass das zugrundeliegende Faktorisierungsproblem derzeit unlösbar ist. Ein Angreifer, der nur belauscht, wird daher derzeit nicht in der Lage sein, das System zu brechen.
+	
+	Ein aktiver Angreifer aber kann das System mit einem Angriff mit frei wählbarem Geheimtext (englisch \textit{chosen-ciphertext attack}) brechen, wie sich mathematisch zeigen lässt. Aus diesem Grund findet das Rabin-Kryptosystem in der Praxis kaum Anwendung.
+	
+	Durch Hinzufügen von Redundanz, z. B. Wiederholen der letzten 64 Bit, wird die Wurzel eindeutig. Dadurch ist der Angriff vereitelt (weil der Entschlüssler nur noch die Wurzel zurückliefert, die der Angreifer schon kennt). Dadurch ist die Äquivalenz der Sicherheit zum Rabin-Kryptosystem nicht mehr beweisbar. Allerdings, laut dem \textit{Handbook of Applied Cryptography} von Menezes, Oorschot und Vanstone, hält die Äquivalenz unter der Annahme, dass das Wurzelziehen ein zweigeteilter Prozess ist (1. Wurzel $\mod p$ und Wurzel $\mod q$ ziehen und 2. Chinesischen Restsatzalgorithmus anwenden).
+	
+	Da bei der Kodierung nur die quadratischen Reste verwendet werden (im Beispiel $n = 77$ sind das nur 23 der 76 möglichen Zustände), ist das Verfahren zusätzlich angreifbar.
+	
+	siehe: \url{https://de.wikipedia.org/wiki/Rabin-Kryptosystem}
+	
+	\section*{Welche Angriffsmöglichkeit ergibt sich?}
+	aktiver Angriff, gewählter-Schlüsseltext-Angriff
+	
+	\section*{Was ist eine elliptische Kurve?}
+	Alle Punkte $(x,y)$, die
+	\begin{align}
+		y^2 = x^3 + ax + b \notag
+	\end{align}
+	erfüllen + Punkt im Unendlichen $\mathcal{O}$.
+	
+	\section*{Wie wird auf elliptischen Kurven gerechnet?}
+	Addition geometrisch:
+	\begin{itemize}
+		\item Gerade durch $P$ und $Q$
+		\item diese Gerade schneidet Kurve in $R'$
+		\item $R = P + Q$ entsteht durch Spiegelung von $R'$ an der $x$-Achse
+	\end{itemize}
+
+	Addition analytisch:
+	\begin{align}
+		s &= \frac{y_Q - y_P}{x_Q - x_P} \notag \\
+		x_R &= s^2 - x_P - x_Q \notag \\
+		y_R &= -y_P + s(x_P - x_R) \notag
+	\end{align}
+	
+\end{document}
