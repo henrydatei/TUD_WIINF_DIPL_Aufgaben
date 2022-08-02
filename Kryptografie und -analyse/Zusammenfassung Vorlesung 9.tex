@@ -1,0 +1,130 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Kryptografie und -analyse, Zusammenfassung Vorlesung 9}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Wie kann ein Generator einer Gruppe $G$ gefunden werden?}
+	Primfaktorzerlegung $\vert G\vert = p_1\cdot p_2\cdot ...$, Wahl eines zufälligen Elementes $a\in G$, für jedes $p_i$:
+	\begin{align}
+		a^{\frac{\vert G\Vert}{p_i}} \overset{?}{\equiv} 1 \mod \vert G\vert \notag
+	\end{align}
+	Wenn $\equiv 1$, dann $a$ kein Generator.
+	
+	\section*{Was versteht man unter dem Problem des Diskreten Logarithmus?}
+	Bestimme $x$:
+	\begin{align}
+		x = \log_g(y) \mod p \notag
+	\end{align}
+	
+	\section*{Wie funktioniert der BSGS-Algorithmus?}
+	$m = \lceil \sqrt{\vert G\vert}\rceil$, Ansatz $x=qm + r$
+	\begin{itemize}
+		\item Babystep-Liste: $B=\{(i,y(g^i)^{-1})\mod p\} \to r$
+		\item Giantstep-Liste: $G=\{(j,(g^m)^j)\mod p\} \to q$
+	\end{itemize}
+	Berechnung der Elemente von $G$, bis $(g^m)^j$ als zweite Komponente eines Elements in $B$ gefunden wurde.
+	
+	\section*{Wie funktioniert der DH-Schlüsselaustausch?}
+	Öffentlich: $p,g$, A wählt $x_A$, B wählt $x_B$, berechnet $y_A = g^{x_A}\mod p$, Austausch $y_A$, $y_B$, $\Rightarrow k = y_B^{x_A}\mod p$
+	
+	\section*{Worauf beruht die Sicherheit (DH-Problem)?}
+	Bestimme $x_A$ ($x_B$ analog):
+	\begin{align}
+		x_A = \log_g(y_A) \mod p \notag
+	\end{align}
+	
+	\section*{Ist der DH-Schlüsselaustausch sicher gegen passive bzw. aktive Angriffe?}
+	sicher gegen passive Angriffe, nicht sicher gegen aktive Angriffe (Man-in-the-middle)
+	
+	\section*{Wie werden bei ElGamal die Schlüssel bestimmt?}
+	Jeder Teilnehmer:
+	\begin{itemize}
+		\item wählt Primzahl $p$ und Generator $p\in\mathbb{Z}_p^\ast$
+		\item wählt zufällige Zahl $k_d$ mit $0\le k_d\le p-2$
+		\item berechnet $k_e = g^{k_d}\mod p$
+		\item[$\Rightarrow$] öffentlicher Schlüssel: $(p,g,k_e)$
+		\item[$\Rightarrow$] privater Schlüssel: $k_d$
+	\end{itemize}
+	
+	\section*{Wie funktioniert ElGamal als Konzelationssystem?}
+	Verschlüsselung (B $\to$ A):
+	\begin{itemize}
+		\item B benötigt öffentlichen Schlüssel von A: $(p,g,k_e)$
+		\item wählt Zufallszahl $r$ mit $0\le r\le p-2$
+		\item berechnet: $c = (c_1,c_2)$ mit
+		\begin{align}
+			c_1 &= g^r\mod p \notag \\
+			c_2 &= mk_e^r\mod p \notag
+		\end{align}
+	\end{itemize}
+	Entschlüsselung:
+	\begin{align}
+		m = (c_1^{k_d})^{-1}c_2\mod p \notag
+	\end{align}
+	
+	\section*{Worauf beruht die Sicherheit des ElGamal-Kryptosystems (DH-Problem, wie lautet es hier konkret)?}
+	Bestimme $k_d$:
+	\begin{align}
+		k_d = \log_g(k_e)\mod p \notag
+	\end{align}
+	
+	\section*{Was ist bei der sicheren Verwendung von ElGamal als Konzelationssystem zu beachten? (Warum darf die Zufallszahl nur einmal vewendet werden? Welcher aktive Angriff ist möglich? Wie ist er zu verhindern?)}
+	Wenn die Zufallszahl mehrfach verwendet wird, so kann, falls eine Nachricht $m_1$ bekannt ist, eine andere Nachricht $m_2$ (bei selben $r$) berechnet werden.
+	
+	Gewählter Klartext-Schlüsseltext-Angriff ist auch möglich $\Rightarrow$ Einfügen von Redundanz: $m = m, h(m)$
+	
+\end{document}
