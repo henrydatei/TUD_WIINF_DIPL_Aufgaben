@@ -1,0 +1,289 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\usepackage[many]{tcolorbox}
+
+\newtcolorbox{exkurs}[2][]{%
+	empty,
+	breakable,
+	boxsep=0pt,boxrule=0pt,left=5mm,right=5mm,
+	toptitle=3mm,bottomtitle=1mm,
+	title=#2,
+	coltitle=black,
+	fonttitle=\bfseries,
+	underlay={%
+		\draw[gray!50,line width=1mm]
+		([xshift=5mm,yshift=-0.5mm]frame.north west)--
+		([xshift=0.5mm,yshift=-0.5mm]frame.north west)--
+		([xshift=0.5mm,yshift=0.5mm]frame.south west)--
+		([xshift=5mm,yshift=0.5mm]frame.south west)
+		([xshift=-5mm,yshift=-0.5mm]frame.north east)--
+		([xshift=-0.5mm,yshift=-0.5mm]frame.north east)--
+		([xshift=-0.5mm,yshift=0.5mm]frame.south east)--
+		([xshift=-5mm,yshift=0.5mm]frame.south east)
+		;
+	},
+	% paragraph skips obeyed within tcolorbox
+	parbox=false,#1
+}
+
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\ggT}{ggT}
+
+\title{\textbf{Kryptografie und -analyse, Fragenkatalog}}
+\author{\textsc{Dennis Rössel}, \textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Wir haben die Schlüsselverteilung in symmetrisch und asymmetrisch unterteilt. Was bedeutet das und was sind die Vorteile und Nachteile? Authentikations- und Konzelationssysteme?}
+	
+	Bei symmetrischen Verschlüsselungsverfahren wird der gleiche Schlüssel zum Ver- und Entschlüsseln verwendet. Dieser Schlüssel muss aber vorher über einen unsicheren Kanal ausgetauscht werden, was es Angreifern ermöglicht den Schlüssel abzufangen und selber die Kommunikation zu entschlüsseln. Allerdings ist die Performance symmetrischer Systeme sehr gut.
+	
+	Bei asymmetrischen Verschlüsselungsverfahren gibt es 2 Schlüssel pro Teilnehmer: einen öffentlichen Schlüssel zum Verschlüsseln und einen privaten Schlüssel zum Entschlüsseln. Der öffentliche Schlüssel ist öffentlich, sodass jeder eine Nachricht für eine Person verschlüsseln kann, aber nur derjenige mit dem privaten Schlüssel diese wieder entschlüsseln kann. Es gibt also kein Problem beim Schlüsselaustausch, allerdings ist die Performance deutlich schlechter.
+	
+	Bei symmetrischen Authentikationssystemen berechnet man für eine Nachricht eine MAC und der Empfänger berechnet aus der Nachricht auch die MAC  und vergleicht mit der erhaltenen MAC. 
+	
+	Bei asymmetrischen Authentikationssystemen verschlüsselt der Sender die Nachricht mit seinem privaten Schlüssel, der Empfänger kann dann die verschlüsselte Nachricht mit dem öffentlichen Schlüssel entschlüsseln und weil nur der Besitzer des privaten Schlüssels diese Signatur berechnen konnte, ist klar, von wem die Nachricht kam.
+	
+	\section*{Was besagt das Prinzip von Kerkhoff?}
+	
+	\textit{Die Sicherheit eines Verfahrens darf nicht von der Geheimhaltung des Verfahrens abhängen, sondern nur von der Geheimhaltung des Schlüssels.}
+	
+	Forscher sollen also das Verfahren überprüfen können um eventuelle Sicherheitslücken finden zu können.
+	
+	\section*{Was ist informationstheoretisch perfekte Sicherheit? Geben Sie ein Beispielverfahren an! Wird das Verfahren praktisch angewendet?}
+	
+	Informationstheoretische Sicherheit: Selbst ein unbeschränkter Angreifer gewinnt aus seinen Beobachtungen keine zusätzlichen Informationen über den Klartext oder den Schlüssel.
+	\begin{itemize}
+		\item unbeschränkt: beliebiger Rechen- und Zeitaufwand
+		\item zusätzliche Informationen: nicht besser als Raten
+	\end{itemize}
+
+	Ein System heißt informationstheoretisch sicher, wenn für alle Nachrichten und alle Schlüsseltexte gilt, dass die a posteriori Wahrscheinlichkeiten $\mathbb{P}(m\mid c)$ der möglichen Nachrichten nach Beobachtung eines gesendeten Geheimtextes gleich der a priori Wahrscheinlichkeiten $\mathbb{P}(m)$ dieser Nachrichten sind:
+	\begin{align}
+		\forall m\in M\forall c\in C: \mathbb{P}(m\mid c) = \mathbb{P}(m) \notag
+	\end{align}
+
+	Resultierende Anforderungen an die Schlüssel:
+	\begin{itemize}
+		\item $\vert K\vert \ge \vert C\vert \ge \vert M\vert$
+		\item Bei einem System mit $\vert K\vert = \vert C\vert = \vert M\vert$ müssen die Schlüssel gleich wahrscheinlich sein.
+		\item Die Wahl des Schlüssels muss zufällig erfolgen.
+	\end{itemize}
+
+	Ein Beispielverfahren ist das One-Time-Pad (Vernam-Chiffre): Klartext und Schlüssel sind gleich lang und es gilt $c_i = m_i \oplus k_i$, wobei jeder Schlüssel nur einmal verwendet wird und echt zufällig sein muss (nicht pseudo-zufällig, wie z.B. wenn Computer "Zufallszahlen" erzeugen). Die Zufälligkeit ist ein Problem, genau so wie der Schlüsselaustausch, weswegen das Verfahren praktisch nicht angewendet wird.
+	
+	\section*{Schutzziele der Kryptographie}
+	
+	Die Schutzziele sind:
+	\begin{itemize}
+		\item Integrität: Die Nachricht wurde nicht verändert
+		\item Zurechenbarkeit: Der Absender der Nachricht hat die Nachricht auch wirklich geschrieben (nur mit asymmetrischen Verfahren realisierbar)
+		\item Vertraulichkeit: Unbefugte können die Nachrichten nicht lesen
+		\item Verfügbarkeit (nicht mit Kryptographie realisierbar)
+	\end{itemize}
+	
+	\section*{Warum benutzen wir nicht das informationstheoretisch perfekt sichere Verfahren in Bezug auf die Schutzziele?}
+	
+	Das One-Time-Pad ist ein symmetrisches Verfahren, damit kann Zurechenbarkeit nicht gewährleistet sein.
+	
+	\section*{Was sind MM und PM? Beispiele? Sicherheit?}
+	
+	MM: Monoalphabetisch + Monografisch, Beispiel ist die Cäsar-Chiffre: Hier wird jeder Buchstabe um eine gewissen Anzahl an Positionen im Alphabet verschoben. Das Verfahren ist angreifbar mittels Häufigkeiten von einzelnen Buchstaben, Bi- und Trigrammen und Redundanz bei fehlenden Zeichen.
+	
+	PM: Polyalphabetisch + Monografisch, Beispiel ist die Vigenère-Chiffre: Jeder Buchtstabe wird um so viele Zeichen im Alphabet verschoben, wie der Schlüssel an dieser Stelle vorgibt. In den meisten Fällen ist der Schlüssel kürzer als die Nachricht, dann wird der Schlüssel wiederholt. Mittels Kasiski-Test (Suche nach identischen Abschnitten im Schlüsseltext) bekommt man die Schlüssellänge. Damit teilt man dann den Schlüsseltext in Blöcke auf und z.B. das erste Zeichen eines jeden Blockes wurde mit dem selben Schlüssel verschlüsselt $\Rightarrow$ Häufigkeitsanalyse.
+	
+	\section*{Wie funktioniert DES? Auf was baut es auf? Sicherheit?}
+	
+	Grundlage ist die Feistel-Chiffre mit 16 Runden. Bei der Feistel-Chiffre wird der zu verschlüsselnde Block in 2 Hälften aufgeteilt, die rechte Hälfte wird durch eine Rundenfunktion $f$ geschickt und das Ergebnis mit der linken Hälfte $\oplus$, was zur neuen rechten Hälfte wird. Die ursprüngliche rechte Hälfte wird zur neuen linken Hälfte.
+	
+	Die Blocklänge beim DES sind 64 Bit, die Schlüssellänge auch, wobei nur 56 Bit frei wählbar sind, der Rest sind Paritätsbits. Bevor es in die 16 Runden geht, findet eine Eingangspermutation statt und nach den 16 Runden werden noch mal linke und rechte Hälfte getauscht und durch die inverse Eingangspermutation geschickt.
+	
+	Die rechte Hälfte in einer Runde ist 32 Bit lang, mittels Expansionsabbildung werden daraus 48 Bit, die mit dem Rundenschlüssel $\oplus$ werden. Danach wandern die 48 Bits in 8 Substitutionsboxen aus denen nur 32 Bit wieder herauskommen und diese werden noch mal mit einer Permutationsbox permutiert.
+	
+	An den Substitutionsboxen hängt die Sicherheit, da diese nicht linear sind. Die lineare Kryptoanalyse versucht diese zu linearisieren und dann rückgängig zu machen. Ein weiteres Problem ist der kurze Schlüssel von nur 56 Bit, mit ausreichend Rechenleistung lässt sich jeder Schlüssel durchprobieren.
+	
+	\section*{Wodurch zeichnet sich die kryptografische Güte der Rundenfunktion $f$ aus?}
+	
+	Eine gute S-Box erfüllt folgende Eigenschaften:
+	\begin{itemize}
+		\item Vollständigkeit: jedes Outputbit hängt von jedem Inputbit ab
+		\item Avalanche: Änderung eines Input-Bits ändert $\approx$ 50\% der Outputbits, striktes Avalanche-Kriterium: Änderung von $\ge$ 50\% der Outputbits
+		\item Nichtlinearität: Jedes Outputbits hängt nicht linear von den Inputbits ab
+	\end{itemize}
+	Man kann diese Eigenschaften anhand der Abhängigkeitsmatrix überprüfen.
+
+	Bei einer Feistel-Chiffre ist die Vollständigkeit erst nach 3 Runden erfüllt.
+	
+	\section*{Wie funktioniert Diffie-Hellman? Und was ist das?}
+	
+	Diffie-Hellman ist ein asymmetrisches Schlüsselaustauschverfahren. Öffentlich bekannt sind eine Primzahl $p$ und ein Generator $g$ der Gruppe $\mathbb{Z}_p^\ast$. Dabei wählen die beiden Partner $x_A$ und $x_B$ im Geheimen und berechnen
+	\begin{align}
+		y_A &= g^{x_A} \mod p \notag \\
+		y_B &= g^{x_B} \mod p \notag
+	\end{align}
+	und schicken sich $y_A$ und $y_B$. Dann kann von beiden Partnern der gemeinsame Schlüssel $k$ berechnet werden:
+	\begin{align}
+		k &= y_B^{x_A} \mod p \notag \\
+		k &= y_A^{x_B} \mod p \notag
+	\end{align}
+	Die Sicherheit beruht auf dem Diffie-Hellman-Problem, was auf dem Problem des diskreten Logarithmus beruht. Es ist (bisher) sicher gegen passive Angriffen, aber nicht gegen aktive Angriffe (z.B. Man-in-the-Middle).
+	
+	DH-Problem: gegeben $p,g,y_A,y_B$, finde $g^{x_Ax_B} \mod p$
+	
+	DL-Problem: bestimme $\log_g(y_A)\mod p$
+	
+	\section*{Wie funktioniert RSA? Schlüsselgenerierung (Bedingungen, $\Phi(n)$, ...), Ver- und Entschlüsselung?}
+	
+	Schlüsselgenerierung: zwei große Primzahlen $p$ und $q$, berechne $n=p\cdot q$. Wähle öffentlichen Schlüssel mit $1<k_e<\Phi(n)$ und $\ggT(k_e,\Phi(n)) = 1$, berechne privaten Schlüssel mit $k_d = k_e^{-1}\mod \Phi(n)$, wobei
+	\begin{align}
+		\Phi(n) = (p-1)(q-1) \notag
+	\end{align}
+
+	Verschlüsselung: $c = m^{k_e}\mod n$ \\
+	Entschlüsselung: $m = c^{k_d}\mod n$
+	
+	\section*{Ist das gerade eben skizzierte RSA-System sicher?}
+	
+	Langer Schlüssel (Stand der Technik 2048 Bit), Primzahlen dürfen nicht zu nah beieinander sein und sollten etwa gleiche Länge haben
+	
+	Nutzung verschiedener $n$'s für verschiedene Nutzer (sonst Common Modulus Attack)
+	
+	Verhinderung passiver Angriffe durch Nutzung einer Zufallszahl
+	
+	Verhinderung aktiver Angriffe durch hinzufügen von Redundanz
+	
+	\section*{Wie funktioniert das ElGamal-Kryptosystem? Wie lautet das DH-Problem? Warum ist es sicher?}
+	
+	Schlüsselgenerierung: Jeder Teilnehmer
+	\begin{itemize}
+		\item wählt Primzahl $p$ und Generator $g\in\mathbb{Z}_p^\ast$
+		\item wählt zufällige Zahl $k_d$ mit $0\le k_d\le p-2$
+		\item berechnet $k_e = g^{k_d}\mod p$
+	\end{itemize}
+
+	Verschlüsselung: Wahl einer Zufallszahl $r$ mit $0\le r\le p-2$
+	\begin{align}
+		c_1 &= g^r \mod p \notag \\
+		c_2 &= m\cdot k_e^r \mod p \notag
+	\end{align}
+	Entschlüsselung: $m = \frac{c_2}{c_1^{k_d}} \mod p$
+	
+	Sicherheit beruht auf dem DL-Problem: $k_d = \log_g(k_e) \mod p$
+	
+	\section*{Was sind Betriebsarten? Was kann man damit erreichen?}
+	
+	Man will Nachrichten, die Länger als 1 Block sind, verschlüsseln.
+	
+	\section*{Was ist Electronic Code Book und was ist daran das Problem?}
+	
+	Beim ECB verschlüsselt man jeden Block einzelnen und hängt die Blöcke aneinander. Allerdings führt das dazu, dass gleiche Klartextblöcke zu gleichen Schlüsseltextblöcken werden und der Angreifer damit eine gewisse Struktur erkennen kann. Zudem kann ein Angreifer auch zusätzliche Blöcke hinzufügen oder vorhandene Blöcke entfernen, ohne dass dies erkennbar wäre.
+	
+	\section*{Wie funktioniert Cipher Block Chaining?}
+	
+	Bevor eine Nachricht verschlüsselt wird, wird diese mit dem vorherigen Schlüsseltextblock $\oplus$ (für den ersten Block wird die Nachricht mit einem Initialvektor IV $\oplus$).
+	
+	Bei der Entschlüsselung wird der Schlüsseltext zuerst entschlüsselt und dann mit dem vorherigen Schlüsseltext $\oplus$.
+	
+	\begin{exkurs}{Cipher Feedback Mode}
+		Schieberegister wird mit IV gefüllt, verschlüsselt und mit der Nachricht $\oplus$. Der so entstandene Schlüsseltext wandert in das Schieberegister.
+	\end{exkurs}
+	
+	\begin{exkurs}{Kryptoanalyse}
+		Bei der differentiellen Kryptoanalyse schickt man Klartextpaare mit bestimmten Differenzen durch den Verschlüsselungsalgorithmus und beobachtet die Output-Differenzen. Daraus versucht man dann wahrscheinliche Schlüssel abzuleiten.
+		
+		Die lineare Kryptoanalyse versucht man die Verschlüsselung durch eine lineare Funktion zu approximieren.
+	\end{exkurs}
+	
+	\begin{exkurs}{AES}
+		Klartextblöcke sind für AES nur für 128 Bit standardisiert, die Anzahl der Runden hängt von der Schlüssellänge ab (10 - 14 Runden).
+		
+		Die Nachricht wird mit dem ersten Teilschlüssel $\oplus$, danach folgenden die $r$ Runden. In jeder Runde finden folgende Operationen statt:
+		\begin{itemize}
+			\item SubBytes: Substitution
+			\item ShiftRow: zyklische Verschiebung der Zeilen
+			\item MixColumn: Substitution auf Spaltenbasis
+			\item $\oplus$ Rundenschlüssel
+		\end{itemize}
+		In der letzten Runde fällt das MixColumn weg.
+		
+		Bei der Entschlüsselung wendet man die Inversen Funktionen an, allerdings kann man hier die Reihenfolge gleich wie bei der Verschlüsselung lassen.
+	\end{exkurs}
+
+	\begin{exkurs}{Elliptische Kurven}
+		Eine elliptische Kurve ist eine implizit definierte Funktion $y^2 = x^3 + ax + b$. In der Kryptografie braucht man nicht-singuläre Kurven, d.h. $4a^3 + 27b^2 \neq 0$.
+		
+		Auf elliptischen Kurven kann man Punkte addieren, geometrisch ist $P+Q$:
+		\begin{itemize}
+			\item Gerade durch $P$ und $Q$ legen, diese schneidet die Kurve in exakt einem Punkt $R'$
+			\item Spiegelung des Punktes $R'$ an der x-Achse liefert $R = P + Q$.
+		\end{itemize}
+		Eine Punktverdoppelung $2P$ ist geometrisch:
+		\begin{itemize}
+			\item Tangente an die Kurve im Punkt $P$ schneidet die Kurve in exakt einem Punkt $R'$
+			\item Spiegelung des Punktes $R'$ an der x-Achse liefert $R = 2P$.
+		\end{itemize}
+	
+		Schlüsselaustausch auf Basis elliptischer Kurven funktioniert so, dass man wie bei Diffie-Hellman sich $x_A$ und $x_B$ wählt Punktverdopplungen/-additionen durchführt. Zusätzlich berechnet man noch mod $p$.
+		\begin{align}
+			Q_A &= x_A\cdot P \mod p \notag \\
+			Q_B &= x_B\cdot P \mod p \notag
+		\end{align}
+		und schicken sich $Q_A$ und $Q_B$. Dann kann von beiden Partnern der gemeinsame Schlüssel $k$ berechnet werden:
+		\begin{align}
+			k &= x_A\cdot Q_B \mod p \notag \\
+			k &= x_B\cdot Q_A \mod p \notag
+		\end{align}
+	\end{exkurs}
+	
+\end{document}
