@@ -1,0 +1,165 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage{multirow}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Mathematical Economics 1A, Problem Set 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Task 1: More Auctions!}
+	\begin{enumerate}[label=(\alph*)]
+		\item Player 1 won't bid over 500, but since the best response for player 2 if player 1 is bidding less then 500 is empty (see problem set 1), player 1 has to bid 500.
+		\begin{align}
+			NE = \left\lbrace\left(500, \sigma(x_1) = \begin{cases}
+				(x_1, \infty) & x_1 < 500 \\
+				[0,500] & x_1 = 500 \\
+				\mathbb{R}_+ & x_1 > 500
+			\end{cases}\right)\right\rbrace \notag
+		\end{align}
+		\item A SPNE must be perfect in \textit{any} game, even if player 1 bids e.g. 150 Pounds. Player 2 can then not find a best response and therefore there is no SPNE.
+		\item The best response of player 1 is
+		\begin{align}
+			BR_1(x_2) = \begin{cases}
+				x_2 + 1 & x_2 < 498 \\
+				498, 499 & x_2 = 498 \\
+				499 & x_2 = 499 \\
+				\{0,1,...,500\} & x_2 = 500 \\
+				\{0,1,...,x_2-1\} & x_2 > 500
+			\end{cases} \notag
+		\end{align}
+		The best response for player 2 is the same. The NE is $NE = \{(498,498), (499,499), (500,500)\}$.
+		\item Nash Equilibria:
+		\begin{align}
+			\left(499, \sigma(x_1) = \begin{cases}
+				x_1 + 1 & x_1 < 498 \\
+				499 & x_1 = 498 \\
+				499 & x_1 = 499 \\
+				\{0,1,...,500\} & x_1 = 500 \\
+				\{0,1,...,x_1-1\} & x_1 > 500
+			\end{cases}\right) \notag
+		\end{align}
+		There's a second NE:
+		\begin{align}
+			\left(498, \sigma(x_1) = \begin{cases}
+				x_1 + 1 & x_1 < 498 \\
+				498 & x_1 = 498 \\
+				499 & x_1 = 499 \\
+				\{0,1,...,500\} & x_1 = 500 \\
+				\{0,1,...,x_1-1\} & x_1 > 500
+			\end{cases}\right) \notag
+		\end{align}
+	\end{enumerate}
+
+	\section*{Task 2: Extensive Form Extravaganza}
+	\begin{enumerate}[label=(\alph*)]
+		\item Normal form:
+		\begin{center}
+			\begin{tabular}{C{0.5cm}c|c|c}
+				& & \multicolumn{2}{c}{\textbf{Player 3}} \\
+				& & F & M \\
+				\hline
+				\multirow{2}{0.5cm}{\rotatebox[origin=c]{90}{\textbf{P 2}}} & F & (\underline{2},\underline{2},\underline{2}) & (\underline{3},\underline{5},1) \\
+				\cline{3-4}
+				& M & (3,1,\underline{5}) & (\underline{4},4,4)
+			\end{tabular}
+			\hspace*{1cm}
+			\begin{tabular}{C{0.5cm}c|c|c}
+				& & \multicolumn{2}{c}{\textbf{Player 3}} \\
+				& & M & B \\
+				\hline
+				\multirow{2}{0.5cm}{\rotatebox[origin=c]{90}{\textbf{P 2}}} & M & (0,\underline{3},\underline{2}) & (2,1,1) \\
+				\cline{3-4}
+				& B & (\underline{5},0,0) & (3,\underline{2},\underline{3})
+			\end{tabular} \\
+			Left: Dilemma, Right: Sexes
+		\end{center}
+		The only NE is (Dilemma, F, F).
+		\item The NE for Dilemma is (F,F) and the NE's for Sexes are (M,M), (B,B) and $\left(\frac{3}{4}M + \frac{1}{4}B, \frac{1}{4}M + \frac{3}{4}B\right)$. The expected payoff for player 1 is
+		\begin{itemize}
+			\item (F,F) $\to$ 2
+			\item (M,M) $\to$ 0
+			\item (B,B) $\to$ 3
+			\item $\left(\frac{3}{4}M + \frac{1}{4}B, \frac{1}{4}M + \frac{3}{4}B\right)$ $\to$ $\frac{3}{4}\cdot\frac{3}{4}\cdot 2 + \frac{1}{4}\cdot\frac{1}{4}\cdot 5 + \frac{1}{4}\cdot\frac{3}{4}\cdot 3 = 2$
+		\end{itemize}
+		Player 1 can expect in Dilemma 2 utility and in Sexes $\frac{5}{3}$ so player 1 will choose Dilemma.
+	\end{enumerate}
+	
+	\section*{Task 3: Repeated Games: Tragedy of the Commons}
+	\begin{enumerate}[label=(\alph*)]
+		\item Normal form:
+		\begin{center}
+			\begin{tabular}{C{0.5cm}c|c|c}
+				& & \multicolumn{2}{c}{\textbf{Player 3}} \\
+				& & Graze & Gorge \\
+				\hline
+				\multirow{2}{0.5cm}{\rotatebox[origin=c]{90}{\textbf{P 2}}} & Graze & (1,1,1) & (\underline{-1},\underline{-1},\underline{3}) \\
+				\cline{3-4}
+				& Gorge & (\underline{-1},\underline{3},\underline{-1}) & (\underline{-3},\underline{-1},\underline{-1})
+			\end{tabular}
+			\hspace*{1cm}
+			\begin{tabular}{C{0.5cm}c|c|c}
+				& & \multicolumn{2}{c}{\textbf{Player 3}} \\
+				& & Graze & Gorge \\
+				\hline
+				\multirow{2}{0.5cm}{\rotatebox[origin=c]{90}{\textbf{P 2}}} & Graze & (\underline{3},\underline{-1},\underline{-1}) & (\underline{-1},\underline{-3},\underline{-1}) \\
+				\cline{3-4}
+				& Gorge & (\underline{-1},\underline{-1},\underline{-3}) & (\underline{-3},\underline{-3},\underline{-3})
+			\end{tabular} \\
+			Left: Graze, Right: Gorge
+		\end{center}
+		Gorge is a weakly dominant strategy.
+	\end{enumerate}
+
+\end{document}
