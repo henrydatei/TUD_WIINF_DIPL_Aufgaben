@@ -1,0 +1,90 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage{multirow}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Mathematical Economics 2, Problem Set 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Task 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Conditional on winning opponent now has $v\sim\mathcal{U}(0,x)$ where $x$ is my value. $\E(v) = \frac{x}{2}$.
+		\item Bidder with higher value will win the auction because he gazumps earlier ($t'(x) < 0$). Conditional on winning opponent now has $v\sim\mathcal{U}(0,x)$.
+		\begin{align}
+			\E(pay) &= \mathbb{P}(v<t)\E(pay\mid v<t) + \mathbb{P}(t < v < x)\E(pay\mid t<v<x) \notag \\
+			&= \frac{t}{x}\cdot\frac{t}{2} + \frac{x-t}{x}\cdot G \notag \\
+			&= \frac{t^2 + 2G(x-t)}{2x} \notag
+		\end{align}
+		\item By revenue equivalence $\frac{t^2 + 2G(x-t)}{2x} = \frac{x}{2}$. This leads to
+		\begin{align}
+			\frac{t^2 + 2G(x-t)}{2x} &= \frac{x}{2} \notag \\
+			t^2 + 2G(x-t) &= x^2 \notag \\
+			t^2 - x^2 + 2G(x-t) &= 0 \notag \\
+			(t-x)(x-t) - 2G(t-x) &= 0 \notag \\
+			(t-x)\cdot (t+x-2G) &= 0 \notag \\
+			t_1 &= x \notag \\
+			t_2 &= 2G-x \notag
+		\end{align}
+		Since $t'(x) < 0$ the solution is $t(x) = 2G-x$.
+		\item In part (a) the seller gets $r\sim\mathcal{U}(0,x) = \mathcal{U}([0,t] \cup [t,x])$. In part (b) the seller gets $r\sim\mathcal{U}([0,t] \cup G)$ which is far less uncertainty.
+		\item Before the trials the values are uniformly distributed and independent but after the trails the values will be highly correlated (if one country finds out that the vaccine is working, the other country will probably find out the same). This implies that the price will go up if the vaccine is working.
+	\end{enumerate}
+
+	\section*{Task 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item 
+	\end{enumerate}
+
+\end{document}
