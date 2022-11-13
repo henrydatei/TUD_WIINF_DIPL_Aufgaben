@@ -1,0 +1,333 @@
+\documentclass[ngerman,t]{beamer}
+\usepackage[ngerman]{babel}
+\usetheme{Boadilla}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{xfrac}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\E}{\mathbb{E}}
+
+\title{Statistik 2, Übung 1}
+\author{\textsc{Henry Haustein}}
+\institute{TU Dresden}
+\date{\today}
+
+\begin{document}
+	\begin{frame}
+		\titlepage
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Aufgabe 1.1}
+		Nur 3\% der kontrollierten Fahrgäste der Dresdner Straßenbahnen besitzen keinen gültigen Fahrschein. Die Ergebnisse der Kontrolle seien unabhängig, d. h. es wird vereinfacht angenommen, dass nur Einzelpersonen kontrolliert werden.
+		\begin{enumerate}[label=(\alph*)]
+			\item Mit welcher Wahrscheinlichkeit wird bei der Kontrolle von 10 Personen wenigstens ein Schwarzfahrer erwischt?
+			\item Wie groß ist die Wahrscheinlichkeit, dass der Kontrolleur erst bei der zehnten Kontrolle den ersten Schwarzfahrer aufspürt?
+		\end{enumerate}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Aufgabe 1.1}
+		\begin{enumerate}[label=(\alph*)]
+			\item Sei $X$ die Anzahl der erwischten Schwarzfahrer. Dann $X\sim B(10, 0.03)$ und für die Binomialverteilung gilt:
+			\begin{align}
+				\mathbb{P}(X = k) &= \binom{n}{k}p^k(1-p)^{n-k} \notag
+			\end{align}
+			\pause
+			Wir suchen
+			\begin{align}
+				\mathbb{P}(X \ge 1) &= 1 - \mathbb{P}(X = 0) \notag \\
+				&= 1 - \binom{10}{0}\cdot 0.03^0\cdot 0.97^{10} \notag \\
+				&= 0.263 \notag
+			\end{align}
+		\end{enumerate}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Aufgabe 1.1}
+		\begin{itemize}
+			\item[(b)] $Y$ sei die Anzahl der kontrollierten Fahrgäste, bis der erste Schwarzfahrer erwischt wird. Daher folgt $Y$ einer geometrischen Verteilung $Y \sim G(0.03)$:
+			\begin{align}
+				\mathbb{P}(Y = k) &= p(1-p)^{k-1} \notag \\
+				\mathbb{P}(Y = 10) &= 0.03\cdot 0.97^9 \notag \\
+				&= 0.023 \notag
+			\end{align}
+			\pause
+			\item[$\Rightarrow$] Alternative Lösung, die vielleicht etwas intuitiver ist: Wenn man erst bei der 10. Kontrolle einen Schwarzfahrer finden will, darf man bei den 9 Kontrollen vorher keinen Schwarzfahrer finden ($0.97^9$), muss aber in der 10. Kontrolle ($0.03$):
+			\begin{align}
+				0.97^9\cdot 0.03 = 0.023 \notag
+			\end{align}
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Aufgabe 1.2}
+		Die Dauer von Telefongesprächen an der Information am Hauptbahnhof Dresden sei exponentialverteilt mit dem Parameter $\lambda = 0.2 min^{-1}$.
+		\begin{enumerate}[label=(\alph*)]
+			\item Skizzieren Sie die Dichte und die Verteilungsfunktion der Dauer der Telefongespräche.
+			\item Wie groß ist die Wahrscheinlichkeit, dass ein Gespräch kürzer als 3 Minuten dauert?
+			\item Wie groß ist die Wahrscheinlichkeit, dass ein Gespräch länger als 3 Minuten dauert?
+			\item Wie groß ist die Wahrscheinlichkeit, dass ein Gespräch länger als 2 Minuten und kürzer als 3 Minuten dauert?
+			\item Berechnen Sie den Erwartungswert und die Varianz für die Dauer der Telefongespräche.
+		\end{enumerate}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Aufgabe 1.2}
+		\begin{itemize}
+			\item[(a)] Die Dichte $f$ und Verteilungsfunktion $F$ einer Exponentialverteilung sind definiert als
+			\begin{align}
+				f(x) &= \lambda\cdot e^{-\lambda x} \notag \\
+				F(x) &= \int_{0}^{x} f(t)\,dt = 1- e^{-\lambda x} \notag
+			\end{align}
+			\pause
+			\begin{center}
+				\begin{tikzpicture}[scale=0.6]
+					\begin{axis}[
+						xmin=0, xmax=20, xlabel=$x$,
+						ymin=0, ymax=0.2, ylabel=$f(x)$,
+						samples=400,
+						axis x line=middle,
+						axis y line=middle,
+						domain=0:20,
+						title={Dichte}
+						]
+						\addplot[mark=none,smooth,blue] {0.2 * exp(-0.2*x)};
+						
+					\end{axis}
+				\end{tikzpicture}
+				\begin{tikzpicture}[scale=0.6]
+					\begin{axis}[
+						xmin=0, xmax=20, xlabel=$x$,
+						ymin=0, ymax=1, ylabel=$F(x)$,
+						samples=400,
+						axis x line=middle,
+						axis y line=middle,
+						domain=0:20,
+						title={Verteilungsfunktion}
+						]
+						\addplot[mark=none,smooth,red] {1-exp(-0.2*x)};
+						
+					\end{axis}
+				\end{tikzpicture}
+			\end{center}
+		\end{itemize}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Aufgabe 1.2}
+		\begin{itemize}
+			\item[(b)] $\mathbb{P}(X < 3) = F(3) = 1 - e^{-0.2\cdot 3} = 0.451$
+			\pause
+			\item[(c)] $\mathbb{P}(X > 3) = 1 - F(3) = 0.549$ \\ \textcolor{gray}{Bemerkung: $\mathbb{P}(X = 3) = 0$, weil $X$ eine stetige Zufallsvariable ist.}
+			\pause
+			\item[(d)] $\mathbb{P}(2 < X < 3) = F(3) - F(2) = 0.121$
+			\pause
+			\item[(e)] In der Formelsammlung 2 ($\nearrow$ Ordner \textit{Extras} in OPAL) finden sich folgende Formeln für den Erwartungswert und die Varianz einer exponentialverteilten Zufallsvariable:
+			\begin{align}
+				\E(X) &= \frac{1}{\lambda} = 5 \notag \\
+				\Var(X) &= \frac{1}{\lambda^2} = 25 \notag
+			\end{align}
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Aufgabe 1.3}
+		Gegeben ist folgende Dichtefunktion einer Zufallsvariablen $X$:
+		\begin{align}
+			f(x) &= \begin{cases}
+				\frac{1}{12}x & 1\le x\le 5 \\
+				0 & \text{sonst}
+			\end{cases} \notag
+		\end{align}
+		\begin{enumerate}[label=(\alph*)]
+			\item Bestimmen Sie die Verteilungsfunktion dieser Zufallsvariablen.
+			\item Bestimmen Sie die Wahrscheinlichkeit des Ereignisses ($2 < X < 3$).
+		\end{enumerate}
+		\pause
+		\begin{center}
+			\begin{tikzpicture}[scale=0.6]
+				\begin{axis}[
+					xmin=0, xmax=6, xlabel=$x$,
+					ymin=0, ymax=0.5, ylabel=$f(x)$,
+					samples=400,
+					axis x line=middle,
+					axis y line=middle,
+					domain=1:5,
+					]
+					\addplot[mark=none,smooth,blue, ultra thick] {1/12 * x};
+					\draw[blue, ultra thick] (axis cs: 0,0) -- (axis cs: 1,0);
+					\draw[blue, ultra thick] (axis cs: 5,0) -- (axis cs: 6,0);
+				\end{axis}
+			\end{tikzpicture}
+		\end{center}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Aufgabe 1.3}
+		\begin{itemize}
+			\item[(a)] Die Verteilungsfunktion ist wie folgt definiert:
+			\begin{align}
+				F(x) = \int_{-\infty}^x f(t)\, dt \notag
+			\end{align}
+			\begin{center}
+				\begin{tikzpicture}[scale=0.6]
+					\begin{axis}[
+						xmin=0, xmax=6, xlabel=$x$,
+						ymin=0, ymax=0.5, ylabel=$f(x)$,
+						samples=400,
+						axis x line=middle,
+						axis y line=middle,
+						domain=1:5,
+						]
+						\addplot[mark=none,smooth,blue, ultra thick] {1/12 * x};
+						\draw[blue, ultra thick] (axis cs: 0,0) -- (axis cs: 1,0);
+						\draw[blue, ultra thick] (axis cs: 5,0) -- (axis cs: 6,0);
+						\draw[red, dashed, thick] (axis cs: 1,0) -- (axis cs: 1,0.5);
+						\draw[red, dashed, thick] (axis cs: 5,0) -- (axis cs: 5,0.5);
+						
+						\draw[fill=blue, opacity = 0.2] (axis cs: 1,0) -- (axis cs: 1,1/12) -- (axis cs: 5,5/12) -- (axis cs: 5,0) -- (axis cs: 1,0);
+					\end{axis}
+				\end{tikzpicture}
+			\end{center}
+			\pause
+			Offensichtlich gilt für alle $x<1: F(x) = 0$ und für $x>5: F(x) = 1$. 
+			\pause
+			Da $f$ eine Dichte ist, hat die \textcolor{blue}{blaue} Fläche den Inhalt 1.
+		\end{itemize}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Aufgabe 1.3}
+		\begin{itemize}
+			\item[] Der interessante Fall ist $x\in [1,5]$:
+			\begin{align}
+				F(x) &= \int_{-\infty}^x f(t)\, dt = \int_{1} ^x \frac{1}{12}t\, dt \notag \\
+				&= \left.\frac{1}{24}t^2\right\vert_1^x = \frac{x^2 - 1}{24} \notag
+			\end{align}
+			\pause
+			Damit können wir die komplette Verteilungsfunktion zusammensetzen:
+			\begin{align}
+				F(x) &= \begin{cases}
+					0 & x<1 \\
+					\frac{x^2-1}{24} &x\in [1,5] \\
+					1 & x>5
+				\end{cases} \notag
+			\end{align}
+			\pause
+			\item[(b)] $\mathbb{P}(2<X<3) = F(3) - F(2) = \frac{3^2-1}{24} - \frac{2^2-1}{24} = \frac{5}{24}$
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Aufgabe 1.4}
+		$X$ sei eine stetige Zufallsvariable mit der Dichte
+		\begin{align}
+			f(x) = \begin{cases}
+				cx(1-x) & x\in [0,1] \\
+				0 & \text{sonst}
+			\end{cases} \notag
+		\end{align}
+		\begin{enumerate}[label=(\alph*)]
+			\item Bestimmen Sie die Konstante $c$.
+			\item Wie lautet die Verteilungsfunktion $F$ der Zufallsvariablen $X$?
+			\item Berechnen Sie $\mathbb{P}(X\le \frac{1}{2})$, $\mathbb{P}(X> \frac{2}{3})$, $\mathbb{P}(\frac{1}{2} < X \le \frac{2}{3})$, $\mathbb{P}(2 < X\le 3)$.
+			\item Berechnen Sie $\E(X)$ und $\Var(X)$.
+		\end{enumerate}
+		\begin{center}
+			\begin{tikzpicture}[scale=0.6]
+				\begin{axis}[
+					xmin=0, xmax=1, xlabel=$x$,
+					ymin=0, ymax=0.5, ylabel=$f(x)$,
+					samples=400,
+					axis x line=middle,
+					axis y line=middle,
+					domain=0:1,
+					]
+					\addplot[mark=none,smooth,blue!25!green, ultra thick] {0.25*x*(1-x)};
+					\addplot[mark=none,smooth,blue!50!green, ultra thick] {0.5*x*(1-x)};
+					\addplot[mark=none,smooth,blue!75!green, ultra thick] {0.75*x*(1-x)};
+					\addplot[mark=none,smooth,blue, ultra thick] {x*(1-x)};
+					\addplot[mark=none,smooth,blue!75!red, ultra thick] {1.25*x*(1-x)};
+					\addplot[mark=none,smooth,blue!50!red, ultra thick] {1.5*x*(1-x)};
+					\addplot[mark=none,smooth,blue!25!red, ultra thick] {1.75*x*(1-x)};
+					\addplot[mark=none,smooth,red, ultra thick] {2*x*(1-x)};
+				\end{axis}
+			\end{tikzpicture}
+		\end{center}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Aufgabe 1.4}
+		\begin{itemize}
+			\item[(a)] Da $f$ eine Dichte sein soll, gilt:
+			\begin{align}
+				\int_{-\infty}^\infty f(x)\, dx = \int_{0}^1 cx(1-x)\,dx \overset{!}{=} 1 \notag
+			\end{align}
+			\pause
+			Daraus ergibt sich
+			\begin{align}
+				\int_{0}^1 cx(1-x)\,dx &= c\left.\left(\frac{x^2}{2} - \frac{x^3}{3}\right)\right\vert_0^1 \notag \\
+				&= \frac{c}{6} \overset{!}{=} 1 \notag \\
+				\Rightarrow c &= 6 \notag
+			\end{align}
+			\pause
+			\item[(b)] Genau wie bei Aufgabe 1.3 ist auch hier für alle $x<0$ $F(x) = 0$ und für alle $x>1$ $F(x) = 1$. Für den interessanten Teil dazwischen ergibt sich:
+		\end{itemize}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Aufgabe 1.4}
+		\begin{itemize}
+			\item[] $x\in [0,1]$
+			\begin{align}
+				F(x) &= \int_{-\infty}^x f(t)\,dt = \int_{0}^x 6t(1-t)\,dt \notag \\
+				&= \left.6\left(\frac{t^2}{2} - \frac{t^3}{3}\right)\right\vert_0^x \notag \\
+				&= 6\left(\frac{x^2}{2} - \frac{x^3}{3}\right) \notag
+			\end{align}
+			\pause
+			Damit ist die Verteilungsfunktion
+			\begin{align}
+				F(x) &= \begin{cases}
+					0 & x<0 \\
+					6\left(\frac{x^2}{2} - \frac{x^3}{3}\right) &x\in [0,1] \\
+					1 & x>1
+				\end{cases} \notag
+			\end{align}
+		\end{itemize}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Aufgabe 1.4}
+		\begin{itemize}
+			\item[(c)] $\mathbb{P}(X\le \frac{1}{2}) = F(\frac{1}{2}) = \frac{1}{2}$ \pause \\
+			$\mathbb{P}(X> \frac{2}{3}) = 1 - F(\frac{2}{3}) = \frac{7}{27}$ \pause \\
+			$\mathbb{P}(\frac{1}{2} < X \le \frac{2}{3}) = F(\frac{2}{3}) - F(\frac{1}{2}) = \frac{13}{54}$ \pause \\
+			$\mathbb{P}(2 < X\le 3) = F(3) - F(2) = 1 - 1 = 0$
+			\pause
+			\item[(d)] Für den Erwartungswert gilt:
+			\begin{align}
+				\E(X) &= \int_{-\infty}^\infty x\cdot f(x)\,dx = \int_{0}^1 x\cdot 6x(1-x)\,dx \notag \\
+				&= \frac{1}{2} \notag
+			\end{align}
+			\pause
+			und die Varianz:
+			\begin{align}
+				\Var(X) &= \int_{-\infty}^\infty x^2\cdot f(x)\,dx - \E(X)^2 \notag \\
+				&= \int_{0}^1 x^2\cdot 6x(1-x)\,dx - \left(\frac{1}{2}\right)^2 \notag \\
+				&= \frac{1}{20} \notag
+			\end{align}
+		\end{itemize}
+	\end{frame}
+\end{document}

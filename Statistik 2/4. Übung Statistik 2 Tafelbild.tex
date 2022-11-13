@@ -1,0 +1,67 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 2, Übung 4, Tafelbild}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Minimierung der Fehlerquadrate:
+	\begin{align}
+		Q = \sum_{i=1}^{n} (\text{tatsächlicher Wert} - \text{gemessener Wert})^2 \to\min \notag
+	\end{align}
+
+	\section*{Aufgabe 2}
+	siehe Taschenrechner
+
+	\section*{Aufgabe 3}
+	Kann man auch mit dem Taschenrechner lösen, muss man aber vorher in eine geeignete Form bringen (und aus den Uhrzeiten Zahlen machen $\to$ diverse Interpretationen möglich)
+	\begin{align}
+		y_i &= \kappa + 16x_i - x_i^2  + \varepsilon_i \notag \\
+		y_i &= \kappa + z_i + \varepsilon_i \notag \\
+		y_i &= \kappa + 1\cdot z_i + \varepsilon_i \notag
+	\end{align}
+	$\Rightarrow$ Koeffizient vor $z_i$ ist schon mit 1 gegeben, wir müssen nur noch $\kappa$ (Rolle von $\beta_0$) berechnen!
+	
+	\section*{Aufgabe 4}
+	Dieses Modell ist auch mit dem Taschenrechner lösbar, allerdings muss man dieses Modell auch erst linearisieren:
+	\begin{align}
+		y_i &= \beta_0\exp(\beta_1x_i + \varepsilon_i) \notag \\
+		\log(y_i) &= \log(\beta_0) + \beta_1x_i + \varepsilon_i \notag
+	\end{align}
+	Händische Schätzung der Parameter:
+	\begin{align}
+		\hat{\beta}_1 &= \frac{\sum_{i=1}^n x_i\log(y_i) - n\bar{x}\overline{\log(y)}}{\sum_{i=1}^n x_i^2 - n\bar{x}^2} = \Cor(X, \log(Y)) \notag \\
+		\widehat{\log(\beta_0)} &= \overline{\log(y)} - \hat{\beta}_1\cdot\bar{x} \notag
+	\end{align}
+	$\Rightarrow$ Rücktransformation!
+	
+\end{document}

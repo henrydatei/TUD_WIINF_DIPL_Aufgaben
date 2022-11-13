@@ -1,0 +1,63 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 2, Übung 2, Tafelbild}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Ungleichung von Tschebyscheff:
+	\begin{align}
+		\mathbb{P}(\vert X-\E(X)\vert < \varepsilon) &\ge 1 - \frac{\Var(X)}{\varepsilon^2} \notag \\
+		\mathbb{P}(\E(X) - \varepsilon < X < \E(X) + \varepsilon) &\ge 1 - \frac{\Var(X)}{\varepsilon^2} \notag
+	\end{align}
+
+	\section*{Aufgabe 2}
+	Wenn $X_i\sim \mathcal{N}(\mu, \sigma^2)$, dann $X = \sum X_i \sim\mathcal{N}(\mu\cdot n, \sigma^2\cdot n)$
+
+	\section*{Aufgabe 3}
+	Für \textit{große} $n$ kann man die Binomialverteilung mit der Normalverteilung approximieren. Damit die Approximation aber gut ist, sollte
+	\begin{align}
+		np(1-p) \ge 9 \notag
+	\end{align}
+	gelten. Falls dem nicht so ist, dann sollte zumindest
+	\begin{align}
+		np\ge 5\qquad\text{und} \qquad n(1-p)\ge 5 \notag
+	\end{align}
+	gelten. Ist $X\sim B(n,p)$, dann $\E(X) = np$ und $\Var(X) = np(1-p)$. Weitere wichtige Identitäten/Eigenschaften:
+	\begin{itemize}
+		\item $\Phi(1-x) = -\Phi(x)$
+		\item $\frac{X-\mu}{\sigma}\sim \mathcal{N}(0,1)$, wenn $X\sim\mathcal{N}(\mu, \sigma^2)$
+	\end{itemize}
+	
+	\section*{Aufgabe 4}
+	Wenn $X_i\sim \mathcal{N}(\mu, \sigma^2)$, dann $\bar{X} = \frac{1}{n}\sum X_i \sim\mathcal{N}(\mu, \frac{\sigma^2}{n})$.
+	
+\end{document}

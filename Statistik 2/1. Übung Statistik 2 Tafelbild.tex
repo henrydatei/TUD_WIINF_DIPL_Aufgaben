@@ -1,0 +1,76 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Statistik 2, Übung 1, Tafelbild}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Binomialverteilung $X\sim B(n,p)$: Ein Bernoulli-Experiment (Experiment mit 2 verschiedenen Ergebnissen $x_1$, $x_2$) mit $n$ mal wiederholt. Die Wahrscheinlichkeit, dass bei einem Bernoulli-Experiment $x_1$ eintritt, ist $p$ und $X$ gibt an, wie oft $x_1$ eintritt.
+	\begin{align}
+		\mathbb{P}(X = k) = \binom{n}{k}p^k(1-p)^{n-k} \qquad\qquad
+		\mathbb{P}(X \le k) = \sum_{i=0}^{k} \mathbb{P}(X = i) \notag
+	\end{align}
+	Geometrische Verteilung $X\sim G(p)$: Ein Bernoulli-Experiment wird solange wiederholt, bis das erste mal $x_1$ eintritt. $X$ gibt an, wie viele Wiederholungen notwendig waren.
+	\begin{align}
+		\mathbb{P}(X = k) = p(1-p)^{n-1} \qquad\qquad
+		\mathbb{P}(X\le k) = \sum_{i=0}^k \mathbb{P}(X = i) \notag
+	\end{align}
+
+	\section*{Aufgabe 2}
+	Exponentialverteilung $X\sim Exp(\lambda)$ (Anmerkung: $\exp(x) = e^x$)
+	\begin{align}
+		f(x) = \begin{cases}
+			\lambda\exp(-\lambda x) & x\ge 0 \\
+			0 & x<0
+		\end{cases} \qquad\qquad
+		F(x) = \begin{cases}
+			1-\exp(-\lambda x) &x\ge 0 \\
+			0 & x<0
+		\end{cases} \notag 
+	\end{align}
+	Die Exponentialverteilung ist eine stetige Verteilung, das heißt unter anderem $\mathbb{P}(X = k) = 0$ und
+	\begin{align}
+		\mathbb{P}(a < X < b) = \int_{a}^{b} f(x)\,dx = F(b) - F(a) \notag
+	\end{align}
+
+	\section*{Aufgabe 3}
+	Verteilungsfunktion: 
+	\begin{align}
+		F(x) = \int_{-\infty}^x f(y)\, dy \notag
+	\end{align}
+	 die Funktion in dieser Aufgabe ist abschnittsweise definiert, insbesondere $\int_{-\infty}^1 f(y)\, dy = 0$ $\to$ untere Grenze sinnvoll wählen!
+	
+	\section*{Aufgabe 4}
+	Es gilt:
+	\begin{align}
+		\int_{-\infty}^\infty f(x) \,dx = 1 \qquad\qquad \mathbb{E}(X) = \int_{-\infty}^\infty xf(x)\,dx \qquad\qquad \text{Var}(X) = \int_{-\infty}^\infty x^2f(x)\,dx - \mathbb{E}(X)^2 \notag
+	\end{align}
+	
+\end{document}

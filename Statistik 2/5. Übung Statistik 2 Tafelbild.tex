@@ -1,0 +1,62 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{parskip}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 2, Übung 5, Tafelbild}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Kriterien der Güte:
+	\begin{itemize}
+		\item erwartungstreu: $\E(\hat{\theta}) = \theta$ $\to$ Bias: $\E(\hat{\theta}) - \theta$
+		\item $MSE(\hat{\theta}) = \Var(\hat{\theta}) + Bias(\hat{\theta})^2$
+		\item konsistent: $MSE(\hat{\theta})\to 0$ für $n\to\infty$
+	\end{itemize}
+
+	\section*{Aufgabe 2}
+	Übersicht über Konfidenzintervalle in FS Seite 32
+	\begin{align}
+		KI(\mu) &= \bar{x} \pm z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}} &\sigma^2\text{ bekannt} \notag \\
+		KI(\mu) &= \bar{x} \pm t_{n-1,1-\alpha/2}\frac{S}{\sqrt{n}} &\sigma^2\text{ unbekannt} \notag \\
+		KI(\sigma^2) &= \left[\frac{n\tilde{S}}{\chi^2_{n,1-\alpha/2}}; \frac{n\tilde{S}}{\chi^2_{n,\alpha/2}}\right] &\mu\text{ bekannt} \notag \\
+		KI(\sigma^2) &= \left[\frac{(n-1)S}{\chi^2_{n,1-\alpha/2}}; \frac{(n-1)S}{\chi^2_{n,\alpha/2}}\right] &\mu\text{ unbekannt} \notag
+	\end{align}
+	Die $t$-Verteilung nähert sich asymptotisch an die Standardnormalverteilung an, d.h. asymptotisches KI $\Rightarrow$ $t_{n-1,1-\alpha/2}$ mit $z_{1-\alpha/2}$ ersetzen
+	
+	Die Werte von $z_\alpha$ stehen auf Seite 23, die Werte von $t_{n,\alpha}$ auf Seite 24 und $\chi^2_{n,\alpha}$ auf Seite 25f.
+	
+	Es gilt (Seite 21):
+	\begin{align}
+		z_\alpha = \Phi^{-1}(\alpha) \notag
+	\end{align}
+	
+\end{document}
