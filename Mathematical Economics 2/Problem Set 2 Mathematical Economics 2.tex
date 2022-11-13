@@ -1,0 +1,112 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage{multirow}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Mathematical Economics 2, Problem Set 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Task 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Total Action (TA): contribution to a public good
+		\begin{align}
+			u_i(\sigma_i, \sigma_1, ..., \sigma_n) = f\left(\sigma_i + \alpha\sum_{j\in N_i} \sigma_j\right) - c\sigma_i\notag
+		\end{align}
+		Best Effort (BE):
+		\begin{align}
+			u_i(\sigma_i, \sigma_1, ..., \sigma_n) = f\left(\max_{j\in N_i\cup \{i\}} \sigma_j\right) - c\sigma_i \notag
+		\end{align}
+		Average Effort (AE):
+		\begin{align}
+			u_i(\sigma_i, \sigma_1, ..., \sigma_n) = f\left(\sigma_i\frac{\sum_{j\in N_i} \sigma_j}{k_i}\right) - c\sigma_i \notag
+		\end{align}
+		Weakest Link (WL): connected banks, one goes bankrupt
+		\begin{align}
+			u_i(\sigma_i, \sigma_1, ..., \sigma_n) = f\left(\min_{j\in N_i\cup \{i\}} \sigma_j\right) - c\sigma_i \notag
+		\end{align}
+		\item TA: if the function is concave we get substitutes, if the function is convex we get complements. Property A is satisfied. \\
+		BE: strategic substitutes. Property A is satisfied. \\
+		AE: strategic complements. Property A is not satisfied. \\
+		WL: strategic complements. Property A is not always satisfied.
+		\item Table
+		\begin{center}
+			\begin{tabular}{c|C{5cm}|C{5cm}}
+				& \textbf{All 0} & \textbf{All 1} \\
+				\hline
+				\textbf{TA} & $c\ge b$ & $b\ge c$ \\
+				\hline
+				\textbf{BE} & $c\ge b$ & never happen when $n>1$ \\
+				\hline
+				\textbf{AE} & always & $b\ge c$,  \\
+				\hline
+				\textbf{WL} & always & $b\ge c$
+			\end{tabular}
+		\end{center}
+		\item[(Extra)] non-decreasing: If your degree is bigger then a certain $k$ then you play 1 otherwise 0. \\
+		non-increasing: If your degree is bigger then a certain $k$ then you play 0 otherwise 1.
+		\begin{itemize}
+			\item TA: function concave: non-increasing, convex: non-decreasing
+			\item BE: non-increasing
+			\item AE: cannot say because it violates property A
+			\item WL: non-increasing/cannot say because it violates property A
+		\end{itemize}
+	\end{enumerate}
+
+	\section*{Task 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item 
+	\end{enumerate}
+
+\end{document}
