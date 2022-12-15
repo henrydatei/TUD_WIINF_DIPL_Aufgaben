@@ -422,6 +422,40 @@ lm(formula = employed ~ month + empstat + agegrp + sex + efamtype + cma + marrie
 	\end{enumerate}
 
 	\section*{Section E: Synthetic Control}
+	\textit{I used R for this task. The code I've written is attached but for comparison I asked a friend of mine to run the provided STATA commands. We got different results and - as mentioned in the forum - no one knows why. I think it might be the different optimisation algorithm. But in this task I will reference to the results R gave to me.}
+	
+	After fitting the models I got
+	\begin{center}
+		\includegraphics[scale = 0.15]{model1}
+		\includegraphics[scale = 0.15]{model2}
+		\includegraphics[scale = 0.15]{model3}
+		\includegraphics[scale = 0.15]{model4}
+	\end{center}
+	Model 1 and 2 got the same weights as in STATA but a parallel trend can't be seen. Model 2 has a better fit in the pre-treatment period but in post-treatment it is way off. Model 3 and 4 look in the graph the same but the weights have a minimal difference. STATA will give different weights in model 3 and 4.
+	
+	The weights are
+	\begin{center}
+		\begin{tabular}{c|c|c|c|c}
+			\textbf{Province} & \textbf{Model 1} & \textbf{Model 2} & \textbf{Model 3} & \textbf{Model 4} \\
+			\hline
+			 NFL & 0.73710714 & $1.935781\cdot 10^{-4}$ & 0.4018604 & 0.4022425 \\			
+			 PEI & 0.02294339 & $3.662704\cdot 10^{-5}$ & $1.412148\cdot 10^{-5}$ & $6.811447\cdot 10^{-7}$ \\
+			 NS & 0.04418981 & $1.263440\cdot 10^{-4}$ & 0.3229095 & 0.3225237 \\
+			 NB & 0.08904221 & $0.9994246$ & $1.072118\cdot 10^{-6}$ & $4.512253\cdot 10^{-8}$ \\
+			 QUE & 0.02098721 & $3.396839\cdot 10^{-5}$ & $2.711164\cdot 10^{-9}$ & $3.944902\cdot 10^{-8}$ \\
+			 MAN & 0.01914771 & $4.130334\cdot 10^{-5}$ & $1.443463\cdot 10^{-6}$ & $8.024621\cdot 10^{-8}$ \\
+			 SASK & 0.01552675 & $3.204996\cdot 10^{-5}$ & $8.581286\cdot 10^{-7}$ & $6.041839\cdot 10^{-8}$ \\
+			 ALB & 0.01555429 & $3.296223\cdot 10^{-5}$ & $4.928783\cdot 10^{-6}$ & $5.619475\cdot 10^{-7}$ \\
+			 BC & 0.03550150 & $7.858791\cdot 10^{-5}$ & 0.2752076 & 0.2752323 \\
+		\end{tabular}
+	\end{center}
+	For better readability I created a graph for the weights
+	\begin{center}
+		\includegraphics[scale=0.35]{weights}
+	\end{center}
+	According to Model 2 the province NB (New Brunswick) is a control group for Ontario. New Brunswick has 2.09\% of Canada's population while Ontario has 38.45\%; population density is 10.9 for NB and 15.2 per km$^2$ for ONT. But in general I don't think that NB is a good control group, they are not similar. The other models build their synthetic control group by a large weight from NFL (Newfoundland and Labrador) which has even less inhabitants than NB (1.38\%) and a population density of 1.4 per km$^2$. Model 3 and 4 include in their synthetic control group BC (British Columbia) which is the third-largest province (13.52\% of population) and has a nearly identical market income per capita than ONT (36,723 CAD vs. 36,298 CAD). The third part of the synthetic control group of model 3 and 4 is NS (New Scotia) which has only 2.62\% of population but a population density of 18.4 per km$^2$. The market income per capita for NS is around 30,000 CAD.\footnote{data from \url{https://en.wikipedia.org/wiki/Population_of_Canada_by_province_and_territory} and \url{https://en.wikipedia.org/wiki/List_of_Canadian_provinces_and_territories_by_gross_domestic_product}}
+	
+	From my point of view are model 1 and 2 not suitable as control group for Ontario. Model 3 and 4 are better but the graphs with the predicted employment rate don't convince me. Especially since the paper \cite{Abadie2015} looks much more promising in it's plots and predictions.
 	
 	\printbibliography 
 
