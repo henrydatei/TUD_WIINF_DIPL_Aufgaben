@@ -1,0 +1,123 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage{multirow}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Mathematical Economics 1A, Problem Set 3}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Task 1: Adverse Selection}
+	\begin{enumerate}[label=(\alph*)]
+		\item for everyone
+		\item types $x\ge p$
+		\item consumer accepts any $p\le x$, rejects otherwise. Insurer offers $p=x$.
+		\item consumer accepts any $p\le x$, rejects otherwise.
+		\begin{align}
+			u_I(p,x) &= \begin{cases}
+				0 & x<p \\
+				p-\frac{x}{2} & x\ge p
+			\end{cases} \notag \\
+			\E(u_I(p,x)) &= \int_0^1 p(x)u_I(p,x)dx \notag \\
+			&= \int_0^p 0 dx + \int_p^1 \left(p-\frac{x}{2}\right) dx \notag \\
+			&= -\frac{3}{4}p^2 + p - \frac{1}{4} \to\max \notag \\
+			p^\ast &= \frac{2}{3} \notag
+		\end{align}
+		PBE: Insurer offers $p=\frac{2}{3}$. Consumers buys if $x\ge p$. Insurer's beliefs are the prior beliefs.
+		\item all consumers with $x\ge\frac{2}{3}$
+		\item Utility:
+		\begin{align}
+			u_i(p_i,p_j,x) = \begin{cases}
+				p & p_i>x \lor p_i>p_j \\
+				p_i-\frac{x}{2} & p_i\le x\land p_i<p_j \\
+				\frac{p_i - \frac{x}{2}}{2} & p_i=p_j \le x
+			\end{cases} \notag
+		\end{align}
+		\item $p_1^\ast = p_2^\ast$ and $\Pi_1^\ast = \Pi_2^\ast = 0$ for insurer
+		\begin{align}
+			\Pi_1 = \Pi_2 &= \int_0^1 u_I(p,p,x) dx \notag \\
+			&= \int_0^p 0dx + \int_p^1 \frac{p_i - \frac{x}{2}}{2} dx \overset{!}{=} 0 \notag \\
+			0 &= -\frac{3}{4}p^2 + p - \frac{1}{4} \notag \\
+			p^\ast &= \frac{1}{3} \notag
+		\end{align}
+		The other root at $p=1$ is not a equilibrium as reducing the price a bit increases sales.
+		\item all consumers with $x\ge \frac{1}{3}$. More competition is not helpful since we are already at zero profits.
+		\item $p$ is lowers price
+		\begin{align}
+			\E(\Pi_i) &= \int_0^1 p-\frac{x}{2} dx \overset{!}{=} 0 \notag \\
+			p^\ast &= \frac{1}{4} \notag
+		\end{align}
+		$\Rightarrow x-p^\ast \ge -k$ for every customer, especially for $x = 0 \Rightarrow k= \frac{1}{4}$
+	\end{enumerate}
+
+	\section*{Task 2: Perfect Bayesian Equilibrium in Stackelberg with informed first-mover}
+	\begin{enumerate}[label=(\alph*)]
+		\item Payoffs for $x=3$:
+		\begin{itemize}
+			\item LL: $\Pi_1 = 1$, $\Pi_2 = 1$
+			\item LH: $\Pi_1 = 0$, $\Pi_2 = 0$
+			\item HL: $\Pi_1 = 0$, $\Pi_2 = 0$
+			\item HH: $\Pi_1 = 0$, $\Pi_2 = 0$
+		\end{itemize}
+		Payoffs for $x=6$:
+		\begin{itemize}
+			\item LL: $\Pi_1 = 4$, $\Pi_2 = 4$
+			\item LH: $\Pi_1 = 3$, $\Pi_2 = 6$
+			\item HL: $\Pi_1 = 6$, $\Pi_2 = 3$
+			\item HH: $\Pi_1 = 4$, $\Pi_2 = 4$
+		\end{itemize}
+		\item 
+	\end{enumerate}
+
+\end{document}
