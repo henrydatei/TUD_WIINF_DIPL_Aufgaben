@@ -1,0 +1,63 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{parskip}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 2, Übung 8, Tafelbild}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Zweiseitige Tests für den Mittelwert (häufig $t$-Test genannt) ($\nearrow$ Formelsammlung II, Seite 33):
+	\begin{align}
+		T &= \frac{\mu - \mu_0}{\sigma}\sqrt{n} \qquad z_{krit} = \pm z_{1-\alpha/2} \qquad\sigma\text{ bekannt} \notag \\
+		T &= \frac{\mu - \mu_0}{s}\sqrt{n} \qquad t_{krit} = \pm t_{n-1,1-\alpha/2} \qquad\sigma\text{ unbekannt} \notag
+	\end{align}
+	Bei einseitigen Tests wird $1-\alpha/2$ durch $1-\alpha$ ersetzt und einer der kritischen Werte verschwindet. Für $n\ge 100$ ist die $t$-Verteilung sehr ähnlich zur Normalverteilung, wir werden deswegen häufig die Quantile der Standardnormalverteilung nehmen.
+	
+	Fehler und $\alpha$-Niveau
+	\begin{itemize}
+		\item Fehler 1. Art: Entscheide mich für $H_1$, aber $H_0$ ist richtig $\to \alpha$ (Signifikanzniveau/Irrtumswahrscheinlichkeit ist die obere Schranke für den Fehler 1. Art)
+		\item Fehler 2. Art: Entscheide mich für $H_0$, aber $H_1$ ist richtig $\to\beta$
+	\end{itemize}
+	Die Gütefunktion $G$ gibt die Wahrscheinlichkeit an, dass man $H_0$ ablehnt. Für einen rechtsseitigen Test ($H_0: \mu \le 83$, $H_1: \mu > 83$):
+	\begin{align}
+		G(\mu) &= \mathbb{P}(T > z_{krit}) \notag
+	\end{align}
+	
+
+	\section*{Aufgabe 2}	
+	Berechnung von $p$-values:
+	\begin{itemize}
+		\item $T<0\Rightarrow p$-value $= \Phi(T)$
+		\item $T>0\Rightarrow p$-value $= 1-\Phi(T)$
+	\end{itemize}
+	
+\end{document}
