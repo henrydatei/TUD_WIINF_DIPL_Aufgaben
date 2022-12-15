@@ -1,0 +1,68 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{parskip}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 2, Übung 9, Tafelbild}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\textbf{Zweistichprobentest, unbekannte und ungleiche Varianzen} ($\nearrow$ Formelsammlung 2, Seite 34)
+	\begin{align}
+		H_0: \mu_X = \mu_Y \qquad&\text{vs}\qquad H_1: \mu_X\neq \mu_Y \notag \\
+		T &= \frac{\bar{X} - \bar{Y}}{\sqrt{\frac{S_X^2}{n_X} + \frac{S_Y^2}{n_Y}}} \notag
+	\end{align}
+	kritische Werte sind $\pm t_{df, 1-\alpha/2}$ mit
+	\begin{align}
+		df &= \frac{(1+R)^2}{\frac{R^2}{n_X-1} + \frac{1}{n_Y-1}} \notag \\
+		R &= \frac{n_Y\cdot S_X^2}{n_X\cdot S_Y^2} \notag
+	\end{align}
+	\textbf{Test auf Varianzgleichheit}
+	\begin{align}
+		H_0: \sigma_X = \sigma_Y \qquad&\text{vs}\qquad H_1: \sigma_X\neq \sigma_Y \notag \\
+		T &= \frac{S_X^2}{S_Y^2} \notag
+	\end{align}
+	kritische Werte sind $F_{n_X-1,n_Y-1,1-\alpha/2}$ und $F_{n_X-1,n_Y-1,\alpha/2}$, wobei
+	\begin{align}
+		F_{a,b,\alpha} = \frac{1}{F_{b,a,1-\alpha}} \notag
+	\end{align}
+	\textbf{Zweistichprobentest, unbekannte und gleiche Varianzen}
+	\begin{align}
+		H_0: \mu_X = \mu_Y \qquad&\text{vs}\qquad H_1: \mu_X\neq \mu_Y \notag \\
+		T &= \frac{\bar{X} - \bar{Y}}{\sqrt{\hat{\sigma}^2\left(\frac{1}{n_X} + \frac{1}{n_Y}\right)}} \notag \\
+		\hat{\sigma}^2 &= \frac{n_X-1}{n_X+n_Y-2}S_X^2 + \frac{n_Y-1}{n_X+n_Y-2}S_Y^2 \notag
+	\end{align}
+	kritische Werte sind $\pm t_{n_X+n_Y-2, 1-\alpha/2}$.
+	
+	\section*{Aufgabe 2}	
+	Es geht in dieser Aufgabe um den Unterschied zwischen verbundenen und unverbundenen Stichproben. Bei verbundenen Stichproben hängen sind die Ergebnisse der Testobjekte nicht mehr unkorreliert; man berechnet hier die Differenz der beiden Ergebnisse und testet, ob $d=0$ mittels $t$-Test.
+	
+\end{document}
