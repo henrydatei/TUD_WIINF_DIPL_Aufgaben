@@ -106,7 +106,27 @@
 
 	\section*{Task 2}
 	\begin{enumerate}[label=(\alph*)]
-		\item 
+		\item $u_i(\Gamma) = \sum_{j\neq i} u(d(i,j\mid \Gamma)) - k_ic$
+		\item Grand star: 1 hub and $n-1$ spokes. 
+		\begin{align}
+			u(\text{hub}) &= (n-1)(u(1) - c) \notag \\
+			u(\text{spoke}) &= (u(1) - c) + (n-2)u(2) \notag \\
+			\text{total utility} &= (n-1)[u(1) - c + (n-2)u(2)] + (n-1)[u(1) - c] \notag \\
+			&= (n-1)[(n-2)u(2) + 2(u(1) - c)] \notag
+		\end{align}
+		Empty network has a utility of 0, when is grand star better?
+		\begin{align}
+			(n-1)[(n-2)u(2) + 2(u(1) - c)] &> 0 \notag \\
+			\underbrace{2[u(1) - c]}_{\text{negative}} + (n-2)u(2) &> 0 \notag \\
+			(n-2)u(2) &> 2c - 2u(1) \notag \\
+			c&< \frac{(n-2)u(2) + 2u(1)}{2} \notag
+		\end{align}
+		\begin{enumerate}[label=(\roman*)]
+			\item efficient network is complete network
+			\item efficient network is grand star
+			\item efficient network is empty network
+		\end{enumerate}
+		\item If $c<u(1) - u(2)$ then a complete network will form. If $c\in (u(1) - u(2), u(1))$ then the hub in a grand star in receiving positive utility and the grand star is pairwise stable. If $c>u(1)$ then the hub will break all links resulting in an empty network.
 	\end{enumerate}
 
 \end{document}

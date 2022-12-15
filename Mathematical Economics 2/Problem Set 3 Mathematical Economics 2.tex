@@ -1,0 +1,94 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage{multirow}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Mathematical Economics 2, Problem Set 3}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Task 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item matrix:
+		\begin{align}
+			\begin{pmatrix}
+				2,2 & 0,2 & 0,0 \\
+				2,0 & 0,0 & 0,3 \\
+				0,0 & 3,0 & 4,4
+			\end{pmatrix} \notag
+		\end{align}
+		\item Population space is a triangle
+		\item pure $NE = \{e_1,e_3\}$, mixed NE:
+		\begin{itemize}
+			\item NE of form $(x,1-x,0)$: $u(e_1,x) = 2x = u(e_2,x)$, $u(e_3,x) = 3(1-x) \Rightarrow x\ge \frac{3}{5}$
+			\item NE of form $(x,0,1-x)$: $u(e_1,x) = 2x = u(e_2,x)$, $u(e_3,x) = 4(1-x) \Rightarrow x= \frac{2}{3}$
+			\item NE of form $(0,x,1-x)$: $e_3$ does better than $e_2$ $\Rightarrow$ no reason to play $e_2$
+			\item NE of form $(x_1,x_2,1-x_1-x_2)$: $u(e_1,x) = 2x_1 = u(e_2,x)$, $u(e_3,x) = 3x_2 + 4(1-x_1-x_2) \Rightarrow 6x_1+x_2 = 4$
+		\end{itemize}
+		\item $e_3$ is a strict NE $\Rightarrow$ $e_3$ is ESS and NSS \\
+		$\left(\frac{2}{3},0,\frac{1}{3}\right)$ is neither ESS nor NSS ($e_3$ can invade), same for all points $(x_1,x_2,1-x_1-x_2)$ on $6x_1+x_2=4$ \\
+		$e_1$ is NSS because you can't resist $e_2$ mutants but they can't invade, same for points $(x,1-x,0)$ on the line $x\ge \frac{3}{5}$ \\
+		$\left(\frac{3}{5},\frac{2}{5},0\right)$ is neither ESS nor NSS because $e_3$ can invade
+		\item $u(x,x) = (x_1+x_2)(2x_1) + (1-x_1-x_2)(3x_2 + 4(1-x_1-x_2))$ \\
+		$\dot{x}_1 = x_1[u(e_1,x) - u(x,x)] = x_1(1-x_1-x_2)(6x_1+x_2-4)$
+		\item Sets
+		\begin{itemize}
+			\item Stationary: all NE, points between $e_1$ and $e_2$
+			\item Lyapunov stable: NSS
+			\item Asymptotically stable: $e_3$
+			\item Limit states: $e_3$, points $(x,1-x,0)$ with $x\ge \frac{3}{5}$ but not $e_1$, points $(x_1,x_2,1-x_1-x_2)$ with $6x_1+x_2=4$
+		\end{itemize}
+	\end{enumerate}
+
+\end{document}
