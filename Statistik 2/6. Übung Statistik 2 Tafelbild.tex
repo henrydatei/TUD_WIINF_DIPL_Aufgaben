@@ -1,0 +1,78 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{parskip}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 2, Übung 6, Tafelbild}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Konfidenzintervall für $\mu$ bei unbekannter Varianz ($\to$ muss aus Stichprobe geschätzt werden)
+	\begin{align}
+		KI(\mu) &= \bar{x} \pm t_{n-1,1-\alpha/2}\frac{S}{\sqrt{n}} \notag
+	\end{align}
+	Die Musterlösung verwendet hier $z_{1-\alpha/2}$ statt $t_{n-1,1-\alpha/2}$, was nicht ganz korrekt ist, aber der Fehler ist sehr klein.
+	\begin{center}
+		\begin{tikzpicture}[
+			declare function={gamma(\z)=
+				2.506628274631*sqrt(1/\z)+ 0.20888568*(1/\z)^(1.5)+ 0.00870357*(1/\z)^(2.5)- (174.2106599*(1/\z)^(3.5))/25920- (715.6423511*(1/\z)^(4.5))/1244160)*exp((-ln(1/\z)-1)*\z;},
+			declare function={student(\x,\n)= gamma((\n+1)/2.)/(sqrt(\n*pi) *gamma(\n/2.)) *((1+(\x*\x)/\n)^(-(\n+1)/2.));}
+			]
+			\begin{axis}[
+				xmin=-3, xmax=3,
+				ymin=0, ymax=0.5,
+				samples=400,
+				axis x line=middle,
+				axis y line=middle,
+				domain=-3:3,
+				]
+				\addplot [blue, smooth] {student(x,116)};
+				\addplot [red, smooth] {1/sqrt(2*pi) * exp(-0.5*x^2)};
+				
+			\end{axis}
+		\end{tikzpicture} \\
+		\textcolor{red}{$t$-Verteilung mit 116 Freiheitsgraden}, \textcolor{blue}{Standardnormalverteilung}
+	\end{center}
+
+	\section*{Aufgabe 2}
+	Konfidenzintervall bei Binomialverteilung für $p$ (Varianz einer binomialverteilten Zufallsvariable ist $p(1-p)$):
+	\begin{align}
+		KI(p) &= \hat{p} \pm t_{n-1,1-\alpha/2}\frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}} \notag
+	\end{align}
+
+	\section*{Aufgabe 3}
+	Einseitige Konfidenzintervalle: ersetze $1-\alpha/2$ durch $1-\alpha$
+	\begin{align}
+		KI(p) &= \left[\hat{p} - t_{n-1,1-\alpha}\frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}},1\right] \qquad \text{linksseitig} \notag \\
+		KI(p) &= \left[0,\hat{p} + t_{n-1,1-\alpha}\frac{\sqrt{\hat{p}(1-\hat{p})}}{\sqrt{n}}\right] \qquad \text{rechtsseitig} \notag
+	\end{align}
+	
+\end{document}
