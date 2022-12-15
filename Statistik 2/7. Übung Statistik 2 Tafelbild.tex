@@ -1,0 +1,69 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{parskip}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 2, Übung 7, Tafelbild}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Zweiseitige Tests für den Mittelwert (häufig $t$-Test genannt) ($\nearrow$ Formelsammlung II, Seite 33):
+	\begin{align}
+		T &= \frac{\mu - \mu_0}{\sigma}\sqrt{n} \qquad z_{krit} = \pm z_{1-\alpha/2} \qquad\sigma\text{ bekannt} \notag \\
+		T &= \frac{\mu - \mu_0}{s}\sqrt{n} \qquad t_{krit} = \pm t_{n-1,1-\alpha/2} \qquad\sigma\text{ unbekannt} \notag
+	\end{align}
+	Bei einseitigen Tests wird $1-\alpha/2$ durch $1-\alpha$ ersetzt und einer der kritischen Werte verschwindet.
+	
+	Zweiseitiger Test für die Varianz
+	\begin{align}
+		T &= (n-1)\frac{s^2}{\sigma_0^2} \qquad\chi^2_{krit} = (\chi^2_{n-1,1-\alpha/2},\chi^2_{n-1,\alpha/2}) \notag
+	\end{align}
+
+	\section*{Aufgabe 2}
+	Zweiseitiger Test für $p$
+	\begin{align}
+		T &= \frac{p-p_0}{\sqrt{p(1-p)}}\sqrt{n} \qquad z_{krit} = \pm z_{1-\alpha/2} \notag
+	\end{align}
+	Die kritischen Werte aus der Standardnormalverteilung kann man nur nehmen, wenn $n$ ausreichend groß ist ($n\ge 100$), ansonsten müsste man die Quantile der Binomialverteilung nutzen!
+	
+	Berechnung von $p$-values:
+	\begin{itemize}
+		\item $T<0\Rightarrow p$-value $= \Phi(T)$
+		\item $T>0\Rightarrow p$-value $= 1-\Phi(T)$
+	\end{itemize}
+
+	\section*{Aufgabe 3}
+	nichts neues
+	
+	\section*{Aufgabe 4}
+	nichts neues
+	
+\end{document}
