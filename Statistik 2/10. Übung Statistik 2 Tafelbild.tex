@@ -1,0 +1,63 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{parskip}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 2, Übung 10, Tafelbild}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Test auf monotonen Zusammenhang
+	\begin{align}
+		H_0: R = 0 \qquad&\text{vs.}\qquad H_1: R \neq 0 \notag \\
+		T &= \frac{1}{2}\log\left(\frac{1+R}{1-R}\right)\sqrt{\frac{n-3}{1.06}} \notag
+	\end{align}
+	kritische Werte: $\pm z_{1-\alpha/2}$
+	
+	Mit $\log(\cdot)$ ist hier der Logarithmus zur Basis $e$ gemeint, also $\ln(\cdot)$!
+	
+	\section*{Aufgabe 2}
+	$\chi^2$-Test auf Unabhängigkeit
+	\begin{align}
+		H_0: \text{$X$ und $Y$ sind unabhängig} \qquad&\text{vs.}\qquad H_1:\text{$X$ und $Y$ sind abhängig} \notag \\
+		\chi^2 &= n\left(\sum_{i=1}^{k}\sum_{j=1}^{l} \frac{n_{ij}^2}{n_{i\cdot}n_{\cdot j}} - 1\right) \notag
+	\end{align}
+	kritischer Wert: $\chi^2_{(l-1)(k-1),1-\alpha}$
+	
+	\section*{Aufgabe 3}	
+	Test auf linearen Zusammenhang
+	\begin{align}
+		H_0: r = 0 \qquad&\text{vs.}\qquad H_1: r \neq 0 \notag \\
+		T &= \frac{r\sqrt{n-2}}{\sqrt{1-r^2}} \notag
+	\end{align}
+	kritische Werte: $\pm t_{n-2,1-\alpha/2}$
+	
+\end{document}
