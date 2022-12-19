@@ -1,0 +1,139 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Datensicherheit, Übung 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Ja kann es. Angenommen eine Vorgabe der IT ist es, alle 6 Monate sein Passwort zu ändern. Da niemand Lust hat sich alle 6 Monate ein neues Passwort zu merken, fangen die Leute an, ihr Passwort mit einem Post-It an den Monitor zu kleben. Damit ist es aber ein leichtes für andere Personen, z.B. Reinigungskräfte, an das Passwort zu kommen.
+
+	\section*{Aufgabe 2}
+	Angriffe entwickeln sich immer weiter, es werden neue Schwachstellen und andere Angriffsvektoren gefunden, gegen die man sich wappnen muss. Z.B. OpenSSL: Seit Jahren Open Source, aber trotzdem wurde HeartBleed erst vor wenigen Jahren entdeckt. Oder Log4Shell, ...
+	
+	\section*{Aufgabe 3}
+	Da es keine 100\%ige Sicherheit gibt, bleibt immer ein Risiko. Risiko: nach Häufigkeit (Eintrittserwartung) und Auswirkung (Schadensmaß) bewertete Gefährdung eines Systems. Betrachtet wird immer die negative, unerwünschte und ungeplante Abweichung von Systemzielen und deren Folgen.
+	
+	\section*{Aufgabe 4}
+	Maßnahmenklassifikation nach Zielrichtung und Zeitpunkt (pre-loss vs. post-loss):
+	\begin{itemize}
+		\item vermeiden
+		\item vermindern
+		\item überwälzen
+		\item selbst tragen
+	\end{itemize}
+
+	alternative Klassifikation nach Objektklassen
+	\begin{itemize}
+		\item Infrastrukturelle Maßnahmen
+		\item Organisatorische Maßnahmen
+		\item Personelle Maßnahmen
+		\item Technische Maßnahmen
+	\end{itemize}
+	
+	\section*{Aufgabe 5}
+	Probleme
+	\begin{itemize}
+		\item Ermitteln von Wahrscheinlichkeiten schwierig (z.B. Motivation von Angreifern, ...)
+		\item Abschätzen der Schadenshöhe schwierig (z.B. Folgekosten, ...)
+		\item Ungenauigkeiten werden durch die Multiplikation verschärft
+	\end{itemize}
+	
+	\section*{Aufgabe 6}
+	Definition der Klassen von $S_H$ und $p_{St}$. Akzeptanzlinie von Unternehmensführung festgelegt.
+	
+	\section*{Aufgabe 7}
+	Planung des Sicherheitsprozesses
+	\begin{itemize}
+		\item Ermittlung der Rahmenbedingungen, Formulierung der allgemeinen Sicherheitsziele
+		\item Erstellung einer IT-Sicherheitspolitik
+	\end{itemize}
+	Aufbau einer Sicherheitsorganisation
+	\begin{itemize}
+		\item Gesamtverantwortung: Leitungsebene; mindestens ein Verantwortlicher (Informationssicherheitsbeauftragter)
+		\item Verantwortlichkeit jedes Mitarbeiters
+	\end{itemize}
+	Umsetzung der Sicherheitsziele: IT-Sicherheitskonzept
+	\begin{itemize}
+		\item Erstellung eines IT-Sicherheitskonzepts: Analyse der Sicherheit, Auswahl und Begründung von Maßnahmen
+	\end{itemize}
+	Aufrechterhaltung der Sicherheit und Verbesserung
+	\begin{itemize}
+		\item Regelmäßige Überprüfungen (interne Audits zur Umsetzung der Sicherheitsmaßnahmen; Überprüfung der Rahmenbedingungen; Awareness-Maßnahmen)
+		\item Nutzung der Ergebnisse für Optimierung und Verbesserung
+	\end{itemize}
+	
+	\section*{Aufgabe 8}
+	Anforderungsanalyse
+	\begin{itemize}
+		\item "Bestandsaufnahme": Objekte, die für den festgelegten Geltungsbereich relevant sind
+		\item Schutzbedarfsfeststellung
+		\item Gesetze, Verträge und unternehmensinterne Regelungen
+	\end{itemize}
+	Risikoanalyse: Risikobildungsmodell
+	\begin{itemize}
+		\item Risiko-Identifikation
+		\item Risiko-Einschätzung
+		\item Risiko-Bewertung
+	\end{itemize}
+	$\Rightarrow$ Festlegen der Maßnahmen
+
+	\section*{Aufgabe 9}
+	Brute-Force-Angriff, Stehlen der Datenbank mit Nutzer-Passwort-Kombos, SQL-Injection (bei webbasierten Formularen)
+	
+	\section*{Aufgabe 10}
+	Ist der Fingerabdruck einmal kopiert bzw. in falsche Hände gelangt, lässt er sich nicht mehr ändern. Biometrische Merkmale sind höchst persönliche Merkmale, die auf gar keinen Fall in fremde Hände gelangen dürfen $\Rightarrow$ extrem hohe Sicherheitsanforderungen nötig!
+
+\end{document}
