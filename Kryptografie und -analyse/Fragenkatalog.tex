@@ -123,6 +123,15 @@
 
 	Ein Beispielverfahren ist das One-Time-Pad (Vernam-Chiffre): Klartext und Schlüssel sind gleich lang und es gilt $c_i = m_i \oplus k_i$, wobei jeder Schlüssel nur einmal verwendet wird und echt zufällig sein muss (nicht pseudo-zufällig, wie z.B. wenn Computer "Zufallszahlen" erzeugen). Die Zufälligkeit ist ein Problem, genau so wie der Schlüsselaustausch, weswegen das Verfahren praktisch nicht angewendet wird.
 	
+	\section*{Welche weiteren Sicherheitsbegriffe gibt es?}
+	
+	Beweisbar sicher: Wenn ein Angreifer die Verschlüsselung knacken kann, so kann er auch das dahinterstehende mathematische Problem lösen.
+	
+	Semantische Sicherheit: Ein System heißt semantisch sicher, wenn alles, was bei Kenntnis des zugehörigen Schlüsseltextes effizient über den Klartext berechnet werden kann, auch effizient ohne Kenntnis des Schlüsseltextes berechnet werden kann.
+	
+	Ununterscheidbarkeit ("polynomielle Sicherheit"): Angreifer ist nicht in der Lage, zwei beliebige Nachrichten zu finden, so dass er die Verschlüsselung einer dieser Nachrichten korrekt der Nachricht zuordnen kann. \\
+	$\Rightarrow$ äquivalent zur semantischen Sicherheit
+	
 	\section*{Schutzziele der Kryptographie}
 	
 	Die Schutzziele sind:
@@ -199,9 +208,9 @@
 	
 	Nutzung verschiedener $n$'s für verschiedene Nutzer (sonst Common Modulus Attack)
 	
-	Verhinderung passiver Angriffe durch Nutzung einer Zufallszahl
+	Verhinderung passiver Angriffe durch Nutzung einer Zufallszahl $\Rightarrow$ sonst Durchprobieren aller Klartexte, bis man Schlüsseltext findet
 	
-	Verhinderung aktiver Angriffe durch hinzufügen von Redundanz
+	Verhinderung aktiver Angriffe durch hinzufügen von Redundanz $\Rightarrow$ RSA ist ein Homomorphismus bezüglich der Multiplikation: $m_1$, $s_1$ und $m_2$, $s_2$ $\to$ $m_1m_2$, $s_1s_2$ ist gültig
 	
 	\section*{Wie funktioniert das ElGamal-Kryptosystem? Wie lautet das DH-Problem? Warum ist es sicher?}
 	
