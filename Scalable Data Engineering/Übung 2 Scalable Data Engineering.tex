@@ -1,0 +1,116 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=SQL,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Scalable Data Engineering, Exercise 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Task 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item False, for some reporting functions we need \texttt{OVER}
+		\item True
+		\item False, this does \texttt{CUBE}
+		\item True
+		\item True
+		\item False, SQL integer division returns an integer
+		\item False, \texttt{ORDER BY} in an \texttt{OVER} clause has no effect on the sorting of the result. And an \texttt{ORDER BY} outside an \texttt{OVER} only sorts the result.
+		\item False, MDX operates on data cubes. This can sometimes work on relational databases but it's not always the case.
+	\end{enumerate}
+
+	\section*{Task 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item SQL:
+		\begin{lstlisting}[tabsize=2]
+SELECT avg(ORDERS.O_TOTALPRICE) FROM ORDERS
+		\end{lstlisting}
+		\begin{center}
+			\begin{tabular}{l|l}
+				& \textbf{avg(ORDERS.O\_TOTALPRICE)} \\
+				\hline
+				\textbf{1} & 151219.537631631
+			\end{tabular}
+		\end{center}
+		\item SQL (I'm using Sqlite for this task, it doesn't support \texttt{ROLLUP}):
+		\begin{lstlisting}[tabsize=2]
+SELECT REGION.R_NAME,  
+FROM REGION, ORDERS, CUSTOMER, NATION
+WHERE 
+	ORDERS.O_CUSTKEY = CUSTOMER.C_CUSTKEY AND 
+	CUSTOMER.C_NATIONKEY = NATION.N_NATIONKEY AND 
+	NATION.N_REGIONKEY = REGION.R_REGIONKEY 
+GROUP BY REGION.R_NAME
+UNION
+SELECT NULL, sum(ORDERS.O_TOTALPRICE) FROM ORDERS
+		\end{lstlisting}
+		\begin{center}
+			\begin{tabular}{l|l|l}
+				& \textbf{R\_NAME} &\textbf{sum(ORDERS.O\_TOTALPRICE)} \\
+				\hline
+				\textbf{1} & NULL & 226829306447.447 \\
+				\hline
+				\textbf{2} & AFRICA & 45230223902.2213 \\
+				\hline
+				\textbf{3} & AMERICA & 45306943255.2101 \\
+				\hline
+				\textbf{4} & ASIA & 45613415042.5609 \\
+				\hline
+				\textbf{5} & EUROPE & 45793265459.7115 \\
+				\hline
+				\textbf{6} & MIDDLE EAST & 44885458787.7611 \\
+			\end{tabular}
+		\end{center}
+	\end{enumerate}
+
+\end{document}
