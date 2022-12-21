@@ -105,9 +105,18 @@
 	
 	Der Inhaltsanbieter muss aktiv seinen Inhalt zum CDN schieben, im Gegensatz dazu speichern Proxy Server nur die Daten, die der Nutzer einmal angefordert hat.
 	
+	Weiterhin ist ein Request Routing notwendig, um den besten CDN-Server zu finden. Das kann zum einen über Load Balancing oder DNS gehen.
+	
 	\section*{Was passiert beim Caching?}
 	
 	Zwischenspeichern von Informationen, die einmal berechnet wurden, sodass diese dem nächsten Nutzer mit der gleichen Anfrage direkt ausgeliefert werden können.
+	
+	Konsistenz Level:
+	\begin{itemize}
+		\item Strong consistency: Cache = Original dauerhaft
+		\item Delta consistency: Cache = Original nachdem die Änderungen durch alle Caches durchgelaufen sind
+		\item Weak consistency: Cache und Original müssen nicht gleich sein
+	\end{itemize}
 	
 	\section*{3 Interaktionsmodelle: Erklären + Technologie, Wo ist der Unterschied zwischen den beiden asynchronen Modellen?}
 	
