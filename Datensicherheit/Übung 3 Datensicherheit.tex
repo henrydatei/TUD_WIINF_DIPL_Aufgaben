@@ -1,0 +1,108 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Datensicherheit, Übung 3}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Aufgabentrennung: Jeder Nutzer ist nur für eine bestimmte Aufgabe zuständig und hat auch nur für genau diese Funktion die nötigen Rechte. Damit ist es für Angreifer schwieriger, wenn diese einen Account übernommen haben, weitreichenden Schaden anzurichten.
+	
+	Vier-Augen-Prinzip: Bei sicherheitskritischen Vorgängen müssen immer 2 Personen ihr OK geben. Damit ist es für eine einzelne Person schwierig Schaden anzurichten. Jeder Vorgang muss erst akzeptiert werden, bevor er angewendet wird.
+
+	\section*{Aufgabe 2}
+	\begin{center}
+		\begin{tabular}{l|l|l|l}
+			& Einreichung Beiträge & Zuweisung & Entscheidung \\
+			\hline
+			Autor & $\checkmark$ & & \\
+			\hline
+			Reviewer & & & $\checkmark$ \\
+			\hline
+			Programmkomitee & & $\checkmark$ ´&
+		\end{tabular}
+	\end{center}
+	
+	\section*{Aufgabe 3}
+	Vertraulichkeit und teilweise Integrität (Änderungen der Informationen sind auf bestimmten Nutzer zurückzuführen)
+	
+	\section*{Aufgabe 4}
+	Verfügbarkeit kann damit nicht sichergestellt werden und Integrität ist nur möglich, wenn das Zugriffssystem Änderungen protokolliert
+	
+	\section*{Aufgabe 5}
+	\begin{enumerate}[label=(\alph*)]
+		\item $A\oplus B\oplus C\oplus D = $ Paritätsinformationen. Damit $D = 000100101$
+		\item Geschrieben wird auf Platte 1 der neue Block $E'$ und dann muss die Prüfsumme neu berechnet werden. Dazu sind Lesezugriffe auf Platte 1-4 und ein Schreibzugriff auf Platte 5 notwendig.
+		\item Wir brauchen schon wenn wir Block $E$ ändern alle Platten. Für Block $J$ das gleiche.
+	\end{enumerate}
+	
+	\section*{Aufgabe 6}
+	\begin{enumerate}[label=(\alph*)]
+		\item Bei RAID 10 (und 4 Platten) werden die Daten auf Platte 1 und 3 abgelegt, diese werden dann 1:1 auf Platte 2 und 4 gespiegelt. Damit ist der verfügbare Speicher:
+		\begin{align}
+			S = \frac{n}{2}\cdot\text{Größe der kleinsten Platte} \notag
+		\end{align}
+		Bei 4 mal 500 GB haben wir also 1000 GB Speicherplatz zur Verfügung.
+		\item Bei RAID 5 wird eine Platte für Paritätsinformationen benötigt. Damit ist der verfügbare Speicher:
+		\begin{align}
+			S = (n-1)\cdot\text{Größe der kleinsten Platte} \notag
+		\end{align}
+		Bei 4 mal 500 GB haben wir also 1500 GB Speicherplatz zur Verfügung.
+	\end{enumerate}
+	
+	\section*{Aufgabe 7}
+	Bei RAID 15 haben wir das RAID 5-Setup 2 mal. Mit 8 Festplatten dürfen 3 beliebige Platten ausfallen (bzw. 5 wenn ein ganzes RAID-5-Setup ausfällt). Mindestens werden 6 Platten benötigt und die Kapazität ist identisch zu RAID 5.
+
+\end{document}
