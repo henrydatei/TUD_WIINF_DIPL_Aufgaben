@@ -73,44 +73,65 @@
 	\begin{enumerate}[label=(\alph*)]
 		\item SQL:
 		\begin{lstlisting}[tabsize=2]
-SELECT avg(ORDERS.O_TOTALPRICE) FROM ORDERS
+SELECT ORDERS.O_ORDERKEY, AVG(ORDERS.O_TOTALPRICE)
+FROM ORDERS
+GROUP BY ORDERS.O_ORDERKEY
 		\end{lstlisting}
-		\begin{center}
-			\begin{tabular}{l|l}
-				& \textbf{avg(ORDERS.O\_TOTALPRICE)} \\
-				\hline
-				\textbf{1} & 151219.537631631
-			\end{tabular}
-		\end{center}
-		\item SQL (I'm using Sqlite for this task, it doesn't support \texttt{ROLLUP}):
+		\item SQL:
 		\begin{lstlisting}[tabsize=2]
-SELECT REGION.R_NAME,  
+SELECT REGION.R_NAME, NATION.N_NAME,  SUM(ORDERS.O_TOTALPRICE)
 FROM REGION, ORDERS, CUSTOMER, NATION
 WHERE 
 	ORDERS.O_CUSTKEY = CUSTOMER.C_CUSTKEY AND 
 	CUSTOMER.C_NATIONKEY = NATION.N_NATIONKEY AND 
 	NATION.N_REGIONKEY = REGION.R_REGIONKEY 
-GROUP BY REGION.R_NAME
-UNION
-SELECT NULL, sum(ORDERS.O_TOTALPRICE) FROM ORDERS
+GROUP BY ROLLUP(REGION.R_NAME, NATION.N_NAME)
 		\end{lstlisting}
-		\begin{center}
-			\begin{tabular}{l|l|l}
-				& \textbf{R\_NAME} &\textbf{sum(ORDERS.O\_TOTALPRICE)} \\
-				\hline
-				\textbf{1} & NULL & 226829306447.447 \\
-				\hline
-				\textbf{2} & AFRICA & 45230223902.2213 \\
-				\hline
-				\textbf{3} & AMERICA & 45306943255.2101 \\
-				\hline
-				\textbf{4} & ASIA & 45613415042.5609 \\
-				\hline
-				\textbf{5} & EUROPE & 45793265459.7115 \\
-				\hline
-				\textbf{6} & MIDDLE EAST & 44885458787.7611 \\
-			\end{tabular}
-		\end{center}
+		\item SQL:
+		\begin{lstlisting}[tabsize=2]
+SELECT
+	year, quarter, sales, sales/SUM(sales)
+FROM (
+	SELECT 
+		EXTRACT(year FROM ORDERS.O_ORDERDATE) AS year, 
+		EXTRACT(quarter FROM ORDERS.O_ORDERDATE) AS quarter,
+		COUNT(*) AS sales
+	FROM ORDERS
+	GROUP BY year, quarter
+) AS x
+		\end{lstlisting}
+		\item SQL:
+		\begin{lstlisting}[tabsize=2]
+SELECT
+	PART.P_NAME, 
+	qty, 
+	RANK() OVER(ORDER BY qty DESC)
+FROM (
+	SELECT 
+		PART.P_NAME,
+		SUM(LINEITEM) AS qty
+	FROM PART, LINEITEM
+	WHERE PART.P_NAME = LINEITEM.L_PARTKEY
+	GROUP BY PART.P_NAME
+) AS x
+		\end{lstlisting}
+		\item SQL:
+		\begin{lstlisting}[tabsize=2]
+SELECT
+	PART.P_NAME,
+	NATION.N_NAME,
+	SUM(LINEITEM.L_QUANTITY),
+	RANK() OVER(
+		PARTITION BY PART.P_NAME 
+		ORDER BY SUM(LINEITEM.L_QUANTITY) DESC
+		)
+FROM PART, NATION, LINEITEM, SUPPLIER
+WHERE
+	PART.P_PARTKEY = LINEITEM.L_PARTKEY AND
+	LINEITEM.L_SUPPKEY = SUPPLIER.S_SUPPKEY AND
+	SUPPLIER.S_NATIONKEY = NATION.N_NATIONKEY
+GROUP BY PART.P_NAME, NATION.N_NAME
+		\end{lstlisting}
 	\end{enumerate}
 
 \end{document}
