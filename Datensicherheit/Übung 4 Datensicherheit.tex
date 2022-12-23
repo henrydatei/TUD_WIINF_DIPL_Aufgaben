@@ -1,0 +1,93 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Datensicherheit, Übung 4}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Wenn ich mich nicht verguckt habe, dann hat Kode 1 ein $d_{min}=2$ und Kode 2 ein $d_{min}=3$. Damit sind beide Kodes in der Lage 1 bzw. 2 Fehler zu erkennen, aber nur Kode 2 kann einen Fehler korrigieren.
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Es gilt $k=3$, damit $n = 2^3-1 = 7$, $l=n-k = 4$ und $d_{min} = 3$ (?)
+		\item Maximal 2 Bitfehler oder maximal 3 Bündelfehler
+		\item Multiplikationsverfahren: $(x^3+x+1)\cdot (x^2+x+1) = x^5 + x^4 + 1\mod 2\Rightarrow 110001$ \\
+		Divisionsverfahren: ?
+		\item Es gilt:
+		\begin{align}
+			\frac{x^6+x^4+x^2+x+1}{x^3+x+1} = x^3-1 + \frac{x^2+2x+1}{x^3+x+1} \notag
+		\end{align}
+		also wurde die Bitfolge nicht richtig übertragen.
+		\begin{align}
+			\frac{x^6+x^3+x^2+x}{x^3+x+1} = x^3-x + \frac{2x^2+2x}{x^3+x+1} \notag
+		\end{align}
+		allerdings ist in $GF(2)$ der Rest äquivalent zu 0, damit wurde die Bitfolge richtig übertragen.
+		\item $b_1$ (?) \\
+		Falls $b_2$ mit dem Multiplikationsverfahren kodiert wurde, so ist die dekodierte Folge 1010. Divisionsverfahren?
+		\item ?
+	\end{enumerate}
+	
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item $k_1=4$ und $k=5$, damit $n = 2^4-1 = 15$, $l = 10$ und $d_{min} = 4$ (?)
+		\item Maximal 3 Bitfehler oder maximal 4 Bündelfehler oder ungeradzahlige Fehlermuster
+		\item $b_2$ hat 7 Einsen und $b_4$ hat 9 Einsen
+	\end{enumerate}
+	
+	\section*{Aufgabe 4}
+	Nein, Kodierung schützt nicht vor Angreifern. Angreifer können die Leitung abhören und die Nachricht dekodieren ($\nearrow$ Vertraulichkeit), sie können sogar die Nachricht abfangen, verändern, neu kodieren und über die Leitung schicken! ($\nearrow$ Integrität)
+
+\end{document}
