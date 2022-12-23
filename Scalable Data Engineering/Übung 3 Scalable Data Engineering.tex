@@ -1,0 +1,177 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=SQL,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space},
+	morekeywords={with, data, refresh, materialized, explain, rank, over, partition}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Scalable Data Engineering, Exercise 3}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Task 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item True
+		\item False, maintenance is different
+		\item False, it is an NP-hard problem
+		\item False, it depends on the use case
+		\item True
+	\end{enumerate}
+
+	\section*{Task 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item SQL:
+		\begin{lstlisting}
+EXPLAIN(SELECT * FROM ORDERS)
+		\end{lstlisting}
+		\item SQL:
+		\begin{lstlisting}
+SELECT * FROM ORDERS WHERE O_CLERK = "Clerk#000000322"
+		\end{lstlisting}
+		took 600ms.
+		\item SQL:
+		\begin{lstlisting}
+CREATE INDEX ocleak_idx ON ODERS(O_CLERK)
+		\end{lstlisting}
+		\item Query from (b) then takes around 300ms
+	\end{enumerate}
+
+	\section*{Task 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item SQL:
+		\begin{lstlisting}[tabsize=2]
+CREATE MATERIALIZED VIEW custperreg AS
+	SELECT REGION.R_NAME, COUNT(*)
+	FROM CUSTOMER, NATION, REGION
+	WHERE 
+		CUSTOMER.C_NATIONKEY = NATION.N_NATIONKEY AND 
+		NATION.N_REGIONKEY = REGION.R_REGIONKEY
+	GROUP BY REGION.R_NAME
+WITH DATA
+		\end{lstlisting}
+		\item SQL:
+		\begin{lstlisting}
+INSERT INTO REGION(R_REGIONKEY, R_NAME, R_COMMENT) VALUES (5, "AUSTRALIA", "down under")
+
+REFRESH MATERIALIZED VIEW custperreg
+		\end{lstlisting}
+		\item In the materialized view Australia is missing. That's why there are no customers for this region and since we are doing inner joins for the materialized view there are no joining partners for Australia. To fix this:
+		\begin{lstlisting}[tabsize=2]
+DROP MATERIALIZED VIEW custperreg
+
+CREATE MATERIALIZED VIEW custperreg AS
+	SELECT REGION.R_NAME, COUNT(CUSTOMER.C_CUSTKEY)
+	FROM 
+		CUSTOMER RIGHT OUTER JOIN (
+			NATION RIGHT OUTER JOIN REGION 
+			ON(NATION.N_REGIONKEY = REGION.R_REGIONKEY)
+		) 
+		ON(CUSTOMER.C_NATIONKEY = NATION.N_NATIONKEY)
+	GROUP BY REGION.R_NAME
+WITH DATA
+		\end{lstlisting}
+	\end{enumerate}
+
+	\section*{Task 4}
+	\begin{enumerate}[label=(\alph*)]
+		\item We create a materialized view from the subquery:
+		\begin{lstlisting}[tabsize=2]
+CREATE MATERIALIZED VIEW linepart AS
+	SELECT 
+		PART.P_NAME,
+		SUM(LINEITEM.L_QUANTITY) AS qty
+	FROM PART, LINEITEM
+	WHERE PART.P_NAME = LINEITEM.L_PARTKEY
+	GROUP BY PART.P_NAME
+WITH DATA
+
+SELECT PART.P_NAME,  qty,  RANK() OVER(ORDER BY qty DESC)
+FROM linepart
+		\end{lstlisting}
+		Creating the materialized view takes some time but then the actual query is done in about a second (from 10 seconds before).
+		\item SQL:
+		\begin{lstlisting}[tabsize=2]
+CREATE MATERIALIZED VIEW linepart2 AS
+	SELECT 
+		PART.P_NAME,
+		SUM(LINEITEM.L_QUANTITY) AS qty,
+		LINEITEM.L_SUPPKEY
+	FROM PART, LINEITEM
+	WHERE PART.P_NAME = LINEITEM.L_PARTKEY
+	GROUP BY PART.P_NAME, LINEITEM.L_SUPPKEY
+WITH DATA
+		\end{lstlisting}
+		The query from (a) becomes then
+		\begin{lstlisting}[tabsize=2]
+SELECT PART.P_NAME,  SUM(qty),  RANK() OVER(ORDER BY SUM(qty) DESC)
+FROM linepart2
+		\end{lstlisting}
+		with roughly 4 seconds run time. The other query becomes
+		\begin{lstlisting}[tabsize=2]
+SELECT
+	PART.P_NAME,
+	NATION.N_NAME,
+	SUM(qty),
+	RANK() OVER(
+		PARTITION BY PART.P_NAME 
+		ORDER BY SUM(qty) DESC
+	)
+FROM linepart2, NATION, SUPPLIER
+WHERE
+	LINEITEM.L_SUPPKEY = SUPPLIER.S_SUPPKEY AND
+	SUPPLIER.S_NATIONKEY = NATION.N_NATIONKEY
+GROUP BY PART.P_NAME, NATION.N_NAME
+		\end{lstlisting}
+		with now 21 seconds runtime (was 60 seconds before).
+	\end{enumerate}
+
+\end{document}
