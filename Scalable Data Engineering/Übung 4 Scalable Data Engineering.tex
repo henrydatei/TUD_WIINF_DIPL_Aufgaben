@@ -1,0 +1,120 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=SQL,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space},
+	morekeywords={with, data, refresh, materialized, explain, rank, over, partition, uuid}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Scalable Data Engineering, Exercise 4}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Task 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item True
+		\item False, they can't be proven algorithmically.
+		\item True
+	\end{enumerate}
+
+	\section*{Task 2}
+	The bigrams are
+	\begin{itemize}
+		\item firstname: f, fi, ir, rs, st, tn, na, am, me, e
+		\item lastname: l, la, as, st, tn, na, am, me, e
+		\item street: s, st, tr, re, ee, et, t
+		\item name: n, na, am, me, e
+		\item address: a, ad, dd, dr, re, es, ss, s
+		\item forename: f, fo, or, re, en, na, am, me, e
+	\end{itemize}
+	Then the similarities are
+	\begin{center}
+		\begin{tabular}{l|l|l|l}
+			& \textbf{firstname} & \textbf{lastname} & \textbf{street} \\
+			\hline
+			\textbf{name} & $\frac{2\cdot 4}{10+5}=0.533$ & $\frac{2\cdot 2\cdot 4}{9+5}=0.571$ & $\frac{2\cdot 0}{7+5}=0$ \\
+			\hline
+			\textbf{address} & $\frac{2\cdot 0}{10+8}=0$ & $\frac{2\cdot 0}{9+8}=0$ & $\frac{2\cdot 1}{7+8}=0.133$ \\
+			\hline
+			\textbf{forename} & $\frac{2\cdot 5}{10+9}=0.526$ & $\frac{2\cdot 4}{9+9}=0.444$ & $\frac{2\cdot 1}{7+9}=0.125$
+		\end{tabular}
+	\end{center}
+	Stable Marriage Algorithm:
+	\begin{itemize}
+		\item firstname proposes to name, agrees: (firstname, name)
+		\item lastname proposes to name, agrees + leaves: (lastname, name)
+		\item firstname proposes to forename, agrees: (lastname, name), (firstname, forename)
+		\item street proposes to adress, agrees: (lastname, name), (firstname, forename), (street, adress)
+	\end{itemize}
+
+	\section*{Task 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item 
+		\item Nation $\Leftrightarrow$ Country, (Region $\Leftrightarrow$ Continent)
+		\item SQL:
+		\begin{lstlisting}[tabsize=2]
+ALTER TABLE mondial.country ADD COLUMN cid UUID
+
+UPDATE mondial.country SET cid = gen_random_uuid()
+		\end{lstlisting}
+		\item SQL:
+		\begin{lstlisting}[tabsize=2]
+ALTER TABLE supplier ADD COLUMN s_countrykey UUID
+
+UPDATE supplier SET s_countrykey = c.uuid
+FROM nation AS n, mondial.country AS c
+WHERE 
+	lower(n.name) = lower(c.name) AND
+	supplier.s_nationkey = nation.n_nationkey
+		\end{lstlisting}
+	\end{enumerate}
+
+\end{document}
