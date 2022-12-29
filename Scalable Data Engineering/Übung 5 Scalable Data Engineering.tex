@@ -1,0 +1,185 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R}
+\lstset{language=SQL,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space},
+	morekeywords={with, data, refresh, materialized, explain, rank, over, partition, uuid}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Scalable Data Engineering, Exercise 5}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Task 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item True, technically there is also a base part, but often this is included into the trend.
+		\item False, the season mask is fixed in length.
+		\item False, this does piece wise aggregate approximation. SAX represents segments with an alphabet.
+		\item False, with very large time series this takes forever.
+		\item False, for some forecasting methods you need the season length too.
+		\item False, e.g. no one can predict the value of a share in the future.
+		\item True.
+	\end{enumerate}
+
+	\section*{Task 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Visualization
+		\begin{center}
+			\begin{tikzpicture}
+				\begin{axis}[
+					xmin=1, xmax=15, xlabel=$x$,
+					ymin=-5, ymax=20, ylabel=$y$,
+					samples=400,
+					axis x line=middle,
+					axis y line=middle,
+					domain=1:15,
+					]
+					\addplot[mark=x,blue] coordinates {
+						(1,-1)
+						(2,2)
+						(3,7)
+						(4,4)
+						(5,3)
+						(6,7)
+						(7,12)
+						(8,9)
+						(9,8)
+						(10,9)
+						(11,12)
+						(13,17)
+						(14,14)
+						(15,13)
+					};
+					
+				\end{axis}
+			\end{tikzpicture}
+		\end{center}
+		The local maxima are at 3, 8 and 13. This suggests a season length of 5. Running the following R code
+		\begin{lstlisting}[style=R]
+series = c(-1, 2, 7, 4, 3, 4, 7, 12, 9, 8, 9, 12, 17, 14, 13)
+trend = filter(series, rep_len(1,5)/5)
+detrend = series - trend
+mat = matrix(detrend, ncol = 5, byrow = TRUE)
+figure = apply(mat, 2, mean, na.rm = TRUE)
+season = figure - mean(figure)
+		\end{lstlisting}
+		We get as \texttt{detrend}: \texttt{NA, NA, 4, -8.881784e-16, -2, -2, 0, 4, 0, -2, -2, -1.776357e-15, 4, NA, NA}. And as season mask: \texttt{-2, 0, 4, 4.440892e-16, -2}.
+		\item I don't see any problem. Obviously one season has a length of 4, so running
+		\begin{lstlisting}[style=R]
+series = c(-1, 2, 5, 4, 3, 6, 9, 8, 7, 10, 13, 12, 11, 14, 17, 16)
+decompose(ts(series, frequency = 4))
+		\end{lstlisting}
+		doesn't give any errors. All residuals are just 0.
+	\end{enumerate}
+	
+
+	\section*{Task 3}
+	Let's plot the data first
+	\begin{center}
+		\begin{tikzpicture}
+			\begin{axis}[
+				xmin=1, xmax=10, xlabel=$x$,
+				ymin=-5, ymax=20, ylabel=$y$,
+				samples=400,
+				axis x line=middle,
+				axis y line=middle,
+				domain=1:10,
+				]
+				\addplot[mark=x,blue] coordinates {
+					(1,4)
+					(2,7)
+					(3,12)
+					(4,9)
+					(5,8)
+					(6,9)
+					(7,12)
+					(8,17)
+					(9,14)
+					(10,13)
+				};
+				
+			\end{axis}
+		\end{tikzpicture}
+	\end{center}
+	We see $s=5$. Then the predicted values are
+	\begin{center}
+		\begin{tabular}{r|rrr|rrr}
+			\textbf{$x_t$} & \textbf{AR(1)} & \textbf{AR(2)} & \textbf{EGRV} & \textbf{$\varepsilon_{AR(1)}^2$} & \textbf{$\varepsilon_{AR(2)}^2$} & \textbf{$\varepsilon_{EGRV}^2$} \\
+			\hline
+			4 & 4 & 4 & 4 & 0 & 0 & 0 \\
+			\hline
+			7 & 2 & 7 & 7 & 25 & 0 & 0 \\
+			\hline
+			12 & 1 & 3 & 12 & 121 & 81 & 0 \\
+			\hline
+			9 & 0,5 & -0,3 & 9 & 72,25 & 86,49 & 0 \\
+			\hline
+			8 & 0,25 & -1,08 & 8 & 60,0625 & 82,4464 & 0 \\
+			\hline
+			9 & 0,125 & -0,558 & 9 & 78,765625 & 91,355364 & 0 \\
+			\hline
+			12 & 0,0625 & -0,0108 & 12 & 142,50390625 & 144,25931664 & 0 \\
+			\hline
+			17 & 0,03125 & 0,16092 & 17 & 287,9384765625 & 283,5546152464 & 0 \\
+			\hline
+			14 & 0,015625 & 0,099792 & 14 & 195,562744140625 & 193,215782443264 & 0 \\
+			\hline
+			13 & 0,0078125 & 0,0115992 & 13 & 168,796936035156 & 168,698555341441 & 0 
+		\end{tabular}
+	\end{center}
+	The AIC is
+	\begin{itemize}
+		\item for AR(1): 2305,760376
+		\item for AR(2): 2264,040067
+		\item for EGRV: 2
+	\end{itemize}
+	$\Rightarrow$ EGRV is for this time series the best forecast.
+\end{document}
