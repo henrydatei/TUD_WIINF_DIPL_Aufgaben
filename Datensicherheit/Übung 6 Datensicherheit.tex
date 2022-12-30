@@ -1,0 +1,125 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Datensicherheit, Übung 6}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	$c = m \oplus k = 111000100110$
+
+	\section*{Aufgabe 2}
+	Ja, der Angreifer ändert einfach das letzte Bit von $c$.
+	
+	\section*{Aufgabe 3}
+	Weil sie das einzige informationstheoretisch perfekte Verfahren ist. Ein Schlüsseltext kann zu jedem Klartext entschlüsselt werden, wenn der Schlüssel unbekannt ist.
+	
+	\section*{Aufgabe 4}
+	Da jeder Schlüssel nur einmal verwendet wird, kann mit der Herausgabe eines Schlüssels nur eine Nachricht entschlüsselt werden.
+	
+	\section*{Aufgabe 5}
+	Nein, gibt es nicht. Asymmetrische Signaturen können von Computern geknackt werden (dauert lange), allerdings haben symmetrische Signatursysteme das Problem, dass diese nur sicher sind, wenn diese nur einmal verwendet werden. Man müsste also jede Nachricht mit einem anderen Schlüssel unterschreiben. Das ist nicht praktikabel.
+	
+	\section*{Aufgabe 6}
+	\begin{align}
+		\begin{pmatrix}
+			H & O & M & O & P & H & O \\
+			N & E & V & E & R & S & C \\
+			H & L & U & E & S & S & E \\
+			L & U & N & G & E & R & S \\
+			C & H & W & E & R & T & S \\
+			T & A & T & I & S & T & I \\
+			S & C & H & E & A & N & A \\
+			L & Y & S & E & N & X & Y
+		\end{pmatrix} \notag
+	\end{align}
+	\textit{Homophone Verschlüsselung erschwert statistische Analysen}.
+	
+	\section*{Aufgabe 7}
+	Mit diversen online Tools findet man recht schnell die Verschiebung von 9. Dann ist der Klartext \textit{Affine Chiffren sind ein weiteres Beispiel für einfache Substitutionen}.
+
+	\section*{Aufgabe 8}
+	\begin{center}
+		\begin{tabular}{c|cccccccccccc}
+			$m_1$ & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 1 & 0 & 1 & 1 & 1 \\
+			$k_1$ & 1 & 0 & 0 & 1 & 1 & 1 & 0 & 0 & 1 & 1 & 0 & 0 \\
+			\hline
+			$c$ & 1 & 0 & 1 & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 1 & 1 \\
+			\hline
+			$k_2$ & 0 & 0 & 1 & 1 & 0 & 1 & 0 & 0 & 1 & 1 & 0 & 1\\
+			$m_2$ & 1 & 0 & 0 & 1 & 1 & 1 & 0 & 1 & 0 & 1 & 1 & 0
+		\end{tabular}
+	\end{center}
+	
+	\section*{Aufgabe 9}
+	Histogramm der Buchstabenverteilung von der Zielsprache und des Schlüsseltextes. Dann gibt es 3 Möglichkeiten:
+	\begin{itemize}
+		\item Häufigkeiten der Buchstaben stimmen komplett überein $\to$ Transposition
+		\item Häufigkeiten sind die selben, aber für verschiedene Buchstaben $\to$ MM-Substitution
+		\item sonst $\to$ PM-Substitution
+	\end{itemize}
+	
+	\section*{Aufgabe 10}
+	Z.B. diese Seite hier \url{https://www.dcode.fr/monoalphabetic-substitution} löst das fast vollautomatisch.
+	\begin{center}
+		\begin{tabular}{cccccccccccccccccccccccccc}
+			A & B & C & D & E & F & G & H & I & J & K & L & M & N & O & P & Q & R & S & T & U & V & W & X & Y & Z \\
+			\hline
+			X & S & H & V & P & T & B & O & Y & F & D & W & Z & J & U & Q & A & L & K & C & G & N & I & E & M & R
+		\end{tabular}
+	\end{center}
+	ergibt: \textit{Auch längere Texte können durchaus von den charakteristischen Eigenschaften der verwendeten Sprache abweichen, allerdings ist es im Allgemeinen nicht möglich, jede charakteristische Eigenschaft einer Sprache zu vermeiden und sich dennoch in dieser Sprache auszudrücken.}
+
+\end{document}
