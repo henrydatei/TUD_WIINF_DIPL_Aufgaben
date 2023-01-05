@@ -11,6 +11,9 @@
 \usepackage{tabularx}
 \usepackage{parskip}
 \usepackage{multirow}
+\usepackage[backend=bibtex]{biblatex}
+\addbibresource{refs}
+\bibliography{refs}
 
 \usepackage{listings}
 \definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
@@ -60,11 +63,39 @@
 	
 	\section*{Task 1}
 	
+	Perhaps beforehand: I am an Erasmus student from Germany and have therefore only experienced Covid and the measures against it in Germany. Therefore, the examples I give will be from Germany, but I think that Germany did not act much differently from the UK during the pandemic.
+	
+	The COVID-19 pandemic has had a significant impact on every aspect of society. Network game theory, a branch of mathematics that studies strategic interactions between players in a network, can help to understand the complex dynamics. In this essay, I will explore how network game theory can be applied to the current pandemic.
+	
+	In particular, I will focus here on the situation of healthcare workers and whether they should be vaccinated. I will also look at the impact of masks; at least in Germany, at the beginning of the pandemic, it was compulsory to wear a surgical mask in public spaces, and later an FFP2 mask. Currently, you still have to wear an surgical mask in public transport.
+	
+	The network on which the analysis takes place consists of nodes and edges. A node is a person, an edge between two nodes represents a contact. I will use the SIS model presented in the lecture. Unlike the SIR model, which is often used in papers analysing Covid, the SIS model does not have a group of people removed from the infection event. Anyone who has had covid and recovered can also be re-infected.
+	
+	The SIS model, also known as the Susceptible-Infected-Susceptible model, is a mathematical model used to describe the spread of infectious diseases within a population. It is a type of compartmental model, meaning that it divides the population into different compartments based on their disease status. In the SIS model, individuals can be in one of two states: susceptible or infected. Susceptible individuals are those who are not currently infected with the disease, but are at risk of becoming infected. Infected individuals have contracted the disease and are capable of spreading it to susceptible individuals.
+
+	The SIS model is based on the assumption that individuals move between these two states at certain rates. For example, susceptible individuals can become infected at a rate proportional to the number of infected individuals in the population ($\beta(N_i^I + x)$). Similarly, infected individuals can recover with probability $\rho$ and become susceptible again at a rate proportional to the number of infected individuals. The SIS model is often used to study the dynamics of infectious diseases and to inform public health policy. \cite{noauthor_sir-modell_2022}
+	
+	Especially during the Covid pandemic, many people came to the hospital, so healthcare workers had a lot of contacts and therefore a high degree in the network. Since Covid had spread all over the world, new mutations kept appearing, so there is a background infection rate $x > 0$. A society can be modelled well with a scale free network, where there are some nodes that have a high degree (the healthcare workers) while many nodes have a low degree. Especially since Covid has cold-like symptoms and many people voluntarily isolate themselves when they have a cold, this approach makes sense.
+	
+	As we saw in the lecture, this configuration results in an epidemic threshold of 0. Covid has spread in every country, but early interventions at the hubs would have stopped or greatly slowed the spread. In fact, Germany has tried to do just that: there is now a facility-based vaccination requirement for health and care workers. However, the introduction has taken a long time because there were many legal concerns and, as a result, the compulsory vaccination could not stop the pandemic. \cite{noauthor_corona-pandemie_2022} \cite{noauthor_informationen_nodate}
+	
+	Concerns about unknown long-term consequences of Covid lead people to reduce or even stop contact with infected people in order not to infect themselves. This process of rewiring thus leads to $\omega > 0$ and an infected person exponentially loses their contacts over time. This results in a sustained injection threshold and since one cannot assume that $\omega \gg \rho$ holds (Covid has a long incubation period, thus it is difficult to detect infected persons without testing and it takes a long time to thus avoid contact with infected persons) of 
+	\begin{align}
+		\tilde{\beta} = \frac{\omega}{\bar{k}\left(1-\exp\left(-\frac{\omega}{\rho}\right)\right)} \notag
+	\end{align}
+	By introducing (self-)testing or self-quarantine, one can increase the value of $\omega$ and $\tilde{\beta}$.
+	
+	By breaking contacts with infected people and rebuilding with recovered people, separate clusters of healthy and infected people are formed. This effect suppresses spread, but infection can spread particularly quickly among the well-connected healthy individuals. This results in a second threshold $\hat{\beta} < \tilde{\beta}$. Current research assumes that Covid will be epidemic, i.e. there will be periodic outbreaks, similar to influenza. \cite{telenti_after_2021}
+	
+	Does the obligation to wear a mask change anything? In any case, it changes the probability of infection: if you have Covid yourself and wear an FFP2 mask, you reduce the risk of infection for your contacts by nearly 100\% if you’re infected. But the mask does not help to protect oneself from infection. But as long as everyone wears a mask, and it protects 100\%, Covid cannot spread in the population and there would be no need for compulsory vaccination ($\beta = 0 \Rightarrow \lambda = 0$). However, since all people will never wear a mask, and even an FFP2 mask does not protect 100\% when used correctly, $\beta > 0$ and therefore $\lambda > 0$ and Covid spreads. So a mask can only be a temporary solution, vaccination always protects. \cite{noauthor_how_nodate}
+	
+	In Germany in particular, a group has emerged in the course of the pandemic that is referred to as "Querdenker". This group is well networked among themselves and rejects any government action in connection with Covid. They do not wear masks, have not been vaccinated, do not test themselves and do not go into self-isolation. The virus persists in such groups and therefore cannot be eradicated. Mutations occur, against which vaccination does not provide complete protection, so that there will always be local outbreaks.
+	
 	\section*{Task 3}
 	
 	Richard Dawkins is a British evolutionary biologist and writer. He is perhaps best known for his book \textit{The Selfish Gene}, which was first published in 1976. In this book, Dawkins argues that the fundamental unit of natural selection is the gene, and that the primary goal of genes is to ensure their own replication. He suggests that the behaviour of organisms, including humans, can be explained by the selfish pursuit of their own genetic interests.
 	
-	\textit{The Selfish Gene} was a groundbreaking work that helped to popularize the concept of gene-centered evolution, and it remains an influential book to this day. It has been translated into numerous languages and has sold millions of copies worldwide. %TODO: Zitat von Wikipedia
+	\textit{The Selfish Gene} was a groundbreaking work that helped to popularize the concept of gene-centered evolution, and it remains an influential book to this day. It has been translated into numerous languages and has sold millions of copies worldwide. \cite{noauthor_richard_2022}
 	
 	In this essay I want to explain an example Dawkins introduced in the 9th chapter (\textit{Battle of the sexes}). This example is about males that would like to start a family with a female. Dawkins has stated in the previous chapters that a female has one large egg, but males have many small sperm. Since the child is born later from the mother, a male can fertilise many females because a male does not have to wait for birth to become reproductive again.
 	
@@ -72,7 +103,7 @@
 	
 	So each sex has an interest in the other caring for the offspring so that one can reproduce oneself with another partner. However, as we have already seen, the female invests more in her egg than the male does in his sperm, which is why we would expect it to be easier for the male to "cheat". Because the female knows this, she prefers to find males who are faithful. So she is more cautious in her choice of mate and wants to see time-consuming courtship rituals from her future mate to test his fidelity. Of course, she can also do without in order to increase her reproductive speed.
 	
-	I would like to examine this game in terms of game theory. We have two players, a male and a female. The male can be either faithful or philandering, while the female can be coy or fast (I use the same terms as Dawkins for simplicity). Dawkins uses the following payoff matrix in his book, so let's start our analysis with that: %TODO: Quelle Selfish Gene Buch
+	I would like to examine this game in terms of game theory. We have two players, a male and a female. The male can be either faithful or philandering, while the female can be coy or fast (I use the same terms as Dawkins for simplicity). Dawkins uses the following payoff matrix in his book, so let's start our analysis with that: \cite{dawkins_selfish_1989}
 	\begin{center}
 		\begin{tabular}{C{0.5cm}c|c|c}
 			& & \multicolumn{2}{c}{\textbf{female}} \\
@@ -97,6 +128,9 @@
 		\item (philandering, coy): The required courtship ritual ensures that the unfaithful male does not have children with the female, but no costs are incurred; both receive 0.
 		\item (philandering, fast): In this case, the male does not participate in feeding the child and does not have to perform a courtship ritual. The situation is different for the female: A child is born, but she alone has to care for it. She therefore receives: $+15 - 20 = -5$.
 	\end{itemize}
+
+	But what does all this have to do with evolution? Evolution is about mutations and if a mutant can reproduce faster, its genes will prevail and the original population will be wiped out. A population that is stable against mutants remains. Since our population in this example is defined only by its strategy, we can define an \textit{Evolutionarily Stable Strategy} (or ESS for short). An ESS is a strategy that is able to persist in a population over time, because it is resistant to being exploited by other strategies. In other words, an ESS is a strategy that is able to withstand the temptation to deviate from it, because doing so would result in a net loss for the individual. By the definition of a Nash Equilibrium it is clear that every Nash Equilibrium is an ESS.
+
 	Let's search for Nash Equilibria in this game: We won't find any pure strategy Nash Equilibria, so let's analyse a mixed strategy. A male can be $p$ faithful and $(1-p)$ philandering; a female can be $q$ coy and $(1-q)$ fast. Everyone is maximising his expected utility:
 	\begin{align}
 		\E(u_{male}(p,q)) &= 2pq + 5p(1-q) + 15(1-p)(1-q) \notag \\
@@ -108,8 +142,8 @@
 		\frac{\partial u_{female}}{\partial q} &= -8p + 5 \overset{!}{=} 0 \notag \\
 		p &= \frac{5}{8} \notag
 	\end{align}
-	There we have our mixed strategy Nash Equilibrium: $\left(\frac{5}{8}\text{faithful} + \frac{3}{8}\text{philandering}, \frac{5}{6}\text{coy} + \frac{1}{6}\text{fast}\right)$.
+	There we have our mixed strategy Nash Equilibrium and therefore ESS: $\left(\frac{5}{8}\text{faithful} + \frac{3}{8}\text{philandering}, \frac{5}{6}\text{coy} + \frac{1}{6}\text{fast}\right)$.
 	
-	But what does all this have to do with evolution? Evolution is about mutations and if a mutant can reproduce faster, its genes will prevail and the original population will be wiped out. A population that is stable against mutants remains. Since our population in this example is defined only by its strategy, we can define an \textit{Evolutionarily Stable Strategy} (or ESS for short). An ESS is a strategy that is able to persist in a population over time, because it is resistant to being exploited by other strategies. In other words, an ESS is a strategy that is able to withstand the temptation to deviate from it, because doing so would result in a net loss for the individual. By the definition of a Nash Equilibrium it is clear that every Nash Equilibrium is an ESS.
+	\printbibliography
 
 \end{document}
