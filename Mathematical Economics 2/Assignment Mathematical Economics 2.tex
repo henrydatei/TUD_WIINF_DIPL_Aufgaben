@@ -1,0 +1,115 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage{multirow}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Mathematical Economics 2, Assignment}}
+\author{\textsc{Henry Haustein} (2291691)}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Task 1}
+	
+	\section*{Task 3}
+	
+	Richard Dawkins is a British evolutionary biologist and writer. He is perhaps best known for his book \textit{The Selfish Gene}, which was first published in 1976. In this book, Dawkins argues that the fundamental unit of natural selection is the gene, and that the primary goal of genes is to ensure their own replication. He suggests that the behaviour of organisms, including humans, can be explained by the selfish pursuit of their own genetic interests.
+	
+	\textit{The Selfish Gene} was a groundbreaking work that helped to popularize the concept of gene-centered evolution, and it remains an influential book to this day. It has been translated into numerous languages and has sold millions of copies worldwide. %TODO: Zitat von Wikipedia
+	
+	In this essay I want to explain an example Dawkins introduced in the 9th chapter (\textit{Battle of the sexes}). This example is about males that would like to start a family with a female. Dawkins has stated in the previous chapters that a female has one large egg, but males have many small sperm. Since the child is born later from the mother, a male can fertilise many females because a male does not have to wait for birth to become reproductive again.
+	
+	At the same time, the females want the father to take care of his child because it contains his genes. It is also in the male's interest to take care of his child, because if the female doesn't, he has to, otherwise his child and his genes will die. It is similar for the female: if the father does not take care, she has to do it, but on the other hand she could also look for a new father and reproduce with him.
+	
+	So each sex has an interest in the other caring for the offspring so that one can reproduce oneself with another partner. However, as we have already seen, the female invests more in her egg than the male does in his sperm, which is why we would expect it to be easier for the male to "cheat". Because the female knows this, she prefers to find males who are faithful. So she is more cautious in her choice of mate and wants to see time-consuming courtship rituals from her future mate to test his fidelity. Of course, she can also do without in order to increase her reproductive speed.
+	
+	I would like to examine this game in terms of game theory. We have two players, a male and a female. The male can be either faithful or philandering, while the female can be coy or fast (I use the same terms as Dawkins for simplicity). Dawkins uses the following payoff matrix in his book, so let's start our analysis with that: %TODO: Quelle Selfish Gene Buch
+	\begin{center}
+		\begin{tabular}{C{0.5cm}c|c|c}
+			& & \multicolumn{2}{c}{\textbf{female}} \\
+			& & coy & fast \\
+			\hline
+			\multirow{2}{0.5cm}{\rotatebox[origin=c]{90}{\textbf{male}}} & faithful & (2,2) & (5,5) \\
+			\cline{3-4}
+			& philandering & (0,0) & (15,-5)
+		\end{tabular}
+	\end{center}
+	
+	How did I arrive at these figures? Dawkins awards the following points in his book
+	\begin{itemize}
+		\item Both partners get +15 points each when a child is born.
+		\item To feed the child, the parents have to spend time and energy, therefore -20 points. If both parents take care of the child, they share the costs.
+		\item If the female insists on a courtship ritual, this lowers the reproduction rate of both partners, therefore each gets -3 points.
+	\end{itemize}
+	This then leads to the following points in the payoff matrix:
+	\begin{itemize}
+		\item (faithful, coy): For each partner: the child is born, the costs of feeding the child are shared, but there was also a long courtship ritual, so each has another -3 in costs. So in total: $+15 - 10 - 3 = +2$.
+		\item (faithful, fast): If the female renounces the courtship ritual, both save the -3 in costs and both receive +5.
+		\item (philandering, coy): The required courtship ritual ensures that the unfaithful male does not have children with the female, but no costs are incurred; both receive 0.
+		\item (philandering, fast): In this case, the male does not participate in feeding the child and does not have to perform a courtship ritual. The situation is different for the female: A child is born, but she alone has to care for it. She therefore receives: $+15 - 20 = -5$.
+	\end{itemize}
+	Let's search for Nash Equilibria in this game: We won't find any pure strategy Nash Equilibria, so let's analyse a mixed strategy. A male can be $p$ faithful and $(1-p)$ philandering; a female can be $q$ coy and $(1-q)$ fast. Everyone is maximising his expected utility:
+	\begin{align}
+		\E(u_{male}(p,q)) &= 2pq + 5p(1-q) + 15(1-p)(1-q) \notag \\
+		&= 12pq - 10p - 15q + 15 \notag \\
+		\frac{\partial u_{male}}{\partial p} &= 12q - 10 \overset{!}{=} 0 \notag \\
+		q &= \frac{10}{12} = \frac{5}{6} \notag \\
+		\E(u_{female}(p,q)) &= 2pq + 5p(1-q) - 5(1-p)(1-q) \notag \\
+		&= -8pq + 10p + 5q - 5 \notag \\
+		\frac{\partial u_{female}}{\partial q} &= -8p + 5 \overset{!}{=} 0 \notag \\
+		p &= \frac{5}{8} \notag
+	\end{align}
+	There we have our mixed strategy Nash Equilibrium: $\left(\frac{5}{8}\text{faithful} + \frac{3}{8}\text{philandering}, \frac{5}{6}\text{coy} + \frac{1}{6}\text{fast}\right)$.
+	
+	But what does all this have to do with evolution? Evolution is about mutations and if a mutant can reproduce faster, its genes will prevail and the original population will be wiped out. A population that is stable against mutants remains. Since our population in this example is defined only by its strategy, we can define an \textit{Evolutionarily Stable Strategy} (or ESS for short). An ESS is a strategy that is able to persist in a population over time, because it is resistant to being exploited by other strategies. In other words, an ESS is a strategy that is able to withstand the temptation to deviate from it, because doing so would result in a net loss for the individual. By the definition of a Nash Equilibrium it is clear that every Nash Equilibrium is an ESS.
+
+\end{document}
