@@ -1,0 +1,151 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Datensicherheit, Zusammenfassung Vorlesung 4}}
+\author{\textsc{Henry Haustein}, \textsc{Dennis Rössel}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Was kann bzgl. der erreichbaren Sicherheit ausgesagt werden?}
+	keine 100\%ige Sicherheit möglich
+	
+	\section*{Warum ist Sicherheit kein Zustand, sondern ein Prozess?}
+	erreichtes Sicherheitsniveau ist nicht dauerhaft
+	
+	\section*{Welche Aufgaben sind der Awareness bzgl. Sicherheit zuzuordnen?}
+	Sensibilisierung, Schulung, Training
+	
+	\section*{Welche Prinzipien sind beim Sicherheitsmanagement zu beachten?}
+	Kombi aus technischen, organisatorischen, personellen und infrastrukturellen Maßnahmen
+	
+	\section*{Was beinhalten IT-Sicherheitspolitik und IT-Sicherheitskonzept?}
+	IT-Sicherheitspolitik:
+	\begin{itemize}
+		\item Charakterisierung des Unternehmens
+		\item Geltungsbereich der Sicherheitspolitik
+		\item Bedeutung der Sicherheit
+		\item Gefährdungslage
+		\item weitere Vorgaben
+		\item Organisationsbeschluss und Verpflichtungserklärung
+	\end{itemize}
+
+	IT-Sicherheitskonzept:
+	\begin{itemize}
+		\item Anforderungsanalyse (Was?)
+		\item Risikoanalyse (Wovor?)
+		\item Festlegung der Maßnahmen (Wie?)
+	\end{itemize}
+	
+	\section*{Was sind die wesentlichen drei Aufgaben bei der Erstellung eines IT-Sicherheitskonzepts?}
+	IT-Sicherheitskonzept:
+	\begin{itemize}
+		\item Anforderungsanalyse (Was?)
+		\item Risikoanalyse (Wovor?)
+		\item Festlegung der Maßnahmen (Wie?)
+	\end{itemize}
+	
+	\section*{Welche Schritte beinhaltet die Anforderungsanalyse?}
+	Anforderungsanalyse
+	\begin{itemize}
+		\item Bestandsaufnahme: relevante Objekte
+		\item Schutzbedarfsfeststellung
+		\item Gesetze, Verträge und unternehmensinterne Regelungen
+	\end{itemize}
+	
+	\section*{Wie entstehen allgemein Risiken (Risikobildungsmodell)?}
+	Bedrohungen/Schwachstellen $\to$ gefährdende Ereignisse $\to$ Risiken
+	
+	\section*{Mit welchen zwei Faktoren werden Risiken bewertet?}
+	Eintrittswahrscheinlichkeit, möglicher Schaden
+	
+	\section*{Wie können Maßnahmen zur Risikobewältigung nach der Zielrichtung bzw. dem Zeitpunkt ihrer Wirkung eingeteilt werden?}
+	Maßnahmenklassifikation nach Zielrichtung und Zeitpunkt:
+	\begin{itemize}
+		\item vermeiden
+		\item vermindern
+		\item überwälzen
+		\item selbst tragen
+	\end{itemize}
+	
+	\section*{Was beinhaltet die Validierung der Maßnahmen?}
+	Validierung der Maßnahmen
+	\begin{itemize}
+		\item Eignung
+		\item Wirksamkeit
+		\item Zusammenwirken
+		\item Praktikabilität
+		\item Akzeptanz
+		\item Wirtschaftlichkeit
+		\item Angemessenheit
+	\end{itemize}
+	
+	\section*{Welche Fragen sind bei der Definition von Zugriffsberechtigungen zu klären?}
+	Wer? Wann? Wo? Welche? Was? Warum?
+	
+	\section*{Wie werden die Zugriffskontrollinformationen grundsätzlich verwaltet, welche vereinfachten Varianten (ACL, CL) gibt es?}
+	allgemein: Zugriffskontrollmatrix, ACL (Access Control List), CL (Capability List)
+	
+	\section*{Was ist das Prinzip bei RBAC, welche Aufgaben sind zu lösen?}
+	Grundidee: Repräsentation einer bestimmten Aufgabe und der damit einhergehenden Zugriffsrechte durch eine Rolle
+	
+	Aufgaben:
+	\begin{itemize}
+		\item Definition der Rollen und der zugehörigen Zugriffsberechtigungen
+		\item Zuweisung der Rollen zu den Objekten
+	\end{itemize}
+	
+	\section*{Welche prinzipiellen Möglichkeiten der Identifikation von Menschen durch IT-Systeme gibt es?}
+	Was man ist (Biometrie), Was man hat (Dokument), Was man weiß (Passwort)
+	
+\end{document}
