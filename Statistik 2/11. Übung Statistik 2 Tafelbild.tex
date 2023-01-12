@@ -1,0 +1,62 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{parskip}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 2, Übung 11, Tafelbild}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	ML-Schätzer der Poisson-Verteilung: $\hat{\lambda} = \bar{x}$. Wahrscheinlichkeitsfunktion (Poisson-Verteilung ist diskret)
+	\begin{align}
+		P(X = x) = \frac{\lambda^x}{x!}\exp(-\lambda) \notag
+	\end{align}
+	
+	$\chi^2$-Anpassungstest
+	\begin{align}
+		H_0: X \sim F_0 \qquad&\text{vs.}\qquad H_1: X \not\sim F_0 \notag \\
+		Q &= \sum_{i=1}^r \frac{(S_i - np_i)^2}{np_i} \notag
+	\end{align}
+	kritischer Wert $\chi^2_{r-l-1,1-\alpha}$. Sollte in einer Klasse $S_i < 5$ sein, so müssen Klassen zusammengefasst werden!
+	
+	\section*{Aufgabe 2}
+	KS-Test verlangt Supremum einer Menge: Supremum ist die kleinste obere Schranke einer Menge, bei endlichen Mengen Supremum = Maximum. Bei unendlichen Mengen: Supremum = "Grenzwert" des Maximums
+	
+	KS-Test:
+	\begin{align}
+		H_0: X \sim F_0 \qquad&\text{vs.}\qquad H_1: X \not\sim F_0 \notag \\
+		D &= \sup_{x\in\mathbb{R}} \vert \hat{F}(x) - F_0(x)\vert \notag
+	\end{align}
+	kritischer Wert: $c_{1-\alpha}$ (tabelliert)
+	
+	Für Aufgabe (b): $\mathbb{P}(a < X < b) = F(b) - F(a)$
+	
+\end{document}
