@@ -1,0 +1,97 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Datensicherheit, Zusammenfassung Vorlesung 1}}
+\author{\textsc{Henry Haustein}, \textsc{Dennis Rössel}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Was sind besondere Eigenschaften von Informationen, aus denen sich Missbrauchsmöglichkeiten und die Notwendigkeit von Datensicherheit ergeben?}
+	Informationen haben Wert durch alleinigen Besitz, Informationen sind duplizierbar, Wertzuwachs durch Akkumulation möglich
+	
+	\section*{Was sind die grundlegenden Schutzziele und was bedeuten sie?}
+	Schutzziele
+	\begin{itemize}
+		\item Vertraulichkeit: Informationen werden nur Berechtigten bekannt.
+		\item Integrität: Informationen können nicht unerkannt modifiziert werden.
+		\item Zurechenbarkeit (spezielles Integritätsziel): Es kann gegenüber Dritten nachgewiesen werden, wer die Information erzeugt hat.
+	\end{itemize}
+	Der Schutz der Verfügbarkeit erfordert andere Maßnahmen, z.B. Redundanz oder Kontrolle der Ressourcen\-nutzung.
+
+	\section*{Ist ein Verlust dieser Schutzziele erkennbar/verhinderbar/kann er rückgängig gemacht werden?}
+	Vertraulichkeit: verhinderbar, Integrität: erkennbar und kann rückgängig gemacht werden, Zurechenbarkeit: erkennbar und kann rückgängig gemacht werden, Verfügbarkeit: erkennbar und kann rückgängig gemacht werden
+	
+	\section*{Wie grenzen sich Datenschutz und Datensicherheit ab?}
+	Datenschutz: Schutz der Betroffenen, Schutz vor Daten
+	
+	Datensicherheit: Schutz der Daten vor Missbrauch, Verfälschung und Nichtverfügbarkeit
+	
+	\section*{Welche Grundsätze der Datenverarbeitung sind einzuhalten?}
+	Art. 5 DSGVO
+	\begin{itemize}
+		\item Rechtmäßigkeit, Verarbeitung nach Treu und Glauben, Transparenz
+		\item Zweckbindung
+		\item Datenminimierung
+		\item Richtigkeit
+		\item Speicherbegrenzung
+		\item Integrität und Vertraulichkeit
+		\item Rechenschaftspflicht
+	\end{itemize}
+	
+	\section*{Was verstehen Sie unter dem \textit{Verbot mit Erlaubnisvorbehalt}? Wann ist die Verarbeitung personenbezogener Daten rechtmäßig?}
+	Verarbeitung ist grundsätzlich verboten und eine begründungsbedürftige Ausnahme
+	
+	Rechtmäßigkeit: Einwilligung der betroffenen Person oder sonstige Rechtsgrundlage
+
+\end{document}
