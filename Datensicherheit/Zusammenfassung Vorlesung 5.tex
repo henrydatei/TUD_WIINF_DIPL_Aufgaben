@@ -1,0 +1,98 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Datensicherheit, Zusammenfassung Vorlesung 5}}
+\author{\textsc{Henry Haustein}, \textsc{Dennis Rössel}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Welche Vor- und Nachteile hat redundante Speicherung?}
+	Vorteile
+	\begin{itemize}
+		\item gleiche Datenbestände auf zwei physisch getrennten Datenspeichern
+		\item bei Nichtverfügbarkeit eines Gerätes kann sofort mit zweitem weitergearbeitet werden
+	\end{itemize}
+	
+	Nachteile:
+	\begin{itemize}
+		\item räumliche Nähe beider Geräte $\Rightarrow$ gleiche Gefährdung beider durch mutwillige Zerstörung und höhere Gewalt
+	\end{itemize}
+	
+	\section*{Wie funktionieren RAID 0, 1 und 5?}
+	RAID 0: Aufteilung der Daten auf die vorhandenen Festplatten
+	
+	RAID 1: Spiegelung der Daten
+	
+	RAID 5: Aufteilung der Daten + Paritätsinformationen auf die vorhandenen Festplatten
+	
+	\section*{Welche Fragen sind bei der Organisation von Backups zu klären?}
+	Welche Daten? Welche Abstände? Wie viele Kopien? Wo?
+	
+	\section*{Welche Backup-Strategien unterscheidet man, wie funktionieren diese und wie erfolgt jeweils die Wiederherstellung?}
+	Backup-Strategien:
+	\begin{itemize}
+		\item Voll-Backup
+		\item inkrementelles Backup: Sicherung aller Änderungen seit dem letzten Backup
+		\item differentielles Backup: Sicherung aller Änderungen seit dem letzten Voll-Backup
+	\end{itemize}
+	
+	\section*{Welche Schutzziele sind bzgl. der Aufbewahrung der Kopien relevant und wie können diese umgesetzt werden?}
+	Verfügbarkeit: Kopien nicht am selben Ort wie Original aufbewahren
+	
+	Vertraulichkeit, Integrität: Verschlüsselung
+	
+	\section*{Was ist Zielstellung der Kanalkodierung?}
+	Schutz vor Störungen im Kanal
+	
+\end{document}
