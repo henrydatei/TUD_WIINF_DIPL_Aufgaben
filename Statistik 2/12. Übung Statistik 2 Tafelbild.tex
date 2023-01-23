@@ -1,0 +1,63 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{parskip}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 2, Übung 12, Tafelbild}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	effizienter Schätzer: Es gibt keinen besseren Schätzer bezüglich Erwartungstreue und MSE
+	
+	KS-Test:
+	\begin{align}
+		H_0: X \sim F_0 \qquad&\text{vs.}\qquad H_1: X \not\sim F_0 \notag \\
+		D &= \sup_{x\in\mathbb{R}} \vert \hat{F}(x) - F_0(x)\vert \notag
+	\end{align}
+	kritischer Wert: $c_{1-\alpha}$ (tabelliert)
+	
+	\section*{Aufgabe 2}
+	QQ-Plot: Vergleich von beobachteten Quantilen mit theoretisch erwarteten Quantilen. Theoretische Quantile: $v_i = F^{-1}(p_i)$ mit $p_i = \frac{i - 0.5}{n}$. Plotten von $(v_i,x_{(i)})$
+	
+	\section*{Aufgabe 3}
+	Wahrscheinlichkeitsfunktion (Poisson-Verteilung ist diskret)
+	\begin{align}
+		P(X = x) = \frac{\lambda^x}{x!}\exp(-\lambda) \notag
+	\end{align}
+	
+	$\chi^2$-Anpassungstest
+	\begin{align}
+		H_0: X \sim F_0 \qquad&\text{vs.}\qquad H_1: X \not\sim F_0 \notag \\
+		Q &= \sum_{i=1}^r \frac{(S_i - np_i)^2}{np_i} \notag
+	\end{align}
+	kritischer Wert $\chi^2_{r-l-1,1-\alpha}$. Sollte in einer Klasse $S_i \le 5$ sein, so müssen Klassen zusammengefasst werden!
+	
+\end{document}
