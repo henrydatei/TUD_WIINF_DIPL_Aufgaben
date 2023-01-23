@@ -1,0 +1,87 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Datensicherheit, Zusammenfassung Vorlesung 7}}
+\author{\textsc{Henry Haustein}, \textsc{Dennis Rössel}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Wie wird beim Multiplikations- und Divisionsverfahren kodiert bzw. dekodiert?}
+	Multiplikationsverfahren:
+	\begin{itemize}
+		\item Kodierung: $a(x) = a^\ast(x) \cdot g(x)$
+		\item Dekodierung: $a^\ast(x) = \frac{a(x)}{g(x)}$
+	\end{itemize}
+	Divisionsverfahren:
+	\begin{itemize}
+		\item Kodierung: $a(x) = a^\ast(x) \cdot x^r + r(x)$, sodass $a(x)$ ein Vielfaches von $g(x)$ ist
+		\item Dekodierung: $a^\ast(x) = \frac{a(x)}{g(x)}$
+	\end{itemize}
+	
+	\section*{Wie erfolgt die Fehlerprüfung?}
+	Wenn es bei der Division zu keinem Rest kommt, so war die Übertragung fehlerfrei (oder der Fehler wurde nicht erkannt)
+	
+	\section*{Was versteht man unter den Eigenschaften zyklisch und systematisch?}
+	zyklisch: Ein Kode heißt zyklisch, wenn für jedes Kanalkodewort durch zyklische Verschiebung der Elemente wieder ein Kanalkodewort entsteht. \\
+	systematisch: Position der Informationstsellen ist bekannt
+	
+	\section*{Welche Kodeparameter und Fehlererkennungseigenschaften hat der zyklische \textsc{Hamming}-Kode?}
+	Parameter: $(n,l,d_{min}) = (2^k-1, n-k, 3)$ mit $k=\deg(g(x))$ \\
+	Fehlererkennung: $f_e=2$, Erkennung von Bündelfehlern bis zu $f_b\le k$
+	
+	\section*{Welche Kodeparameter und Fehlererkennungseigenschaften hat der \textsc{Abramson}-Kode?}
+	Parameter: $(n,l,d_{min}) = (2^{k_1}-1, n-k, 4)$ mit $k=\deg(g(x))$, $k_1 = \deg(M(x))$ \\
+	Fehlererkennung: $f_e=3$, Erkennung von Bündelfehlern bis zu $f_b\le k$, Erkennung ungradzahliger Fehlermuster
+	
+\end{document}
