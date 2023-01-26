@@ -1,0 +1,90 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Datensicherheit, Zusammenfassung Vorlesung 13}}
+\author{\textsc{Henry Haustein}, \textsc{Dennis Rössel}}
+\date{}
+
+\begin{document}
+	\maketitle
+
+	\section*{Wie können Primzahlen erzeugt werden?}
+	Probabilistischer Test nach Rabin-Miller: Falls $p$ prim, dann $\forall a\in\mathbb{Z}_p^\ast: a^{\frac{p-1}{2}} \equiv \pm 1 \mod p$. Falls $p$ nicht prim, dann gilt dies höchstens für $\frac{1}{4}$ der möglichen $a$.
+	
+	\section*{Wie werden die öffentlichen und geheimen Parameter für RSA bestimmt?}
+	Wahl von $k_e$ mit $1<k_e<\Phi(n)$ und $ggT(k_e,\Phi(n))=1$, $k_d = k_e^{-1} \mod \Phi(n)$
+	
+	\section*{Wie erfolgt die Ver- bzw. Entschlüsselung?}
+	Verschlüsselung: $c = m^{k_e} \mod n$
+	
+	Entschlüsselung: $m = c^{k_d} \mod n$
+	
+	\section*{Wie erfolgt das Signieren und Testen?}
+	Signieren: $s = m^{k_s}\mod n$
+	
+	Testen: $m = s^{k_t} \mod n$?
+	
+	\section*{Worauf ist bei der Parameterwahl bzgl. Sicherheit zu achten?}
+	Wahl von $p$ und $q$ als große Primzahlen, die nicht dicht beieinander liegen, aber auch nicht zu weit auseinander
+	
+	\section*{Welche Angriffsmöglichkeiten bestehen bei der einfachen, unsicheren Variante von RSA?}
+	passive Angriffe: RSA arbeitet deterministisch, man kann also verschlüsseln und vergleichen
+	
+	aktive Angriffe: RSA ist ein Homomorphismus bezüglich Multiplikation: Angreifer beobachtet Signaturen $s_1$, $s_2$ für Nachrichten $m_1$, $m_2$. Dann ist $s_3 = s_1\cdot s_2$ eine Signatur für $m_3 = m_1\cdot m_2$
+	
+	\section*{Wie werden die passiven Angriffe verhindert?}
+	Zufallszahl $r$ hinzufügen: $c = (r,m, h(r, m))^{k_e}$ $\to$ indeterministische Verschlüsselung
+	
+	\section*{Wie werden die aktiven Angriffe verhindert?}
+	Redundanz
+	
+\end{document}
