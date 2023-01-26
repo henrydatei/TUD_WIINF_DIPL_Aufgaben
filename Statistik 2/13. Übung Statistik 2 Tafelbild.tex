@@ -1,0 +1,72 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{parskip}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 2, Übung 13, Tafelbild}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Lineare Regression: $y = \beta_0 + \beta_1x$ mit
+	\begin{align}
+		\hat{\beta}_1 &= \Cor(X,Y) = \frac{\sum x_iy_i - n\bar{x}\bar{y}}{\sum x_i^2 - n\bar{x}^2} \notag \\
+		\hat{\beta}_0 &= \bar{y} - \hat{\beta}_1\bar{x} \notag
+	\end{align}
+	$\Rightarrow$ kann auch der Taschenrechner: Menü 6 (Statistik) $\to$ $y = a+bx$
+
+	Test für Koeffizienten $\beta_1$ (FS II, Seite 14)
+	\begin{align}
+		H_0: \beta_1 = a &\qquad H_1: \beta_1 \neq a \notag \\
+		T &= \frac{\hat{\beta}_1 - a}{\hat{\sigma}}\sqrt{n}\tilde{s} \notag
+	\end{align}
+	kritische Werte: $\pm t_{n-2;1-\alpha/2}$
+	
+	$\tilde{s}$ ist die Populationsstandardabweichung, alternativ könnte man auch $\sqrt{n-1}s$ mit $s$ als Stichprobenstandardabweichung ($\nearrow$ FS II, Seite 13)
+	
+	Prognoseintervall (FS II, Seite 15)
+	\begin{align}
+		\hat{y}(x) \pm \hat{\sigma}\sqrt{1+\frac{1}{n}\left(1+\frac{(x-\bar{x})^2}{\tilde{s}^2}\right)}\cdot t_{n-2;1-\alpha/2} \notag
+	\end{align}
+	
+	\section*{Aufgabe 2}
+	$R^2 = \Cor(X, \hat{Y})^2$ $\Rightarrow$ kann auch der Taschenrechner: nach Durchführung der Regression gibt der TR einen Wert $r = ...$ aus $\Rightarrow R^2 = r^2$
+	
+	Test für Koeffizienten $\beta_0$ (FS II, Seite 14)
+	\begin{align}
+		H_0: \beta_0 = a &\qquad H_1: \beta_0 \neq a \notag \\
+		T &= \frac{\hat{\beta}_0 - a}{\hat{\sigma}\sqrt{1+\frac{\bar{x}^2}{\tilde{s}^2}}}\sqrt{n} \notag
+	\end{align}
+	kritische Werte: $\pm t_{n-2;1-\alpha/2}$
+	
+	\section*{Aufgabe 3}
+	der Taschenrechner kann auch dieses Modell vollautomatisch schätzen
+	
+\end{document}
