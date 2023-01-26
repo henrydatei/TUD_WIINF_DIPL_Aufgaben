@@ -1,0 +1,93 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Datensicherheit, Zusammenfassung Vorlesung 11}}
+\author{\textsc{Henry Haustein}, \textsc{Dennis Rössel}}
+\date{}
+
+\begin{document}
+	\maketitle
+
+	\section*{Was charakterisiert den Algorithmus AES?}
+	Substitutions-Permutations-Netzwerk mit wahlweise 10, 12 oder 14 Runden
+	
+	\section*{Wie erfolgt bei AES die Verschlüsselung?}
+	Verschlüsselung von Klartextblöcken der Länge 128 Bit (vorgeschlagene Längen von 192 und 256 Bits nicht standardisiert), Schlüssellänge wahlweise 128, 192 oder 256 Bits, Rundenanzahl $r$ hängt von Schlüssel- und Klartextlänge ab:
+	\begin{itemize}
+		\item Schlüssellänge 128 Bit: 10 Runden
+		\item Schlüssellänge 192 Bit: 12 Runden
+		\item Schlüssellänge 256 Bit: 14 Runden
+	\end{itemize}
+	
+	Runde 0: $\oplus k_0$ \\
+	Struktur der ersten $r-1$ Runden: SubBytes, ShiftRow, MixColumn, $\oplus k_i$ \\
+	Struktur der $r$-ten Runde: SubBytes, ShiftRow, $\oplus k_r$
+	
+	\section*{Wie werden die Teilschlüssel erzeugt?}
+	Schlüsselexpansion mit Rot (zyklische Verschiebung), SubWord (Substitution mit $S_8$) und Rcon (Rundenkonstante) 
+	
+	\section*{Wie erfolgt die Entschlüsselung?}
+	Runde $r$: $\oplus k_r$, ShiftRow$^{-1}$, SubBytes$^{-1}$ \\
+	Runde $1,...,r-1$: $\oplus k_i$, MixColumn$^{-1}$, ShiftRow$^{-1}$, SubBytes$^{-1}$ \\
+	Runde 0: $\oplus k_0$
+	
+	\section*{Was versteht man unter synchronen/selbstsynchronisierenden Chiffren?}
+	Synchrone Stromchiffre: Verschlüsselung eines Zeichens ist abhängig von der Position bzw. von vorhergehenden Klartext- oder Schlüsselzeichen
+	
+	Selbstsynchronisierende Stromchiffre: Verschlüsselung ist nur von begrenzter Anzahl vorhergehender Zeichen abhängig
+	
+	\section*{Wie erfolgen Ver- und Entschlüsselung bei den Betriebsarten ECB und CBC?}
+	ECB: Jeder Block wird einzeln verschlüsselt/entschlüsselt
+	
+	CBC: $c_i = enc(k, m_i \oplus c_{i-1})$, $m_i = dec(k, c_i) \oplus c_{i-1}$
+	
+\end{document}
