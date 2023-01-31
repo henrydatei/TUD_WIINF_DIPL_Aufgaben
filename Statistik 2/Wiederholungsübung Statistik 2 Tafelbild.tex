@@ -1,0 +1,89 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.10}
+\usepgfplotslibrary{fillbetween}
+\usepackage{parskip}
+
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Cor}{Cor}
+\newcommand{\E}{\mathbb{E}}
+
+\title{\textbf{Statistik 2, Wiederholungsübung, Tafelbild}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Hypergeometrische Verteilung: Urne mit $N$ Kugeln, wovon $M$ günstig für uns sind, es werden $n$ Kugeln gezogen. $X$... Anzahl der gezogenen günstigen Kugeln
+	\begin{align}
+		\mathbb{P}(X=m) = \frac{\binom{M}{m}\cdot\binom{N-M}{n-m}}{\binom{N}{n}} \notag
+	\end{align}
+	
+	\section*{Aufgabe 2}
+	Ungleichung von Tschebyscheff:
+	\begin{align}
+		\mathbb{P}(\vert X-\E(X)\vert \le \varepsilon) \ge 1- \frac{\Var(X)}{\varepsilon^2} \notag
+	\end{align}
+	Konfidenzintervall für $\mu$, wenn $X$ normalverteilt und $\sigma$ bekannt
+	\begin{align}
+		KI = \bar{x} \pm \frac{\sigma}{\sqrt{n}}\cdot z_{1-\alpha/2} \notag
+	\end{align}
+	Konfidenzintervall für $\mu$, wenn $X$ normalverteilt und $\sigma$ nicht bekannt
+	\begin{align}
+		KI = \bar{x} \pm \frac{s}{\sqrt{n}}\cdot t_{n-1,1-\alpha/2} \notag
+	\end{align}
+	
+	\section*{Aufgabe 3}
+	Dichte $f(x)$ ist Ableitung der Verteilungsfunktion $F(x)$
+	
+	Likelihood-Funktion aufstellen, [Logarithmus bilden], ableiten und nullsetzen. Dann überprüfen, ob es sich wirklich um ein Maximum handelt:
+	\begin{align}
+		L = \prod_{i=1}^n f(x_i) \notag 
+	\end{align}
+
+	\section*{Aufgabe 4}
+	Teststatistik T-Test:
+	\begin{align}
+		T = \frac{\bar{x} - \mu_0}{\sigma}\sqrt{n} \sim \mathcal{N}(0,1) \notag
+	\end{align}
+
+	Gütefunktion: Wahrscheinlichkeit, $H_0$ abzulehnen, in Abhängigkeit von $\mu$
+	
+	\section*{Aufgabe 5}
+	$\chi^2$-Anpassungstest
+	\begin{align}
+		Q = \sum_{i=1}^{r} \frac{(S_i - np_i)^2}{np_i} \notag
+	\end{align}
+
+	\section*{Aufgabe 6}
+	Test auf monotonen Zusammenhang
+	\begin{align}
+		T = \frac{1}{2}\log\left(\frac{1+ \hat{R}}{1-\hat{R}}\right)\sqrt{\frac{n-3}{1.06}} \notag
+	\end{align}
+	mit $\log(\cdot)$ ist hier $\ln(\cdot)$ gemeint!
+	
+	\section*{Aufgabe 7}
+	verbundene Stichproben: Berechne $D = X - Y$ und teste $D=0$ vs. $D\neq 0$
+	
+\end{document}
