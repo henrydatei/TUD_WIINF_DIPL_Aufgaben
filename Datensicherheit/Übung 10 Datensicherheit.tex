@@ -1,0 +1,127 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Datensicherheit, Übung 10}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item Ergebnis
+		\begin{center}
+			\begin{tabular}{|c|c|c|c|c|}
+				\hline
+				1 & 3 & 2 & 2 & 9 \\
+				\hline
+				0 & 0 & 7 & 6 & 9 \\
+				\hline
+				4 & 2 & 4 & 5 & 5 \\
+				\hline
+				3 & 4 & 6 & 6 & 7 \\
+				\hline
+				1 & 3 & 5 & 5 & 6 \\
+				\hline
+			\end{tabular}
+		\end{center}
+		\item Ergebnis (Werte von 255 müssen übersprungen werden)
+		\begin{center}
+			\begin{tabular}{|c|c|c|c|c|}
+				\hline
+				1 & 3 & 2 & 4 & 9 \\
+				\hline
+				2 & 2 & 7 & 6 & 9 \\
+				\hline
+				6 & 2 & 4 & 5 & 5 \\
+				\hline
+				3 & 4 & 6 & 6 & 7 \\
+				\hline
+				1 & 3 & 5 & 5 & 6 \\
+				\hline
+			\end{tabular}
+		\end{center}
+		\item Ergebnis (Werte von 0 müssen übersprungen werden)
+		\begin{center}
+			\begin{tabular}{|c|c|c|c|c|}
+				\hline
+				0 & 3 & 1 & 2 & 8 \\
+				\hline
+				1 & 0 & 6 & 6 & 7 \\
+				\hline
+				4 & 1 & 4 & 5 & 5 \\
+				\hline
+				3 & 4 & 6 & 6 & 7 \\
+				\hline
+				1 & 3 & 5 & 5 & 6 \\
+				\hline
+			\end{tabular}
+		\end{center}
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item $\frac{800\cdot 1000}{2500\cdot 8} = 40$
+		\item 50\%
+	\end{enumerate}
+	
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item alle Abstände probieren, Nachricht sinnvoll?
+		\item alle Abstände probieren, Histogramm der Buchstabenverteilung entspricht natürlicher Sprache?
+	\end{enumerate}
+	
+	\section*{Aufgabe 4}
+	Dekrementieren, LSB-Ersetzung
+
+\end{document}
