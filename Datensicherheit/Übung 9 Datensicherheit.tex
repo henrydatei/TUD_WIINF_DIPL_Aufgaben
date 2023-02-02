@@ -1,0 +1,116 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Datensicherheit, Übung 9}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Konzelationssystem: öffentlicher Schlüssel zum Verschlüsseln, privater Schlüssel zum Entschlüsseln
+	
+	Authentikationssystem: privater Schlüssel zum Signieren, öffentlicher Schlüssel zum Testen der Signatur
+
+	\section*{Aufgabe 2}
+	Hinzufügen einer Zufallszahl, verhindert aktive und passive Angriffe
+	
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item WolframAlpha liefert $20^{-1} \equiv 27\mod 77$
+		\item $ggT(77,14)\neq 1$, damit ist 14 nicht invertierbar mod 77
+	\end{enumerate}
+	
+	\section*{Aufgabe 4}
+	\begin{enumerate}[label=(\alph*)]
+		\item $k_e$ muss zwei Anforderungen erfüllen: $1<k_e<\Phi(n)$ und $ggT(k_e,\Phi(n))=1$.
+		\begin{align}
+			\Phi(69) &= \Phi(3\cdot 23) \notag \\
+			&= \Phi(3)\cdot \Phi(23) \notag \\
+			&= 2\cdot 22 \notag \\
+			&= 44 \notag
+		\end{align}
+		Damit scheiden 8 und 11 als $k_e$ aus.
+		\item Einfach alle möglichen Nachrichten verschlüsseln und schauen ob $c=20$ ist $\Rightarrow m = 5$.
+		\begin{lstlisting}
+(0:10)^5 %% 69
+# 0  1 32 36 58 20 48 40 62 54 19
+		\end{lstlisting}
+	\end{enumerate}
+	
+	\section*{Aufgabe 5}
+	Signaturschlüssel $k_s = k_t^{-1}\mod \Phi(pq)$, $k_t$ muss teilerfremd zu $\Phi(77) = 60$ sein, das heißt $k_t = 7$ und damit $k_s = 43$.
+	
+	\section*{Aufgabe 6}
+	\begin{enumerate}[label=(\alph*)]
+		\item $k_d = k_e^{-1}\mod \Phi(n) = 3^{-1}\mod (2\cdot 10) = 7$
+		\item $c = m^{k_e}\mod n = 6^3\mod 33 = 18$
+		\item $m = c^{k_d}\mod n = 18^7\mod 33 = 6$
+		\item Finde Linearkombination $up + vq \equiv 1 \mod n \Rightarrow$ $u = 4$ und $v = -1$. Dann $m = upy_q + vqy_p \mod n$, wobei
+		\begin{align}
+			y_p &= c^{k_{d,p}} \mod p \notag \\
+			y_q &= c^{k_{d,q}} \mod q \notag \\
+			k_{d,p} &= k_e^{-1} \mod p-1 = 3^{-1} \mod 2 = 1 \notag \\
+			k_{d,q} &= k_e^{-1} \mod q-1  = 3^{-1} \mod 10 = 7 \notag
+		\end{align}
+		Damit $y_p = 2$ und $y_q = 3$, also $m = 14$
+	\end{enumerate}
+	
+	\section*{Aufgabe 7}
+	\begin{enumerate}[label=(\alph*)]
+		\item $k_s = k_t^{-1}\mod \Phi(n) = 3^{-1}\mod (2\cdot 16) = 11$
+		\item $s = m^{k_s}\mod n = 7^{11}\mod 51 = 31$
+		\item $m = s^{k_t}\mod n = 12^3\mod 51 = 45$. Signatur passt nicht zur Nachricht.
+	\end{enumerate}
+
+\end{document}
