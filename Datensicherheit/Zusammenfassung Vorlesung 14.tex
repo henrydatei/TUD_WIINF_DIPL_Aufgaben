@@ -1,0 +1,98 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Datensicherheit, Zusammenfassung Vorlesung 14}}
+\author{\textsc{Henry Haustein}, \textsc{Dennis Rössel}}
+\date{}
+
+\begin{document}
+	\maketitle
+
+	\section*{Was ist Multimedia-Sicherheit?}
+	Forschungsgebiet, das sich mit der Durchsetzung von Schutzzielen an und mit digitalisierten Signalen als Abbild von Ausschnitten der Realität beschäftigt.
+	
+	\section*{Welche Schutzziele sind für Multimedia-Sicherheit relevant, und was bedeuten sie in diesem Kontext?}
+	Integrität, Zurechenbarkeit, Verdecktheit, Vertraulichkeit
+	
+	\section*{Mit welchen Schutzmechanismen können diese Ziele durchgesetzt werden?}
+	Multimedia-Forensik, digitale Wasserzeichen, Steganografie
+	
+	\section*{Wie grenzt sich Steganographie von Kryptographie ab?}
+	Steganographie verdeckt die Existenz von vertraulicher Kommunikation
+	
+	\section*{Wie ist ein steganographisches System prinzipiell aufgebaut (Funktionen mit Ein- und Ausgabewerten)?}
+	Einbetten der Nachricht in Coverdaten unter Verwendung eines Schlüssels
+	
+	Extrahieren der Daten unter Verwendung des Schlüssels
+	
+	\section*{Was sind relevante Anforderungen an steganographische Systeme?}
+	Unentdeckbarkeit: Entdeckung nicht besser als Raten
+	
+	Hohe Einbettungsrate
+	
+	\section*{Welche Möglichkeiten für die Verwendung von Schlüsseln in der Steganographie gibt es?}
+	Schlüssel kann Abstände zwischen Einbettungen oder Schlüssel ist Startwert für Zufallszahlengenerator
+	
+	\section*{Welche Klassen von Einbettungstechniken gibt es?}
+	LSB-Ersetzung, Inkrementieren und Dekrementieren
+	
+	\section*{Wie funktionieren LSB-Ersetzung, Inkrementieren und Dekrementieren?}
+	LSB-Ersetzung: letztes Bit jedes Pixels mit Nachricht ersetzen
+	
+	Inkrementieren: Wenn $cover\mod 2 \neq emb$, dann $stego = cover + 1$
+	
+	Dekrementieren: Wenn $cover\mod 2 \neq emb$, dann $stego = cover - 1$
+	
+	\section*{Wie ist die Sicherheit der LSB-Ersetzung zu bewerten?}
+	unsicher, da gut untersucht, verschiedene Ansätze zur Analyse: visueller Angriff, Histogrammangriff, Analyse der Bildstruktur
+	
+\end{document}
