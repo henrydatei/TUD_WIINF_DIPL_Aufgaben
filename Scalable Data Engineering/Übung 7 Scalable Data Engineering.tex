@@ -1,0 +1,122 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R}
+\lstset{language=SQL,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space},
+	morekeywords={with, data, refresh, materialized, explain, rank, over, partition, uuid, extension, replace, function, returns, language}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Scalable Data Engineering, Exercise 7}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\textit{I don't know what happened to exercise 6, there aren't any tasks.}
+	
+	\section*{Task 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item False. Most obviously SQL is not Turing complete.
+		\item False. Functions do calculations and have a return value, procedures don't have a return value and can do data manipulations.
+		\item False. An aggregate function calls the step function for every processed tuple and a final function on the end.
+		\item False. Regression can do this but it's not limited to that.
+		\item False. Overfitting is a real issue.
+		\item False. We don't necessarily want good performance on the training set, we want it on the test set. Overfitting does not give that.
+		\item False. In general this is not a good idea.
+	\end{enumerate}
+
+	\section*{Task 2}
+	With R this is pretty easy
+	\begin{lstlisting}[style=R]
+x = c(1, 2.5, 3, 4.25, 5)
+y = c(4.5, 4, 2.5, 2, 1)
+summary(lm(y ~ x))
+	\end{lstlisting}
+	Gives
+	\begin{table}[ht]
+	\centering
+	\begin{tabular}{rrrrr}
+	  \hline
+	 & Estimate & Std. Error & t value & Pr($>$$|$t$|$) \\ 
+	  \hline
+	(Intercept) & 5.5928 & 0.5247 & 10.66 & 0.0018 \\ 
+	  x & -0.8866 & 0.1523 & -5.82 & 0.0101 \\ 
+	   \hline
+	\end{tabular}
+\end{table}
+
+	\section*{Task 3}
+	In SQL:
+	\begin{lstlisting}[tabsize=2]
+CREATE TABLE reg (size numeric, price numeric);
+
+INSERT INTO reg (size, price) VALUES (1000, 275000), (2500, 370000), (800, 175000), (1900, 225000), (3000, 500000);
+
+CREATE EXTENSION plpython3u;
+
+CREATE OR REPLACE FUNCTION ols() RETURNS numeric[] AS
+$$
+	from sklearn.linear_model import LinearRegression
+	
+	X = []
+	y = []
+	
+	rv = plpy.execute("SELECT * FROM reg")
+	for row in rv:
+		X.append([row["size"]])
+		y.append(row["price"])
+	
+	model = LinearRegression().fit(X, y)
+	return [*model.coef_, model.intercept]
+$$
+LANGUAGE plpython3u;
+
+SELECT ols();
+	\end{lstlisting}
+\end{document}
