@@ -1,0 +1,109 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage{longtable}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+\lstdefinestyle{R} {language=R}
+\lstset{language=SQL,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space},
+	morekeywords={with, data, refresh, materialized, explain, rank, over, partition, uuid, extension, replace, function, returns, language}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Scalable Data Engineering, Exercise 8}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Task 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item False. Supervised Learning needs labelled data.
+		\item False. The output is $f(Xw)$.
+		\item True.
+		\item False. For non-linearity you need at least one non-linear activation function.
+		\item True.
+		\item False. Three derivatives.
+		\item False. Exploding gradients lead to instability because of huge changes in weights.
+		\item False. Problem are dead neurons.
+		\item True.
+	\end{enumerate}
+
+	\section*{Task 2}
+	Using an Excel Spreadsheet we get
+	\begin{center}
+		\begin{longtable}{ccc|cccc|cc}
+			$x_1$ & $x_2$ & $t$ & $w_{11}^{old}$ & $w_{21}^{old}$ & $z$ & $a$ & $w_{11}^{new}$ & $w_{21}^{new}$ \\
+			\hline
+			1 & 0 & 1 & -0,2 & 0,4 & -0,2 & 0 & 0,1 & 0,4\\
+			0 & 1 & 1 & 0,1 & 0,4 & 0,4 & 0 & 0,1 & 0,7\\
+			0 & 0 & 0 & 0,1 & 0,7 & 0 & 0 & 0,1 & 0,7\\
+			1 & 1 & 1 & 0,1 & 0,7 & 0,8 & 0 & 0,4 & 1\\
+			\hline
+			1 & 0 & 1 & 0,4 & 1 & 0,4 & 0 & 0,7 & 1\\
+		 	0 & 1 & 1 & 0,7 & 1 & 1 & 1 & 0,7 & 1\\
+			0 & 0 & 0 & 0,7 & 1 & 0 & 0 & 0,7 & 1\\
+			1 & 1 & 1 & 0,7 & 1 & 1,7 & 1 & 0,7 & 1\\
+			\hline
+			1 & 0 & 1 & 0,7 & 1 & 0,7 & 0 & 1 & 1\\
+			0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\
+			0 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1\\
+			1 & 1 & 1 & 1 & 1 & 2 & 1 & 1 & 1\\
+			\hline
+			1 & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\
+			0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\
+			0 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1\\
+			1 & 1 & 1 & 1 & 1 & 2 & 1 & 1 & 1
+		\end{longtable}
+	\end{center}
+	The weights converge to 1.
+
+	\section*{Task 3}
+	Since we know the true values $t_{a_1}$, $t_{a_2}$ and $t_{a_3}$ we can train all three perceptrons individually. For the first perceptron we see that it should only fire if and only if $x_1$ fires. This leads to $w_{11} = 1$ and $w_{21} = -1$. For the second perceptron it is the opposite: It should only fire if and only if $x_2$ fires. Therefore $w_{21} = -1$ and $w_{22} = 1$.
+	
+	The third perceptron models the XOR function which is not linear separable. Therefore we won't find weights $w_{13}$ and $w_{23}$ that will produce correct results.
+	
+\end{document}
