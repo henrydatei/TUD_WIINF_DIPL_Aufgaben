@@ -1,0 +1,116 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Datensicherheit, Lösungsvorschlag Prüfung WS 2022/23}}
+\author{\textsc{Henry Haustein}, \textsc{Dennis Rössel}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Schutzziele, was bedeuten Sie?}
+	Schutzziele:
+	\begin{itemize}
+		\item Vertraulichkeit: nur der bestimmte Empfänger kann die Nachricht lesen
+		\item Integrität: die Daten sind nicht manipuliert worden
+		\item Verfügbarkeit: [nicht mit Kryptografie erreichbar]
+	\end{itemize}
+	
+	\section*{Wie funktioniert ein symmetrisches Authentikationssystem? Wie wird die MAC geprüft?}
+	Neben der Nachricht wird auch eine MAC mitgeschickt. Die MAC wird berechnet, indem die Nachricht mit einem Schlüssel verschlüsselt wird. Auf Empfängerseite kann dann einfach die empfangene Nachricht auch verschlüsselt werden und es wird verglichen, ob das mit der MAC übereinstimmt.
+	
+	\section*{Was ist ein IT-Sicherheitskonzept? Anforderungs- und Risikoanalyse, Maßnahmen}
+	IT-Sicherheitskonzept:
+	\begin{itemize}
+		\item Was, Wovor und Wie schützen?
+		\item Anforderungsanalyse:
+		\begin{itemize}
+			\item Welche Objekte (Anwendungen, Netze, Informationen, ...) relevant
+			\item Schutzbedarf (normal, hoch, sehr hoch)
+		\end{itemize}
+		\item Risikoanalyse:
+		\begin{itemize}
+			\item Risiko-Identifikation (Bedrohungen und Schwachstellen)
+			\item Risiko-Einschätzung (Eintrittswahrscheinlichkeit)
+			\item Risiko-Bewertung (Einstufung Risiko + Ausmaß für Maßnahmen)
+		\end{itemize}
+		\item Maßnahmen
+	\end{itemize}
+	
+	\section*{Wie ist die Risikoanalyse klassifiziert? (qualitativ, quantitativ, Risikomatrix)}
+	quantitativ: Eintrittswahrscheinlichkeit $\cdot$ Schadenshöhe $\to$ schwierig zu schätzen
+	
+	qualitativ mittels Risikomatrix: Risikoklassen gering, mittel, hoch, sehr hoch $\to$ Einschätzung, was tragbar ist und was nicht mehr tragbar ist
+	
+	\section*{Was ist Sicherheit? Gibt es einen Endpunkt?}
+	Sicherheit ist ein Prozess ohne Endpunkt. Es gibt keine 100\%-ige Sicherheit, da es immer neue Schwachstellen gibt, die behoben werden müssen.
+	
+	\section*{Was ist Steganographie? Wo wird es eingesetzt? Welche Methoden gibt es?}
+	Bei der Steganographie geht es darum, eine Nachricht in unverdächtigen Daten zu verbergen. Man schützt nur die Existenz der Nachricht, nicht den Inhalt.
+	
+	Methoden:
+	\begin{itemize}
+		\item LSB-Ersetzung
+		\item Inkrementieren/Dekrementieren
+		\item synthetische Steganographie (Erstellen von Coverdaten passend zur Nachricht)
+		\item selektive Steganographie (Suchen von Coverdaten, die die Nachricht bereits enthalten)
+	\end{itemize}
+	
+	\section*{Ist die LSB-Ersetzung sicher? Welche Angriffe gibt es dagegen?}
+	LSB-Ersetzung ist nicht sicher, es gibt eine Vielzahl von Angriffen, da das Verfahren bereits gut untersucht wurde. Beispiele für Angriffe:
+	\begin{itemize}
+		\item visueller Angriff: LSB-Ebene visualisieren
+		\item Histogramm auf LSB-Ebene: Werte, die sich nur im LSB unterscheiden, werden angeglichen
+		\item große Datenmengen + statistische Analysen + KI $\to$ Unentdeckbarkeit schwierig
+	\end{itemize}
+
+\end{document}
