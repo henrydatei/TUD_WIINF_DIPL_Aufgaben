@@ -1,0 +1,200 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Finanzderivate und Optionen, Übung 1}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{itemize}
+		\item historische/realisierte Volatilität
+		\item implizierte Volatilität: Mit dem Black-Scholes-Model auf Basis von Optionen bestimmte zukünftige Volatilität
+		\item zukünftige Volatilität
+		\item erwartete Volatilität
+	\end{itemize}
+
+	\section*{Aufgabe 2}
+	Nach der Markowitz'schen Portfolio-Theorie wird das Risiko einer Aktie nicht explizit als das Risiko eines Kursrückgangs definiert. Stattdessen wird das Risiko durch die Varianz bzw. Standardabweichung der Renditen der Aktie beschrieben. Dieses Maß bezieht sowohl positive als auch negative Abweichungen von der erwarteten Rendite mit ein, und nicht nur Kursrückgänge. Markowitz betrachtet das Risiko als eine Funktion der Schwankungen der Erträge und betont die Bedeutung der Diversifikation zur Risikoreduktion.
+	
+	\section*{Aufgabe 3}
+	Eine Korrelation von 1 der Renditen der Aktien bedeutet, dass die Renditen der beiden Aktien genau auf einer Linie liegen, nicht notwendigerweise auf der Winkelhalbierenden.
+	\begin{center}
+		\begin{tikzpicture}
+			\begin{axis}[
+				xmin=0, xmax=1, xlabel={Rendite A},
+				ymin=0, ymax=0.6, ylabel={Rendite B},
+				samples=400,
+				axis x line=bottom,
+				axis y line=left,
+				domain=0:1,
+				]
+				\addplot[blue, mark=x,only marks] coordinates {
+					(0.1,0.05)
+					(0.2,0.1)
+					(0.3,0.15)
+					(0.4,0.2)
+					(0.5,0.25)
+					(0.6,0.3)
+					(0.7,0.35)
+					(0.8,0.4)
+					(0.9,0.45)
+				};
+				
+			\end{axis}
+		\end{tikzpicture}
+	\end{center}
+	Hier in diesem Beispiel ist die Rendite von Aktie B genau halb so groß wie die Rendite von Aktie A. Wenn die durchschnittliche Rendite (Marktrendite) bei 51\% liegt, hat Aktie A eine Wahrscheinlichkeit $>0$ den Markt zu schlagen, aber Aktie B hat immer eine Wahrscheinlichkeit, die halb so groß ist.\footnote{Die Aufgabenstellung ist offensichtlich ungenau definiert, mit überdurchschnittlicher Rendite ist hier eine Rendite über dem Mittelwert der Aktie gemeint, nicht eine überdurchschnittliche Rendite gegenüber dem Markt.}
+	
+	Wenn mit überdurchschnittliche Rendite die Überperformance bezüglich der Aktie gemeint ist (also die Aktie mehr Rendite macht, als sie sonst macht), dann ist die Wahrscheinlichkeit 1.
+	
+	\section*{Aufgabe 4}
+	Es gilt
+	\begin{align}
+		\sigma_P &= \sqrt{w_1^2\sigma_1^2 + w_2^2\sigma_2^2 + 2w_1w_1\sigma_1\sigma_2\rho_{12}} \notag \\
+		&= \sqrt{0.35^2\cdot 0.6^2 + 0.65^2\cdot 0.3^2 + 2\cdot 0.35\cdot 0.65\cdot 0.6\cdot 0.3\cdot 0.11} \notag \\
+		&= 0.3019 \notag
+	\end{align}
+	
+	\section*{Aufgabe 5}
+	Es gilt ($w_1$ Avon, $w_2$ Nova)
+	\begin{align}
+		\sigma_P &= \sqrt{w_1^2\sigma_1^2 + w_2^2\sigma_2^2 + 2w_1w_1\sigma_1\sigma_2\rho_{12}} \notag \\
+		0 &= \sqrt{w_1^2\cdot 0.5^2 + (1-w_1)^2\cdot 0.25^2 - 2\cdot w_1\cdot (1-w_1)\cdot 0.5\cdot 0.25\cdot 1} \notag \\
+		w_1 &= \frac{1}{3} \notag
+	\end{align}
+	
+	\section*{Aufgabe 6}
+	Es gilt ($w_1$ Tex, $w_2$ Mex)
+	\begin{align}
+		\sigma_P &= \sqrt{w_1^2\sigma_1^2 + w_2^2\sigma_2^2 + 2w_1w_1\sigma_1\sigma_2\rho_{12}} \notag \\
+		0.2 &= \sqrt{w_1^2\cdot 0.4^2 + (1-w_1)^2\cdot 0.2^2} \notag \\
+		w_1 &= \frac{2}{5} \notag \\
+		w_1 &= 0 \notag
+	\end{align}
+	Man könnte sagen, dass ein Gewicht einer Aktie von 0\% durchaus keine sinnvolle Lösung ist. 
+	
+	\section*{Aufgabe 7}
+	Alle Investoren möchten ein effizientes Portfolio. Die Summe aller Portfolios ist das Marktportfolio.
+	
+	\section*{Aufgabe 8}
+	Die Rendite setzt sich zusammen aus
+	\begin{itemize}
+		\item Kursentwicklung
+		\item Erträge
+	\end{itemize}
+	
+	\section*{Aufgabe 9}
+	systemisches Risiko: nicht diversifizierbares Risiko, z.B. Weltwirtschaftskrisen \\
+	unsystemisches Risiko: diversifizierbares Risiko
+	
+	\section*{Aufgabe 10}
+	Das Risiko, das
+	\begin{enumerate}[label=(\alph*)]
+		\item der Unternehmensgründer und Geschäftsführer in den Ruhestand geht. $\to$ unternehmensspezifisches Risiko
+		\item durch einen Anstieg des Ölpreises die Produktionskosten steigen. $\to$ teils diversifizierbares Risiko, teils systematisches Risiko
+		\item ein Produktdesign fehlerhaft ist und das Produkt zurückgerufen werden muss. $\to$ unternehmensspezifisches Risiko
+		\item dass durch eine Verlangsamung der Wirtschaft, die Nachfrage sinkt. $\to$ systematisches Risiko
+	\end{enumerate}
+	
+	\section*{Aufgabe 11}
+	$\beta$ misst in CAPM das Risiko des Wertpapiers und ist die Korrelation des der Rendite Wertpapiers abzüglich $r_f$ mit der Rendite des Marktportfolios abzüglich $r_f$. Es wird nur systematisches Risiko bewertet.
+	
+	\section*{Aufgabe 12}
+	Es gilt
+	\begin{align}
+		\E(r_P) &= w_1\E(r_1) + w_2\E(r_2) \notag \\
+		&= \frac{1}{4}\cdot 10\% + \frac{3}{4}\cdot 16\% \notag \\
+		&= 14.5 \% \notag
+	\end{align}
+	
+	\section*{Aufgabe 13}
+	Der Unterschied ist
+	\begin{itemize}
+		\item Absicherung: Reduzierung der Volatilität durch Reduktion der Rendite, in der Regel Derivat + Underlying
+		\item Spekulation: Erhöhung der Rendite durch Erhöhung der Volatilität, in der Regel nur Derivat
+		\item Arbitrage: Geld verdienen ohne Risiko durch Ausnutzung von Preisunterschieden der selben Güter an unterschiedlichen Börsen
+	\end{itemize}
+	
+	\section*{Aufgabe 14}
+	Es gilt
+	\begin{align}
+		VaR_{\alpha} &= V_0(\mu + z_{\alpha}\sigma) \notag \\
+		9000 &= V_0(0 + 1.6449\cdot 0.047) \notag \\
+		V_0 &= 116414 \notag
+	\end{align}
+	
+	\section*{Aufgabe 15}
+	Es gilt
+	\begin{align}
+		VaR_{\alpha} &= V_0(\mu + z_{\alpha}\sigma) \notag \\
+		300000 &= 1500000(0 + 1.6449\cdot \sigma) \notag \\
+		\sigma &= 0.1216 \notag
+	\end{align}
+	
+	\section*{Aufgabe 16}
+	Die Volatilität des Portfolios ist
+	\begin{align}
+		\sigma_P &= \sqrt{w_1^2\sigma_1^2 + w_2^2\sigma_2^2 + 2w_1w_1\sigma_1\sigma_2\rho_{12}} \notag \\
+		&= \sqrt{0.5^2\cdot 0.01^2 + 0.5^2\cdot 0.01^2 + 2\cdot 0.5\cdot 0.5\cdot 0.01\cdot 0.01\cdot 0.3} \notag \\
+		&= 0.0081 \notag
+	\end{align}
+	Damit gilt
+	\begin{align}
+		VaR_{\alpha} &= V_0(n\cdot \mu + \sqrt{n}\cdot z_{\alpha}\sigma_P) \notag \\
+		&= 200000(5\cdot 0 + \sqrt{5}\cdot 2.33\cdot 0.0081) \notag \\
+		&= 8840.26 \notag
+	\end{align}
+
+\end{document}
