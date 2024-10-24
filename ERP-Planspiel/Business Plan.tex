@@ -1,0 +1,205 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage{longtable}
+\usepackage[onehalfspacing]{setspace}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\usepackage[resetfonts]{cmap}
+\usepackage{fancyvrb}
+\begin{VerbatimOut}{ot1.cmap}
+	%!PS-Adobe-3.0 Resource-CMap
+	%%DocumentNeededResources: ProcSet (CIDInit)
+	%%IncludeResource: ProcSet (CIDInit)
+	%%BeginResource: CMap (TeX-OT1-0)
+	%%Title: (TeX-OT1-0 TeX OT1 0)
+	%%Version: 1.000
+	%%EndComments
+	/CIDInit /ProcSet findresource begin
+	12 dict begin
+	begincmap
+	/CIDSystemInfo
+	<< /Registry (TeX)
+	/Ordering (OT1)
+	/Supplement 0
+	>> def
+	/CMapName /TeX-OT1-0 def
+	/CMapType 2 def
+	1 begincodespacerange
+	<00> <7F>
+	endcodespacerange
+	8 beginbfrange
+	<00> <01> <0000>
+	<09> <0A> <0000>
+	<23> <26> <0000>
+	<28> <3B> <0000>
+	<3F> <5B> <0000>
+	<5D> <5E> <0000>
+	<61> <7A> <0000>
+	<7B> <7C> <0000>
+	endbfrange
+	40 beginbfchar
+	<02> <0000>
+	<03> <0000>
+	<04> <0000>
+	<05> <0000>
+	<06> <0000>
+	<07> <0000>
+	<08> <0000>
+	<0B> <0000>
+	<0C> <0000>
+	<0D> <0000>
+	<0E> <0000>
+	<0F> <0000>
+	<10> <0000>
+	<11> <0000>
+	<12> <0000>
+	<13> <0000>
+	<14> <0000>
+	<15> <0000>
+	<16> <0000>
+	<17> <0000>
+	<18> <0000>
+	<19> <0000>
+	<1A> <0000>
+	<1B> <0000>
+	<1C> <0000>
+	<1D> <0000>
+	<1E> <0000>
+	<1F> <0000>
+	<21> <0000>
+	<22> <0000>
+	<27> <0000>
+	<3C> <0000>
+	<3D> <0000>
+	<3E> <0000>
+	<5C> <0000>
+	<5F> <0000>
+	<60> <0000>
+	<7D> <0000>
+	<7E> <0000>
+	<7F> <0000>
+	endbfchar
+	endcmap
+	CMapName currentdict /CMap defineresource pop
+	end
+	end
+	%%EndResource
+	%%EOF
+\end{VerbatimOut}
+
+\title{\textbf{ERP-Planspiel, Business Plan}}
+\author{\textsc{Henry Haustein}, \textsc{Dennis Rössel}, \textsc{Hannes Metzner}, \textsc{Felix Hauspurg}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Products}
+	Our goal as a muesli product provider is to offer affordable products while keeping our costs low by minimizing the use of expensive ingredients. We have developed a strategy of using the most favourable ingredient to fill up the remaining content of each muesli product. We use fruit ingredients sparingly due to their higher cost.
+	
+	Each of our muesli products has a minimum percentage of wheat, oats, and a specific fruit or nut. We have created a table summarizing the components of each muesli product, which can be found below:
+	\begin{center}
+		\begin{tabular}{l|c|c|c|c|c|c}
+			& \textbf{Nut} & \textbf{Blueberry} & \textbf{Strawberry} & \textbf{Rasin} & \textbf{Original} & \textbf{Mixed} \\
+			\hline
+			\textbf{Wheat} & min. 20\% & min. 20\% & min. 20\% & min. 20\% & min. 20\% & min. 20\% \\
+			\hline
+			\textbf{Oat} & min. 30\% & min. 30\% & min. 30\% & min. 30\% & min. 30\% & min. 30\% \\
+			\hline
+			\textbf{Additional} & min. 20\% & min. 20\% & min. 20\% & min. 20\% & min. 20\% & min. 20\% \\
+		\end{tabular}
+	\end{center}
+
+	At least in the Introduction Game, the prices for Oat were 0.92 and for Wheat 0.99; the other ingredients were much more expensive. Based on this, we decided to maximise the share of Oat and reduce all other ingredients to a minimum.
+	
+	We have chosen to specialize in four muesli products, each available in 500g and 1kg sizes. We do not offer a mixed muesli product due to the need for multiple orders and potential delays. By offering a variety of flavours while minimizing costs, we can provide affordable muesli products to our customers.
+	
+	\section*{Pricing}
+	Our pricing strategy will also be based on market segmentation to meet the different needs and price expectations of our customers. We will group our products into categories or product lines of varying quality. We may offer lower prices in certain sales channels or regions to attract price-conscious customers and increase sales for price-sensitive or budget-conscious customers.
+	
+	Dynamic pricing is also part of our approach. For example, to stimulate demand during peak or off-season periods, we may offer seasonal or limited-time price promotions. For different customer segments, such as large customers or smaller stores, we may also offer different prices.
+	Monitoring our competitors' prices and market dynamics is also important. If necessary, we can adjust our prices to remain competitive or gain market share. However, it is equally important to ensure that our prices remain profitable and do not compromise our target net margin of around 45\%.
+	
+	It is important to emphasise that determining the optimal pricing strategy is an ongoing process and requires regular monitoring, analysis and adjustment. We will carefully analyse market data, customer feedback, sales trends and other relevant information to ensure that our pricing strategy is in line with the changing demands of the market and that it helps us to achieve our business objectives.
+	
+	\section*{Marketing}
+	Our pricing strategy is based on a low-price strategy. We aim to be the market leader. Our low price strategy requires us to identify the target groups for our products. We are interested in price-sensitive customers who appreciate the value of our products. 
+	
+	However, we also have to check whether our competitors are also working on massive price segmentation. If they are, we will have to invest even more time in order not to be left behind by our competitors. Our biggest customers are said to be the hypermarkets, which are less sensitive to advertising. This is why marketing expenditure is concentrated in the north. There are many more hypermarkets in the South than in the North, so we're going to see less marketing spent there. It is in the north that a large number of the advertising-sensitive independent stores are located. By analysing the existing marketing, we will regularly adjust the marketing budget according to the product range. The marketing share of the product will be set at around 5\% so that we can reach our customers effectively. With the help of these measures, we want to achieve a large budget so that we can enter higher price segments at a later stage and ultimately maximise our share of the market. 
+	
+	Due to the tightness of the budget, we are forced to limit ourselves to the selected areas, otherwise it would result in costs that are unreasonable. Of course, our message remains that our products continue to appeal to the customer, so we are trying to cut costs everywhere.
+	
+	\section*{Investment}
+	Our investment strategy is based on a combination of mass production and price leadership to succeed in the competitive environment of HEC Montreal's cereal ERP simulation game. Our main focus is on two key areas: warehouse expansion and production lines.
+	
+	We plan to significantly expand our warehouse to take advantage of favourable purchasing opportunities for raw materials. By purchasing raw materials in bulk, we can anticipate and benefit from favourable prices that give us a competitive advantage. A larger warehouse also enables us to minimise material bottlenecks and ensure continuous production on the production lines, as we always have sufficient raw materials available.
+	
+	In parallel, we are planning the expansion of our production lines. Our goal is to set up four production lines, each producing one product continuously. This will allow us to minimise set-up times and maximise production capacity to increase our output and meet market demand efficiently. We recognise that this will require significant investment and are prepared to consider temporary debt to fund these expansion projects. However, in doing so, we will carefully weigh the risks and costs to ensure that the debt can be repaid within a foreseeable period of time.
+	
+	To minimise the risk of dependence on a single commodity, we also plan to diversify our commodity investments. We will include different raw materials in our purchasing strategy to reduce price fluctuations and shortages. This will allow us to optimise raw material procurement and hedge against potential risks related to raw material availability and costs.
+	
+	Once our warehouse and production lines are operating efficiently, we plan to make further investments to increase production efficiency. This may include the implementation of automation technologies, improvements in material flow or the implementation of lean principles to continuously optimise our production processes and reduce costs. We will also regularly monitor our production data and key performance indicators to identify bottlenecks and inefficiencies and initiate appropriate improvement measures.
+	
+	It is important to emphasise that our investment strategy is flexible and will be regularly reviewed and adjusted to respond to changes in the gaming environment and new market situations.
+	
+	\section*{Strategy \& Outlook}
+	
+	Our company's main focus is to offer customers a high-quality muesli at an affordable price. We recognize that some customers may be willing to pay more for better quality ingredients, but we believe that there is a large market for a more affordable option. To achieve this, we have developed a strategy of reducing costs as much as possible by using the minimum amount of expensive ingredients necessary.
+	
+	We will also ensure that our production processes are optimized to reduce costs as much as possible. By doing this, we can keep our prices competitive and accessible to a wider range of customers. To ensure maximum efficiency and productivity in our manufacturing operations, we will use a process of lean manufacturing to optimize our production processes. Our goal is to produce our four types of muesli with minimum set-up times and reduce costs as much as possible.
+	
+	To ensure that we are producing the four most popular types of muesli, we will conduct market research by evaluating surveys. We will gather information on customer preferences and tastes to help us develop products that meet their needs and expectations. By using surveys and other market research methods, we can ensure that we are producing muesli that meets the needs and preferences of our target market. This will help us to create products that are in high demand, leading to increased sales and long-term success for our business.
+	
+	To maintain our competitive edge, we will continuously analyse our operations and identify areas where we can make further improvements. By staying up-to-date with the latest technologies, we can ensure that our products remain relevant and in-demand. By listening to feedback from our customers, we can make adjustments as needed to ensure that our products and operations are meeting their needs and expectations.
+	
+	Overall, we believe that by focusing on these key areas, we can establish ourselves as a leading manufacturer of affordable muesli and achieve long-term success in the market.
+
+\end{document}

@@ -1,0 +1,118 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage{longtable}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{ERP-Planspiel, Short Exam}}
+\author{\textsc{Henry Haustein}, \textsc{Dennis Rössel}, \textsc{Hannes Metzner}, \textsc{Felix Hauspurg}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Question 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item wrong, oat has to be at leat 30\%, blueberry has to be at least 20\%
+		\item wrong, the sum of all ingredients is 0.55kg
+		\item correct
+		\item wrong, oat is missing, the raisins are not part of the recipe
+	\end{enumerate}
+
+	\section*{Question 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item After step 1: As we have already the missing 30,000 units of blueberry muesli in production, there is nothing else to do.
+		\item After step 1: We need to produce 30,000 more units of original muesli. \\
+		After step 2: We have the ingredients for the muesli but we need 30,000 boxes and bags which we currently don't have in our inventory. We buy the 30,000 boxes and bags. \\
+		After step 3: After delivery we start the production.
+	\end{enumerate}
+	
+	\section*{Question 3}
+	\textit{You should stick to your own conventions: In the American number system 30.000 units means 30 units....}
+	\begin{center}
+		\begin{longtable}{l|C{3cm}|C{3cm}|C{3cm}|C{3cm}}
+			& \textbf{selling 30,000 units} & \textbf{invest 2M} & \textbf{reduce setup time} & \textbf{short on cash} \\
+			\hline
+			(a) Credit rating & positive. If we have debt the debt is reduced and so our credit rating improves. & no influence, cash is reduced but Acc. receivables increase by same amount & no influence, cash is reduced but Acc. receivables increase by same amount & credit rating is getting worse because you need a loan \\
+			\hline
+			(b) weekly costs & no influence. Costs stay the same. & weekly costs increase as bigger machines need more employees & weekly costs increase as faster machines need more employees, use more energy, ... & increase because we have to pay interests \\
+			\hline
+			(c) cash account & positive, positive cash income & cash is reduced by 2M & cash is reduced by invested amount & is on 0 because we get a loan to get back to 0 \\
+			\hline
+			(d) loan & positive, loan is reduced (if we are in debt) & if we have cash, then no influence, if not, then we need an additional loan & if we have cash, then no influence, if not, then we need an additional loan & increases, we need more loans \\
+		\end{longtable}
+	\end{center}
+	
+	\section*{Question 4}
+	\begin{enumerate}[label=(\alph*)]
+		\item calculation below:
+		\begin{align}
+			\text{Debt Loading} &= (1,000,000 + 500,000) + (-12,000,000 - 150,000) \notag \\
+			&= -10,650,000 \Rightarrow BB \Rightarrow 7\% \notag \\
+			\text{Company Value} &= \frac{12\cdot \frac{650,000 - 0}{3} + 0}{7\% + 7\%} \notag \\
+			&= 18,571,428.57 \EUR \notag
+		\end{align}
+		\item calculation below, we pay the investment of 2M from cash:
+		\begin{align}
+			\text{Debt Loading} &= (800,000 + 240,000) + (-12,000,000 - 450,000) \notag \\
+			&= -11,410,000 \Rightarrow BB- \Rightarrow 7.25\% \notag \\
+			\text{Company Value} &= \frac{12\cdot \frac{350,000 - 2,000,000}{1} + 2,000,000}{7\% + 7,25\%} \notag \\
+			&= -124,912,280.7 \EUR \notag
+		\end{align}
+	\end{enumerate}
+	
+	\section*{Question 5}
+	\begin{enumerate}[label=(\alph*)]
+		\item fixed costs change to 1.18 per unit, so 500g Nut Muesli will cost 2.08 and 1kg Original Muesli will cost 2.54
+		\item fixed costs change to 2.06 per unit, so 500g Nut Muesli will cost 2.96 and 1kg Original Muesli will cost 3.42
+		\item fixed costs change to 1.34 per unit, so 500g Nut Muesli will cost 2.24 and 1kg Original Muesli will cost 2.70
+	\end{enumerate}
+
+\end{document}

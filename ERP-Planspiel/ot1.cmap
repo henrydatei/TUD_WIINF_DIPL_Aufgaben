@@ -1,0 +1,78 @@
+        %!PS-Adobe-3.0 Resource-CMap
+        %%DocumentNeededResources: ProcSet (CIDInit)
+        %%IncludeResource: ProcSet (CIDInit)
+        %%BeginResource: CMap (TeX-OT1-0)
+        %%Title: (TeX-OT1-0 TeX OT1 0)
+        %%Version: 1.000
+        %%EndComments
+        /CIDInit /ProcSet findresource begin
+        12 dict begin
+        begincmap
+        /CIDSystemInfo
+        << /Registry (TeX)
+        /Ordering (OT1)
+        /Supplement 0
+        >> def
+        /CMapName /TeX-OT1-0 def
+        /CMapType 2 def
+        1 begincodespacerange
+        <00> <7F>
+        endcodespacerange
+        8 beginbfrange
+        <00> <01> <0000>
+        <09> <0A> <0000>
+        <23> <26> <0000>
+        <28> <3B> <0000>
+        <3F> <5B> <0000>
+        <5D> <5E> <0000>
+        <61> <7A> <0000>
+        <7B> <7C> <0000>
+        endbfrange
+        40 beginbfchar
+        <02> <0000>
+        <03> <0000>
+        <04> <0000>
+        <05> <0000>
+        <06> <0000>
+        <07> <0000>
+        <08> <0000>
+        <0B> <0000>
+        <0C> <0000>
+        <0D> <0000>
+        <0E> <0000>
+        <0F> <0000>
+        <10> <0000>
+        <11> <0000>
+        <12> <0000>
+        <13> <0000>
+        <14> <0000>
+        <15> <0000>
+        <16> <0000>
+        <17> <0000>
+        <18> <0000>
+        <19> <0000>
+        <1A> <0000>
+        <1B> <0000>
+        <1C> <0000>
+        <1D> <0000>
+        <1E> <0000>
+        <1F> <0000>
+        <21> <0000>
+        <22> <0000>
+        <27> <0000>
+        <3C> <0000>
+        <3D> <0000>
+        <3E> <0000>
+        <5C> <0000>
+        <5F> <0000>
+        <60> <0000>
+        <7D> <0000>
+        <7E> <0000>
+        <7F> <0000>
+        endbfchar
+        endcmap
+        CMapName currentdict /CMap defineresource pop
+        end
+        end
+        %%EndResource
+        %%EOF
