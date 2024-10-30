@@ -1,0 +1,155 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Finanzderivate und Optionen, Übung 2}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Kontrahentenrisiko: Der Kontrahent eines Kontraktes kann nicht zahlen
+
+	\section*{Aufgabe 2}
+	ja, wenn alle Kontrahenten nicht mehr zahlen können oder wenn alle von einem Kontrahenten (z.B. Bank) abhängen
+	
+	\section*{Aufgabe 3}
+	Richtig ist: \textit{Das Inflationsrisiko ist aufgrund der kurzen Laufzeit der Geldmarktgeschäfte gering bzw. geringer als bei langlaufenden Krediten.}
+	
+	\section*{Aufgabe 4}
+	\begin{enumerate}[label=(\alph*)]
+		\item \textcolor{red}{Kursrückgang des Euro}
+		\item \textcolor{red}{Steigendes Angebot an Euro}
+		\item \textcolor{green}{Höhere Nachfrage nach Euro}
+		\item \textcolor{green}{Kursanstieg des Euro}
+	\end{enumerate}
+	
+	\section*{Aufgabe 5}
+	Jedes halbe Jahr ist eine Periode, bisher sind 24 Tage vergangen, also ist heute der 25.01. und es sind 13.3\% der Periode vergangen. Die Anleihe läuft damit noch 1.867 Perioden.
+	\begin{center}
+		\begin{tabular}{llll}
+			Datum & Periode & Cashflow & Barwert \\
+			\hline
+			01.07.21 & 0.867 & 0.175 & $0.175\cdot \frac{1}{1.002^{0.867}} = 0.1747$ \\
+			01.01.22 & 1.867 & 100.175 & $100.175\cdot \frac{1}{1.002^{1.867}} = 99.8020$ \\
+			\hline
+			Dirty Price & & & 99.9767
+		\end{tabular}
+	\end{center}
+	Stückzinsen sind $0.1747\cdot 0.133 = 0.0232$, damit ist der Clean Price 99.9535.
+	
+	\section*{Aufgabe 6}
+	Es gilt
+	\begin{center}
+		\begin{tabular}{l|r|r|r}
+			& \textbf{Cashflow} & \textbf{Barwert} & \textbf{multiplizierter Barwert} \\
+			\hline
+			Jahr 1 & 10 & $\frac{10}{1.06}=9.4340$ & 9.4340 \\
+			Jahr 2 & 10 & $\frac{10}{1.06^2}=8.900$ & 17.8000 \\
+			Jahr 3 & 10 & $\frac{10}{1.06^3}=8.3962$ & 25.1886 \\
+			Jahr 4 & 110 & $\frac{110}{1.06^4}=87.1303$ & 348.5212 \\
+			\hline
+			Summe & & 113.8605 & 400.9438
+		\end{tabular}
+	\end{center}
+	\begin{enumerate}[label=(\alph*)]
+		\item Macaulay-Duration $= \frac{400.9438}{113.8605}=3.5214$
+		\item modifizierte Duration $= - \frac{3.5214}{1+0.06} = -3.3221$
+		\item Basispunktwert $= \frac{\text{mod. Duration}}{10000}\cdot\text{Dirty Price} = \frac{-3.3221}{10000}\cdot 113.8605 = -0.0378$. Wenn die Marktrendite um 0.01\% steigt (1 Basispunkt), sinkt der Preis des Bonds um rund 0.04 Euro.
+	\end{enumerate}
+	
+	\section*{Aufgabe 7}
+	Richtig ist: \textit{Wenn die Rendite um 1,00 Prozentpunkte sinkt.}
+	
+	\section*{Aufgabe 8}
+	Richtig ist: \textit{Alle Antworten sind richtig.}
+	
+	\section*{Aufgabe 9}
+	Richtig
+	
+	\section*{Aufgabe 10}
+	Floating Rate Notes (FRN)
+	
+	\section*{Aufgabe 11}
+	Richtig
+	
+	\section*{Aufgabe 12}
+	Edelmetalle: Gold, Platin, Silber \\
+	Unedle Industriemetalle (Base Metals): Kupfer, Zink, Zinn, Eisen
+	
+	\section*{Aufgabe 13}
+	alle, nur die Vorzugsaktie hat kein Stimmrecht
+	
+	\section*{Aufgabe 14}
+	$r = \frac{Div}{P_0}$, damit $P_0=20$
+	
+	\section*{Aufgabe 15}
+	\begin{enumerate}[label=(\alph*)]
+		\item \textcolor{green}{Dividenden haben Auswirkungen auf den Indexstand.}
+		\item \textcolor{red}{Dividenden haben keine Auswirkungen auf den Indexstand.}
+		\item \textcolor{green}{Dividenden werden reinvestiert.}
+		\item \textcolor{red}{Dividenden werden nicht reinvestiert.}
+	\end{enumerate}
+	
+	\section*{Aufgabe 16}
+	Geld in einem Land mit günstigen Zinsen leihen (z.B. Japan), Geld in einem Land mit hohen Zinsen anlegen (z.B. USA). Mit den Erträgen die Zinsen bezahlen und hoffen, dass sich Zinsen und Wechselkurse nicht ändern.
+	
+	\section*{Aufgabe 17}
+	Es gilt
+	\begin{align}
+		\text{Devisenterminkurs} &= \text{Kassakurs} + \frac{(\text{Zinssatz Währung 2} - \text{Zinssatz Währung 1}) \cdot \text{Kassakurs} \cdot \text{Laufzeit in Tagen}}{360\cdot 100} \notag \\
+		&= 1.75 + \frac{(1.1 - 3.25)\cdot 1.75\cdot 360}{360\cdot 100} \notag \\
+		&= 1.7124 \notag
+	\end{align}
+
+\end{document}
