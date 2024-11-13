@@ -1,0 +1,138 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Finanzderivate und Optionen, Übung 4}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Reverse-Cash-and-Carry: Verkauf des Underlyings, Kauf des Futures $\to$ festgelegter Preis ist der Verkaufspreis des Underlyings
+
+	\section*{Aufgabe 2}
+	Richtig ist \textit{Gewinn (Verlust) der Future-Position/Initial Margin}.
+	
+	\section*{Aufgabe 3}
+	\begin{enumerate}[label=(\alph*)]
+		\item\textcolor{green}{Finanzierungskosten sind höher als die Erlöse.}
+		\item\textcolor{red}{Erlöse sind höher als die Finanzierungskosten.}
+		\item\textcolor{green}{Erlöse sind geringer als die Lagerhaltungskosten.}
+		\item\textcolor{red}{Lagerhaltungskosten sind größer als die Versicherungskosten.}
+	\end{enumerate}
+	
+	\section*{Aufgabe 4}
+	Es gilt $\text{Basis} = \text{Kassa} - \text{Termin}$, also ist der Futurepreis hier 490 Euro.
+	
+	\section*{Aufgabe 5}
+	Richtig
+	
+	\section*{Aufgabe 6}
+	Es gilt ($r_1, r_2$ Rendite für Geldanlage 1 oder 2 Jahre, $f_1$ Forward Rate für 1 Jahr)
+	\begin{align}
+		(1+r_1)(1+r_1f_1) &= (1+r_2)^2 \notag \\
+		r_1f_1 &= \frac{(1+r_2)^2}{1+r_1}-1 \notag \\
+		&= \frac{1.07^2}{1.05}-1 \notag \\
+		&= 0.0904 \notag
+	\end{align}
+	
+	\section*{Aufgabe 7}
+	Es gilt
+	\begin{align}
+		(1+r_2)^2(1+r_1f_2) &= (1+r_3)^3 \notag \\
+		r_1f_2 &= \frac{(1+r_3)^3}{(1+r_2)^2}-1 \notag \\
+		&= \frac{1.095^3}{1.07^2}-1 \notag \\
+		&= 0.1468 \notag
+	\end{align}
+	
+	\section*{Aufgabe 8}
+	Es gilt
+	\begin{align}
+		(1+r_1)(1+r_1f_1) &= (1+r_2)^2 \notag \\
+		r_1f_1 &= \frac{(1+r_2)^2}{1+r_1}-1 \notag \\
+		&= \frac{1.07^2}{1.06}-1 \notag \\
+		&= 0.0801 \notag
+	\end{align}
+	
+	\section*{Aufgabe 9}
+	\begin{itemize}
+		\item Hohe Nachfrage (und damit niedrige Rendite) weil T-Bills zur Erfüllung regulatorischer Anforderungen gebraucht werden
+		\item Steuerlicher Vorteil, da man sie nicht auf Bundesstaat-Ebene versteuern muss
+		\item Deposit Requirements sind bei T-Bills geringer als bei Assets mit ähnlich geringem Risiko
+	\end{itemize}
+	
+	\section*{Aufgabe 10}
+	\begin{itemize}
+		\item LIBOR: London Interbank Offered Rate ist ein in London an allen Bankarbeitstagen ermittelter Referenzzinssatz, der unter anderem als Grundlage für die Berechnung des Kreditzinses herangezogen wird.
+		\item EONIA: Der EONIA (Euro OverNight Index Average) war der Zinssatz, zu dem auf dem Interbankenmarkt im Euroraum unbesicherte Ausleihungen in Euro von einem Target-Tag auf den nächsten gewährt wurden. Ein Target-Tag ist jeder Tag, an dem das Target-2-System Zahlungen abwickelt.
+		\item \EUR STR: Die Euro Short-Term Rate (\EUR STR) ist ein Referenzzinssatz für die Währung Euro. Die €STR wird von der Europäischen Zentralbank (EZB) ermittelt und basiert auf der Geldmarktstatistik des Eurosystems. Nachfolger von EONIA
+		\item EURIBOR: Die Abkürzung Euribor steht für Euro Interbank Offered Rate. Euribor bezeichnet die durchschnittlichen Zinssätze, zu denen viele europäische Banken einander Anleihen in Euro gewähren. Dabei gelten verschiedene Laufzeiten: von einer Woche bis 12 Monate. Nachfolger von LIBOR
+		\item SOFR: Secured Overnight Financing Rate (SOFR) ist ein Referenzzinssatz für die Währung US-Dollar. Der SOFR basiert auf den Transaktionen des US-Dollar Repo-Marktes.
+	\end{itemize}
+	
+	\section*{Aufgabe 11}
+	Weil die Geschäfte mit Gütern besichert sind und die Laufzeiten kurz sind.
+	
+	\section*{Aufgabe 12}
+	Forward-Preis ist der heutige Preis zu dem ein Asset an einem zukünftigen Zeitpunkt ge- oder verkauft werden kann. Wer des Kontaktes ist zum Abschluss 0, ändert sich aber mit der Zeit durch Preisänderungen des Underlyings.
+	
+	\section*{Aufgabe 13}
+	Richtig, da Gewinn: $1000\cdot (105.10 - 102.70) = 2400$ (die Kontraktgröße findet man im Handbuch)
+	
+	\section*{Aufgabe 14}
+	Richtig ist \textit{Short einjährige Anleihe und Long zweijährige Anleihe}. Der Future sorgt dafür, dass man von Jahr 1-2 eine Anleihe hat, im Jahr 0-1 keine. Durch den Kauf der zweijährigen Anleihe habe ich schon die Anleihe für die Jahre 1-2, die Anleihe im Jahr 0-1 bekomme ich durch die Short-Position weg.
+	
+	\section*{Aufgabe 15}
+	Falsch, da Gewinn: $4\cdot 10\cdot (3533 - 3407) = 5040$
+	
+\end{document}
