@@ -1,0 +1,160 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Finanzderivate und Optionen, Übung 5}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\begin{enumerate}[label=(\alph*)]
+		\item\textcolor{green}{zahlt den variablen Zinssatz}
+		\item\textcolor{red}{empfängt den variablen Zinssatz}
+		\item\textcolor{red}{zahlt den festen Zinssatz}
+		\item\textcolor{green}{empfängt den festen Zinssatz}
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item \textcolor{green}{Kreditnehmer mit variabel verzinstem Kredit können sich durch den Kauf eines FRA gegen steigende Zinsen schützen.}
+		\item \textcolor{red}{Kreditnehmer mit variabel verzinstem Kredit können sich durch den Verkauf eines FRA gegen steigende Zinsen schützen.}
+		\item \textcolor{green}{Ein Händler kann bei Erwartung steigender Zinsen FRAs kaufen, wenn er der Meinung ist, dass der Zins zum Zeitpunkt der zukünftigen Zinsfeststellung oberhalb des im FRA vereinbarten Zinssatzes liegen wird.}
+		\item \textcolor{red}{Ein Händler kann bei Erwartung fallender Zinsen FRAs kaufen, wenn er der Meinung ist, dass der Zins zum Zeitpunkt der zukünftigen Zinsfeststellung unterhalb des im FRA vereinbarten Zinssatzes liegen wird.}
+	\end{enumerate}
+	
+	\section*{Aufgabe 3}
+	Richtig
+	
+	\section*{Aufgabe 4}
+	Falsch, die Wette war, dass die Zinsen steigen, aber das hat sich nicht bestätigt.
+	
+	\section*{Aufgabe 5}
+	Unternehmen A nimmt Kredit zu 5\% auf und macht Swap mit Bank (zahlt LIBOR, erhält 5.3\%). Insgesamt: LIBOR - 0.3\% (statt LIBOR + 0.1\%)
+	
+	Unternehmen B nimmt Kredit zu LIBOR + 0.6\% auf und macht Swap mit Bank (zahlt 5.4\%, erhält LIBOR). Insgesamt: 6\% (statt 6.4\%)
+	
+	Die Bank zahlt einmal LIBOR und erhält ihn, außerdem erhält sie 5.4\% und zahlt 5.3\%. Es bleiben 0.1\% Gewinn.
+	
+	\section*{Aufgabe 6}
+	Die Seite, die in Pfund bezahlt, muss jedes Jahr 2 Millionen Pfund zahlen und erhält 1.8 Millionen Dollar. Die erste Zahlung in 3 Monaten, es handelt sich um ein ganzjähriges Geschäft.
+	
+	Am Ende des Swaps Austausch der Nominalbeträge (bei Währungsswaps wird immer der Nominalbetrag getauscht):
+	\begin{align}
+		\frac{2}{1.07^{1/4}} + \frac{22}{1.07^{5/4}} &= 22.182 \notag \\
+		\frac{1.8}{1.04^{1/4}} + \frac{31.8}{1.04^{5/4}} &= 32.061 \notag
+	\end{align}
+	Die Seite die Leistungen in GBP leistet: $32.061 - (22.182\cdot 185) = -8.976$ Dollar \\
+	Die Seite die Leistungen in USD leistet: $-32.061 + (22.182\cdot 185) = 8.976$ Dollar
+	
+	\section*{Aufgabe 7}
+	Gewinn: $(3.5\% - 2.5\%)\cdot 15000000 \cdot \frac{90}{360} = 37500$
+	
+	\section*{Aufgabe 8}
+	Am Ende des Kontraktes
+	
+	\section*{Aufgabe 9}
+	Ich erhalte $10000000\cdot 0.4\%\cdot\frac{90}{360} = 10000$
+	
+	FRA 3/6 (oder FRA 3x6) bedeutet: In 3 Monaten beginnt die Zinsperiode, die Zahlung in 6 Monaten. Damit ist die Zinsperiode 3 Monate lang.
+	
+	\section*{Aufgabe 10}
+	\begin{enumerate}[label=(\alph*)]
+		\item\textcolor{red}{Laufzeit des Futures}
+		\item\textcolor{red}{Nominalwert}
+		\item\textcolor{green}{Basispunktwert}
+		\item\textcolor{green}{Modified Duration}
+	\end{enumerate}
+	
+	\section*{Aufgabe 11}
+	Lieferpreis: $((155\cdot 0.63) + 0.45)\cdot 1000 = 98100$ \\
+	Einstandskosten: $(97.50 + 0.45)\cdot 1000 = 97950$ \\
+	Gewinn: 150
+	
+	\section*{Aufgabe 12}
+	Ja, Futures kaufen ist wie den DAX auf Kredit kaufen. Wenn das Portfolio nur deutsch ist, dann erhöht sich damit das $\beta$.
+	
+	\section*{Aufgabe 13}
+	Die Hedge Ratio ist
+	\begin{align}
+		HR &= \frac{1450000\cdot 0.87}{4211\cdot 10} \notag \\
+		&= 29.9573 \notag
+	\end{align}
+	Mit dem Kauf von 30 Kontrakten ist das Portfolio etwas überabgesichert.
+	
+	\section*{Aufgabe 14}
+	Die Hedge Ratio ist
+	\begin{align}
+		HR &= \frac{4400}{0.02933\cdot 1000} \notag \\
+		&= 150.02 \notag
+	\end{align}
+	Also sollten 150 Kontrakte verkauft werden.
+	
+	\section*{Aufgabe 15}
+	\begin{enumerate}[label=(\alph*)]
+		\item\textcolor{green}{Basisrisiko}
+		\item\textcolor{green}{Unterschied zwischen Laufzeit des Absicherungsinstrumentes und Halteperiode des Basiswertes}
+		\item\textcolor{green}{Keine Übereinstimmung zwischen abzusicherndem Basiswert und dem Absicherungsinstrument}
+		\item\textcolor{red}{Ein Cross Hedge ist immer ein perfekter Hedge}
+	\end{enumerate}
+
+	\section*{Aufgabe 16}
+	Der Verlust ist $(152.50 - 154.40)\cdot 1000 = -1900$
+	
+	\section*{Aufgabe 17}
+	Es gilt $(4817 - x)\cdot 25 = -375$, damit $x = 4832$
+	
+	\section*{Aufgabe 18}
+	Es gilt $(155.40 - 156.70)\cdot n\cdot 1000 = -84500$, damit $n=65$
+	
+\end{document}
