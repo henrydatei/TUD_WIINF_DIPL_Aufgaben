@@ -1,0 +1,156 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Finanzderivate und Optionen, Übung 7}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Ja, in Summe schon. Zwar ist bei einer Conversion und einem Reversal immer noch ein Long Aktie und Short Aktie dabei, aber das hebt sich auf.
+
+	\section*{Aufgabe 2}
+	Falsch, der Wert einer Box ist am Ausübungstag die Differenz der Strike-Preise. Für den Wert von heute muss also abgezinst werden. Macht man eine Box auf FI-Produkte, so muss man gar nicht mit den Zinsen arbeiten, da die Zinsen direkt im Preis eingepreist sind.
+	
+	\section*{Aufgabe 3}
+	Wert der Box
+	\begin{align}
+		P = \frac{550-500}{1.1} = 45.45 \notag
+	\end{align}
+	
+	\section*{Aufgabe 4}
+	Es gilt ($r$ für 3 Monate)
+	\begin{align}
+		490 &= \frac{9500-9000}{1 + r} \notag \\
+		r &= 0.0204 \notag
+	\end{align}
+	
+	\section*{Aufgabe 5}
+	Kauf eines Calls $K_1$, Verkauf eines Calls mit $K_2$ und $K_1 < K_2$ \\
+	max. Verlust: Nettoprämie \\
+	max. Gewinn: $K_2 - K_1 - \text{Nettoprämie}$ \\
+	BE-Point: $K_1 + \text{Nettoprämie}$
+	
+	\section*{Aufgabe 6}
+	Kauf eines Calls $K_2$, Verkauf eines Calls mit $K_1$ und $K_1 < K_2$ \\
+	max. Verlust: $K_2 - K_1 - \text{Nettoprämie}$ \\
+	max. Gewinn: Nettoprämie \\
+	BE-Point: $K_1 + \text{Nettoprämie}$
+	
+	\section*{Aufgabe 7}
+	Kauf eines Put $K_1$, Verkauf eines Put mit $K_2$ und $K_1 < K_2$ \\
+	max. Verlust: $K_2 - K_1 - \text{Nettoprämie}$ \\
+	max. Gewinn: Nettoprämie \\
+	BE-Point: $K_2 - \text{Nettoprämie}$
+	
+	\section*{Aufgabe 8}
+	Kauf eines Put $K_2$, Verkauf eines Put mit $K_1$ und $K_1 < K_2$ \\
+	max. Verlust: Nettoprämie \\
+	max. Gewinn: $K_2 - K_1 - \text{Nettoprämie}$ \\
+	BE-Point: $K_2 - \text{Nettoprämie}$
+	
+	\section*{Aufgabe 9}
+	Kauf eines Calls und eines Puts zum selben Strike $K$ \\
+	max. Verlust: gezahlte Prämien \\
+	max. Gewinn: unbegrenzt \\
+	BE-Point: $K \pm \text{gezahlte Prämien}$
+	
+	\section*{Aufgabe 10}
+	Verkauf eines Calls und eines Puts zum selben Strike $K$ \\
+	max. Verlust: unbegrenzt \\
+	max. Gewinn: erhaltene Prämien \\
+	BE-Point: $K \pm \text{erhaltene Prämien}$
+	
+	\section*{Aufgabe 11}
+	Kauf eines Puts $K_1$ und eines Calls $K_2$ mit $K_1 < K_2$ \\
+	max. Verlust: gezahlte Prämien \\
+	max. Gewinn: unbegrenzt \\
+	BE-Point: $K_2 + \text{gezahlte Prämien}$ oder $K_1 - \text{gezahlte Prämien}$
+	
+	\section*{Aufgabe 12}
+	Verkauf eines Puts $K_1$ und eines Calls $K_2$ mit $K_1 < K_2$ \\
+	max. Verlust: unbegrenzt \\
+	max. Gewinn: erhaltene Prämien \\
+	BE-Point: $K_2 + \text{erhaltene Prämien}$ oder $K_1 - \text{erhalteneß Prämien}$
+	
+	\section*{Aufgabe 13}
+	Kauf Call $K_1$, 2 mal Verkauf Call $K_2$, Kauf Call $K_3$
+	max. Verlust: gezahlte Prämien \\
+	max. Gewinn: $K_2 - K_1 - \text{gezahlte Prämien} $ \\
+	BE-Point: $K_1 + \text{gezahlte Prämien}$ oder $K_3 - \text{gezahlte Prämien}$
+	
+	\section*{Aufgabe 14}
+	Verkauf Call $K_1$, 2 mal Kauf Call $K_2$, Verkauf Call $K_3$
+	max. Verlust: $K_2 - K_1 - \text{erhaltene Prämien} $ \\
+	max. Gewinn:  erhaltene Prämien \\
+	BE-Point: $K_3 - \text{erhaltene Prämien}$ oder $K_1 + \text{erhaltene Prämien}$
+	
+	\section*{Aufgabe 15}
+	Richtig. Die verkaufte, kürzer laufende Option verliert schneller an Wert als die gekaufte, länger laufenden Option, d.h. Sie haben mehr Profit durch die verkaufte Option als Verluste durch die gekauften Option.
+
+	\section*{Aufgabe 16}
+	Richtig
+	
+	\section*{Aufgabe 17}
+	Richtig
+	
+	\section*{Aufgabe 18}
+	\begin{enumerate}[label=(\alph*)]
+		\item\textcolor{green}{Kombination aus Long Put-Option und Short Call-Option auf DAX}
+		\item\textcolor{green}{Long DAX-Put-Option} $\to$ mit (a) und (d) könnte man mit weniger Prämie wetten. Aber grundsätzlich funktioniert das auch.
+		\item\textcolor{red}{Long Straddle DAX-Option}
+		\item\textcolor{green}{Short DAX-Future}
+	\end{enumerate}
+	
+\end{document}
