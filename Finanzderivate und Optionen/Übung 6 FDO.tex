@@ -1,0 +1,145 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Finanzderivate und Optionen, Übung 6}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Der Wert von Put-Optionen steigt, da der Aktienkurs direkt nach der Ausschüttung fallen wird.
+
+	\section*{Aufgabe 2}
+	Falsch, der Verlust beträgt 600, da der maximale Verlust bei einer Long Call genau die Prämie (hier 6,00) ist. Mit Multiplikator ergibt sich ein Verlust von 600.
+	
+	\section*{Aufgabe 3}
+	Beim Verkauf ist der Investor 3300 im Plus. Der Preis pro Aktie darf höchstens um 33 fallen, also auf 167, damit der Investor bei $\pm$ 0 ist.
+	
+	\section*{Aufgabe 4}
+	Der Put mit einem Strike von 450. Es ist am unwahrscheinlichsten, dass die Aktie von ABC so tief fällt. Und man kann mit diesem nur maximal 450 verdienen.
+	
+	\section*{Aufgabe 5}
+	Falsch, erst wenn der Preis um 18 unter dem Strike ist, ist der Investor bei $\pm 0$, also bei 282.
+	
+	\section*{Aufgabe 6}
+	Der Gewinn in Abhängigkeit des zukünftigen Preises $x$ ist:
+	\begin{align}
+		\Pi(x) = 1000(x-100) + 1000\cdot \max(100 - x, 0) - 6.4\cdot 1000 - 1000\cdot\max(x-110,0) + 6.10\cdot 1000 \notag
+	\end{align}
+	Mit WolframAlpha ergibt sich
+	\begin{align}
+		\Pi(x) = \begin{cases}
+			-300 & x<100 \\
+			9700 & x>110 \\
+			1000x - 100300 & \text{sonst.}
+		\end{cases} \notag
+	\end{align}
+	welches sein Maximum bei 9700 hat.
+	
+	Alternativ:
+	\begin{itemize}
+		\item Kauf: $(10\cdot -6.40)\cdot 100 = -6400$
+		\item Verkauf: $(10\cdot 6.10)\cdot 100 = 6100$
+		\item[$\Rightarrow$] Gewinn/Verlust durch Prämien: -300
+		\item Aktiengewinn bei Kassastand 110: $(110-100)\cdot 1000 = 10000$
+		\item[$\Rightarrow$] Gesamtgewinn: 9700
+	\end{itemize}
+	
+	\section*{Aufgabe 7}
+	Die Put-Option ist schon im Geld, der innere Wert ist 500. Der Zeitwert muss damit -15 betragen.
+	
+	\section*{Aufgabe 8}
+	GuV je Option: $10 - (200-196) = 6$ \\
+	GuV je Kontrakt: 600 \\
+	Anzahl der Kontrakte: $\frac{9000}{600} = 15$
+	
+	\section*{Aufgabe 9}
+	Wenn alle Optionen verfallen, dann ist
+	\begin{align}
+		\Pi &= 100(- 2\cdot 35 - 2\cdot 8 + 4\cdot 15) \notag \\
+		&= -2600 \notag
+	\end{align}
+	
+	\section*{Aufgabe 10}
+	Da man als Verkäufer die Pflicht hat zu liefern. Als Käufer hat man das Recht.
+	
+	\section*{Aufgabe 11}
+	Die Ausübung von Mitarbeiteroptionen führt in der Regel zur Emission neuer Aktien durch das Unternehmen (Verwässerung).
+	
+	\section*{Aufgabe 12}
+	Weil amerikanische Optionen jederzeit ausgeübt werden können.
+	
+	\section*{Aufgabe 13}
+	Put-Call-Parität bei Fixed-Income-Futures:
+	\begin{align}
+		C-P &= IF - E \notag \\
+		12 - 7 &= 145 - E \notag \\
+		E &= 140 \notag
+	\end{align}
+	
+	\section*{Aufgabe 14}
+	Richtig, es gilt $C^+P^- = U^+$, damit gilt auch $C^+U^- = P^+$
+	
+	\section*{Aufgabe 15}
+	Wenn die Call Option im Verhältnis zur Aktie und zur Put Option unterbewertet ist, lässt sich eine
+	profitable Reversal-Strategie (Short Aktie + Long Call + Short Put) aufbauen.
+
+	\section*{Aufgabe 16}
+	Reversal = $U^-C^+P^-$ \\
+	GuV = Prämie Put - Kosten Call = 1.19 - 1.15 = 0.04 \\
+	Conversion = $U^+C^-P^+$ \\
+	GuV = Prämie Call - Kosten Put = 1.13 - 1.21 = -0.08
+	
+	
+\end{document}
