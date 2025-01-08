@@ -1,0 +1,187 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Finanzderivate und Optionen, Übung 8}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Die Griechen sind:
+	\begin{itemize}
+		\item[$\delta$] Delta misst die Sensitivität des Optionspreises gegenüber Veränderungen des Preises des Basiswerts. Es zeigt an, um wie viel sich der Preis der Option ändert, wenn der Preis des Basiswerts um eine Einheit steigt.
+		\begin{align}
+			\delta = \frac{\partial C}{\partial S} \notag
+		\end{align}
+		\item[$\gamma$] Gamma misst die Veränderung des Deltas in Bezug auf Änderungen des Basiswerts. Es zeigt an, wie stabil oder instabil Delta ist.
+		\begin{align}
+			\gamma = \frac{\partial^2 C}{\partial S^2} \notag
+		\end{align}
+		\item[$\omega$] Omega misst die Hebelwirkung einer Option. Es gibt an, um wie viel Prozent sich der Wert der Option verändert, wenn sich der Preis des Basiswerts um 1 \% ändert.
+		\begin{align}
+			\omega = \frac{\delta\cdot S}{C} \notag
+		\end{align}
+		\item[$\nu$] Vega misst die Sensitivität des Optionspreises gegenüber Änderungen der impliziten Volatilität des Basiswerts. Wie viel ändert sich der Geldbetrag der Option, wenn die Volatilität um 1\% steigt.
+		\begin{align}
+			\nu = \frac{\partial C}{\partial \sigma} \notag
+		\end{align}
+		\item[$\theta$] Theta misst die Sensitivität des Optionspreises gegenüber der verstrichenen Zeit. Es zeigt den Zeitwertverlust der Option pro Tag.
+		\begin{align}
+			\theta = \frac{\partial C}{\partial t} \notag
+		\end{align}
+		\item[$\rho$] Rho misst die Sensitivität des Optionspreises gegenüber Veränderungen des risikofreien Zinssatzes.
+		\begin{align}
+			\rho = \frac{\partial C}{\partial r} \notag
+		\end{align}
+	\end{itemize}
+
+	\section*{Aufgabe 2}
+	
+	Die Produkte:
+	\begin{itemize}
+		\item Knock-out-Zertifikat: Ein Knock-out-Zertifikat ist ein Derivat, das es Anlegern ermöglicht, mit einem Hebel auf die Kursentwicklung eines Basiswerts zu spekulieren. Es gibt sowohl Long- als auch Short-Knock-out-Zertifikate, je nachdem, ob man auf steigende oder fallende Kurse setzen möchte. Jedes Zertifikat hat eine definierte Schwelle. Erreicht oder durchbricht der Basiswert diese Schwelle, verfällt das Zertifikat sofort und kann wertlos werden. Da der Hebel durch Fremdkapital finanziert wird, fallen Finanzierungskosten an, die im Zertifikatspreis berücksichtigt sind.
+		\item Reverse Convertible Bond (Aktienanleihe): Ein Reverse Convertible Bond, auch als Aktienanleihe bekannt, ist ein strukturiertes Finanzprodukt, das feste Zinszahlungen bietet, jedoch bei Fälligkeit entweder in bar oder durch Lieferung von Aktien zurückgezahlt wird, der Emittent entscheidet dies.
+		Zusammensetzung: Anleihekomponente gewährt feste Zinszahlungen. Enthält eine verkaufte Put-Option, wodurch der Anleger das Risiko einer Aktienlieferung bei Kursverlusten übernimmt.
+		\item Discountzertifikat: Ein Discountzertifikat ermöglicht den Kauf eines Basiswerts mit Preisabschlag, begrenzt jedoch die maximale Rendite durch einen Cap. Der Verkauf einer Call-Option finanziert den Discount und setzt den Cap.
+		\item Airbag-Zertifikat: Ein Airbag-Zertifikat bietet einen begrenzten Schutz vor Kursverlusten des Basiswerts, indem es einen Risikopuffer integriert. Verluste bis zu einem bestimmten Schwellenwert werden abgefedert. Erst bei Überschreiten des Puffers wirken sich Verluste voll aus. Zusammensetzung: Basiswert + Short Put + Long Call
+		\item Ein Outperformance-Zertifikat bietet die Möglichkeit, überproportional an Kursgewinnen des Basiswerts zu partizipieren, sobald ein bestimmtes Kursniveau überschritten wird. Zusammensetzung: Basiswert + Long Call
+		\item Sprint-Zertifikat: Ein Sprint-Zertifikat ermöglicht es, innerhalb eines definierten Kurskorridors doppelt an Kursgewinnen zu partizipieren, wobei die maximale Rendite durch einen Cap begrenzt ist. Zusammensetzung: Basiswert + Kombination aus dem Kauf einer Call-Option und dem Verkauf einer höheren Call-Option, um den doppelten Hebel und den Cap zu realisieren.
+	\end{itemize}
+	
+	\section*{Aufgabe 3}
+	Bull Call Spread + Bear Put Spread = Long Box \\
+	Wert der Box = Differenz der Ausübungspreise (Zins ist egal) = 125.50 - 123.50 = 2 \\
+	Bear Put Spread = 2 - 1.18 = 0.82
+	
+	\section*{Aufgabe 4}
+	Es gilt
+	\begin{align}
+		HR &= \frac{BPV_{Bond}}{BPV_{Future}\cdot 1000}\cdot KF_{CTD} \notag \\
+		&= \frac{20000}{0.75\cdot 1000}\cdot 0.7125 \notag \\
+		&= 19 \notag
+	\end{align}
+	
+	\section*{Aufgabe 5}
+	Delta-Hedge:
+	\begin{align}
+		\text{Delta-Hedge} &= \frac{\text{Anzahl Aktien}}{\text{Kontraktgröße}}\cdot\frac{1}{\delta} \notag \\
+		&= \frac{10000}{100} \cdot \frac{1}{-0.5} \notag \\
+		&= -200 \notag
+	\end{align}
+	Es müssen also $200\cdot 100$ Puts gekauft werden.
+	
+	\section*{Aufgabe 6}
+	Vor dem Anstieg:
+	\begin{align}
+		\text{Delta-Hedge} &= \frac{\text{Anzahl Aktien}}{\text{Kontraktgröße}}\cdot\frac{1}{\delta} \notag \\
+		&= \frac{13000}{100} \cdot \frac{1}{-0.4} \notag \\
+		&= -325 \notag
+	\end{align}
+	Nach dem Preisanstieg werden insgesamt
+	\begin{align}
+		\text{Delta-Hedge} &= \frac{\text{Anzahl Aktien}}{\text{Kontraktgröße}}\cdot\frac{1}{\delta} \notag \\
+		&= \frac{13000}{100} \cdot \frac{1}{-0.25} \notag \\
+		&= -520 \notag
+	\end{align}
+	Puts gebraucht, es müssen also $195\cdot 100$ Puts für je 7 EUR gekauft werden, insgesamt also 136500 EUR.
+	
+	\section*{Aufgabe 7}
+	Vor dem Anstieg:
+	\begin{align}
+		\text{Delta-Hedge} &= \frac{\text{Anzahl Aktien}}{\text{Kontraktgröße}}\cdot\frac{1}{\delta} \notag \\
+		&= \frac{30000}{100} \cdot \frac{1}{-0.375} \notag \\
+		&= -800 \notag
+	\end{align}
+	Nach dem Preisanstieg werden insgesamt
+	\begin{align}
+		\text{Delta-Hedge} &= \frac{\text{Anzahl Aktien}}{\text{Kontraktgröße}}\cdot\frac{1}{\delta} \notag \\
+		&= \frac{30000}{100} \cdot \frac{1}{-0.15} \notag \\
+		&= -2000 \notag
+	\end{align}
+	Puts gebraucht, es müssen also 1200 Puts gekauft werden.
+	
+	\section*{Aufgabe 8}
+	Der Investor hat $\frac{5880000}{280}=21000$ Aktien, dafür braucht er
+	\begin{align}
+		\text{Delta-Hedge} &= \frac{\text{Anzahl Aktien}}{\text{Kontraktgröße}}\cdot\frac{1}{\delta} \notag \\
+		&= \frac{21000}{100} \cdot \frac{1}{-0.5} \notag \\
+		&= -420 \notag
+	\end{align}
+	Puts, die ihn insgesamt 420000 EUR kosten, was einen Kostenanteil von 7.14\% bedeutet.
+	
+	\section*{Aufgabe 9}
+	Es gilt
+	\begin{align}
+		\text{Anzahl Optionen} \cdot \text{Multiplikator} \cdot \text{Index} \cdot \delta &= \text{Portfoliowert} \cdot \beta \notag \\
+		8000 \cdot 5 \cdot 12000\cdot -0.25 &= \text{Portfoliowert} \cdot 1.5 \notag \\
+		\text{Portfoliowert} &= 80 \text{ Mio. EUR} \notag
+	\end{align}
+	
+	\section*{Aufgabe 10}
+	\begin{enumerate}[label=(\alph*)]
+		\item\textcolor{green}{Long Aktie (aus Euro STOXX 50-Index)}
+		\item\textcolor{red}{Long Euro STOXX 50-Put-Optionen}
+		\item\textcolor{red}{Long Straddle Euro STOXX 50-Option}
+		\item\textcolor{green}{Long Euro STOXX 50-Future}
+	\end{enumerate}
+	
+	\section*{Aufgabe 11}
+	\begin{enumerate}[label=(\alph*)]
+		\item\textcolor{green}{Bull Call Spread DAX-Option}
+		\item\textcolor{red}{Long Butterfly DAX-Option}
+		\item\textcolor{red}{Long DAX-Put-Option}
+		\item\textcolor{green}{Long DAX-Call-Option}
+	\end{enumerate}
+	
+\end{document}
