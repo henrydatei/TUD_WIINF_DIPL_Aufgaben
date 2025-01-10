@@ -1,0 +1,93 @@
+%\usepackage{ngerman}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{ifthen}
+%\usepackage{scrlayer-scrpage}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{eurosym}
+\usepackage{latexsym}
+\usepackage{units}
+\usepackage{tabularx}
+\usepackage{longtable}
+%\usepackage{rawfonts,pictex}
+
+\usepackage[ngerman]{babel}
+\usepackage{parskip}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{amsmath, amssymb}
+
+\geometry{a4paper, top=25mm, bottom=20mm, left=25mm, right=25mm}
+\renewcommand*{\arraystretch}{1.4}
+
+%\renewcommand*{\headfont}{\normalfont}
+%\renewcommand*{\footfont}{\normalfont}
+%\renewcommand*{\pnumfont}{\normalfont}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\SD}{SD}
+\DeclareMathOperator{\Cor}{Cor}
+
+\newcounter{Aufgabe}
+\newcommand{\aufgabe}[1]{
+    \refstepcounter{Aufgabe}
+        \par
+        \vspace{4mm}
+        \noindent
+        \formatAufg{Aufgabe \theNummer.\theAufgabe}
+        \vspace{2mm}
+        \par
+}
+
+\newcommand{\uebung}[1]{\def\theNummer{#1} \def\theUebung{#1}}
+\newcommand{\veranstaltung}[1]{\def\theVeranstaltung{#1}}
+\newcommand{\semester}[1]{\def\theSemester{#1}}
+\newcommand{\datum}[1]{\def\theDatum{#1}}
+\newcommand{\head}[1]{\def\theHead{#1}}
+\newcommand{\titel}[1]{\formatAufg{-- #1}}
+\newcommand{\formatAufg}[1]{\textsf{\textbf{{\large #1}}}}
+\newcommand{\formatLsg}[1]{\textsf{\textbf{{\large #1}}}}
+\newcommand{\del}[1]{}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%\pagestyle{scrheadings}
+%\ihead{\pagemark}
+%\ohead{\theHead}
+%\ifoot{}
+%\ofoot{}
+\pagestyle{headandfoot}
+\runningheader{Seite \thepage\ von \numpages}{}{\theHead}
+\runningheadrule
+\runningfooter{}{}{}
+
+%\pagestyle{myheadings} \markright{\theVeranstaltung \, $\circ$ \theUebung}
+
+\newcommand{\makehead}{
+    %\begin{picture}(0,100)(96.3,-60)
+    %    \put(0,0){\includegraphics[trim=0 250mm 0 0, clip, width=\paperwidth]{kopf}}
+    %\end{picture}
+
+    \vspace{-2.5cm}
+
+    \begin{center}
+		{\Large \textbf{\textsf{\theHead}}}
+    \end{center}
+%    \hspace{-4mm}{{\Large \textbf{\textsf{\theHead}}}\hfill \theDatum}
+%    \vspace{5mm}
+}
+
+\pointsinrightmargin
+%\bracketedpoints
+\boxedpoints
+\hqword{Aufgabe}
+\hpword{Punkte}
+\hsword{erreichte Punkte}
+\renewcommand{\solutiontitle}{\noindent\textbf{L\"osung:}\enspace}

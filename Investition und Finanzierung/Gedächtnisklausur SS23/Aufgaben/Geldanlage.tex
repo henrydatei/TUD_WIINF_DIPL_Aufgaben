@@ -1,0 +1,26 @@
+\question[8] Ein Tagesgeldkonto zahlt Ihnen 3,5\% Zinsen p.a. nachschüssig, inklusive Zinseszinsen.
+\begin{parts}
+    \part Sie haben heute 8000 EUR, welchen Betrag haben Sie nach 40 Jahren?
+    \part Sie haben heute 0 EUR, aber nach 40 Jahren möchten Sie 30000 EUR auf Ihrem Konto haben. Wie hoch muss Ihre jährliche Einzahlung sein, damit Sie dieses Ziel erreichen?
+    \part Sie haben heute 0 EUR, zahlen aber jeden Monat 25 EUR und bekommen 0,6\% pro Monat vorschüssig, inklusive Zinseszinsen. Wie hoch ist Ihr Kontostand nach 40 Jahren? Welche effektive Verzinsung haben Sie pro Jahr?
+\end{parts}
+\begin{solution}
+    \begin{parts}
+        \part[2] $8000\cdot (1+0,035)^{40} = 31674,08$ EUR
+		\part[3] Wir brauchen den Rentenendwertfaktor $REF = RBF\cdot q^n$ mit $q = 1,035$:
+		\begin{align}
+			RBF &= \frac{q^n-1}{q^n\cdot (q-1)} = \frac{1,035^{40}-1}{1,035^{40}\cdot 0,035} = 21,3551 \notag \\
+			REF &= 21,3551\cdot 1,035^{40} = 84,55 \notag
+		\end{align}
+		Damit ist die jährliche Einzahlung $\frac{30000}{84,55}=354,82$
+		\part[3] Es gibt $12\cdot 40 = 480$ Monate. Analog zu (b):
+		\begin{align}
+			RBF &= \frac{q^n-1}{q^n\cdot (q-1)} = \frac{1,006^{480}-1}{1,006^{480}\cdot 0,006}\cdot 1,006 = 158,1734 \notag \\
+			REF &= 158,1734 \cdot 1,006^{480} = 2793.5994 \notag
+		\end{align}
+		Der Kontostand ist dann $25\cdot 2793.5994 = 69839.99$. Die effektive Verzinsung ist
+		\begin{align}
+			r = 1,006^{12}-1 = 0,07 \notag
+		\end{align}
+    \end{parts}
+\end{solution}

@@ -1,0 +1,58 @@
+\question[16] Ein Projekt kostet sie 150 Millionen EUR Anschaffungskosten. Dazu kommen 4 Millionen für Instandhaltung und 65 Millionen für Herstellungskosten in den ersten 2 Jahren. Ihr Umsatz wird durch dieses Projekt 100 Millionen im ersten Jahr betragen, allerdings sinkt der Umsatz in den nachfolgenden Jahren um 5\%. Sie können das Projekt linear über 10 Jahre abschreiben, ihr Kalkulationszinssatz beträgt 7\% und ihr Steuersatz 30\%. Sie erwarten, dass ihre Free Cash Flows nach dem zweiten Jahr um 10\% pro Jahr sinken. Zudem wissen Sie, dass ihre Forderungen aus Lieferungen und Leistungen im ersten Jahr 10\% des Umsatzes und im zweiten Jahr 0\% des Umsatzes betragen werden. Ihre Verbindlichkeiten werden 17\% der Herstellungskosten im ersten Jahr und 0\% der Herstellungskosten im zweiten Jahr betragen.
+\begin{parts}
+    \part Berechnen Sie die Free Cash Flows für die Jahre 1 und 2 und den Fortführungswert.
+    \part Wie hoch ist der Kapitalwert des Projektes und sollte man das Projekt durchführen?
+    \part Das Projekt könnte nach den 2 Jahren für 120 Millionen liquidiert werden, sollte man das Projekt nach 2 Jahren fortführen oder liquidieren?
+    \part Angenommen, Sie könnten das Projekt in weniger als 10 Jahren abschreiben. Steigt oder sinkt dadurch der FCF? Begründen Sie, ohne den FCF explizit auszurechnen.
+\end{parts}
+\begin{solution}
+    \begin{parts}
+        \part[9] Zuerst müssen die Änderungen im Nettoumlaufvermögen berechnet werden:
+        \begin{center}
+        	\begin{tabular}{l|c|c}
+        		& $t=1$ & $t=2$ \\
+        		\hline
+        		Forderungen & 10 & 0 \\
+        		$\Delta$ Forderungen & 10 & -10 \\
+        		\hline
+        		Verbindlichkeiten & 11,05 & 0 \\
+        		$\Delta$ Verbindlichkeiten & 11,05 & -11,05 \\
+        		\hline
+        		$\Delta$ NUV & -1,05 & 1,05
+        	\end{tabular}
+        \end{center}
+        Die Abschreibung ist $\frac{150}{10}=15$ und damit sind die FCF:
+        \begin{center}
+        	\begin{tabular}{l|c|c}
+        		& $t=1$ & $t=2$ \\
+        		\hline
+        		Umsatz & 100 & 95 \\
+        		- Kosten & 65 & 65 \\
+        		- Instandhaltung & 4 & 4  \\
+        		- Abschreibung & 15 & 15 \\
+        		\hline
+        		= EBIT & 16 & 11 \\
+        		- Steuern & 4,8 & 3,3 \\
+        		\hline
+        		= NOPAT & 11,2 & 7,7 \\
+        		+ Abschreibung & 15 & 15 \\
+        		- $\Delta$ NUV & -1,05 & 1,05 \\
+        		\hline
+        		= FCF & 27,25 & 21,65
+        	\end{tabular}
+        \end{center}
+        Der Fortführungswert am Ende von Jahr 2 ist
+        \begin{align}
+        	\text{Fortführungswert} &= \frac{FCF_3}{r-g} = \frac{21,65\cdot 0,9}{0,07 - (-0,1)} \notag \\
+        	&= 114,62 \notag
+        \end{align}
+        \part[3] Der Kapitalwert ist
+        \begin{align}
+        	KW &= -150 + \frac{27,25}{1,07} + \frac{21,65 + 114,62}{1,07^2} \notag \\
+        	&= -5.51 \notag
+        \end{align}
+    	Der Kapitalwert ist unter 0, daher sollte das Projekt nicht durchgeführt werden.
+        \part[2] Da Liquidationserlös $<$ Fortführungswert, ist die Fortführung der Fertigungsanlage vorteilhafter
+        \part[2] Eine Abschreibung über weniger als 10 Jahre führt zu einem höheren FCF, da Steuervorteil durch geringeres EBIT
+    \end{parts}
+\end{solution}

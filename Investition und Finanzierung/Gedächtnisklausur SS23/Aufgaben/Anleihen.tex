@@ -1,0 +1,42 @@
+\question[16] Betrachten Sie die folgenden 2 Nullkupon-Anleihen mit einem Nennwert von 100 EUR:
+\begin{center}
+	\begin{tabular}{c|c}
+		\textbf{Laufzeit} & \textbf{Preis} \\
+		\hline
+		1 & 97,54 EUR \\
+		\hline
+		3 & 89,62 EUR
+	\end{tabular}
+\end{center}
+\begin{parts}
+    \part Ermitteln Sie die Effektivverzinsung der beiden Anleihen.
+    \part Welchen Preis hat eine 3-jährige Anleihe mit einem Kuponzins von 4\% und einem Nennwert von 1000 EUR? Nutzen Sie das Duplizierungsportfolio und ermitteln Sie den effektiven Zins einer zweijährigen Nullkupon-Anleihe mittels linearer Interpolation.
+    \part Wie heißt das finanzwirtschaftliche Prinzip, welches Sie in (b) benutzt haben?
+    \part Welchen Preis hat eine Kuponanleihe mit 4\% Kupon, einer Effektivverzinsung von 3,61\% p.a., einem Nennwert von 1000 EUR und einer Laufzeit von 1,5 Jahren, die ihren Kupon halbjährlich auszahlt?
+    \part Was ist der Unterschied zwischen Clean und Dirty Price? Und welchen sollte man benutzen, um Preisunterschiede zu untersuchen?
+\end{parts}
+\begin{solution}
+    \begin{parts}
+        \part[2] $r_1 = \frac{100}{97,54} - 1 = 2,52\%$ \\
+        $r_3 = \sqrt[3]{\frac{100}{89,62}} - 1 = 3,72\%$
+        \part[6] Lineare Interpolation für $r_2 = \frac{r_3-r_1}{2} = \frac{2,52\% + 3,72\%}{2} = 3,12\%$. Der Preis einer solchen Anleihe ist dann $\frac{100}{1,0312^2} = 94,04$ EUR. Duplizierungsportfolio:
+        \begin{center}
+        	\begin{tabular}{c|c|ccc|c}
+        		\textbf{Laufzeit} & \textbf{Preis} & $CF_1$ & $CF_2$ & $CF_3$ & \textbf{Stückzahl} \\
+        		\hline
+        		1 & 97,54 & 40 & & & 0,4 \\
+        		2 & 94,04 & & 40 & & 0,4 \\
+        		3 & 89,62 & & & 1040 & 10,4 \\
+        		\hline
+        		Kuponanleihe & 1008,68 & 40 & 40 & 1040 & 1
+        	\end{tabular}
+        \end{center}
+        \part[1] Law of One Price / Gesetz des einheitlichen Preises
+        \part[4] Der Effektivzins für ein halbes Jahr ist $r_{halb} = \sqrt{1,0361}-1 = 0,0179$. Der Preis ist dann
+        \begin{align}
+        	P_0 &= \frac{20}{1,0179} + \frac{20}{1,0179^2} + \frac{1020}{1,0179^3} \notag \\
+        	&= 1006,08 \notag
+        \end{align}
+        \part[3] Dirty Price enthält aufgelaufene Stückzinsen, welche vorhersagbarem Muster folgen, Clean Price enthält keine aufgelaufenen Stückzinsen wodurch unvorhergesehene Änderungen der Preise durch eine Änderung der Effektivverzinsung betrachtet werden
+    \end{parts}
+\end{solution}
