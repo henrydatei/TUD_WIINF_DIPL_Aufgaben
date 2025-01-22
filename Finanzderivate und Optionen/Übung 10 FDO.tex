@@ -1,0 +1,184 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Finanzderivate und Optionen, Übung 10}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Black-Scholes-Modell, europäischer Call:
+	\begin{align}
+		d_1 &= \frac{\ln\left(\frac{S_0}{K}\right) + \left(r+\frac{\sigma^2}{2}\right)T}{\sigma\sqrt{T}} \notag \\
+		d_2 &= d_1 - \sigma\sqrt{T} \notag \\
+		c_0(C) &= S_0\Phi(d_1) - \exp(-rT)\cdot K\cdot \Phi(d_2) \notag
+	\end{align}
+	Mittels Put-Call-Parität ergibt sich der Preis eines europäischen Puts:
+	\begin{align}
+		c_0(P) &= \exp(-rT)\cdot K\cdot\Phi(-d_2) - S_0\cdot\Phi(-d_1) \notag
+	\end{align}
+	\begin{enumerate}[label=(\alph*)]
+		\item Einsetzen\footnote{\url{https://www.wolframalpha.com/input?i=black+scholes\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22underlying\%22\%7D+-\%3E\%22\%2420\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22div\%22\%7D+-\%3E\%220+\%25\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22rf\%22\%7D+-\%3E\%225+\%25\%22\&assumption=\%7B\%22FP\%22\%2C+\%22FinancialOption\%22\%2C+\%22OptionName\%22\%7D+-\%3E+\%22VanillaEuropean\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22strike\%22\%7D+-\%3E\%22\%2415\%22\&assumption=\%7B\%22MC\%22\%2C+\%22\%22\%7D+-\%3E+\%7B\%22Formula\%22\%2C+\%22dflt\%22\%7D\&assumption=\%7B\%22FP\%22\%2C+\%22FinancialOption\%22\%2C+\%22opttype\%22\%7D+-\%3E+\%22Call\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22exptime\%22\%7D+-\%3E\%220.75+a\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22vol\%22\%7D+-\%3E\%2220+\%25\%22}}:
+		\begin{align}
+			d_1 &= \frac{\ln\left(\frac{20}{15}\right) + \left(0.05+\frac{0.2^2}{2}\right)\cdot 0.75}{0.2\cdot\sqrt{0.75}} \notag \\
+			&= 1.9640 \notag \\
+			d_2 &= 1.9640 - 0.2\cdot\sqrt{0.75} \notag \\
+			&= 1.7908 \notag \\
+			c_0(C) &= 20\cdot\Phi(1.9640) - \exp(-0.05\cdot 0.75)\cdot 15\cdot \Phi(1.7908) \notag \\
+			&= 5.59 \notag
+		\end{align}
+		Das Nettoauszahlungsprofil ist
+		\begin{center}
+			\begin{tikzpicture}
+				\begin{axis}[
+					xmin=10, xmax=25, xlabel={Preis Underlying},
+					ymin=-6, ymax=4, ylabel=Payout,
+					samples=400,
+					axis x line=middle,
+					axis y line=middle,
+					domain=10:25,
+					]
+					\addplot[blue, no marks] {max(x-15,0)-5.59};
+					
+				\end{axis}
+			\end{tikzpicture}
+		\end{center}
+		Zeitwert: 0.59, innerer Wert: 5
+		\item Einsetzen\footnote{\url{https://www.wolframalpha.com/input?i=black+scholes\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22underlying\%22\%7D+-\%3E\%22\%2420\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22div\%22\%7D+-\%3E\%220+\%25\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22rf\%22\%7D+-\%3E\%225+\%25\%22\&assumption=\%7B\%22FP\%22\%2C+\%22FinancialOption\%22\%2C+\%22OptionName\%22\%7D+-\%3E+\%22VanillaEuropean\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22strike\%22\%7D+-\%3E\%22\%2420\%22\&assumption=\%7B\%22MC\%22\%2C+\%22\%22\%7D+-\%3E+\%7B\%22Formula\%22\%2C+\%22dflt\%22\%7D\&assumption=\%7B\%22FP\%22\%2C+\%22FinancialOption\%22\%2C+\%22opttype\%22\%7D+-\%3E+\%22Call\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22exptime\%22\%7D+-\%3E\%220.75+a\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22vol\%22\%7D+-\%3E\%2220+\%25\%22}}
+		\begin{align}
+			d_1 &= \frac{\ln\left(\frac{20}{20}\right) + \left(0.05+\frac{0.2^2}{2}\right)\cdot 0.75}{0.2\cdot\sqrt{0.75}} \notag \\
+			&= 0.3031 \notag \\
+			d_2 &= 0.3031 - 0.2\cdot\sqrt{0.75} \notag \\
+			&= 0.1299 \notag \\
+			c_0(C) &= 20\cdot\Phi(0.3031) - \exp(-0.05\cdot 0.75)\cdot 20\cdot \Phi(0.1299) \notag \\
+			&= 1.75 \notag
+		\end{align}
+		\item Wir brauchen noch den Preis des Puts\footnote{\url{https://www.wolframalpha.com/input?i=black+scholes\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22underlying\%22\%7D+-\%3E\%22\%2420\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22div\%22\%7D+-\%3E\%220+\%25\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22rf\%22\%7D+-\%3E\%225+\%25\%22\&assumption=\%7B\%22FP\%22\%2C+\%22FinancialOption\%22\%2C+\%22OptionName\%22\%7D+-\%3E+\%22VanillaEuropean\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22strike\%22\%7D+-\%3E\%22\%2420\%22\&assumption=\%7B\%22MC\%22\%2C+\%22\%22\%7D+-\%3E+\%7B\%22Formula\%22\%2C+\%22dflt\%22\%7D\&assumption=\%7B\%22FP\%22\%2C+\%22FinancialOption\%22\%2C+\%22opttype\%22\%7D+-\%3E+\%22Put\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22exptime\%22\%7D+-\%3E\%220.75+a\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22vol\%22\%7D+-\%3E\%2220+\%25\%22}}:
+		\begin{align}
+			c_0(P) &= \exp(-0.05\cdot 0.75)\cdot 20\cdot\Phi(-0.1299) - 20\cdot\Phi(-0.3031) \notag \\
+			&= 1.01 \notag
+		\end{align}
+		Alternativ
+		\begin{align}
+			c_0(P) = c_0(C) - S_0 - \exp(-rT)K \notag
+		\end{align}
+		Der Preis der Strategie ist dann $1.01 + 1.75 = 2,76$ und mit dieser Strategie kann man auf steigende Volatilität wetten.
+		\begin{center}
+			\begin{tikzpicture}
+				\begin{axis}[
+					xmin=10, xmax=30, xlabel={Preis Underlying},
+					ymin=-6, ymax=4, ylabel=Payout,
+					samples=400,
+					axis x line=middle,
+					axis y line=middle,
+					domain=10:30,
+					]
+					\addplot[blue, no marks] {max(x-20,0)-1.76 + max(20-x,0) - 1.02};
+					
+				\end{axis}
+			\end{tikzpicture}
+		\end{center}
+	\end{enumerate}
+
+	\section*{Aufgabe 2}
+	\begin{enumerate}[label=(\alph*)]
+		\item Einsetzen\footnote{\url{https://www.wolframalpha.com/input?i=black+scholes\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22underlying\%22\%7D+-\%3E\%22\%2444.50\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22div\%22\%7D+-\%3E\%220+\%25\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22rf\%22\%7D+-\%3E\%221.5+\%25\%22\&assumption=\%7B\%22FP\%22\%2C+\%22FinancialOption\%22\%2C+\%22OptionName\%22\%7D+-\%3E+\%22VanillaEuropean\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22strike\%22\%7D+-\%3E\%22\%2441\%22\&assumption=\%7B\%22MC\%22\%2C+\%22\%22\%7D+-\%3E+\%7B\%22Formula\%22\%2C+\%22dflt\%22\%7D\&assumption=\%7B\%22FP\%22\%2C+\%22FinancialOption\%22\%2C+\%22opttype\%22\%7D+-\%3E+\%22Put\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22exptime\%22\%7D+-\%3E\%222+a\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22vol\%22\%7D+-\%3E\%2223+\%25\%22}}
+		\begin{align}
+			d_1 &= \frac{\ln\left(\frac{44.50}{41}\right) + \left(0.015+\frac{0.23^2}{2}\right)\cdot 2}{0.23\cdot\sqrt{2}} \notag \\
+			&= 0.5067 \notag \\
+			d_2 &= 0.5067 - 0.23\cdot\sqrt{2} \notag \\
+			&= 0.1814 \notag \\
+			c_0(P) &= \exp(-0.015\cdot 2)\cdot 41\cdot\Phi(-0.1814) - 44.50\cdot\Phi(-0.5067) \notag \\
+			&= 3.41 \notag
+		\end{align}
+		Das Nettoauszahlungsprofil ist
+		\begin{center}
+			\begin{tikzpicture}
+				\begin{axis}[
+					xmin=0, xmax=80, xlabel={Preis Underlying},
+					ymin=-4, ymax=40, ylabel=Payout,
+					samples=400,
+					axis x line=middle,
+					axis y line=middle,
+					domain=0:80,
+					]
+					\addplot[blue, no marks] {max(41-x,0)-3.40};
+					
+				\end{axis}
+			\end{tikzpicture}
+		\end{center}
+		Zeitwert: 3.41, innerer Wert: 0
+		\item Einsetzen\footnote{\url{https://www.wolframalpha.com/input?i=black+scholes\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22underlying\%22\%7D+-\%3E\%22\%2444.50\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22div\%22\%7D+-\%3E\%220+\%25\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22rf\%22\%7D+-\%3E\%221.5+\%25\%22\&assumption=\%7B\%22FP\%22\%2C+\%22FinancialOption\%22\%2C+\%22OptionName\%22\%7D+-\%3E+\%22VanillaEuropean\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22strike\%22\%7D+-\%3E\%22\%2445\%22\&assumption=\%7B\%22MC\%22\%2C+\%22\%22\%7D+-\%3E+\%7B\%22Formula\%22\%2C+\%22dflt\%22\%7D\&assumption=\%7B\%22FP\%22\%2C+\%22FinancialOption\%22\%2C+\%22opttype\%22\%7D+-\%3E+\%22Put\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22exptime\%22\%7D+-\%3E\%222+a\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22vol\%22\%7D+-\%3E\%2223+\%25\%22}}
+		\begin{align}
+			d_1 &= \frac{\ln\left(\frac{44.50}{45}\right) + \left(0.015+\frac{0.23^2}{2}\right)\cdot 2}{0.23\cdot\sqrt{2}} \notag \\
+			&= 0.2205 \notag \\
+			d_2 &= 0.2205 - 0.23\cdot\sqrt{2} \notag \\
+			&= -0.1048 \notag \\
+			c_0(P) &= \exp(-0.015\cdot 2)\cdot 45\cdot\Phi(0.1048) - 44.50\cdot\Phi(-0.2205) \notag \\
+			&= 5.29 \notag
+		\end{align}
+		Zeitwert: 4.79, innerer Wert: 0.50. Diese Option ist ITM, sie kostet also auch mehr.
+		\item Einsetzen\footnote{\url{https://www.wolframalpha.com/input?i=black+scholes\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22underlying\%22\%7D+-\%3E\%22\%2440\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22div\%22\%7D+-\%3E\%220+\%25\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22rf\%22\%7D+-\%3E\%221.5+\%25\%22\&assumption=\%7B\%22FP\%22\%2C+\%22FinancialOption\%22\%2C+\%22OptionName\%22\%7D+-\%3E+\%22VanillaEuropean\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22strike\%22\%7D+-\%3E\%22\%2441\%22\&assumption=\%7B\%22MC\%22\%2C+\%22\%22\%7D+-\%3E+\%7B\%22Formula\%22\%2C+\%22dflt\%22\%7D\&assumption=\%7B\%22FP\%22\%2C+\%22FinancialOption\%22\%2C+\%22opttype\%22\%7D+-\%3E+\%22Put\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22exptime\%22\%7D+-\%3E\%222+a\%22\&assumption=\%7B\%22F\%22\%2C+\%22FinancialOption\%22\%2C+\%22vol\%22\%7D+-\%3E\%2226+\%25\%22}}
+		\begin{align}
+			d_1 &= \frac{\ln\left(\frac{40}{41}\right) + \left(0.015+\frac{0.26^2}{2}\right)\cdot 2}{0.26\cdot\sqrt{2}} \notag \\
+			&= 0.1983 \notag \\
+			d_2 &= 0.1983 - 0.26\cdot\sqrt{2} \notag \\
+			&= -0.1694 \notag \\
+			c_0(P) &= \exp(-0.015\cdot 2)\cdot 41\cdot\Phi(0.1694) - 40\cdot\Phi(-0.1983) \notag \\
+			&= 5.71 \notag
+		\end{align}
+		Die Option ist jetzt ITM und damit mehr wert. Die Vola steigt auch.
+	\end{enumerate}
+	
+\end{document}
