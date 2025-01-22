@@ -1,0 +1,123 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Finanzderivate und Optionen, Übung 9}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Die Rendite $u$ für den Fall, dass die Aktie steigt ist $\frac{135}{120} = 1.125$, die Rendite $d$ für den Fall, dass die Aktie fällt ist $d = \frac{105}{120} = 0.875$. Die Wahrscheinlichkeit, dass die Aktie dann steigt ist
+	\begin{align}
+		p &= \frac{\exp(rT) - d}{u-d} \notag \\
+		&= \frac{\exp(0.03\cdot 1) - 0.875}{1.125 - 0.875} \notag \\
+		&= 0.622 \notag
+	\end{align}
+	Wenn die Aktie nach oben geht, hat die Option einen Wert von 5, falls die Aktie fällt, ist der Wert der Option 0. Damit ist der Preis der Option in $t=1$:
+	\begin{align}
+		0.622\cdot 5 + (1-0.622)\cdot 0 = 3.11 \notag
+	\end{align}
+	Heutiger Wert:
+	\begin{align}
+		3.11\cdot \exp(-0.03\cdot 1) = 3.02 \notag
+	\end{align}
+
+	\section*{Aufgabe 2}
+	Mit den Werten $u=1.1$, $d=0.9$, $T=0.5$ und $r=0.08$ lässt sich wieder die Wahrscheinlichkeit $p$ berechnen:
+	\begin{align}
+		p &= \frac{\exp(rT) - d}{u-d} \notag \\
+		&= \frac{\exp(0.08\cdot 0.5) - 0.9}{1.1 - 0.9} \notag \\
+		&= 0.704 \notag
+	\end{align}
+	Nach 2 Perioden ist die Aktie entweder bei 121 (Optionswert 21), 99 (Optionswert 0) oder 81 (Optionswert 0). Wir können daher den Wert der Aktie und Option berechnen, wenn die Aktie nach der ersten Periode gestiegen ist:
+	\begin{align}
+		\exp(-0.08\cdot 0.5)\cdot (0.704\cdot 21 + (1-0.704)\cdot 0) = 14.20 \notag
+	\end{align}
+	oder wenn sie nach der ersten Periode gefallen ist:
+	\begin{align}
+		\exp(-0.08\cdot 0.5)\cdot (0.704\cdot 0 + (1-0.704)\cdot 0) = 0 \notag
+	\end{align}
+	Damit ergibt sich dann auch der Preis der Option heute:
+	\begin{align}
+		\exp(-0.08\cdot 0.5)\cdot (0.704\cdot 14.20 + (1-0.704)\cdot 0) = 9.61 \notag
+	\end{align}
+	
+	\section*{Aufgabe 3}
+	Im Wesentlichen das Selbe wie in Aufgabe 2, nur dass sich die Werte der Option ändern: Nach 2 Perioden ist die Aktie entweder bei 121 (Optionswert 0), 99 (Optionswert 1) oder 81 (Optionswert 19). Wir können daher den Wert der Aktie und Option berechnen, wenn die Aktie nach der ersten Periode gestiegen ist:
+	\begin{align}
+		\exp(-0.08\cdot 0.5)\cdot (0.704\cdot 0 + (1-0.704)\cdot 1) = 0.28 \notag
+	\end{align}
+	oder wenn sie nach der ersten Periode gefallen ist:
+	\begin{align}
+		\exp(-0.08\cdot 0.5)\cdot (0.704\cdot 1 + (1-0.704)\cdot 19) = 6.08 \notag
+	\end{align}
+	Damit ergibt sich dann auch der Preis der Option heute:
+	\begin{align}
+		\exp(-0.08\cdot 0.5)\cdot (0.704\cdot 0.28 + (1-0.704)\cdot 6.08) = 1.92 \notag
+	\end{align}
+	Überprüfung Put-Call-Parität:
+	\begin{align}
+		C-P &= S - \text{Ausübungspreis}\cdot \exp(-rT) \notag \\
+		9.61 - 1.92 &= 100 - 100\cdot\exp(-0.08\cdot 1) \notag \\
+		7.69 &= 7.69 \notag
+	\end{align}
+	Put-Call-Parität hält!
+	
+	\section*{Aufgabe 4}
+	Noch mal das Selbe, nur länger. Der Wert von $u = \sqrt[3]{\frac{172.8}{100}} = 1.2$, $d=\sqrt[3]{\frac{51.2}{100}}=0.8$, damit $p=0.56$ und $T=\frac{1.5}{3}=0.5$. Mit immer den selben Formeln ergibt sich
+	\begin{center}
+		\includegraphics[scale=0.7]{Übung 9, Aufgabe 4}
+	\end{center}
+	
+\end{document}
