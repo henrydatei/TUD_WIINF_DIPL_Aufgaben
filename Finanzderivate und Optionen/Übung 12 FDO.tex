@@ -1,0 +1,163 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Finanzderivate und Optionen, Übung 12}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	inverse	
+
+	\section*{Aufgabe 2}
+	Gold, Silber, Platin
+	
+	\section*{Aufgabe 3}
+	Emittenten, Branchen, Laufzeiten, Ratings, ...
+	
+	\section*{Aufgabe 4}
+	Emittentenrisiko/Kontrahentenrisiko, also dass die Counterparty des Swaps pleite geht.
+	
+	Tracking Error: Differenz zwischen Rendite des Index und des ETF.
+	Liquiditätsrisiko: ETF kann nicht schnell genug verkauft werden.
+	Währungsrisiko: ETF ist in anderer Währung als die Währung des Investors
+	
+	\section*{Aufgabe 5}
+	Bobl
+	
+	\section*{Aufgabe 6}
+	Verkauf am Kassamarkt, Kauf am Terminmarkt $\to$ Verkaufspreis
+	
+	\section*{Aufgabe 7}
+	$(3533 - 3407)\cdot 4\cdot 10 = 5040$
+	
+	\section*{Aufgabe 8}
+	Es gilt
+	\begin{align}
+		\text{Hedge Ratio} &= \frac{\text{Portoliowert}\cdot \beta}{\text{Indexstand}\cdot 25} \notag \\
+		\text{Indexstand} &= \frac{\text{Portfoliowert}\cdot\beta}{25\cdot \text{Hedge Ratio}} \notag \\
+		&= \frac{8000000\cdot 1.5}{25\cdot 41} = 11707.32 \notag
+	\end{align}
+	Damit ist der Aufschlag $\frac{11824.5 - 11707.32}{11707.32} = 0.01$
+	
+	\section*{Aufgabe 9}
+	Reversal = $U^-C^+P^-$ \\
+	Synthetische Position: $-1.15 + 1.19 = 0.04$ \\
+	Effektiver Preis: $148 - 0.04 = 147.96$. Wenn ich den Future heute verkaufe zu 148.02, dann mache ich 0.06 Gewinn.
+	
+	\section*{Aufgabe 10}
+	Payer, fixen, variablen
+	
+	\section*{Aufgabe 11}
+	Long Straddle
+	
+	\section*{Aufgabe 12}
+	Long Butterfly: $C^+ < 2C^- < C^+$ \\
+	Break-even-Points: $E_1+P = 180 + 5 = 185$, $E_3-P = 220 - 5 = 215$
+	
+	\section*{Aufgabe 13}
+	\begin{center}
+		\includegraphics[scale=0.5]{Übung 12, Aufgabe 13}
+	\end{center}
+	
+	\section*{Aufgabe 14}
+	Puts vorher: $\text{Anzahl Aktien}\cdot\frac{1}{\Delta}\cdot\frac{1}{\text{Kontraktgröße}} = 13000\cdot\frac{1}{0.4}\cdot\frac{1}{100} = 325$ \\
+	Puts nachher: $\text{Anzahl Aktien}\cdot\frac{1}{\Delta}\cdot\frac{1}{\text{Kontraktgröße}} = 13000\cdot\frac{1}{0.25}\cdot\frac{1}{100} = 520$ \\
+	Damit müssen noch $(520-325)\cdot 100\cdot 7 = 136500$ aufgewendet werden.
+	
+	\section*{Aufgabe 15}
+	Mit $u=1.2$, $d=0.8$, $T=1$ und $r=0.05$ ergibt sich
+	\begin{align}
+		p = \frac{\exp(rT) - d}{u-d} = \frac{\exp(0.05\cdot 1) - 0.8}{1.2-0.8} = 0.6282 \notag
+	\end{align}
+	Der Preis an den Punkten A, B und C ist dann
+	\begin{align}
+		f_B &= \exp(-0.05\cdot 1)\cdot (0.6282\cdot 0 + (1-0.6282)\cdot 4) = 1.4147 \notag \\
+		f_C &= \exp(-0.05\cdot 1)\cdot (0.6282\cdot 4 + (1-0.6282)\cdot 20) = 9.4636 \notag \\
+		f_A &= \exp(-0.05\cdot 1)\cdot (0.6282\cdot 1.4147 + (1-0.6282)\cdot 9.4636) = 4.1290 \notag
+	\end{align}
+	\begin{center}
+		\includegraphics[scale=1]{Übung 12, Aufgabe 15}
+	\end{center}
+	
+	\section*{Aufgabe 16}
+	Es gilt
+	\begin{align}
+		d_1 &= \frac{\ln\left(\frac{42}{40}\right) + \left(0.1+\frac{0.2^2}{2}\right)\cdot 0.5}{0.2\cdot\sqrt{0.5}} \notag \\
+		&= 0.7693 \notag \\
+		d_2 &= 0.7393 - 0.2\cdot\sqrt{0.5} \notag \\
+		&= 0.6278 \notag \\
+		c_0(P) &= \exp(-0.1\cdot 0.5)\cdot 40\cdot\Phi(-0.6278) - 42\cdot\Phi(-0.7693) \notag \\
+		&= 0.809 \notag
+	\end{align}
+	
+	\section*{Aufgabe 17}
+	Reverse Cash and Carry: $K^-F^+$ \\
+	$P/L = (\text{Kassa}\cdot (1+r) - \text{Future})\cdot \text{Kontrakte}\cdot \text{Multiplikator} = (89.55\cdot 1.02 - 91.4)\cdot 1\cdot 1000 = -59$
+	
+	\section*{Aufgabe 18}
+	\begin{itemize}
+		\item Book-or-Cancel: BOC-Orders werden nur in das Orderbuch aufgenommen, wenn sie nicht sofort ausführbar sind. BOC-Orders dienen der Liquiditätsbereitstellung im Orderbuch und sollen durch neu eingestellte Orders ausgeführt werden. Ziel ist eine passive Orderausführung. BOC-Orders müssen ein Limit haben.
+		\item One-Cancels-the-Other: OCO-Orders sind eine Kombination aus einer regulären Limit Order und einer Stop Market Order, die eine Positionierung in beide Richtungen im Orderbuch erlaubt.
+		\item Closing-Auction-Only: CAO-Orders sind nur im Instrument Status Closing Auktion aktiv und erhalten dann einen neuen Zeitstempel. Während der Trading-Phase sind sie inaktiv und werden nicht für das Matching berücksichtigt. CAO-Orders können Market Orders oder Limit Orders sein und sind nur tagesgültig.
+		\item Good-for-Day (GFD): Orders werden automatisch in der Tagesendverarbeitung gelöscht.
+		\item Good-till-Cancelled (GTC): Orders werden automatisch gelöscht, wenn das Instrument verfallen ist.
+		\item Good-till-Date (GTD): Orders haben einen bestimmten Geschäftstag, der die Gültigkeit festlegt. Sie werden an diesem Tag in der Tagesendverarbeitung gelöscht.
+		\item Immediate-or-Cancel (IOC): Orders werden sofort und vollständig oder soweit wie möglich ausgeführt. Nicht ausgeführte Teile einer IOC-Order werden ohne Aufnahme in das Orderbuch gelöscht.
+	\end{itemize}
+	
+	\section*{Aufgabe 19}
+	Kontrahentenrisiko: Das Clearinghaus überprüft, ob ausreichende Sicherheiten vorhanden sind, und bezieht nach erfolgreicher Prüfung die Transaktion in das Clearing ein. Das Clearinghaus kann dann entgegenstehende Transaktionen netten und reduziert so das Risiko für die Marktteilnehmer. Durch die Novation wird der ursprüngliche Vertrag zwischen Käufer und Verkäufer durch zwei neue Verträge ersetzt – einen zwischen dem CCP und dem Käufer und einen zwischen dem CCP und dem Verkäufer
+	
+\end{document}
