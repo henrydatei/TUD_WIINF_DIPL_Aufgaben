@@ -1,0 +1,99 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Finanzderivate und Optionen, Übung 11}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	Falsch, EMIR setzt sich für Stärkung von Transparenz im OTC-Handel ein (zentrale Gegenparteien, Transaktionsregister)	
+
+	\section*{Aufgabe 2}
+	Richtig, es geht z.B. darum wie Firewalls bei Banken eingerichtet werden oder wie Gelder von Anlegern getrennt werden müssen. Weitere Punkte: Tick-Größe, Positions-Größen, HFT
+	
+	\section*{Aufgabe 3}
+	PRA und FCA
+	
+	\section*{Aufgabe 4}
+	Falsch
+	
+	\section*{Aufgabe 5}
+	Pro-Rata Methode
+	
+	\section*{Aufgabe 6}
+	Zeit-Pro-Rata Methode
+	
+	\section*{Aufgabe 7}
+	Es wird die Order 30 @ 3125 (für 3125) und die Order 30 @ 3124 (für 3124) ausgeführt. Auf der Ask-Seite verbleibt der Rest 40 @ 3124.
+	
+	\section*{Aufgabe 8}
+	Da bisher nichts auf der Bid-Seite steht, wird solange gewartet, bis dort eine weitere Order reinkommt, damit man weiß, wie die Market-Order-Matching-Range beginnt und endet.
+	
+	\section*{Aufgabe 9}
+	Matching mit der Market-Order 20 @ 3.16. 
+	
+	\section*{Aufgabe 10}
+	\begin{center}
+		\begin{tabular}{c|c|c|c|c}
+			\textbf{Order} & \textbf{Quantity} & \textbf{Anteil} & \textbf{zugeteilt} & \textbf{noch offen} \\
+			\hline
+			1 & 20 & $\frac{20}{90}\cdot 25 = 5.55$ & 6 & 14 \\
+			2 & 20 & $\frac{20}{70}\cdot 19 = 5.42$ & 5 & 15 \\
+			3 & 50 & $\frac{50}{50}\cdot 14 = 14$ & 14 & 36
+		\end{tabular}
+	\end{center}
+	
+	
+\end{document}
