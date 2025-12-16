@@ -1,0 +1,304 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{xcolor}
+\usepackage[left=2.1cm,right=3.1cm,bottom=3cm,footskip=0.75cm,headsep=0.5cm]{geometry}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{marvosym}
+\usepackage{tabularx}
+\usepackage{parskip}
+
+\usepackage{listings}
+\definecolor{lightlightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{lila}{rgb}{0.8,0,0.8}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mygreen}{rgb}{0,0.8,0.26}
+%\lstdefinestyle{java} {language=java}
+\lstset{language=R,
+	basicstyle=\ttfamily,
+	keywordstyle=\color{lila},
+	commentstyle=\color{lightgray},
+	stringstyle=\color{mygreen}\ttfamily,
+	backgroundcolor=\color{white},
+	showstringspaces=false,
+	numbers=left,
+	numbersep=10pt,
+	numberstyle=\color{mygray}\ttfamily,
+	identifierstyle=\color{blue},
+	xleftmargin=.1\textwidth, 
+	%xrightmargin=.1\textwidth,
+	escapechar=§,
+	%literate={\t}{{\ }}1
+	breaklines=true,
+	postbreak=\mbox{\space}
+}
+
+\usepackage[colorlinks = true, linkcolor = blue, urlcolor  = blue, citecolor = blue, anchorcolor = blue]{hyperref}
+\usepackage[utf8]{inputenc}
+
+\renewcommand*{\arraystretch}{1.4}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\newcommand{\E}{\mathbb{E}}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+
+\title{\textbf{Finanzderivate und Optionen, Zusammenfassung}}
+\author{\textsc{Henry Haustein}}
+\date{}
+
+\begin{document}
+	\maketitle
+
+	\section*{Portfoliomanagement}
+	Efficient Frontier (Markowitz): alle Portfolio auf dieser Linie haben ein optimales Risiko-Rendite-Verhältnis. Maß für Risiko: Volatilität
+	\begin{itemize}
+		\item historische Vola: Standardabweichung der bisher realisierten Renditen
+		\item implizierte Vola: Durch das Black-Scholes-Modell implizierte Vola anhand des aktuellen Preises von Optionen
+		\item zukünftige Vola
+		\item erwartete Vola
+	\end{itemize}
+	
+	Risiko:
+	\begin{itemize}
+		\item systematisches Risiko: Das Risiko eines Assets, dass die Firma z.B. pleite geht, etc. $\to$ kann durch Diversifikation eliminiert werden
+		\item unsystematisches Risiko: Gesamtmarktrisiko $\to$ kann nicht eliminiert werden, professionelle Investoren zahlen nur für die Übernahme dieses Risikos
+	\end{itemize}
+
+	VaR (Value-at-Risk): Der maximale Verlust, der mit einer bestimmten Wahrscheinlichkeit eintritt
+	\begin{align}
+		VaR_{\alpha} = \text{Vermögen}\cdot (\mu + \sigma\cdot z_{\alpha}) \notag
+	\end{align}
+	
+	\section*{Kassamärkte}
+	Geldmarkt: Banken können Geld anlegen und aufnehmen über EZB oder über andere Banken
+	\begin{itemize}
+		\item LIBOR (London Interbank Offered Rate) war anfällig für Manipulationen, wurde ersetzt durch andere Referenzzinssätze (RFR - Risk Free Rates)
+		\item EONIA (Euro Overnight Index Average) wurde ersetzt durch \EUR STR (Euro Short Term Rate)
+	\end{itemize}
+
+	Duration: misst durchschnittliche Kapitalbindungsdauer, Grad der Zinsreagibilität
+	\begin{itemize}
+		\item Macaulay-Duration $\sum \frac{CF^2}{(1+r)^i}\cdot BW^{-1}$
+		\item modifizierte Duration $\frac{-\text{Macaulay-Duration}}{1+\text{Kupon}}$: gibt an, um wie viel Prozent sich der Anleihekurs ändert, wenn sich das Marktzinsniveau um einen Prozentpunkt ändert
+	\end{itemize}
+
+	Preisindex: ignoriert Dividendenzahlungen (z.B. Dow Jones) \\
+	Performanceindex: inkludiert Dividenzahlungen (z.B. DAX)
+	
+	Terminkurs:
+	\begin{align}
+		\text{Devisenterminkurs} = \text{Kassakurs} + \frac{(\text{Zinssatz Währung 2} - \text{Zinssatz Währung 1}) \cdot \text{Kassakurs} \cdot \text{Laufzeit in Tagen}}{360\cdot 100} \notag
+	\end{align}
+	
+	\section*{Grundlagen Derivate}
+	Future: beide Seiten sind verpflichtet zu liefern und anzunehmen \\
+	Optionen: der Verkäufer hat die Pflicht, der Käufer das Recht
+	
+	Basis/Cost-of-Carry: Erträge $-$ Aufwendungen
+	\begin{itemize}
+		\item negative Cost-of-Carry: niedrige Erträge, hohe Finanzierungskosten $\to$ Contango
+		\item positive Cost-of-Carry: hohe Erträge, niedrige Finanzierungskosten $\to$ Backwardation
+	\end{itemize}
+	\begin{center}
+		\begin{tabular}{l|l}
+			Cash-and-Carry & $K^+F^-$ \\
+			Reverse-Cash-and-Carry & $K^-F^+$ \\
+			\hline
+			Conversion & $K^+C^-P^+$ \\
+			Reversal & $K^-C^+P^-$ \\
+		\end{tabular}
+	\end{center}
+	\begin{center}
+		\begin{tabular}{c|c|c}
+			\textbf{Vorzeichen} & \textbf{Widening (Betrag $\uparrow$)} & \textbf{Narrowing (Betrag $\downarrow$)} \\
+			\hline
+			$+$ & Strengthening & Weakening \\
+			$-$ & Weakening & Strengthening
+		\end{tabular}
+	\end{center}
+
+	Repo-Geschäft: Verkauf heute, zurückkaufen später $\to$ kurzfristiger, besicherter Kredit $\to$ implied Repo-Rate
+
+	Initial Margin: Initialer Geldbetrag der bei Eröffnung der Position gefordert wird \\
+	Maintenance Margin: Minimaler Geldbetrag der benötigt wird um die Position aufrecht zu erhalten \\
+	Variation Margin: Regelmäßig abgerechnete Margin, stellt den aktuellen Gewinn/Verlust der eingegangen Position dar
+	
+	\section*{Symmetrische Derivate}
+	
+	FRA (Forward Rate Agreement): Zinssatz für einen zukünftigen Kredit sichern. $\to$ Ausgleichzahlung am Ende des FRA = Am Anfang des Kredites
+	\begin{align}
+		(1+r_1)\cdot (1+f_{1,1}) = (1+r_2)^2 \notag
+	\end{align}
+	Ein-Jahreszins und Forward-Rate für ein Jahr in einem Jahr müssen äquivalent zum Zins für 2 Jahre sein.
+	\begin{align}
+		\text{Ausgleichzahlung} = \frac{(\text{Referenzzins} - \text{FRA-Zins})\cdot\text{Kreditsumme}\cdot\frac{\text{Tage FRA}}{360}}{1+\left(\text{Referenzzins}\cdot\frac{\text{Tage FRA}}{360}\right)} \notag
+	\end{align}
+
+	Swaps (z.B. Plain Vanilla Zinsswap): Tauschen von Zinszahlungen, nicht Nennbetrag (außer bei Währungsswaps, da wird auch der Nennbetrag getauscht). Payer zahlt fix, Receiver zahlt flexibel
+	
+	Futurepreis = Basiswert + Finanzierungskosten - Erträge, bei Geldmarktfutures gilt Preis = 100 - Zins $\to$ Kauf ist Absicherung gegen fallende Zinsen (alternativ: Verkauf FRA, Receiver Zinsswap)
+	
+	Fix-Income-Future: Käufer verpflichtet sich zum Kauf von Anleihen zu einem späteren Zeitpunkt für heutigen Preis, er erwartet fallende Zinsen, da die Anleihen dann im Preis steigen
+	\begin{itemize}
+		\item Euro-Bund (Bundeanleihen $\approx$ 9 Jahre), 
+		\item Euro-Bobl (Bundesobligationen $\approx$ 5 Jahre), 
+		\item Euro-Schatz (Bundesschatzanweisungen $\approx$ 2 Jahre)
+	\end{itemize}
+	Konvertierungsfaktor macht verschiedene Anleihen vergleichbar, Lieferpreis muss Käufer zahlen
+	\begin{align}
+		\text{Lieferpreis} = 1000(\text{Kurs Future}\cdot KF + \text{Stückzinsen}) \notag
+	\end{align}
+	Der Verkäufer des FI-Future hat das Recht zur Auswahl, welche konkrete Anleihe er liefern möchte, er nimmt die Cheapest-To-Deliver-Anleihe (CTD-Anleihe). Kosten für ihn:
+	\begin{align}
+		\text{Einstandskurs} = 1000(\text{Preis CTD-Anleihe} + \text{Stückzinsen}) \notag
+	\end{align}
+
+	Aktienindex-Future: keine Lieferung, nur Barausgleich (Multiplikator 10 bei Euro STOXX 50; 25 bei DAX). Futurepreis ist Addition der Cost-of-Carry (äquivalent zu Aufzinsen)
+
+	Hedging: Absicherung gegen Preisänderungen (einige davon haben wir nicht in den Übungen gemacht)
+	\begin{itemize}
+		\item \textcolor{gray}{Direct-Hedge: nimmt Gleichheit der Änderung von Kassa und Future an
+		\begin{align}
+			HR = \frac{\text{Portfoliowert}}{\text{Preis Future}\cdot 1000} \notag
+		\end{align}}
+		\item  \textcolor{gray}{Kassa-äquivalente Methode
+		\begin{align}
+			HR = \frac{\text{Portfoliowert}}{\text{Preis Future}\cdot 1000\cdot KF_{Bond}} \notag
+		\end{align}}
+		\item  \textcolor{gray}{Future-äquivalente Methode
+		\begin{align}
+			HR = \frac{\text{Portfoliowert}}{\text{Preis CTD}\cdot 1000}\cdot KF_{CTD} \notag
+		\end{align}}
+		\item Basispunktwert- oder Sensitivitäts-Methode
+		\begin{align}
+			HR = \frac{BPV_{Bond}}{BPV_{Future}\cdot 1000} \qquad  \textcolor{gray}{HR = \frac{BPV_{Bond}}{BPV_{Future}\cdot 1000}\cdot KF_{CTD}} \notag
+		\end{align}
+		\item Absicherung mit Aktienindex-Futures
+		\begin{align}
+			HR = \frac{\text{Portfoliowert}\cdot\beta}{\text{Index}\cdot \text{Multiplikator}} \notag
+		\end{align}
+	\end{itemize}
+	$\to$ in der Regel kein perfekter Hedge (Cross Hedge/Imperfect Hedge)
+	
+	Multiplikatoren
+	\begin{itemize}
+		\item Futures (Euro-Bund, Euro-Bobl, Euro-Schatz): 1000
+		\item Optionen: in der Regel 100
+		\item Euro Stoxx 50 Future: 10
+		\item Dax Future: 25
+		\item Euro Stoxx 50 Optionen: 10
+		\item Dax Optionen: 5
+	\end{itemize}
+	
+	\section*{Optionen}
+	
+	Long Call: Recht, einen Basiswert zu kaufen \\
+	Long Put: Recht, einen Basiswert zu verkaufen \\
+	Short Call: Pflicht, einen Basiswert zu verkaufen \\
+	Short Put: Pflicht, einen Basiswert zu kaufen
+	
+	Europäische Optionen: Ausübung nur am Ende der Laufzeit \\
+	Amerikanische Optionen: Ausübung jederzeit zur Laufzeit
+	
+	Preis einer Option = innerer Wert (wie viel ITM) + Zeitwert (Wahrscheinlichkeit, dass Option Rendite noch positiv wird), Ausübung einer Call-Option lohnt sich immer, wenn Strike $K$ $<$ Preis des Underlyings $S_T$ (analog Put)
+	
+	Put-Call-Parität:
+	\begin{align}
+		C - P &= S_t - \frac{K}{1+\frac{r}{n}} \notag \\
+		C - P &= \text{implizierter FI-Futurepreis am Verfallstag} - K \notag
+	\end{align}
+	Diskontierung entfällt bei dem zweiten Fall, da Eurex ein Future-Style-Margin-Verfahren anbietet, tägliche Ausgleichszahlungen (Variantion Margin)
+	
+	Synthetische Positionen: $C^+P^- = U^+$, den Rest einfach durch "Addieren" von Positionen auf beiden Seiten herleiten
+	\begin{itemize}
+		\item Reversal = $C^+P^-U^-$ kauft man, wenn Optionen zu billig sind (durch $C^+P^-$ bekomme ich viel billiger eine Aktie) = Reverse-Cash-and-Carry
+		\item Konversion = jede Position einmal umdrehen, kauft man, wenn Optionen zu teuer sind = Cash-and-Carry
+	\end{itemize}
+
+	Die Griechen
+	\begin{itemize}
+		\item Delta $\delta = \frac{\partial C}{\partial S}$
+		\item Gamma $\gamma = \frac{\partial^2 C}{\partial S^2}$
+		\item Theta $\theta = \frac{\partial C}{\partial t}$
+		\item Vega $\nu = \frac{\partial C}{\partial \sigma}$
+		\item Omega $\omega = \frac{\delta\cdot S}{C}$
+		\item Rho $\rho = \frac{\partial C}{\partial r}$
+	\end{itemize}
+
+	Delta-Hedge: $\text{Anzahl Optionen} = \frac{\text{Anzahl Aktien}}{\text{Kontraktgröße}}\cdot\frac{1}{\delta}$ \\
+	Delta-Hedge mit Beta: $\text{Anzahl Optionen}\cdot\text{Multiplikator}\cdot\text{Index}\cdot\delta = \text{Portfoliowert}\cdot\beta$
+	
+	Aktienoptionen werden durch physische Lieferung erfüllt, Aktienindexoptionen nur durch Barausgleich
+	
+	Käufer eines Caps erhält Ausgleichszahlung, wenn Referenzzins zu stark steigt \\
+	Käufer eines Floors erhält Ausgleichszahlung, wenn Referenzzins zu stark fällt
+	
+	Credit-Default-Swap (CDS): Käufer zahlt eine Prämie und erhält eine Ausgleichszahlung, wenn der Kreditnehmer pleite geht
+	
+	\section*{Binomialbäume}
+	Eigentlich steht alles relevante in der Formelsammlung: Man startet zum Zeitpunkt $T$, bestimmt den Wert der Optionen, berechnet $p$ (die Wahrscheinlichkeit, dass es nach oben geht) und dann über ein gewichtetes Mittel den Preis der Option für $T-1$, usw. bis $T=0$.
+	
+	\section*{Black und Scholes}
+	Formeln stehen auch alle in der Formelsammlung
+	\begin{align}
+		C &= S_0\Phi(d_1) - \exp(-rT)K\Phi(d_2) \notag \\
+		P &= \exp(-rT)K\Phi(-d_2) - S_0\Phi(-d_1) \notag
+	\end{align}
+	
+	Wichtige Annahmen: konstante Vola, Log-Normalverteilung der Preise, konstanter risikoloser Zins sind nicht erfüllt $\to$ andere Modell wie das Heston-Modell sind besser
+	
+	Black-Scholes kann für implizierte Vola aus Optionsdaten genutzt werden $\to$ Volatility-Smiles und -Skews
+	
+	\section*{Regulatorischer Rahmen}
+	
+	EMIR: Transparenz im OTC-Handel, zentrale Gegenpartei, Transaktionsregister
+	
+	MAD/MAR: Definitionen Insidertrading, Marktmanipulationen, Mindeststrafen vereinheitlichen $\to$ Integrität der europäischen Finanzmärkte gewährleisten
+	
+	MiFID II/MiFIR: Anforderungen an Geschäftsführer von Wertpapierfirmen, Zulassungsanforderungen Börsen/ Instrumente, Meldewesen, Transparenzpflicht, Anlegerschutz, Regulierung HFT
+	
+	UK: FCA + PRA \\
+	USA: SEC + CFTC
+	
+	\section*{Eurex}
+	
+	Organisation: Deutsche Börse AG $\to$ Eurex Frankfurt AG, ... $\to$ Eurex Deutschland (Börse nach deutschem Recht), Eurex Clearing AG, Eurex Repo AG
+	\begin{itemize}
+		\item Börsenrat: Börsenordnung, Gebühren, Zulassungsordnung Händler, Überwachung Geschäftsführung
+		\item Geschäftsführung: Zulassen Händler, Handelszeiten, Ermittlung + Veröffentlichung Preise, Einhaltung Gesetze überwachen, Aufnahme, Aussetzung, Einstellung Terminhandel, Kontraktspezifikationen
+		\item Handelsüberwachungsstelle: Überwachung Handel, Daten sammlen und auswerten, darf jederzeit Geschäftsräume der Teilnehmer betreten
+		\item Sanktionsausschuss: Verweis, Ordnungsgeld (max 1 Million Euro), Ausschluss von Börse (max 30 Tage)
+		\item Aufsicht: BaFin, Handelsüberwachungsstelle, Börsenaufsichtsbehörden 
+	\end{itemize}
+
+	Börsenteilnehmer: Unternehmen, die einen/mehrere Händler haben, muss beantragt werden \\
+	Börsenhändler: muss von Eurex zugelassen werden durch Prüfung
+	
+	Off-Book-Geschäfte müssen in T7 Entry Services eingetragen werden
+	
+	Verbote:
+	\begin{itemize}
+		\item Aufträge oder Quotes ohne Geschäftsabschlussabsicht
+		\item Terminhandel nicht gefährden
+		\item Aufträge oder Quotes in das Handelssystem einzugeben, die geeignet sind, fehlerhaft oder irreführend Angebot, Nachfrage oder Preis von Produkten zu beeinflussen oder einen nicht marktgerechten Preis oder ein künstliches Preisniveau herbeizuführen
+		\item Verschleierung von Algo-Trading
+		\item keine Pre-Arranged-Trades oder Cross-Trades ohne vorherige Ankündigung
+	\end{itemize}
+
+	Order-Matching:
+	\begin{itemize}
+		\item ältere Orders haben Priorität, sowohl beim Matching als auch beim Preis
+		\item Market-Orders stehen immer ganz oben, werden aber nur ausgeführt, wenn Preis innerhalb Market-Order-Matching-Range
+		\item Market-Orders sind nicht öffentlich sichtbar im Orderbuch
+		\item Pro-Rata-Verfahren (z.B. bei Geldmarkt-ETFs, da ist der korrekte Preis im Vorhinein bekannt): $\text{Anteil} = \frac{\text{Ordergröße}}{\text{Summe aller verbleibenden Orders}}$
+	\end{itemize}
+	
+\end{document}
